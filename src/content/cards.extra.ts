@@ -13,20 +13,21 @@
 
 import type { Card } from './types';
 
-const ia = (
+const card = (
+  subject: string,
   topic: string,
   term: string,
   definition: string,
   example: string,
   level: Card['level'] = null,
 ): Card => ({
-  id: `ia-x-${term
+  id: `${subject}-x-${term
     .toLowerCase()
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-z0-9]+/g, '-')
     .replace(/^-|-$/g, '')}`,
-  subject: 'ia',
+  subject,
   topic,
   level,
   term,
@@ -34,6 +35,11 @@ const ia = (
   example,
   tags: ['#manual'],
 });
+
+const ia = (topic: string, term: string, definition: string, example: string, level: Card['level'] = null): Card =>
+  card('ia', topic, term, definition, example, level);
+const py = (topic: string, term: string, definition: string, example: string, level: Card['level'] = null): Card =>
+  card('python', topic, term, definition, example, level);
 
 export const EXTRA_CARDS: readonly Card[] = [
   // ------------------------------------------------------------ histoire
@@ -141,4 +147,68 @@ export const EXTRA_CARDS: readonly Card[] = [
   ia('marketing-ia', 'llms.txt', 'Fichier proposé à la racine d’un site pour indiquer aux modèles les contenus importants et leur structure, sur le modèle de robots.txt. Adoption et effet encore incertains.', 'Lister ses pages piliers dans llms.txt coûte cinq minutes et ne garantit rien.', 'intermediaire'),
   ia('marketing-ia', 'Suivi de visibilité IA', 'Mesurer si et comment une marque apparaît dans les réponses des assistants (ChatGPT, Perplexity, AI Overviews) sur un jeu de requêtes, comme on suit des positions Google.', 'Chaque semaine, poser 50 questions à trois assistants et compter les citations.', 'intermediaire'),
   ia('marketing-ia', 'Automatisation marketing par agents', 'Délégation de workflows entiers (veille, reporting, réponses aux avis, tests A/B) à des agents, avec validation humaine aux étapes sensibles.', 'Un agent lit les avis clients chaque matin et propose des réponses à valider.', 'avance'),
+
+  // ====================================================== Python : concepts
+  py('concepts', 'Variable', 'Un nom qui désigne une valeur en mémoire. En Python, pas de déclaration de type : `budget = 1200` crée la variable et lui donne un entier.', 'cpc = 0.45 ; clics = 300 ; depense = cpc * clics', 'debutant'),
+  py('concepts', 'Affectation multiple', 'Donner plusieurs valeurs d’un coup : `a, b = 1, 2`. Sert aussi à échanger deux variables sans intermédiaire : `a, b = b, a`.', 'nom, email = ligne.split(";")', 'intermediaire'),
+  py('concepts', 'Booléen', 'Type à deux valeurs, `True` et `False`. Résultat des comparaisons (`==`, `<`, `in`) et des conditions. Attention : `0`, `""`, `[]` et `None` valent False dans un `if`.', 'if clics > 100: … ; actif = email.endswith("@gmail.com")', 'debutant'),
+  py('concepts', 'None', 'La valeur « rien » : l’absence de résultat. Une fonction sans `return` rend None. On teste avec `is None`, jamais avec `==`.', 'resultat = trouver_client(email) ; if resultat is None: print("inconnu")', 'debutant'),
+  py('concepts', 'Commentaire', 'Texte ignoré par Python, introduit par `#`, pour expliquer POURQUOI le code fait quelque chose (le QUOI, le code le dit déjà).', '# Le CPA cible vient du contrat client, ne pas le calculer ici', 'debutant'),
+  py('concepts', 'Indentation', 'En Python, ce sont les espaces en début de ligne (4 par niveau) qui délimitent les blocs : le corps d’un `if`, d’une boucle, d’une fonction. Une indentation fausse est une erreur.', 'if ok:\n    print("oui")  # les 4 espaces font partie de la syntaxe', 'debutant'),
+  py('concepts', 'Mutable / immuable', 'Une liste ou un dict se modifient sur place (mutables) ; une chaîne, un tuple ou un nombre ne changent jamais (immuables) : toute « modification » crée une nouvelle valeur.', 'canaux.append("geo") modifie la liste ; nom.upper() rend une nouvelle chaîne, nom reste inchangé.', 'intermediaire'),
+  py('concepts', 'Tuple', 'Séquence immuable entre parenthèses : `(48.85, 2.35)`. Pour des données qui vont ensemble et ne doivent pas changer, ou comme clé de dictionnaire.', 'coordonnees = (48.85, 2.35) ; lat, lon = coordonnees', 'intermediaire'),
+  py('concepts', 'Set (ensemble)', 'Collection sans doublons ni ordre, entre accolades : `{"seo", "sea"}`. Idéal pour dédupliquer et tester l’appartenance très vite.', 'emails_uniques = set(emails) ; len(emails_uniques)', 'intermediaire'),
+  py('concepts', 'Slicing', 'Extraire une tranche d’une séquence avec `[debut:fin]` (fin exclue). Les indices négatifs partent de la fin ; `[::2]` saute un élément sur deux.', '"marketing"[:6] → "market" ; liste[-3:] → les trois derniers', 'intermediaire'),
+  py('concepts', 'Compréhension de liste', 'Construire une liste en une ligne à partir d’une autre : `[f(x) for x in xs if cond]`. Plus lisible et plus rapide qu’une boucle avec append.', 'gros_clients = [c for c in clients if c["ca"] > 10000]', 'intermediaire'),
+  py('concepts', 'Fonction lambda', 'Fonction anonyme d’une seule expression : `lambda x: x * 2`. Utile comme argument de `sorted`, `map` ou `apply` ; au-delà d’une ligne, écrire un `def`.', 'campagnes.sort(key=lambda c: c["cpa"])', 'intermediaire'),
+  py('concepts', 'Argument par défaut', 'Valeur qu’un paramètre prend si l’appelant ne la fournit pas : `def envoyer(msg, urgent=False)`. Piège : ne jamais mettre une liste ou un dict comme valeur par défaut.', 'def resume(texte, longueur=100): …  →  resume(article) ou resume(article, 50)', 'intermediaire'),
+  py('concepts', 'Portée (scope)', 'Une variable créée dans une fonction n’existe que dans cette fonction. Le code extérieur ne la voit pas ; la fonction voit les variables globales mais ne doit pas les modifier.', 'total défini dans calculer() n’est pas accessible après l’appel : il faut le return.', 'intermediaire'),
+  py('concepts', 'Module', 'Un fichier .py dont on importe les fonctions : `import math`, `from datetime import date`. La bibliothèque standard en fournit des centaines.', 'from collections import Counter ; Counter(mots).most_common(10)', 'debutant'),
+  py('concepts', 'Package', 'Un ensemble de modules distribué et installable : pandas, requests… Installé avec pip depuis PyPI, le dépôt public.', 'pip install pandas ; puis import pandas as pd', 'debutant'),
+  py('concepts', 'pip et PyPI', 'pip est l’outil qui installe les packages ; PyPI (Python Package Index) est le dépôt où ils sont publiés — plus de 500 000 projets.', 'pip install requests beautifulsoup4 ; pip freeze > requirements.txt', 'debutant'),
+  py('concepts', 'PEP 8', 'Le guide de style officiel de Python : 4 espaces, snake_case pour variables et fonctions, lignes de 79 caractères, espaces autour des opérateurs. Les formateurs (black, ruff) l’appliquent automatiquement.', 'taux_de_clic plutôt que TauxDeClic ou tauxdeclic', 'intermediaire'),
+
+  // ------------------------------------------------------- Python : outils
+  py('outils', 'Environnement virtuel', 'Dossier isolé contenant un Python et ses packages, propre à un projet, pour que deux projets n’aient pas de conflits de versions.', 'python -m venv .venv ; source .venv/bin/activate (ou .venv\\Scripts\\activate sous Windows)', 'debutant'),
+  py('outils', 'requirements.txt', 'Fichier listant les packages d’un projet et leurs versions, pour réinstaller le même environnement ailleurs en une commande.', 'pip install -r requirements.txt', 'debutant'),
+  py('outils', 'Notebook Jupyter', 'Document interactif mêlant cellules de code, résultats et texte. Parfait pour explorer des données pas à pas ; moins bon pour un programme à rejouer.', 'Charger un CSV, afficher df.head(), tracer un graphique, tout dans la même page.', 'debutant'),
+  py('outils', 'Script vs notebook', 'Un script .py s’exécute d’un bloc, se planifie et se versionne bien ; un notebook s’explore cellule par cellule. On explore en notebook, on industrialise en script.', 'Le rapport hebdo tourne en script via cron ; son prototype est né dans un notebook.', 'intermediaire'),
+  py('outils', 'if __name__ == "__main__"', 'Garde qui n’exécute le code principal que quand le fichier est lancé directement, pas quand il est importé comme module.', 'if __name__ == "__main__":\n    main()', 'intermediaire'),
+  py('outils', 'breakpoint()', 'Arrête le programme à cet endroit et ouvre un débogueur pour inspecter les variables. Plus efficace qu’une pluie de print().', 'Insérer breakpoint() avant la ligne qui plante, relancer, taper le nom d’une variable.', 'intermediaire'),
+  py('outils', 'logging', 'Module standard pour écrire des messages horodatés avec un niveau (DEBUG, INFO, WARNING, ERROR) au lieu de print ; on choisit ensuite ce qu’on affiche ou enregistre.', 'logging.warning("API Ads indisponible, rapport partiel")', 'intermediaire'),
+  py('outils', 'Variables d’environnement et .env', 'Les secrets (clés d’API, mots de passe) ne vont jamais dans le code : on les lit depuis l’environnement (`os.environ`), souvent chargé depuis un fichier .env exclu de git.', 'API_KEY = os.environ["ADS_API_KEY"]', 'debutant'),
+
+  // ------------------------------------------------------ Python : web-py
+  py('web-py', 'API REST', 'Interface d’un service accessible par HTTP : on appelle des URL (endpoints) avec GET, POST…, on reçoit du JSON. C’est ainsi qu’un script parle à Google Ads, Notion ou un CRM.', 'GET https://api.exemple.com/campagnes?statut=active', 'debutant'),
+  py('web-py', 'Endpoint', 'Une URL précise d’une API, associée à une action : `/campagnes` pour lister, `/campagnes/42` pour une seule.', 'requests.get(f"{BASE}/campagnes/{id}")', 'debutant'),
+  py('web-py', 'JSON', 'Format texte d’échange de données (objets `{}`, listes `[]`, chaînes, nombres) que Python convertit en dict et list avec `response.json()` ou le module json.', '{"nom": "Été", "budget": 1200} → data["budget"] vaut 1200', 'debutant'),
+  py('web-py', 'Clé d’API', 'Jeton secret qui identifie ton application auprès d’une API, transmis dans un en-tête. Se lit depuis l’environnement, jamais en dur dans le code ni dans git.', 'headers = {"Authorization": f"Bearer {cle}"}', 'debutant'),
+  py('web-py', 'Timeout et erreurs HTTP', 'Toujours donner un délai maximal à une requête (`timeout=10`) et vérifier le code de réponse (`raise_for_status()`), sinon un script peut attendre indéfiniment ou traiter une erreur comme un succès.', 'r = requests.get(url, timeout=10) ; r.raise_for_status()', 'intermediaire'),
+  py('web-py', 'BeautifulSoup', 'Bibliothèque qui lit du HTML et permet d’en extraire des éléments par balise, classe ou sélecteur CSS. Le duo requests + BeautifulSoup est la base du scraping.', 'soup.select("h2.titre-produit") → tous les titres de produits de la page', 'intermediaire'),
+  py('web-py', 'Scraping responsable', 'Respecter robots.txt et les conditions du site, espacer les requêtes, s’identifier (User-Agent), ne pas collecter de données personnelles, préférer une API quand elle existe.', 'time.sleep(2) entre deux pages ; vérifier /robots.txt avant de commencer.', 'intermediaire'),
+  py('web-py', 'gspread', 'Bibliothèque pour lire et écrire des Google Sheets depuis Python via l’API Google, avec un compte de service. Idéal pour déposer les résultats d’un script là où l’équipe travaille.', 'feuille.append_row([date, clics, cout])', 'intermediaire'),
+  py('web-py', 'Planification (cron)', 'Lancer un script automatiquement à heure fixe : cron sous Linux/macOS, Planificateur de tâches sous Windows, ou GitHub Actions dans le cloud.', '0 8 * * 1 → tous les lundis à 8 h : le rapport de la semaine se génère seul.', 'intermediaire'),
+  py('web-py', 'Rate limiting', 'Limite du nombre d’appels qu’une API accepte par seconde ou par jour. La dépasser renvoie une erreur 429 : il faut ralentir ou réessayer plus tard.', 'Après un 429, attendre la durée indiquée par l’en-tête Retry-After.', 'avance'),
+
+  // -------------------------------------------------- Python : donnees-py
+  py('donnees-py', 'DataFrame', 'Le tableau de pandas : lignes et colonnes nommées, comme une feuille de calcul en mémoire. Presque tout le travail de données passe par lui.', 'df = pd.read_csv("campagnes.csv") ; df.shape → (1200, 8)', 'debutant'),
+  py('donnees-py', 'Series', 'Une seule colonne d’un DataFrame (ou une liste indexée). `df["clics"]` est une Series ; on lui applique sum(), mean(), max()…', 'df["cout"].sum()', 'debutant'),
+  py('donnees-py', 'dtype', 'Le type des valeurs d’une colonne : int64, float64, object (texte), bool, datetime64. Un nombre lu comme texte ne se somme pas : vérifier avec df.dtypes.', 'df["cout"] = df["cout"].astype(float)', 'intermediaire'),
+  py('donnees-py', 'NaN', 'Not a Number : la valeur manquante de pandas. Ignorée par les moyennes, mais elle se propage dans les calculs. dropna() la retire, fillna() la remplace.', 'df["cpa"].fillna(0)', 'debutant'),
+  py('donnees-py', 'Index', 'L’étiquette de chaque ligne (par défaut 0, 1, 2…). On peut en faire une colonne significative (date, id) pour sélectionner avec loc.', 'df.set_index("date").loc["2026-09"]', 'intermediaire'),
+  py('donnees-py', 'Jointure (merge)', 'Combiner deux tableaux sur une colonne commune, comme une jointure SQL : inner (communs), left (tout de gauche), outer (tout).', 'pd.merge(campagnes, couts, on="id_campagne", how="left")', 'intermediaire'),
+  py('donnees-py', 'Agrégation', 'Résumer des groupes : groupby() puis sum(), mean(), count()… ou agg() pour plusieurs mesures à la fois.', 'df.groupby("canal").agg(clics=("clics", "sum"), cpa=("cpa", "mean"))', 'intermediaire'),
+  py('donnees-py', 'datetime', 'Type date/heure. pd.to_datetime() convertit une colonne texte ; on peut ensuite extraire le mois, regrouper par semaine, filtrer une période.', 'df["date"] = pd.to_datetime(df["date"]) ; df.resample("W", on="date").sum()', 'intermediaire'),
+  py('donnees-py', 'matplotlib', 'Bibliothèque de graphiques de référence ; pandas s’en sert avec df.plot(). Courbe, barres, histogramme en une ligne.', 'df.groupby("mois")["clics"].sum().plot(kind="bar")', 'debutant'),
+  py('donnees-py', 'Export', 'Écrire le résultat : to_csv(), to_excel(), to_json(). Pour Excel, openpyxl est nécessaire ; index=False évite la colonne d’index parasite.', 'df.to_excel("rapport.xlsx", index=False)', 'debutant'),
+
+  // -------------------------------------------------- Python : pratiques
+  py('pratiques', 'Gestion d’erreurs', 'try / except attrape une erreur prévue (fichier absent, API en panne) pour réagir proprement au lieu de planter. On n’attrape que ce qu’on sait traiter.', 'try: r = requests.get(url, timeout=10)\nexcept requests.Timeout: logging.error("API lente")', 'intermediaire'),
+  py('pratiques', 'assert', 'Vérification qui fait planter le programme si une condition est fausse : un filet de sécurité pour les hypothèses (« le CSV a bien une colonne cout »).', 'assert "cout" in df.columns, "colonne cout manquante"', 'intermediaire'),
+  py('pratiques', 'pytest', 'Outil de tests : chaque fonction `test_…` vérifie un comportement ; `pytest` les lance toutes. Les tests protègent contre les régressions quand on modifie le code.', 'def test_cpa(): assert cpa(100, 4) == 25', 'intermediaire'),
+  py('pratiques', 'Docstring', 'Chaîne de documentation en tête d’une fonction, entre triples guillemets : ce qu’elle fait, ses paramètres, ce qu’elle rend. Lue par help() et les éditeurs.', 'def cpa(cout, conversions):\n    """Coût par acquisition ; rend None si aucune conversion."""', 'debutant'),
+  py('pratiques', 'Type hints', 'Annotations de types sur les paramètres et le retour (`def cpa(cout: float, conv: int) -> float`). Python ne les vérifie pas, mais l’éditeur et les outils oui, et ça documente.', 'def envoyer(destinataires: list[str], objet: str) -> bool:', 'intermediaire'),
+  py('pratiques', 'DRY', 'Don’t Repeat Yourself : un code copié-collé trois fois devient une fonction. Une correction se fait alors à un seul endroit.', 'Trois blocs qui calculent un CPA → une fonction cpa(cout, conversions).', 'debutant'),
+  py('pratiques', 'Commit git', 'Enregistrer un état du code avec un message qui dit pourquoi. Petits commits fréquents = historique lisible et retour arrière facile.', 'git commit -m "Ignore les lignes sans coût dans le rapport hebdo"', 'debutant'),
+  py('pratiques', 'Nommage', 'Des noms qui disent ce que la chose est : `cout_par_clic` plutôt que `x` ou `cpc2`. Le code se lit dix fois plus qu’il ne s’écrit.', 'for campagne in campagnes: plutôt que for c in cs:', 'debutant'),
 ];

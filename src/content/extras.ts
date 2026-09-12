@@ -420,6 +420,114 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
   qcm('ia-mkt-1', 2, 'Un « persona synthétique » sert à…', ['Explorer rapidement des réactions à un message avant de le tester sur de vrais clients — jamais pour conclure', 'Remplacer les études clients', 'Générer de faux avis', 'Prédire le chiffre d’affaires'], 'Utile pour repérer les objections évidentes ; un LLM ne remplace pas une vraie personne pour décider.'),
   vf('ia-mkt-1', 3, 'Une mention de marque sans lien n’a aucune valeur pour la visibilité dans les IA.', false, 'Les modèles apprennent l’association marque ↔ sujet à partir de toutes les mentions, liens ou pas. La notoriété textuelle devient un levier.'),
 
+  // ================================================ Python : concepts (1)
+  qcm('py-concepts-1', 101, 'Qu’affiche ce code ?', ['False', 'True', '0', 'Une erreur'], 'Une liste vide vaut False. `not []` vaut donc True… mais ici on affiche `bool([])`, qui vaut False.', { code: { lang: 'python', src: 'clients = []\nprint(bool(clients))' } }),
+  qcm('py-concepts-1', 102, 'Qu’affiche ce code ?', ['None', '5', 'Une erreur', '0'], 'La fonction calcule mais ne retourne rien : elle rend None. Il manque `return total`.', { code: { lang: 'python', src: 'def somme(a, b):\n    total = a + b\n\nprint(somme(2, 3))' } }),
+  qcm('py-concepts-1', 103, 'Qu’affiche ce code ?', ['[1, 2, 3]', '[1, 2]', 'Une erreur', '[3]'], 'b et a désignent LA MÊME liste (mutable) : modifier b modifie a. Pour copier : `b = a.copy()`.', { code: { lang: 'python', src: 'a = [1, 2]\nb = a\nb.append(3)\nprint(a)' } }),
+  qcm('py-concepts-1', 104, 'Pourquoi ce code produit-il une erreur ?', ['Le corps du if n’est pas indenté', 'Il manque des parenthèses au if', 'print n’existe pas', 'clics doit être une chaîne'], 'Après `if …:`, le bloc doit être indenté de 4 espaces. C’est une IndentationError.', { code: { lang: 'python', src: 'clics = 120\nif clics > 100:\nprint("bonne journée")' } }),
+  vf('py-concepts-1', 105, 'En Python, `x == None` et `x is None` sont équivalents et interchangeables.', false, '`is None` compare l’identité et est la forme correcte ; `== None` peut donner des résultats surprenants avec certains objets (pandas, par exemple).'),
+
+  // ================================================ Python : concepts (2)
+  qcm('py-concepts-2', 101, 'Qu’affiche ce code ?', ['[4, 9, 16]', '[2, 3, 4]', '[1, 4, 9, 16]', 'Une erreur'], 'La compréhension garde les nombres > 1 (donc 2, 3, 4) et les élève au carré.', { code: { lang: 'python', src: 'nombres = [1, 2, 3, 4]\nprint([n * n for n in nombres if n > 1])' } }),
+  qcm('py-concepts-2', 102, 'Qu’affiche ce code ?', ['3', '4', '{"seo", "sea", "geo"}', 'Une erreur'], 'Un set retire les doublons : "seo" n’y est qu’une fois. len rend 3.', { code: { lang: 'python', src: 'canaux = {"seo", "sea", "seo", "geo"}\nprint(len(canaux))' } }),
+  qcm('py-concepts-2', 103, 'Qu’affiche ce code ?', ['"ket"', '"ark"', '"arke"', '"rke"'], 'Le slicing [1:4] prend les indices 1, 2 et 3 (fin exclue) : "a", "r", "k".', { code: { lang: 'python', src: 'print("marketing"[1:4])' } }),
+  qcm('py-concepts-2', 104, 'Qu’affiche ce code ?', ["[('b', 1), ('a', 2)]", "[('a', 2), ('b', 1)]", '[1, 2]', 'Une erreur'], 'sorted avec key=lambda trie sur le second élément (la valeur) : 1 avant 2.', { code: { lang: 'python', src: 'paires = [("a", 2), ("b", 1)]\nprint(sorted(paires, key=lambda p: p[1]))' } }),
+  qcm('py-concepts-2', 105, 'Pourquoi ce code produit-il une erreur ?', ['Un tuple est immuable : on ne peut pas modifier un élément', 'Les tuples n’acceptent que des chaînes', 'Il manque un import', 'L’index 0 n’existe pas'], 'TypeError: "tuple" object does not support item assignment. Utiliser une liste si les valeurs doivent changer.', { code: { lang: 'python', src: 'point = (48.85, 2.35)\npoint[0] = 50' } }),
+
+  // ================================================ Python : pratiques
+  qcm('py-pratiques-1', 101, 'Qu’affiche ce code ?', ['Fichier introuvable', 'Une erreur non gérée', 'Rien', 'None'], 'open() sur un fichier absent lève FileNotFoundError, attrapée par le except : le message s’affiche et le programme continue.', { code: { lang: 'python', src: 'try:\n    f = open("inexistant.csv")\nexcept FileNotFoundError:\n    print("Fichier introuvable")' } }),
+  qcm('py-pratiques-1', 102, 'Que se passe-t-il ?', ['AssertionError : le programme s’arrête avec le message', 'Rien, le code continue', 'Le CPA vaut 0', 'Une division par zéro'], 'La condition est fausse (0 conversion), assert lève une AssertionError avec le message. Mieux vaut planter tôt et clairement qu’afficher un CPA infini.', { code: { lang: 'python', src: 'conversions = 0\nassert conversions > 0, "aucune conversion"\ncpa = 120 / conversions' } }),
+  qcm('py-pratiques-1', 103, 'Lequel de ces noms respecte PEP 8 pour une variable ?', ['taux_de_clic', 'TauxDeClic', 'tauxDeClic', 'TAUXDECLIC'], 'snake_case pour variables et fonctions ; CamelCase est réservé aux classes ; MAJUSCULES aux constantes.'),
+  vf('py-pratiques-1', 104, 'Les type hints font planter le programme si on passe un mauvais type.', false, 'Python les ignore à l’exécution. Ce sont l’éditeur (VS Code) et des outils comme mypy qui les vérifient — et surtout, ils documentent.'),
+
+  // ================================================ Python : outils
+  qcm('py-outils-1', 101, 'Ce fichier est importé depuis un autre script. Que se passe-t-il ?', ['Rien ne s’affiche : le bloc __main__ ne s’exécute qu’en lancement direct', '« Rapport envoyé » s’affiche', 'Une erreur', 'Le script s’arrête'], 'Le garde `if __name__ == "__main__"` empêche l’exécution du code principal à l’import : on peut réutiliser les fonctions sans déclencher l’envoi.', { code: { lang: 'python', src: 'def envoyer_rapport():\n    print("Rapport envoyé")\n\nif __name__ == "__main__":\n    envoyer_rapport()' } }),
+  qcm('py-outils-1', 102, 'Où doit vivre la clé d’API ?', ['Dans une variable d’environnement (fichier .env exclu de git), lue par os.environ', 'En dur dans le script, c’est plus simple', 'Dans un commentaire', 'Dans le nom du fichier'], 'Une clé committée dans git est compromise pour toujours (l’historique la garde). .env + .gitignore, et os.environ dans le code.'),
+  vf('py-outils-1', 103, 'Un environnement virtuel permet d’avoir pandas 1.5 dans un projet et pandas 2.2 dans un autre.', true, 'Chaque .venv a ses propres packages ; c’est exactement son rôle.'),
+  qcm('py-outils-1', 104, 'Ton script plante à la ligne 40 et tu ne comprends pas pourquoi. Le réflexe le plus efficace ?', ['Mettre breakpoint() juste avant la ligne 40 et inspecter les variables', 'Ajouter des print() partout', 'Tout réécrire', 'Relancer en espérant'], 'Le débogueur montre l’état exact au moment du problème ; les print() sont une version lente et salissante de la même idée.'),
+
+  // ================================================ Python : données
+  qcm('py-data-1', 101, 'Que rend ce code ?', ['150.0', '"100.050.0"', 'Une erreur', '2'], 'La colonne est convertie en float avant la somme. Sans astype, deux textes se concatènent au lieu de s’additionner.', { code: { lang: 'python', src: 'import pandas as pd\ndf = pd.DataFrame({"cout": ["100.0", "50.0"]})\nprint(df["cout"].astype(float).sum())' } }),
+  qcm('py-data-1', 102, 'Après ce merge, combien de lignes ?', ['2 : seules les campagnes présentes dans les deux tableaux', '3 : toutes les campagnes', '5', '0'], 'how="inner" ne garde que les identifiants communs (1 et 2). Avec how="left", on garderait les 3 campagnes, avec NaN pour la 3.', { code: { lang: 'python', src: 'campagnes = pd.DataFrame({"id": [1, 2, 3]})\ncouts = pd.DataFrame({"id": [1, 2], "cout": [10, 20]})\nprint(len(pd.merge(campagnes, couts, on="id", how="inner")))' } }),
+  qcm('py-data-1', 103, 'Qu’affiche ce code ?', ['20.0', '15.0', 'NaN', 'Une erreur'], 'mean() ignore les NaN : (10 + 30) / 2 = 20. Si on avait rempli le NaN par 0 avec fillna, la moyenne serait 13,3.', { code: { lang: 'python', src: 'import numpy as np\ns = pd.Series([10, np.nan, 30])\nprint(s.mean())' } }),
+  qcm('py-data-1', 104, 'Tu veux le total des clics par canal. Quelle ligne ?', ['df.groupby("canal")["clics"].sum()', 'df["clics"].sum("canal")', 'df.sum(canal)', 'df.groupby("clics")["canal"].sum()'], 'On groupe par la dimension (canal), on choisit la mesure (clics), on agrège (sum).'),
+  vf('py-data-1', 105, 'df.to_excel("rapport.xlsx") écrit aussi la colonne d’index par défaut.', true, 'D’où index=False dans la plupart des exports, pour ne pas avoir une colonne 0, 1, 2… dans le fichier.'),
+
+  // ================================================ Python : web
+  qcm('py-web-1', 101, 'Que contient `data` après ce code ?', ['Un dict Python : data["budget"] vaut 1200', 'Une chaîne de caractères', 'Une liste', 'Une erreur'], 'response.json() convertit le JSON de la réponse en dict / list Python.', { code: { lang: 'python', src: 'r = requests.get(url, timeout=10)\nr.raise_for_status()\ndata = r.json()\n# réponse : {"nom": "Été", "budget": 1200}' } }),
+  qcm('py-web-1', 102, 'Qu’est-ce qui manque à cette requête ?', ['Un timeout : sans lui, le script peut attendre indéfiniment', 'Un mot de passe', 'Un print', 'Rien'], 'Toujours `timeout=` (en secondes). Et vérifier le statut avec raise_for_status().', { code: { lang: 'python', src: 'r = requests.get("https://api.exemple.com/campagnes")\ndata = r.json()' } }),
+  qcm('py-web-1', 103, 'Que rend cette ligne ?', ['La liste des éléments <a> ayant la classe "produit"', 'Le premier lien de la page', 'Le texte de la page', 'Une erreur'], 'select() prend un sélecteur CSS et rend tous les éléments qui correspondent ; select_one() rendrait le premier.', { code: { lang: 'python', src: 'soup = BeautifulSoup(html, "html.parser")\nliens = soup.select("a.produit")' } }),
+  qcm('py-web-1', 104, 'L’API renvoie une erreur 429. Que fais-tu ?', ['Ralentir : attendre (Retry-After) puis réessayer, et espacer les appels', 'Relancer immédiatement en boucle', 'Changer de clé d’API', 'Ignorer et continuer'], '429 = Too Many Requests. Réessayer en rafale aggrave le blocage, et peut faire bannir la clé.'),
+  {
+    kind: 'order',
+    key: 'py-web-1:x:105',
+    unitId: 'py-web-1',
+    prompt: 'Remets dans l’ordre un script de veille de prix hebdomadaire',
+    steps: ['Lire la clé d’API et les URL cibles depuis l’environnement', 'Appeler chaque page avec requests (timeout, User-Agent, pause entre deux)', 'Extraire les prix avec BeautifulSoup', 'Comparer avec les prix de la semaine passée', 'Écrire les résultats dans un Google Sheet (gspread)', 'Planifier le script chaque lundi avec cron'],
+    explain: 'Configuration → collecte responsable → extraction → comparaison → dépôt là où l’équipe travaille → automatisation.',
+  },
+
+  // ================================================ Python : cas pratiques
+  {
+    kind: 'case',
+    key: 'py-case-1:x:1',
+    unitId: 'py-case-1',
+    title: 'Automatiser le rapport du lundi',
+    scenario: 'Chaque lundi, tu passes deux heures à exporter Google Ads en CSV, à faire un tableau croisé dans Excel et à l’envoyer par email. Tu veux que Python le fasse.',
+    steps: [
+      {
+        prompt: 'Par quoi commences-tu ?',
+        choices: ['Un notebook qui lit le CSV avec pandas et reproduit le tableau croisé — pour valider le calcul', 'Le cron, pour que ça tourne tout de suite', 'L’envoi d’email', 'Tout écrire d’un coup sans tester'],
+        answer: 0,
+        feedback: 'On explore en notebook, on valide les chiffres contre l’Excel actuel, puis on industrialise.',
+      },
+      {
+        prompt: 'Le tableau croisé, en pandas, c’est…',
+        choices: ['df.pivot_table(index="campagne", columns="semaine", values="cout", aggfunc="sum")', 'df.excel_pivot()', 'df.groupby().pivot()', 'df.cross()'],
+        answer: 0,
+        feedback: 'pivot_table = index (lignes), columns (colonnes), values (mesure), aggfunc (somme, moyenne…).',
+      },
+      {
+        prompt: 'Le script marche. Comment le rendre robuste avant de le planifier ?',
+        choices: ['Vérifier les colonnes attendues (assert), gérer le fichier absent (try/except), logger, et garder l’envoi de l’email sous validation les premières semaines', 'Le planifier tel quel', 'Supprimer les messages d’erreur', 'Le lancer toutes les heures'],
+        answer: 0,
+        feedback: 'Un script planifié échoue en silence : assert, try/except et logging le rendent bavard au bon moment. Et on garde un humain sur l’envoi au début.',
+      },
+    ],
+    explain: 'Notebook → validation → pivot_table → robustesse (assert, try/except, logging) → planification.',
+  },
+  {
+    kind: 'case',
+    key: 'py-case-1:x:2',
+    unitId: 'py-case-1',
+    title: 'Nettoyer un export CRM',
+    scenario: 'Un export CRM de 40 000 contacts : emails en majuscules avec des espaces, doublons, dates au format texte, et une colonne « ca » où certains montants sont écrits « 1 200 € ».',
+    steps: [
+      {
+        prompt: 'Pour les emails, la bonne chaîne d’opérations ?',
+        choices: ['df["email"].str.strip().str.lower(), puis drop_duplicates(subset="email")', 'df["email"].upper()', 'Supprimer la colonne', 'Les corriger à la main dans Excel'],
+        answer: 0,
+        feedback: 'strip retire les espaces, lower normalise la casse, drop_duplicates dédoublonne sur l’email normalisé — dans cet ordre.',
+      },
+      {
+        prompt: 'Pour la colonne « ca » avec « 1 200 € » ?',
+        choices: ['Retirer espace et € avec str.replace, puis astype(float)', 'astype(float) directement', 'La laisser en texte', 'Multiplier par 1'],
+        answer: 0,
+        feedback: 'astype(float) sur « 1 200 € » lève une erreur : il faut nettoyer le texte d’abord.',
+      },
+      {
+        prompt: 'Comment être sûr de ne pas avoir cassé les données ?',
+        choices: ['Comparer nombre de lignes, somme du CA et quelques contacts avant / après, avec des assert', 'Faire confiance', 'Regarder les 5 premières lignes', 'Relancer deux fois'],
+        answer: 0,
+        feedback: 'Des contrôles chiffrés avant / après attrapent 90 % des erreurs de nettoyage.',
+      },
+    ],
+    explain: 'Normaliser (strip, lower), dédoublonner, convertir après nettoyage, contrôler par des assert.',
+  },
+  qcm('py-case-1', 3, 'Ton script de scraping tourne toutes les 5 secondes sur le site d’un concurrent, 24 h/24. Problème ?', ['Charge abusive et non-respect probable des conditions du site : espacer, respecter robots.txt, ou chercher une API / un flux', 'Aucun, c’est public', 'Il faudrait aller plus vite', 'Python n’est pas fait pour ça'], 'Le scraping responsable est lent, identifié, et s’arrête là où le site le demande. Sinon : blocage d’IP, voire risque juridique.'),
+  qcm('py-case-1', 4, 'Un collègue a committé la clé d’API Ads dans le dépôt GitHub public, puis l’a supprimée au commit suivant. Que faire ?', ['Révoquer la clé et en générer une nouvelle : l’historique git la contient toujours', 'Rien, elle est supprimée', 'Renommer le dépôt', 'Ajouter un .gitignore maintenant'], 'Supprimer au commit suivant ne retire rien de l’historique. Une clé exposée est révoquée, point.'),
+  qcm('py-case-1', 5, 'Le rapport hebdo affiche un CPA de 0 € sur une campagne. Cause la plus probable ?', ['Un NaN de coût rempli par 0 avec fillna, ou une division mal gérée', 'La campagne est gratuite', 'Excel a raison', 'Le CPA se calcule en clics'], 'fillna(0) sur des coûts manquants fabrique des zéros crédibles. Préférer dropna ou signaler les manquants.'),
+
   // ============================================================ HTML (web-2)
   qcm('web-2', 1, 'Que signifie HTML ?', ['HyperText Markup Language', 'High Tech Modern Language', 'Home Tool Markup Language', 'HyperText Machine Logic'], 'HTML décrit la STRUCTURE d’une page : titres, paragraphes, liens, images. Ce n’est pas un langage de programmation, c’est un langage de balisage.'),
   qcm('web-2', 2, 'Quelle balise crée un lien ?', ['<a>', '<link>', '<href>', '<url>'], '<a href="https://…">texte</a>. L’attribut href porte l’adresse. <link> sert à charger une feuille de style, pas à créer un lien cliquable.', { code: { lang: 'html', src: '<a href="https://exemple.fr">Voir le site</a>' } }),
