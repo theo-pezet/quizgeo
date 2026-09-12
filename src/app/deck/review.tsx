@@ -199,5 +199,5 @@ const styles = StyleSheet.create({
   grades: { flexDirection: 'row', gap: space.sm },
   grade: { flex: 1, borderWidth: 2, borderRadius: radius.md, padding: space.sm, alignItems: 'center', gap: 2 },
   hero: { alignItems: 'center', gap: space.sm, paddingVertical: space.xl },
-  big: { fontSize: 64 },
+  big: { fontSize: 64, lineHeight: 76, textAlign: 'center' },
 });

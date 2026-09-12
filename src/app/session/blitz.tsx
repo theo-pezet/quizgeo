@@ -201,5 +201,5 @@ const styles = StyleSheet.create({
   choice: { borderWidth: 2, borderRadius: radius.md, padding: space.md },
   choiceText: { fontSize: 15, lineHeight: 21 },
   hero: { alignItems: 'center', gap: space.sm, paddingVertical: space.xl },
-  big: { fontSize: 64 },
+  big: { fontSize: 64, lineHeight: 76, textAlign: 'center' },
 });

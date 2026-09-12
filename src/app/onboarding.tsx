@@ -158,7 +158,7 @@ const styles = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   bar: { flex: 1 },
   stepWrap: { gap: space.lg },
-  big: { fontSize: 56, textAlign: 'center' },
+  big: { fontSize: 56, lineHeight: 68, textAlign: 'center' },
   list: { gap: space.sm },
   card: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderWidth: 2, borderRadius: radius.lg, padding: space.md },
   cardText: { flex: 1, gap: 2 },

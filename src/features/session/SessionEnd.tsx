@@ -236,7 +236,7 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
 
 const styles = StyleSheet.create({
   hero: { alignItems: 'center', gap: space.sm, paddingVertical: space.xl },
-  big: { fontSize: 64 },
+  big: { fontSize: 64, lineHeight: 76, textAlign: 'center' },
   center: { textAlign: 'center' },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.md },
   grow: { flex: 1 },
