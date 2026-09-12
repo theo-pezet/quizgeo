@@ -1,3 +1,4 @@
+export { Confetti, FadeUp, Pop, Pulse, Ring, Shake, useCountUp } from './anim';
 export { Button } from './Button';
 export { Card } from './Card';
 export { CodeBlock } from './CodeBlock';

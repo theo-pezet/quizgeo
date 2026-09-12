@@ -4,6 +4,7 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { SUBJECT_BY_ID, UNIT_BY_ID } from '@/content';
 import { confirm } from '@/lib/confirm';
 import { haptics } from '@/lib/haptics';
+import { sounds } from '@/lib/sounds';
 import { boostMinutesLeft } from '@/game';
 import { useProgress } from '@/store/progress';
 import { Button, NoEnergySheet, ProgressBar, Screen, Text, space, useColors } from '@/ui';
@@ -74,6 +75,7 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
         locked={state.phase === 'feedback'}
         onAnswer={(correct) => {
           void (correct ? haptics.correct() : haptics.wrong());
+          sounds.play(correct ? 'correct' : 'wrong');
           answer(correct);
         }}
       />

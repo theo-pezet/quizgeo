@@ -66,6 +66,8 @@ export interface SessionState {
   adShown: boolean;
   /** Test de sortie : réussi (unités validées), raté, ou sans objet. */
   skipTest: { passed: boolean; validatedUnits: string[] } | null;
+  /** XP au lancement, pour afficher le total gagné à la fin. */
+  xpAtStart: number;
 }
 
 function compose(spec: SessionSpec, progress: Progress): Exercise[] {
@@ -120,6 +122,7 @@ export function useSession(spec: SessionSpec) {
     result: null,
     adShown: false,
     skipTest: null,
+    xpAtStart: init.startProgress.xp,
   });
 
   const current: Step | undefined = state.steps[state.index];

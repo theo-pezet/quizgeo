@@ -1,6 +1,6 @@
 import { StyleSheet, View } from 'react-native';
 
-import { Button, Text, radius, space, useColors } from '@/ui';
+import { Button, FadeUp, Shake, Text, radius, space, useColors } from '@/ui';
 
 import type { Feedback } from './useSession';
 
@@ -8,6 +8,8 @@ export function FeedbackPanel({ feedback, combo, onNext }: { feedback: Feedback;
   const colors = useColors();
   const tone = feedback.correct ? colors.success : colors.danger;
   return (
+    <FadeUp>
+      <Shake trigger={feedback.correct ? null : 1}>
     <View style={[styles.panel, { backgroundColor: feedback.correct ? colors.successSoft : colors.dangerSoft, borderColor: tone }]}>
       <View style={styles.head}>
         <Text variant="h2" style={{ color: tone }}>
@@ -21,6 +23,8 @@ export function FeedbackPanel({ feedback, combo, onNext }: { feedback: Feedback;
       )}
       <Button label="Continuer" tone={feedback.correct ? 'success' : 'danger'} onPress={onNext} />
     </View>
+      </Shake>
+    </FadeUp>
   );
 }
 

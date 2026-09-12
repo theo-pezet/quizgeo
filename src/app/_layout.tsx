@@ -19,6 +19,8 @@ export default function RootLayout() {
           contentStyle: { backgroundColor: colors.background },
         }}>
         <Stack.Screen name="(tabs)" />
+        <Stack.Screen name="onboarding" options={{ animation: 'fade' }} />
+        <Stack.Screen name="privacy" options={{ headerShown: true, title: 'Confidentialité', presentation: 'modal' }} />
         <Stack.Screen name="session/[unitId]" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="session/review" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="session/free" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />

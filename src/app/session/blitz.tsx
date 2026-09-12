@@ -14,6 +14,7 @@ import {
   type QcmExercise,
 } from '@/game';
 import { haptics } from '@/lib/haptics';
+import { sounds } from '@/lib/sounds';
 import { useProgress } from '@/store/progress';
 import { Button, Card, NoEnergySheet, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
 
@@ -68,6 +69,7 @@ export default function BlitzRoute() {
 
   const finish = () => {
     setRunning(false);
+    sounds.play('timeup');
     const store = useProgress.getState();
     const answered = index;
     const result = applySessionEnd(store.progress, {
@@ -101,6 +103,7 @@ export default function BlitzRoute() {
     if (ok) credited.current.add(presented.exercise.key);
     store.setProgress(r.progress);
     void (ok ? haptics.correct() : haptics.wrong());
+    sounds.play(ok ? 'correct' : 'wrong');
     setFlash(ok ? 'ok' : 'ko');
     if (ok) setCorrect((c) => c + 1);
     setTimeout(() => {

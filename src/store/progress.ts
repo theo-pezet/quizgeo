@@ -56,10 +56,18 @@ interface SettingsStore {
   /** Rappels (série en danger, énergie rechargée). Demande la permission à l'activation. */
   reminders: boolean;
   reminderHour: number;
+  sound: boolean;
+  /** Matière ouverte par défaut sur le parcours. */
+  favoriteSubject: string | null;
+  /** Les réglages ont été relus depuis le disque. */
+  hydrated: boolean;
   setOnboardingDone: (done: boolean) => void;
   setHaptics: (on: boolean) => void;
   setReminders: (on: boolean) => void;
   setReminderHour: (hour: number) => void;
+  setSound: (on: boolean) => void;
+  setFavoriteSubject: (id: string | null) => void;
+  markHydrated: () => void;
 }
 
 /** Réglages, séparés de la progression : « réinitialiser » ne les touche pas. */
@@ -70,11 +78,30 @@ export const useSettings = create<SettingsStore>()(
       haptics: true,
       reminders: false,
       reminderHour: 19,
+      sound: true,
+      favoriteSubject: null,
+      hydrated: false,
       setOnboardingDone: (onboardingDone) => set({ onboardingDone }),
       setHaptics: (haptics) => set({ haptics }),
       setReminders: (reminders) => set({ reminders }),
       setReminderHour: (reminderHour) => set({ reminderHour }),
+      setSound: (sound) => set({ sound }),
+      setFavoriteSubject: (favoriteSubject) => set({ favoriteSubject }),
+      markHydrated: () => set({ hydrated: true }),
     }),
-    { name: 'settings.v1', version: 1, storage: createJSONStorage(() => AsyncStorage) },
+    {
+      name: 'settings.v1',
+      version: 1,
+      storage: createJSONStorage(() => AsyncStorage),
+      partialize: (state) => ({
+        onboardingDone: state.onboardingDone,
+        haptics: state.haptics,
+        reminders: state.reminders,
+        reminderHour: state.reminderHour,
+        sound: state.sound,
+        favoriteSubject: state.favoriteSubject,
+      }),
+      onRehydrateStorage: () => (state) => state?.markHydrated(),
+    },
   ),
 );

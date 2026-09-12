@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { StyleSheet, Switch, View } from 'react-native';
 
 import { CARDS, CATALOG, EXERCISES, SUBJECTS, UNITS } from '@/content';
-import { BADGES, MAX_FREEZES, SHOP, allUnitTraits, applyBuyRefill, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
+import { BADGES, DAILY_GOALS, MAX_FREEZES, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
 import { confirm } from '@/lib/confirm';
 import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
@@ -19,6 +19,9 @@ export default function ProfileScreen() {
   const setReminders = useSettings((s) => s.setReminders);
   const reminderHour = useSettings((s) => s.reminderHour);
   const setReminderHour = useSettings((s) => s.setReminderHour);
+  const soundOn = useSettings((s) => s.sound);
+  const setSound = useSettings((s) => s.setSound);
+  const setOnboardingDone = useSettings((s) => s.setOnboardingDone);
 
   const now = new Date();
   const today = toDayKey(now);
@@ -135,6 +138,18 @@ export default function ProfileScreen() {
       <Card>
         <Text variant="h2">Réglages</Text>
         <View style={styles.row}>
+          <Text variant="body">Objectif du jour</Text>
+          <View style={styles.hours}>
+            {DAILY_GOALS.map((g) => (
+              <Button key={g} label={`${g}`} tone={g === progress.daily.goal ? 'primary' : 'secondary'} style={styles.hour} onPress={() => setProgress(applySetDailyGoal(progress, g))} />
+            ))}
+          </View>
+        </View>
+        <View style={styles.row}>
+          <Text variant="body">Sons</Text>
+          <Switch value={soundOn} onValueChange={setSound} />
+        </View>
+        <View style={styles.row}>
           <Text variant="body">Vibrations</Text>
           <Switch value={hapticsOn} onValueChange={setHaptics} />
         </View>
@@ -166,6 +181,8 @@ export default function ProfileScreen() {
         <Text variant="small" secondary>
           Les rappels ne fonctionnent que dans l’application Android, pas sur le site.
         </Text>
+        <Button label="Revoir l’introduction" tone="secondary" onPress={() => { setOnboardingDone(false); router.push('/onboarding'); }} />
+        <Button label="Confidentialité" tone="secondary" onPress={() => router.push('/privacy')} />
         <Button
           label="Réinitialiser ma progression"
           tone="danger"
