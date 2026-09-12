@@ -55,7 +55,7 @@ ordre, cas pratique.
 ```
 npm install
 npm run typecheck
-npm test              # 341 tests ; src/game/ doit rester à 100 % de couverture
+npm test              # 349 tests ; src/game/ doit rester à 100 % de couverture
 npx expo start        # puis w (web), a (Android)
 npx expo export --platform web   # build statique dans dist/
 ```
@@ -65,6 +65,15 @@ Régénérer le deck après modification du classeur :
 ```
 python3 tools/build_deck.py docs/deck-source.xlsx src/data/deck.json
 ```
+
+## Play Store
+
+Tout est dans `docs/play-store/` : la fiche (`fiche.md`), le mode d'emploi
+(`publier.md`), les captures 1080×1920 (`screenshots/`), l'image de
+présentation (`feature-graphic.png`). L'icône et ses déclinaisons se
+régénèrent avec `python3 tools/make_icons.py assets/images`, les sons avec
+`python3 tools/make_sounds.py assets/sounds`. La signature passe par EAS
+(`eas.json`, profil `production`).
 
 ## Publicité (plus tard)
 
