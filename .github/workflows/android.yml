@@ -1,0 +1,45 @@
+# Construit l'APK Android (signé avec la clé de debug : installable pour tester,
+# pas pour le Play Store). Se lance à la main, ou sur un tag v*.
+name: Android APK
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ['v*']
+
+permissions:
+  contents: write
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - uses: android-actions/setup-android@v3
+      - run: npm ci
+      - name: Générer le projet natif
+        run: npx expo prebuild --platform android --no-install
+        env:
+          CI: 1
+      - name: Compiler
+        run: cd android && chmod +x gradlew && ./gradlew assembleRelease --no-daemon
+      - name: Renommer
+        run: cp android/app/build/outputs/apk/release/app-release.apk quizgeo-${{ github.ref_name }}.apk
+      - uses: actions/upload-artifact@v4
+        with:
+          name: quizgeo-apk
+          path: quizgeo-*.apk
+      - name: Publier la release
+        if: startsWith(github.ref, 'refs/tags/v')
+        uses: softprops/action-gh-release@v2
+        with:
+          files: quizgeo-*.apk
+          generate_release_notes: true

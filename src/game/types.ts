@@ -94,6 +94,8 @@ export interface ExerciseBase {
   /** Affiché après la réponse, juste ou fausse. */
   explain?: string;
   source?: { title: string; url: string };
+  /** Carte du deck dont l'exercice est tiré : une erreur la replanifie. */
+  cardId?: string;
 }
 
 export interface CodeBlock {
