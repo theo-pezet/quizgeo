@@ -17,6 +17,9 @@ import {
   applyCardReview,
   applySessionEnd,
   applyStartLesson,
+  PATH_TRAITS,
+  toDayKey,
+  unitTraits,
   composeFreeSession,
   composeReviewSession,
   composeUnitSession,
@@ -77,15 +80,19 @@ function compose(spec: SessionSpec, progress: Progress): Exercise[] {
  * Prélève l'énergie de la leçon et compose la file. Une seule fois par
  * session : le résultat est mémorisé dans un ref par l'appelant.
  */
-function start(spec: SessionSpec): { steps: Step[]; started: boolean; startProgress: Progress } {
+function start(spec: SessionSpec): { steps: Step[]; started: boolean; startProgress: Progress; hard: boolean } {
   const store = useProgress.getState();
-  const started = applyStartLesson(store.progress, spec.mode, new Date());
-  if (started === null) return { steps: [], started: false, startProgress: store.progress };
+  const now = new Date();
+  const started = applyStartLesson(store.progress, spec.mode, now);
+  if (started === null) return { steps: [], started: false, startProgress: store.progress, hard: false };
   store.setProgress(started);
+  // Mode maîtrise : dès 3 couronnes, les QCM typables se tapent.
+  const hard = spec.mode === 'unit' && unitTraits(started, spec.unitId, EXERCISES, toDayKey(now)) >= PATH_TRAITS;
   return {
     steps: compose(spec, started).map((exercise) => ({ exercise, retry: false })),
     started: true,
     startProgress: started,
+    hard,
   };
 }
 
@@ -204,5 +211,5 @@ export function useSession(spec: SessionSpec) {
 
   const ratio = state.steps.length === 0 ? 1 : Math.min(1, state.index / state.steps.length);
 
-  return { state, current, answer, next, ratio, unitId };
+  return { state, current, answer, next, ratio, unitId, hard: init.hard };
 }

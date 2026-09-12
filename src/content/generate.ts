@@ -98,6 +98,7 @@ export function generateExercises(
         choices: [card.term, ...wrong.map((c) => c.term)],
         answer: 0,
         explain: explainFor(card),
+        typed: { answer: card.term },
       };
       out.push(qcm);
     }

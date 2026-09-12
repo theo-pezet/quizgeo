@@ -34,7 +34,8 @@ src/
 │               révision, badges, répétition espacée, politique de pub)
 ├── content/    matières, unités, génération d'exercices depuis le deck,
 │               exercices écrits à la main (GEO, culture IA, HTML/CSS/JS, code)
-├── data/       deck.json (généré depuis docs/deck-source.xlsx)
+├── data/       deck.json (généré depuis docs/deck-source.xlsx) ;
+│               les cartes écrites à la main sont dans content/cards.extra.ts
 ├── features/   la session (machine à états + rendu des 5 types d'exercices)
 ├── store/      zustand + AsyncStorage : progression et réglages
 ├── ui/         jetons de design et composants de base
@@ -51,7 +52,7 @@ ordre, cas pratique.
 ```
 npm install
 npm run typecheck
-npm test              # 321 tests ; src/game/ doit rester à 100 % de couverture
+npm test              # 325 tests ; src/game/ doit rester à 100 % de couverture
 npx expo start        # puis w (web), a (Android)
 npx expo export --platform web   # build statique dans dist/
 ```

@@ -15,7 +15,7 @@ import { useSession, type SessionSpec } from './useSession';
 
 export function SessionScreen({ spec, title }: { spec: SessionSpec; title: string }) {
   const colors = useColors();
-  const { state, current, answer, next, ratio } = useSession(spec);
+  const { state, current, answer, next, ratio, hard } = useSession(spec);
   const boostLeft = useProgress((s) => boostMinutesLeft(s.progress.boost, new Date()));
   const unit = spec.mode === 'unit' ? UNIT_BY_ID.get(spec.unitId) : undefined;
   const color = unit ? (SUBJECT_BY_ID.get(unit.subjectId)?.color ?? colors.primary) : colors.primary;
@@ -70,6 +70,7 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
       <ExerciseView
         key={`${current.exercise.key}:${state.index}`}
         exercise={current.exercise}
+        hard={hard}
         locked={state.phase === 'feedback'}
         onAnswer={(correct) => {
           void (correct ? haptics.correct() : haptics.wrong());

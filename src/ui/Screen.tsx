@@ -28,7 +28,7 @@ export function Screen({
       )}
       {overlay ? (
         <View pointerEvents="box-none" style={styles.overlay}>
-          <View style={styles.overlayInner}>{overlay}</View>
+          <View pointerEvents="box-none" style={styles.overlayInner}>{overlay}</View>
         </View>
       ) : null}
     </SafeAreaView>

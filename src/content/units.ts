@@ -44,15 +44,23 @@ export const UNITS: readonly Unit[] = [
 
   // -------------------------------------------------------------------- IA
   { id: 'ia-1', subjectId: 'ia', title: 'Les mots de l’IA', description: 'Hallucination, fine-tuning, multimodal, paramètres, open source.', cards: slice('ai', 0, 8) },
+  { id: 'ia-hist-1', subjectId: 'ia', title: 'Une histoire de l’IA', description: 'De Turing à ChatGPT : les dates qui ont tout changé.', cards: slice('histoire', 0, 10) },
   { id: 'ia-2', subjectId: 'ia', title: 'Générer : texte, image, vidéo', description: 'Text-to-image, biais, agents, éthique.', cards: slice('ai', 8, 17) },
-  { id: 'ia-3', subjectId: 'ia', title: 'Le prompting', description: 'Zero-shot, few-shot, system prompt, chaînage, injection.', cards: ['ia-zero-shot', 'ia-few-shot', 'ia-system-prompt', 'ia-in-context-learning', 'ia-prompt-chaining', 'ia-negative-prompt', 'ia-prompt-library', 'ia-prompt-injection'] },
+  { id: 'ia-9', subjectId: 'ia', title: 'Qui fait quoi : labos et modèles', description: 'OpenAI, Anthropic, Google, Meta, Mistral, NVIDIA, Hugging Face.', cards: slice('acteurs', 0, 10) },
   { id: 'ia-4', subjectId: 'ia', title: 'Comment fonctionne un LLM', description: 'Tokens, fenêtre de contexte, température, transformer, attention.', cards: ['ia-context-window', 'ia-temperature', 'ia-tokenization', 'ia-pre-training', 'ia-inference', 'ia-transformer-architecture', 'ia-neural-network', 'ia-attention-mechanism'] },
+  { id: 'ia-llm-2', subjectId: 'ia', title: 'Tokens, contexte et coût', description: 'Ce que coûte un appel, ce qu’un modèle peut lire, ce qu’un benchmark vaut.', cards: slice('llm', 0, 10) },
+  { id: 'ia-3', subjectId: 'ia', title: 'Le prompting', description: 'Zero-shot, few-shot, system prompt, chaînage, injection.', cards: ['ia-zero-shot', 'ia-few-shot', 'ia-system-prompt', 'ia-in-context-learning', 'ia-prompt-chaining', 'ia-negative-prompt', 'ia-prompt-library', 'ia-prompt-injection'] },
+  { id: 'ia-prompt-2', subjectId: 'ia', title: 'Prompting avancé', description: 'Chain of thought, rôle, format de sortie, délimiteurs, jailbreak.', cards: slice('prompting', 0, 10) },
   { id: 'ia-5', subjectId: 'ia', title: 'RAG et bases vectorielles', description: 'Embeddings, recherche sémantique, données synthétiques, latence.', cards: ['ia-rag', 'ia-embedding', 'ia-vector-database', 'ia-semantic-search', 'ia-synthetic-data', 'ia-latency', 'ia-api-key', 'ia-top-p-nucleus-sampling'] },
+  { id: 'ia-data-1', subjectId: 'ia', title: 'Bases de données pour l’IA', description: 'SQL, NoSQL, index, embeddings, pgvector, chunking.', cards: slice('donnees', 0, 10) },
   { id: 'ia-6', subjectId: 'ia', title: 'Entraîner un modèle', description: 'RLHF, overfitting, LoRA, quantization, backpropagation.', cards: ['ia-rlhf', 'ia-overfitting', 'ia-hyperparameter', 'ia-lora', 'ia-quantization', 'ia-loss-function', 'ia-backpropagation', 'ia-gradient-descent'] },
+  { id: 'ia-train-2', subjectId: 'ia', title: 'Fabriquer un LLM, étape par étape', description: 'Corpus, tokenizer, lois d’échelle, SFT, DPO, évaluation, coût.', cards: slice('entrainement', 0, 10) },
+  { id: 'ia-agents-1', subjectId: 'ia', title: 'Agents, outils et MCP', description: 'Appels d’outils, boucle agentique, mémoire, garde-fous, humain dans la boucle.', cards: slice('agents', 0, 10) },
+  { id: 'ia-8', subjectId: 'ia', title: 'Modèles avancés', description: 'Workflows agentiques, MoE, diffusion, SLM, model collapse.', cards: ['ia-agent', 'ia-agentic-workflow', 'ia-moe', 'ia-diffusion-model', 'ia-small-language-model-slm', 'ia-model-collapse', 'ia-emergent-behavior', 'ia-inference-cost'] },
   { id: 'ia-7', subjectId: 'ia', title: 'Sécurité et alignement', description: 'Constitutional AI, red teaming, garde-fous, biais algorithmique.', cards: ['ia-alignment', 'ia-constitutional-ai', 'ia-rlaif', 'ia-red-teaming', 'ia-safety-guardrails', 'ia-algorithmic-bias', 'ia-explainable-ai-xai', 'ia-data-privacy-ai'] },
-  { id: 'ia-8', subjectId: 'ia', title: 'Agents et modèles avancés', description: 'Workflows agentiques, MoE, diffusion, SLM, model collapse.', cards: ['ia-agent', 'ia-agentic-workflow', 'ia-moe', 'ia-diffusion-model', 'ia-small-language-model-slm', 'ia-model-collapse', 'ia-emergent-behavior', 'ia-inference-cost'] },
-  { id: 'ia-9', subjectId: 'ia', title: 'Culture IA : Claude, ChatGPT et les autres', description: 'Qui fait quoi, les modèles, les dates clés, les bases de données.', cards: [] },
-  { id: 'ia-case-1', subjectId: 'ia', title: 'Cas pratiques', description: 'RAG ou fine-tuning ? Quel modèle pour quel besoin ?', cards: [] },
+  { id: 'ia-reg-1', subjectId: 'ia', title: 'Loi, éthique et société', description: 'AI Act, RGPD, droit d’auteur, deepfakes, énergie.', cards: slice('regulation', 0, 8) },
+  { id: 'ia-mkt-1', subjectId: 'ia', title: 'L’IA pour le marketing', description: 'AI Overviews, GEO, mentions de marque, chatbots, personas synthétiques.', cards: slice('marketing-ia', 0, 10) },
+  { id: 'ia-case-1', subjectId: 'ia', title: 'Cas pratiques', description: 'RAG ou fine-tuning ? Quel modèle pour quel besoin ? Concevoir un agent.', cards: [] },
 
   // ---------------------------------------------------------------- Python
   { id: 'py-1', subjectId: 'python', title: 'Le terminal', description: 'pwd, ls, cd, mkdir… se déplacer et créer des fichiers.', cards: slice('terminal', 0, 8) },

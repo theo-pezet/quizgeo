@@ -111,6 +111,12 @@ export interface QcmExercise extends ExerciseBase {
   choices: string[];
   /** Index de la bonne réponse. */
   answer: number;
+  /**
+   * Variante « taper la réponse », posée à la place des choix quand l'unité
+   * a déjà 3 couronnes : la maîtrise se prouve sans béquille. Même clé, même
+   * progression — seule la présentation durcit.
+   */
+  typed?: { answer: string; accept?: string[] };
 }
 
 /** Texte à trou : `text` contient un `___` à remplir depuis la banque de mots. */
