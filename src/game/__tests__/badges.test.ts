@@ -28,8 +28,8 @@ function withTraits(overrides: Record<string, Traits>): Record<string, Traits> {
   return { ...traitsMap(0), ...overrides };
 }
 
-function subjectAt3(subject: string): Record<string, Traits> {
-  return { [`${subject}-1`]: 3, [`${subject}-2`]: 3, [`${subject}-3`]: 3 };
+function subjectAt5(subject: string): Record<string, Traits> {
+  return { [`${subject}-1`]: 5, [`${subject}-2`]: 5, [`${subject}-3`]: 5 };
 }
 
 function ctx(
@@ -53,10 +53,10 @@ function earns(id: BadgeId, context: BadgeContext): boolean {
   return evaluateBadges(context).includes(id);
 }
 
-describe('les 14 badges sont tous définis, une fois chacun', () => {
-  it('a 14 identifiants uniques', () => {
-    expect(BADGES).toHaveLength(14);
-    expect(new Set(BADGE_IDS).size).toBe(14);
+describe('les 17 badges sont tous définis, une fois chacun', () => {
+  it('a 17 identifiants uniques', () => {
+    expect(BADGES).toHaveLength(17);
+    expect(new Set(BADGE_IDS).size).toBe(17);
   });
 });
 
@@ -79,8 +79,9 @@ describe('perfect — Sans faute', () => {
 });
 
 describe('highlighter — Trois couronnes', () => {
-  it('tombe dès qu’une unité atteint 3 couronnes', () => {
+  it('tombe dès qu’une unité atteint 3 couronnes, ou plus', () => {
     expect(earns('highlighter', ctx({}, withTraits({ 'seo-1': 3 })))).toBe(true);
+    expect(earns('highlighter', ctx({}, withTraits({ 'seo-1': 5 })))).toBe(true);
   });
   it('ne tombe pas à 2 couronnes', () => {
     expect(earns('highlighter', ctx({}, withTraits({ 'seo-1': 2 })))).toBe(false);
@@ -88,21 +89,21 @@ describe('highlighter — Trois couronnes', () => {
 });
 
 describe('chapter — Chapitre clos', () => {
-  it('tombe quand toutes les unités d’une matière sont à 3 couronnes', () => {
-    expect(earns('chapter', ctx({}, withTraits(subjectAt3('web'))))).toBe(true);
+  it('tombe quand toutes les unités d’une matière sont à 5 couronnes', () => {
+    expect(earns('chapter', ctx({}, withTraits(subjectAt5('web'))))).toBe(true);
   });
   it('ne tombe pas s’il manque une unité de la matière', () => {
-    const t = withTraits({ ...subjectAt3('web'), 'web-3': 2 });
+    const t = withTraits({ ...subjectAt5('web'), 'web-3': 4 });
     expect(earns('chapter', ctx({}, t))).toBe(false);
   });
 });
 
 describe('encyclopedia — Encyclopédie', () => {
-  it('tombe quand les 15 unités sont à 3 couronnes', () => {
-    expect(earns('encyclopedia', ctx({}, traitsMap(3)))).toBe(true);
+  it('tombe quand les 15 unités sont à 5 couronnes', () => {
+    expect(earns('encyclopedia', ctx({}, traitsMap(5)))).toBe(true);
   });
   it('ne tombe pas s’il reste une seule unité en dessous', () => {
-    const t = { ...traitsMap(3), 'gr-3': 2 as Traits };
+    const t = { ...traitsMap(5), 'gr-3': 4 as Traits };
     expect(earns('encyclopedia', ctx({}, t))).toBe(false);
   });
 });
@@ -199,6 +200,28 @@ describe('regular — Fidèle', () => {
   });
 });
 
+describe('legendary — Légendaire', () => {
+  it('tombe à 5 couronnes, pas à 4', () => {
+    expect(earns('legendary', ctx({}, withTraits({ 'seo-1': 5 })))).toBe(true);
+    expect(earns('legendary', ctx({}, withTraits({ 'seo-1': 4 })))).toBe(false);
+  });
+});
+
+describe('quests_10 — Chasseur de quêtes', () => {
+  it('tombe à 10 quêtes accomplies, pas à 9', () => {
+    expect(earns('quests_10', ctx({ counters: { questsCompleted: 10 } as never }))).toBe(true);
+    expect(earns('quests_10', ctx({ counters: { questsCompleted: 9 } as never }))).toBe(false);
+  });
+});
+
+describe('league_gold — Ligue Or', () => {
+  it('tombe en division Or (2) ou plus, pas en Argent', () => {
+    const base = progressWith();
+    expect(earns('league_gold', ctx({ league: { ...base.league, tier: 2 } }))).toBe(true);
+    expect(earns('league_gold', ctx({ league: { ...base.league, tier: 1 } }))).toBe(false);
+  });
+});
+
 describe('evaluateBadges', () => {
   it('ne re-décerne jamais un badge déjà obtenu', () => {
     const context = ctx({
@@ -214,7 +237,7 @@ describe('evaluateBadges', () => {
         counters: { sessionsCompleted: 100, perfectSessions: 1 } as never,
         streak: { best: 30 } as never,
       },
-      traitsMap(3),
+      traitsMap(5),
     );
     expect(evaluateBadges(context)).toEqual([
       'first_session',
@@ -226,6 +249,7 @@ describe('evaluateBadges', () => {
       'streak_7',
       'streak_30',
       'regular',
+      'legendary',
     ]);
   });
 });

@@ -12,7 +12,8 @@ import {
   type QuestionProgress,
 } from './types';
 
-export const STREAK_CAP = 3;
+/** Cinq couronnes : le streak d'un exercice monte jusqu'à 5. */
+export const STREAK_CAP = 5;
 export const REVIEW_EXIT_STREAK = 2;
 
 export interface AnswerOutcome {

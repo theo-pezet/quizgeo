@@ -1,5 +1,6 @@
 import {
   FIRST_TRAIT_MIN_SCORE,
+  effectiveStreak,
   allUnitTraits,
   applyUnitSessionResult,
   isSubjectComplete,
@@ -10,7 +11,7 @@ import {
   unitTraits,
   unlockedUnits,
 } from '../mastery';
-import { emptyUnitProgress, type Traits, type UnitId } from '../types';
+import { emptyQuestionProgress, emptyUnitProgress, type Traits, type UnitId } from '../types';
 import {
   CATALOG,
   makeFullBank,
@@ -68,6 +69,45 @@ describe('unitTraits', () => {
     expect(unitTraits(p, UNIT, bank)).toBe(3);
   });
 
+  it('rend 4 puis 5 quand le streak minimal atteint 3 puis 4', () => {
+    const p4 = withQuestionState(progressWith(), questions, { seen: 4, streak: 3 });
+    expect(unitTraits(p4, UNIT, bank)).toBe(4);
+    const p5 = withQuestionState(progressWith(), questions, { seen: 5, streak: 4 });
+    expect(unitTraits(p5, UNIT, bank)).toBe(5);
+    // Le streak le plus BAS décide.
+    expect(unitTraits(withQuestionState(p5, [questions[0]], { streak: 3 }), UNIT, bank)).toBe(4);
+  });
+
+  describe('fissures (decay)', () => {
+    // Les fixtures datent lastSeenAt du 2026-09-09.
+    it('ne change rien sans date de référence ni avant 14 jours', () => {
+      const p = withQuestionState(progressWith(), questions, { seen: 5, streak: 4 });
+      expect(unitTraits(p, UNIT, bank)).toBe(5);
+      expect(unitTraits(p, UNIT, bank, '2026-09-22')).toBe(5);
+    });
+
+    it('retire une couronne par période de 14 jours sans révision', () => {
+      const p = withQuestionState(progressWith(), questions, { seen: 5, streak: 4 });
+      expect(unitTraits(p, UNIT, bank, '2026-09-23')).toBe(4);
+      expect(unitTraits(p, UNIT, bank, '2026-10-07')).toBe(3);
+      expect(unitTraits(p, UNIT, bank, '2026-10-21')).toBe(2);
+      expect(unitTraits(p, UNIT, bank, '2027-01-01')).toBe(0);
+    });
+
+    it('ne descend jamais sous la première couronne latchée', () => {
+      let p = withQuestionState(progressWith(), questions, { seen: 5, streak: 4 });
+      p = withFirstTrait(p, UNIT);
+      expect(unitTraits(p, UNIT, bank, '2030-01-01')).toBe(1);
+    });
+
+    it('effectiveStreak ignore une question jamais vue ou une date dans le passé', () => {
+      expect(effectiveStreak({ ...emptyQuestionProgress('k'), streak: 2 }, '2026-09-09')).toBe(2);
+      const seen = { ...emptyQuestionProgress('k'), streak: 2, lastSeenAt: '2026-09-09T10:00:00.000Z' };
+      expect(effectiveStreak(seen, '2026-09-01')).toBe(2);
+      expect(effectiveStreak(seen, undefined)).toBe(2);
+    });
+  });
+
   it('ne compte pas une question inconnue de la progression', () => {
     let p = withQuestionState(progressWith(), questions.slice(0, 3), { seen: 3, streak: 3 });
     p = withFirstTrait(p, UNIT);
@@ -104,6 +144,11 @@ describe('allUnitTraits', () => {
     const traits = allUnitTraits(progressWith(), makeFullBank(), CATALOG);
     expect(Object.keys(traits)).toHaveLength(15);
     expect(Object.values(traits).every((t) => t === 0)).toBe(true);
+  });
+
+  it('applique la date de référence à toutes les unités', () => {
+    const p = withQuestionState(progressWith(), questions, { seen: 5, streak: 4 });
+    expect(allUnitTraits(p, bank, CATALOG, '2026-10-07')[UNIT]).toBe(3);
   });
 });
 
@@ -244,10 +289,10 @@ describe('déverrouillage', () => {
 });
 
 describe('isSubjectComplete', () => {
-  it('exige toutes les unités de la matière à 3 couronnes', () => {
-    const t: Record<string, Traits> = { 'seo-1': 3, 'seo-2': 3, 'seo-3': 3 };
+  it('exige toutes les unités de la matière à 5 couronnes', () => {
+    const t: Record<string, Traits> = { 'seo-1': 5, 'seo-2': 5, 'seo-3': 5 };
     expect(isSubjectComplete('seo', t, CATALOG)).toBe(true);
-    expect(isSubjectComplete('seo', { ...t, 'seo-3': 2 }, CATALOG)).toBe(false);
+    expect(isSubjectComplete('seo', { ...t, 'seo-3': 4 }, CATALOG)).toBe(false);
     expect(isSubjectComplete('ia', t, CATALOG)).toBe(false);
   });
 

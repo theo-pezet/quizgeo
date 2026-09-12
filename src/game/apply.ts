@@ -10,20 +10,76 @@
 import { recordAdShown, recordSessionForAds } from './ads';
 import { evaluateBadges, awardBadges, isEarlyHour, isNightHour, type BadgeId } from './badges';
 import { localHour, toDayKey } from './dates';
+import { GEMS, SHOP, addGems, spendGems, streakMilestoneGems, xpMultiplier } from './economy';
+import {
+  LESSON_ENERGY_COST,
+  MISTAKE_ENERGY_COST,
+  PERFECT_ENERGY_REFUND,
+  canStartLesson,
+  modeCostsEnergy,
+  refillEnergy,
+  refundEnergy,
+  settleEnergy,
+  spendEnergy,
+} from './energy';
+import { addLeagueXp, clearLeagueOutcome, ensureLeague } from './league';
+import { applyQuestEvent, ensureQuests, questsReward, type QuestEvent } from './quests';
 import { allUnitTraits, applyUnitSessionResult, newlyUnlocked, unitTraits } from './mastery';
 import { applyAnswer } from './review';
 import { gradeIsCorrect, reviewCard, type Grade } from './srs';
 import { recordActiveDay, sessionCountsForStreak } from './streak';
-import { XP_CORRECT_REVIEW, addXp, isPerfectSession, levelUp, xpForAnswer, xpForSession } from './xp';
+import { MIN_SESSION_LENGTH, XP_CORRECT_REVIEW, addXp, isPerfectSession, levelUp, xpForAnswer, xpForSession } from './xp';
 import {
   emptyUnitProgress,
   type Catalog,
   type Exercise,
   type Progress,
+  type Quest,
   type SessionMode,
   type Traits,
   type UnitId,
 } from './types';
+
+/**
+ * Remet l'état au présent : quêtes du jour, semaine de ligue, énergie
+ * régénérée. Appelé au début de chaque action et à chaque retour au premier
+ * plan. Idempotent.
+ */
+export function applyTick(progress: Progress, now: Date): Progress {
+  const today = toDayKey(now);
+  return {
+    ...progress,
+    quests: ensureQuests(progress.quests, today),
+    league: ensureLeague(progress.league, today),
+    energy: settleEnergy(progress.energy, now),
+  };
+}
+
+/** Fait avancer les quêtes et verse les récompenses des quêtes accomplies. */
+function grantQuests(progress: Progress, event: QuestEvent): { progress: Progress; completed: Quest[] } {
+  const { state, completed } = applyQuestEvent(progress.quests, event);
+  if (completed.length === 0) return { progress: { ...progress, quests: state }, completed };
+  return {
+    progress: {
+      ...progress,
+      quests: state,
+      gems: addGems(progress.gems, questsReward(completed)),
+      counters: { ...progress.counters, questsCompleted: progress.counters.questsCompleted + completed.length },
+    },
+    completed,
+  };
+}
+
+/**
+ * Lancement d'une leçon : prélève l'énergie. Null si elle manque — l'écran
+ * propose alors d'attendre, de recharger, ou de réviser gratuitement.
+ */
+export function applyStartLesson(progress: Progress, mode: SessionMode, now: Date): Progress | null {
+  const p = applyTick(progress, now);
+  if (!modeCostsEnergy(mode)) return p;
+  if (!canStartLesson(p.energy, now)) return null;
+  return { ...p, energy: spendEnergy(p.energy, LESSON_ENERGY_COST, now) };
+}
 
 export interface AnswerAction {
   question: Exercise;
@@ -52,6 +108,9 @@ export interface AnswerResult {
   xpGained: number;
   enteredQueue: boolean;
   leftQueue: boolean;
+  /** L'erreur a coûté un point d'énergie. */
+  energySpent: number;
+  questsCompleted: Quest[];
 }
 
 /**
@@ -63,33 +122,53 @@ export interface AnswerResult {
  */
 export function applyAnswerAction(progress: Progress, action: AnswerAction): AnswerResult {
   const nowIso = action.now.toISOString();
+  const ticked = applyTick(progress, action.now);
   const outcome = applyAnswer(
-    progress.questions[action.question.key],
+    ticked.questions[action.question.key],
     action.question.key,
     action.correct,
     nowIso,
     action.creditedThisSession,
   );
 
-  const xpGained = xpForAnswer({
-    mode: action.mode,
-    correct: action.correct,
-    chrono: action.chrono,
-  });
+  // Le boost double les XP de réponse, jamais les bonus de session.
+  const xpGained =
+    xpForAnswer({ mode: action.mode, correct: action.correct, chrono: action.chrono }) *
+    xpMultiplier(ticked.boost, action.now);
+
+  const energySpent = !action.correct && modeCostsEnergy(action.mode) ? MISTAKE_ENERGY_COST : 0;
+
+  let next: Progress = {
+    ...ticked,
+    xp: addXp(ticked.xp, xpGained),
+    questions: { ...ticked.questions, [action.question.key]: outcome.progress },
+    counters: {
+      ...ticked.counters,
+      reviewRecovered: ticked.counters.reviewRecovered + (outcome.leftQueue ? 1 : 0),
+    },
+    energy: energySpent > 0 ? spendEnergy(ticked.energy, energySpent, action.now) : ticked.energy,
+    league: addLeagueXp(ticked.league, xpGained),
+  };
+
+  let questsCompleted: Quest[] = [];
+  if (xpGained > 0) {
+    const r = grantQuests(next, { kind: 'xp', amount: xpGained });
+    next = r.progress;
+    questsCompleted = questsCompleted.concat(r.completed);
+  }
+  if (outcome.leftQueue) {
+    const r = grantQuests(next, { kind: 'recover', count: 1 });
+    next = r.progress;
+    questsCompleted = questsCompleted.concat(r.completed);
+  }
 
   return {
-    progress: {
-      ...progress,
-      xp: addXp(progress.xp, xpGained),
-      questions: { ...progress.questions, [action.question.key]: outcome.progress },
-      counters: {
-        ...progress.counters,
-        reviewRecovered: progress.counters.reviewRecovered + (outcome.leftQueue ? 1 : 0),
-      },
-    },
+    progress: next,
     xpGained,
     enteredQueue: outcome.enteredQueue,
     leftQueue: outcome.leftQueue,
+    energySpent,
+    questsCompleted,
   };
 }
 
@@ -104,6 +183,8 @@ export interface SessionEndAction {
   /** Tous les exercices courants, pour recalculer couronnes et déverrouillages. */
   questions: readonly Exercise[];
   catalog: Catalog;
+  /** Meilleur enchaînement de bonnes réponses de la session (quête « combo »). */
+  bestCombo?: number;
   /**
    * L'état AVANT la première question de la session. Obligatoire : les
    * réponses sont appliquées une à une (applyAnswerAction), donc à la fin de
@@ -127,6 +208,9 @@ export interface SessionEndResult {
   freezeConsumedFor: string | null;
   newBadges: BadgeId[];
   newlyUnlockedUnits: UnitId[];
+  gemsGained: number;
+  energyRefunded: number;
+  questsCompleted: Quest[];
 }
 
 /**
@@ -147,24 +231,38 @@ export function applySessionEnd(
     now,
     questions,
     catalog,
+    bestCombo,
     progressAtSessionStart,
   } = action;
+  const today = toDayKey(now);
 
   // « Avant » = au lancement de la session, pas maintenant : les réponses ont
   // déjà été appliquées une à une.
-  const traitsMapBefore = allUnitTraits(progressAtSessionStart, questions, catalog);
+  const traitsMapBefore = allUnitTraits(progressAtSessionStart, questions, catalog, today);
   const traitsBefore = unitId ? (traitsMapBefore[unitId] ?? 0) : 0;
 
   const nowIso = now.toISOString();
   const hour = localHour(now);
   const perfect = isPerfectSession(questionCount, correctCount);
+  const counted = questionCount >= MIN_SESSION_LENGTH;
+  const lesson = modeCostsEnergy(mode);
 
   // 1. Les XP. Les réponses ont déjà été créditées une à une : on n'ajoute ici
-  //    que les bonus de session, jamais doublés par le chrono.
+  //    que les bonus de session, jamais doublés par le chrono ni le boost.
   const breakdown = xpForSession({ mode, questionCount, correctCount, chrono });
   const bonusXp = breakdown.completion + breakdown.perfect;
   const xpBefore = progressAtSessionStart.xp;
-  let next: Progress = { ...progress, xp: addXp(progress.xp, bonusXp) };
+  const ticked = applyTick(progress, now);
+  let next: Progress = { ...ticked, xp: addXp(ticked.xp, bonusXp), league: addLeagueXp(ticked.league, bonusXp) };
+
+  // 1b. Énergie et gemmes de la session.
+  const energyRefunded = lesson && perfect ? PERFECT_ENERGY_REFUND : 0;
+  if (energyRefunded > 0) next = { ...next, energy: refundEnergy(next.energy, energyRefunded, now) };
+  let gemsGained = 0;
+  if (counted) {
+    if (lesson) gemsGained += GEMS.lesson + (perfect ? GEMS.perfect : 0);
+    else if (mode === 'deck') gemsGained += GEMS.deckSession;
+  }
 
   // 2. Les compteurs.
   next = {
@@ -206,14 +304,29 @@ export function applySessionEnd(
   let streakIncremented = false;
   let freezeConsumedFor: string | null = null;
   if (sessionCountsForStreak(questionCount)) {
-    const update = recordActiveDay(next.streak, toDayKey(now));
+    const update = recordActiveDay(next.streak, today);
     next = { ...next, streak: update.streak };
     streakIncremented = update.incremented;
     freezeConsumedFor = update.freezeConsumedFor;
+    if (update.incremented) gemsGained += streakMilestoneGems(update.streak.current);
   }
+  next = { ...next, gems: addGems(next.gems, gemsGained) };
+
+  // 4b. Les quêtes du jour.
+  let questsCompleted: Quest[] = [];
+  const events: QuestEvent[] = [];
+  if (bonusXp > 0) events.push({ kind: 'xp', amount: bonusXp });
+  if (lesson && counted) events.push({ kind: 'lesson', perfect });
+  if (bestCombo !== undefined && bestCombo > 0) events.push({ kind: 'combo', best: bestCombo });
+  for (const event of events) {
+    const r = grantQuests(next, event);
+    next = r.progress;
+    questsCompleted = questsCompleted.concat(r.completed);
+  }
+  gemsGained += questsReward(questsCompleted);
 
   // 5. Les traits, une fois tout le reste écrit.
-  const traitsMapAfter = allUnitTraits(next, questions, catalog);
+  const traitsMapAfter = allUnitTraits(next, questions, catalog, today);
   const traitsAfter = unitId ? (traitsMapAfter[unitId] ?? 0) : 0;
 
   // 6. Les badges, en dernier.
@@ -230,6 +343,9 @@ export function applySessionEnd(
     freezeConsumedFor,
     newBadges,
     newlyUnlockedUnits: newlyUnlocked(traitsMapBefore, traitsMapAfter, catalog),
+    gemsGained,
+    energyRefunded,
+    questsCompleted,
   };
 }
 
@@ -244,7 +360,7 @@ export function applySourceOpened(
     ...progress,
     counters: { ...progress.counters, sourcesOpened: progress.counters.sourcesOpened + 1 },
   };
-  const traitsByUnit = allUnitTraits(next, questions, catalog);
+  const traitsByUnit = allUnitTraits(next, questions, catalog, toDayKey(now));
   const newBadges = evaluateBadges({ progress: next, traitsByUnit, catalog });
   return {
     progress: { ...next, badges: awardBadges(next.badges, newBadges, now.toISOString()) },
@@ -262,6 +378,7 @@ export interface CardReviewResult {
   progress: Progress;
   xpGained: number;
   correct: boolean;
+  questsCompleted: Quest[];
 }
 
 /**
@@ -270,25 +387,45 @@ export interface CardReviewResult {
  * réponse de révision (5 XP).
  */
 export function applyCardReview(progress: Progress, action: CardReviewAction): CardReviewResult {
+  const ticked = applyTick(progress, action.now);
   const correct = gradeIsCorrect(action.grade);
-  const xpGained = correct ? XP_CORRECT_REVIEW : 0;
+  const xpGained = (correct ? XP_CORRECT_REVIEW : 0) * xpMultiplier(ticked.boost, action.now);
   const card = reviewCard(
-    progress.cards[action.cardId],
+    ticked.cards[action.cardId],
     action.cardId,
     action.grade,
     toDayKey(action.now),
     action.now.toISOString(),
   );
-  return {
-    progress: {
-      ...progress,
-      xp: addXp(progress.xp, xpGained),
-      cards: { ...progress.cards, [action.cardId]: card },
-      counters: { ...progress.counters, cardsReviewed: progress.counters.cardsReviewed + 1 },
-    },
-    xpGained,
-    correct,
+  let next: Progress = {
+    ...ticked,
+    xp: addXp(ticked.xp, xpGained),
+    cards: { ...ticked.cards, [action.cardId]: card },
+    counters: { ...ticked.counters, cardsReviewed: ticked.counters.cardsReviewed + 1 },
+    league: addLeagueXp(ticked.league, xpGained),
   };
+  let questsCompleted: Quest[] = [];
+  const cards = grantQuests(next, { kind: 'cards', count: 1 });
+  next = cards.progress;
+  questsCompleted = questsCompleted.concat(cards.completed);
+  if (xpGained > 0) {
+    const xp = grantQuests(next, { kind: 'xp', amount: xpGained });
+    next = xp.progress;
+    questsCompleted = questsCompleted.concat(xp.completed);
+  }
+  return { progress: next, xpGained, correct, questsCompleted };
+}
+
+/** Recharge complète de l'énergie contre des gemmes. Null si trop pauvre. */
+export function applyBuyRefill(progress: Progress, now: Date): Progress | null {
+  const gems = spendGems(progress.gems, SHOP.refill.cost);
+  if (gems === null) return null;
+  return { ...progress, gems, energy: refillEnergy(now) };
+}
+
+/** Le bilan de ligue a été affiché. */
+export function applyLeagueOutcomeSeen(progress: Progress): Progress {
+  return { ...progress, league: clearLeagueOutcome(progress.league) };
 }
 
 /** Une publicité a été affichée : on remet les compteurs d'espacement à zéro. */

@@ -24,7 +24,10 @@ export type BadgeId =
   | 'corrector'
   | 'chrono'
   | 'reader'
-  | 'regular';
+  | 'regular'
+  | 'legendary'
+  | 'quests_10'
+  | 'league_gold';
 
 export interface BadgeContext {
   progress: Progress;
@@ -53,7 +56,7 @@ export const BADGES: readonly BadgeDefinition[] = [
   {
     id: 'highlighter',
     name: 'Trois couronnes',
-    condition: ({ traitsByUnit }) => Object.values(traitsByUnit).some((t) => t === 3),
+    condition: ({ traitsByUnit }) => Object.values(traitsByUnit).some((t) => t >= 3),
   },
   {
     id: 'chapter',
@@ -110,6 +113,21 @@ export const BADGES: readonly BadgeDefinition[] = [
     id: 'regular',
     name: 'Fidèle',
     condition: ({ progress }) => progress.counters.sessionsCompleted >= 100,
+  },
+  {
+    id: 'legendary',
+    name: 'Légendaire',
+    condition: ({ traitsByUnit }) => Object.values(traitsByUnit).some((t) => t === 5),
+  },
+  {
+    id: 'quests_10',
+    name: 'Chasseur de quêtes',
+    condition: ({ progress }) => progress.counters.questsCompleted >= 10,
+  },
+  {
+    id: 'league_gold',
+    name: 'Ligue Or',
+    condition: ({ progress }) => progress.league.tier >= 2,
   },
 ];
 

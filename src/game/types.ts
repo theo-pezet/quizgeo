@@ -164,8 +164,11 @@ export type ExerciseKind = Exercise['kind'];
 // Progression : ce qui est persisté.
 // ---------------------------------------------------------------------------
 
-/** Nombre de couronnes d'une unité, 0..3. */
-export type Traits = 0 | 1 | 2 | 3;
+/**
+ * Nombre de couronnes d'une unité, 0..5. Le chemin avance à 3 ; 4 et 5 sont
+ * la maîtrise, optionnelle, qui se fissure si on ne revient pas.
+ */
+export type Traits = 0 | 1 | 2 | 3 | 4 | 5;
 
 export interface QuestionProgress {
   key: string;
@@ -224,6 +227,57 @@ export interface CardState {
   lastReviewedAt: IsoDate | null;
 }
 
+/** Énergie : ce qui limite le nombre de leçons d'affilée (voir energy.ts). */
+export interface EnergyState {
+  value: number;
+  /** Instant de la dernière mise à jour ; la régénération se calcule depuis. */
+  updatedAt: IsoDate | null;
+}
+
+export type QuestKind = 'xp' | 'lessons' | 'perfect' | 'combo' | 'cards' | 'recover';
+
+export interface Quest {
+  id: string;
+  kind: QuestKind;
+  target: number;
+  progress: number;
+  /** Gemmes gagnées à l'accomplissement. */
+  reward: number;
+  done: boolean;
+}
+
+export interface QuestState {
+  day: DayKey | null;
+  items: Quest[];
+}
+
+export type LeagueResult = 'promoted' | 'stayed' | 'demoted';
+
+export interface LeagueOutcome {
+  weekKey: DayKey;
+  tier: number;
+  rank: number;
+  result: LeagueResult;
+  newTier: number;
+}
+
+export interface LeagueState {
+  /** 0 = Bronze … 9 = Diamant. */
+  tier: number;
+  /** Lundi de la semaine en cours. */
+  weekKey: DayKey | null;
+  /** Graine des adversaires de la semaine. */
+  seed: number;
+  xpThisWeek: number;
+  /** Bilan de la semaine passée, à afficher une fois. */
+  pendingOutcome: LeagueOutcome | null;
+  history: LeagueOutcome[];
+}
+
+export interface BoostState {
+  activeUntil: IsoDate | null;
+}
+
 export interface AdsState {
   /** Sessions terminées depuis la dernière publicité. */
   sessionsSinceLastAd: number;
@@ -243,6 +297,7 @@ export interface Counters {
   nightSessions: number;
   /** Cartes du deck révisées (toutes réponses confondues). */
   cardsReviewed: number;
+  questsCompleted: number;
 }
 
 export interface Progress {
@@ -256,6 +311,11 @@ export interface Progress {
   badges: Record<string, IsoDate>;
   counters: Counters;
   ads: AdsState;
+  energy: EnergyState;
+  gems: number;
+  quests: QuestState;
+  league: LeagueState;
+  boost: BoostState;
 }
 
 export type SessionMode = 'unit' | 'review' | 'free' | 'deck';
@@ -308,7 +368,13 @@ export function emptyProgress(): Progress {
       earlySessions: 0,
       nightSessions: 0,
       cardsReviewed: 0,
+      questsCompleted: 0,
     },
     ads: { sessionsSinceLastAd: 0, lastAdAt: null, adsShown: 0 },
+    energy: { value: 25, updatedAt: null },
+    gems: 0,
+    quests: { day: null, items: [] },
+    league: { tier: 0, weekKey: null, seed: 0, xpThisWeek: 0, pendingOutcome: null, history: [] },
+    boost: { activeUntil: null },
   };
 }

@@ -28,11 +28,11 @@ describe('applyAnswer', () => {
     expect(wrong.progress.lastAnswerCorrect).toBe(false);
   });
 
-  it('plafonne le streak à 3', () => {
+  it('plafonne le streak à 5', () => {
     let qp = emptyQuestionProgress('K');
-    for (let i = 0; i < 5; i += 1) qp = applyAnswer(qp, 'K', true, T1).progress;
-    expect(qp.streak).toBe(3);
-    expect(qp.correct).toBe(5);
+    for (let i = 0; i < 7; i += 1) qp = applyAnswer(qp, 'K', true, T1).progress;
+    expect(qp.streak).toBe(5);
+    expect(qp.correct).toBe(7);
   });
 
   it('remet le streak à 0 sur une mauvaise réponse', () => {

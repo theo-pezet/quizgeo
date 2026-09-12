@@ -7,6 +7,7 @@
  * condition à chaque réponse reverrouillerait des unités déjà ouvertes.
  */
 
+import { daysBetween, toDayKey } from './dates';
 import { FULL_SESSION_LENGTH } from './xp';
 import {
   emptyUnitProgress,
@@ -14,6 +15,7 @@ import {
   subjectIds,
   subjectUnits,
   type Catalog,
+  type DayKey,
   type Exercise,
   type Progress,
   type QuestionProgress,
@@ -25,6 +27,25 @@ import {
 
 /** Score minimal d'une session pour acquérir la première couronne. */
 export const FIRST_TRAIT_MIN_SCORE = 6;
+
+/** Couronnes nécessaires pour que le chemin avance. Au-delà : maîtrise. */
+export const PATH_TRAITS = 3;
+export const MAX_TRAITS: Traits = 5;
+
+/** Sans révision, un exercice perd un cran de streak tous les 14 jours. */
+export const DECAY_DAYS = 14;
+
+/**
+ * Streak effectif d'un exercice à la date `today` : le streak enregistré,
+ * moins un cran par période de 14 jours sans le revoir. Rien n'est écrit ;
+ * revenir sur l'unité restaure les couronnes en re-répondant juste.
+ */
+export function effectiveStreak(q: QuestionProgress, today: DayKey | undefined): number {
+  if (today === undefined || q.lastSeenAt === null) return q.streak;
+  const elapsed = daysBetween(toDayKey(new Date(q.lastSeenAt)), today);
+  const lost = Math.floor(Math.max(0, elapsed) / DECAY_DAYS);
+  return Math.max(0, q.streak - lost);
+}
 
 export function unitExercises(exercises: readonly Exercise[], unitId: UnitId): Exercise[] {
   return exercises.filter((e) => e.unitId === unitId);
@@ -44,20 +65,24 @@ export function unitTraits(
   progress: Progress,
   unitId: UnitId,
   exercises: readonly Exercise[],
+  today?: DayKey,
 ): Traits {
   const keys = unitExercises(exercises, unitId).map((e) => e.key);
   if (keys.length === 0) return 0;
 
   const entries = keys.map((key) => progressOf(progress, key));
   const allSeen = entries.every((q) => q !== undefined && q.seen >= 1);
-  const allStreak1 = entries.every((q) => q !== undefined && q.streak >= 1);
-  const allStreak2 = entries.every((q) => q !== undefined && q.streak >= 2);
+  // Le streak le plus bas de l'unité fixe les couronnes 2 à 5.
+  let minStreak = Infinity;
+  for (const q of entries) minStreak = Math.min(minStreak, q === undefined ? 0 : effectiveStreak(q, today));
 
   const latched = progress.units[unitId]?.firstTraitEarned === true;
 
   let traits: Traits = 0;
-  if (allStreak2) traits = 3;
-  else if (allStreak1) traits = 2;
+  if (minStreak >= 4) traits = 5;
+  else if (minStreak >= 3) traits = 4;
+  else if (minStreak >= 2) traits = 3;
+  else if (minStreak >= 1) traits = 2;
   else if (allSeen && latched) traits = 1;
 
   // Jamais en dessous de 1 une fois obtenue.
@@ -73,12 +98,13 @@ export function allUnitTraits(
   progress: Progress,
   exercises: readonly Exercise[],
   catalog: Catalog,
+  today?: DayKey,
 ): Record<string, Traits> {
   const units = new Set<UnitId>();
   for (const unit of catalog.units) units.add(unit.id);
   for (const e of exercises) units.add(e.unitId);
   const out: Record<string, Traits> = {};
-  for (const unitId of units) out[unitId] = unitTraits(progress, unitId, exercises);
+  for (const unitId of units) out[unitId] = unitTraits(progress, unitId, exercises, today);
   return out;
 }
 
@@ -160,14 +186,14 @@ export function newlyUnlocked(
   return unlockedUnits(after, catalog).filter((unitId) => !wasOpen.has(unitId));
 }
 
-/** Une matière dont toutes les unités sont à 3 couronnes (badge « Chapitre clos »). */
+/** Une matière dont toutes les unités sont à 5 couronnes (badge « Chapitre clos »). */
 export function isSubjectComplete(
   subjectId: SubjectId,
   traitsByUnit: Record<string, Traits>,
   catalog: Catalog,
 ): boolean {
   const units = subjectUnits(catalog, subjectId);
-  return units.length > 0 && units.every((unit) => traitsByUnit[unit.id] === 3);
+  return units.length > 0 && units.every((unit) => traitsByUnit[unit.id] === MAX_TRAITS);
 }
 
 export function allSubjectsComplete(
@@ -180,9 +206,9 @@ export function allSubjectsComplete(
 
 /**
  * Où en est l'utilisateur sur un chemin : la première unité qui n'est pas
- * encore à 3 couronnes, ou la dernière unité si tout est fini. Elle est
- * forcément ouverte : on ne l'atteint qu'en passant par une unité à 3
- * couronnes, qui ouvre la suivante. C'est le nœud « Continuer » de l'accueil.
+ * encore à 3 couronnes (PATH_TRAITS), ou la dernière unité si tout est fini.
+ * Elle est forcément ouverte : on ne l'atteint qu'en passant par une unité à
+ * 3 couronnes, qui ouvre la suivante. C'est le nœud « Continuer » de l'accueil.
  */
 export function currentUnit(
   subjectId: SubjectId,
@@ -192,7 +218,7 @@ export function currentUnit(
   const units = subjectUnits(catalog, subjectId);
   if (units.length === 0) return null;
   for (const unit of units) {
-    if ((traitsByUnit[unit.id] ?? 0) < 3) return unit.id;
+    if ((traitsByUnit[unit.id] ?? 0) < PATH_TRAITS) return unit.id;
   }
   return units[units.length - 1].id;
 }
