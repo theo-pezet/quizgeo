@@ -12,7 +12,7 @@ const basePath = process.env.EXPO_PUBLIC_BASE_PATH ?? '';
 const config: ExpoConfig = {
   name: 'Quiz GEO',
   slug: 'quizgeo',
-  version: '0.7.0',
+  version: '0.7.1',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'quizgeo',

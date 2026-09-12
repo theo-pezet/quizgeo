@@ -34,6 +34,10 @@ jobs:
         run: npx expo prebuild --platform android --no-install
         env:
           CI: 1
+      - name: Ne compiler que pour les téléphones (arm), pas les émulateurs (x86)
+        run: |
+          printf '\nreactNativeArchitectures=arm64-v8a,armeabi-v7a\n' >> android/gradle.properties
+          grep reactNativeArchitectures android/gradle.properties
       - name: Compiler
         run: cd android && chmod +x gradlew && ./gradlew assembleRelease --no-daemon
       - name: Nom de version
