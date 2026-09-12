@@ -4,6 +4,11 @@ name: Android APK
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Nom de la release à publier (ex. v0.1.0). Le tag est créé s’il n’existe pas.'
+        required: true
+        default: 'v0.1.0'
   push:
     tags: ['v*']
 
@@ -31,15 +36,20 @@ jobs:
           CI: 1
       - name: Compiler
         run: cd android && chmod +x gradlew && ./gradlew assembleRelease --no-daemon
+      - name: Nom de version
+        id: version
+        run: echo "tag=${{ github.event.inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
       - name: Renommer
-        run: cp android/app/build/outputs/apk/release/app-release.apk quizgeo-${{ github.ref_name }}.apk
+        run: cp android/app/build/outputs/apk/release/app-release.apk quizgeo-${{ steps.version.outputs.tag }}.apk
       - uses: actions/upload-artifact@v4
         with:
           name: quizgeo-apk
           path: quizgeo-*.apk
-      - name: Publier la release
-        if: startsWith(github.ref, 'refs/tags/v')
+      - name: Publier la release (téléchargement direct de l'APK)
         uses: softprops/action-gh-release@v2
         with:
+          tag_name: ${{ steps.version.outputs.tag }}
+          target_commitish: ${{ github.sha }}
+          name: Quiz GEO ${{ steps.version.outputs.tag }}
           files: quizgeo-*.apk
           generate_release_notes: true
