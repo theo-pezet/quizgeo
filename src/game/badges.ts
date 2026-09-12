@@ -27,7 +27,8 @@ export type BadgeId =
   | 'regular'
   | 'legendary'
   | 'quests_10'
-  | 'league_gold';
+  | 'league_gold'
+  | 'goal_7';
 
 export interface BadgeContext {
   progress: Progress;
@@ -128,6 +129,11 @@ export const BADGES: readonly BadgeDefinition[] = [
     id: 'league_gold',
     name: 'Ligue Or',
     condition: ({ progress }) => progress.league.tier >= 2,
+  },
+  {
+    id: 'goal_7',
+    name: 'Objectif ×7',
+    condition: ({ progress }) => progress.counters.goalDays >= 7,
   },
 ];
 

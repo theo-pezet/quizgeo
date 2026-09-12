@@ -53,10 +53,10 @@ function earns(id: BadgeId, context: BadgeContext): boolean {
   return evaluateBadges(context).includes(id);
 }
 
-describe('les 17 badges sont tous définis, une fois chacun', () => {
-  it('a 17 identifiants uniques', () => {
-    expect(BADGES).toHaveLength(17);
-    expect(new Set(BADGE_IDS).size).toBe(17);
+describe('les 18 badges sont tous définis, une fois chacun', () => {
+  it('a 18 identifiants uniques', () => {
+    expect(BADGES).toHaveLength(18);
+    expect(new Set(BADGE_IDS).size).toBe(18);
   });
 });
 
@@ -219,6 +219,13 @@ describe('league_gold — Ligue Or', () => {
     const base = progressWith();
     expect(earns('league_gold', ctx({ league: { ...base.league, tier: 2 } }))).toBe(true);
     expect(earns('league_gold', ctx({ league: { ...base.league, tier: 1 } }))).toBe(false);
+  });
+});
+
+describe('goal_7 — Objectif ×7', () => {
+  it('tombe à 7 jours d’objectif atteint, pas à 6', () => {
+    expect(earns('goal_7', ctx({ counters: { goalDays: 7 } as never }))).toBe(true);
+    expect(earns('goal_7', ctx({ counters: { goalDays: 6 } as never }))).toBe(false);
   });
 });
 

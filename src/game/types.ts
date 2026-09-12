@@ -9,6 +9,10 @@
  * `Exercise` rattachés à une unité. Le contenu vit dans src/content/.
  */
 
+/** Objectif quotidien par défaut, en XP (« Régulier »). */
+export const DEFAULT_DAILY_GOAL = 50;
+export const DAILY_GOALS = [20, 50, 100, 200] as const;
+
 /** Jour local au format "2026-09-09". Jamais un instant, jamais UTC. */
 export type DayKey = string;
 
@@ -286,6 +290,16 @@ export interface BoostState {
   activeUntil: IsoDate | null;
 }
 
+/** L'objectif quotidien d'XP et son avancement, remis à zéro chaque jour. */
+export interface DailyState {
+  day: DayKey | null;
+  xp: number;
+  /** XP visés par jour ; se règle à l'onboarding et dans le Profil. */
+  goal: number;
+  /** Jour où l'objectif a été atteint pour la dernière fois (récompense une fois par jour). */
+  metOn: DayKey | null;
+}
+
 export interface AdsState {
   /** Sessions terminées depuis la dernière publicité. */
   sessionsSinceLastAd: number;
@@ -306,6 +320,8 @@ export interface Counters {
   /** Cartes du deck révisées (toutes réponses confondues). */
   cardsReviewed: number;
   questsCompleted: number;
+  /** Jours où l'objectif quotidien a été atteint. */
+  goalDays: number;
 }
 
 export interface Progress {
@@ -326,6 +342,7 @@ export interface Progress {
   boost: BoostState;
   /** Meilleur score Blitz par matière. */
   blitz: Record<string, number>;
+  daily: DailyState;
 }
 
 export type SessionMode = 'unit' | 'review' | 'free' | 'deck';
@@ -379,6 +396,7 @@ export function emptyProgress(): Progress {
       nightSessions: 0,
       cardsReviewed: 0,
       questsCompleted: 0,
+      goalDays: 0,
     },
     ads: { sessionsSinceLastAd: 0, lastAdAt: null, adsShown: 0 },
     energy: { value: 25, updatedAt: null },
@@ -387,5 +405,6 @@ export function emptyProgress(): Progress {
     league: { tier: 0, weekKey: null, seed: 0, xpThisWeek: 0, pendingOutcome: null, history: [], rivalSeed: 0 },
     boost: { activeUntil: null },
     blitz: {},
+    daily: { day: null, xp: 0, goal: DEFAULT_DAILY_GOAL, metOn: null },
   };
 }

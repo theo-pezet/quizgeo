@@ -24,7 +24,8 @@ const questions = makeUnit('seo-1', 4);
 const quest = (kind: QuestKind, target: number, reward = 20): Quest => ({ id: kind, kind, target, progress: 0, reward, done: false });
 
 function withQuests(p: Progress, items: Quest[]): Progress {
-  return { ...p, quests: { day: TODAY, items } };
+  // Objectif du jour hors de portée : ces tests mesurent les autres gemmes.
+  return { ...p, quests: { day: TODAY, items }, daily: { ...p.daily, goal: 100000 } };
 }
 
 const answer = (p: Progress, correct: boolean, mode: SessionMode = 'unit') =>

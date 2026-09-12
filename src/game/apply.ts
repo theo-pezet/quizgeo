@@ -9,6 +9,7 @@
 
 import { recordAdShown, recordSessionForAds } from './ads';
 import { evaluateBadges, awardBadges, isEarlyHour, isNightHour, type BadgeId } from './badges';
+import { creditDailyXp, dailyRatio, ensureDaily } from './daily';
 import { localHour, toDayKey } from './dates';
 import { GEMS, SHOP, addGems, spendGems, streakMilestoneGems, xpMultiplier } from './economy';
 import {
@@ -53,6 +54,7 @@ export function applyTick(progress: Progress, now: Date): Progress {
     quests: ensureQuests(progress.quests, today),
     league: ensureLeague(progress.league, today),
     energy: settleEnergy(progress.energy, now),
+    daily: ensureDaily(progress.daily, today),
   };
 }
 
@@ -112,6 +114,8 @@ export interface AnswerResult {
   /** L'erreur a coûté un point d'énergie. */
   energySpent: number;
   questsCompleted: Quest[];
+  /** L'objectif du jour vient d'être atteint avec cette réponse. */
+  goalReached: boolean;
 }
 
 /**
@@ -152,10 +156,14 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
   };
 
   let questsCompleted: Quest[] = [];
+  let goalReached = false;
   if (xpGained > 0) {
     const r = grantQuests(next, { kind: 'xp', amount: xpGained });
     next = r.progress;
     questsCompleted = questsCompleted.concat(r.completed);
+    const d = creditDailyXp(next, xpGained, toDayKey(action.now));
+    next = d.progress;
+    goalReached = d.goalReached;
   }
   if (outcome.leftQueue) {
     const r = grantQuests(next, { kind: 'recover', count: 1 });
@@ -170,6 +178,7 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
     leftQueue: outcome.leftQueue,
     energySpent,
     questsCompleted,
+    goalReached,
   };
 }
 
@@ -212,6 +221,10 @@ export interface SessionEndResult {
   gemsGained: number;
   energyRefunded: number;
   questsCompleted: Quest[];
+  /** L'objectif du jour est tombé avec le bonus de fin de session. */
+  goalReached: boolean;
+  /** Avancement de l'objectif du jour après la session, 0..1. */
+  dailyRatio: number;
 }
 
 /**
@@ -326,6 +339,11 @@ export function applySessionEnd(
   }
   gemsGained += questsReward(questsCompleted);
 
+  // 4c. L'objectif du jour, nourri par le bonus de session.
+  const daily = creditDailyXp(next, bonusXp, today);
+  next = daily.progress;
+  if (daily.goalReached) gemsGained += GEMS.dailyGoal;
+
   // 5. Les traits, une fois tout le reste écrit.
   const traitsMapAfter = allUnitTraits(next, questions, catalog, today);
   const traitsAfter = unitId ? (traitsMapAfter[unitId] ?? 0) : 0;
@@ -347,6 +365,8 @@ export function applySessionEnd(
     gemsGained,
     energyRefunded,
     questsCompleted,
+    goalReached: daily.goalReached,
+    dailyRatio: dailyRatio(next.daily, today),
   };
 }
 
@@ -380,6 +400,7 @@ export interface CardReviewResult {
   xpGained: number;
   correct: boolean;
   questsCompleted: Quest[];
+  goalReached: boolean;
 }
 
 /**
@@ -409,12 +430,27 @@ export function applyCardReview(progress: Progress, action: CardReviewAction): C
   const cards = grantQuests(next, { kind: 'cards', count: 1 });
   next = cards.progress;
   questsCompleted = questsCompleted.concat(cards.completed);
+  let goalReached = false;
   if (xpGained > 0) {
     const xp = grantQuests(next, { kind: 'xp', amount: xpGained });
     next = xp.progress;
     questsCompleted = questsCompleted.concat(xp.completed);
+    const d = creditDailyXp(next, xpGained, toDayKey(action.now));
+    next = d.progress;
+    goalReached = d.goalReached;
   }
-  return { progress: next, xpGained, correct, questsCompleted };
+  return { progress: next, xpGained, correct, questsCompleted, goalReached };
+}
+
+/** Changer l'objectif quotidien (onboarding, Profil). */
+export function applySetDailyGoal(progress: Progress, goal: number): Progress {
+  return { ...progress, daily: { ...progress.daily, goal: Math.max(1, Math.round(goal)) } };
+}
+
+/** L'animation de déverrouillage d'une unité a été jouée : une seule fois. */
+export function applyUnlockAnimationPlayed(progress: Progress, unitId: UnitId): Progress {
+  const unit = progress.units[unitId] ?? emptyUnitProgress(unitId);
+  return { ...progress, units: { ...progress.units, [unitId]: { ...unit, unlockAnimationPlayed: true } } };
 }
 
 /** Recharge complète de l'énergie contre des gemmes. Null si trop pauvre. */

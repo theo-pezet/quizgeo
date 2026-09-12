@@ -14,6 +14,8 @@ export const GEMS = {
   lesson: 10,
   perfect: 20,
   deckSession: 5,
+  /** Objectif quotidien atteint, une fois par jour. */
+  dailyGoal: 15,
   streakMilestones: { 7: 50, 30: 200, 100: 500 } as Record<number, number>,
 } as const;
 

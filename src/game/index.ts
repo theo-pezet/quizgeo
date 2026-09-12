@@ -22,5 +22,6 @@ export * from './quests';
 export * from './league';
 export * from './migrations';
 export * from './reminders';
+export * from './daily';
 export * from './random';
 export * from './apply';
