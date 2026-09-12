@@ -25,6 +25,9 @@ et des cas pratiques.
   jour**, **ligue hebdomadaire** (30 joueurs, 10 divisions ; adversaires
   simulés hors ligne, remplaçables par un service en ligne).
 - Série quotidienne avec gels, 17 badges, niveaux, sessions libres par matière.
+- **Blitz** (60 s, XP ×2), **test de sortie** (8/10 sur une unité verrouillée
+  valide les précédentes), **rappels locaux** (série en danger, énergie
+  rechargée — Android uniquement), trois **rivaux** récurrents en ligue.
 
 ## Architecture
 
@@ -52,7 +55,7 @@ ordre, cas pratique.
 ```
 npm install
 npm run typecheck
-npm test              # 325 tests ; src/game/ doit rester à 100 % de couverture
+npm test              # 341 tests ; src/game/ doit rester à 100 % de couverture
 npx expo start        # puis w (web), a (Android)
 npx expo export --platform web   # build statique dans dist/
 ```

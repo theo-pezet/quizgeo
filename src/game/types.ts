@@ -278,6 +278,8 @@ export interface LeagueState {
   /** Bilan de la semaine passée, à afficher une fois. */
   pendingOutcome: LeagueOutcome | null;
   history: LeagueOutcome[];
+  /** Graine des trois rivaux, stable d'une semaine à l'autre. 0 = pas encore tirés. */
+  rivalSeed: number;
 }
 
 export interface BoostState {
@@ -322,6 +324,8 @@ export interface Progress {
   quests: QuestState;
   league: LeagueState;
   boost: BoostState;
+  /** Meilleur score Blitz par matière. */
+  blitz: Record<string, number>;
 }
 
 export type SessionMode = 'unit' | 'review' | 'free' | 'deck';
@@ -380,7 +384,8 @@ export function emptyProgress(): Progress {
     energy: { value: 25, updatedAt: null },
     gems: 0,
     quests: { day: null, items: [] },
-    league: { tier: 0, weekKey: null, seed: 0, xpThisWeek: 0, pendingOutcome: null, history: [] },
+    league: { tier: 0, weekKey: null, seed: 0, xpThisWeek: 0, pendingOutcome: null, history: [], rivalSeed: 0 },
     boost: { activeUntil: null },
+    blitz: {},
   };
 }

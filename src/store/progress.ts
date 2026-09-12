@@ -53,8 +53,13 @@ export const useProgress = create<ProgressStore>()(
 interface SettingsStore {
   onboardingDone: boolean;
   haptics: boolean;
+  /** Rappels (série en danger, énergie rechargée). Demande la permission à l'activation. */
+  reminders: boolean;
+  reminderHour: number;
   setOnboardingDone: (done: boolean) => void;
   setHaptics: (on: boolean) => void;
+  setReminders: (on: boolean) => void;
+  setReminderHour: (hour: number) => void;
 }
 
 /** Réglages, séparés de la progression : « réinitialiser » ne les touche pas. */
@@ -63,8 +68,12 @@ export const useSettings = create<SettingsStore>()(
     (set) => ({
       onboardingDone: false,
       haptics: true,
+      reminders: false,
+      reminderHour: 19,
       setOnboardingDone: (onboardingDone) => set({ onboardingDone }),
       setHaptics: (haptics) => set({ haptics }),
+      setReminders: (reminders) => set({ reminders }),
+      setReminderHour: (reminderHour) => set({ reminderHour }),
     }),
     { name: 'settings.v1', version: 1, storage: createJSONStorage(() => AsyncStorage) },
   ),

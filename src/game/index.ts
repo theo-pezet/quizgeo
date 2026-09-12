@@ -21,5 +21,6 @@ export * from './economy';
 export * from './quests';
 export * from './league';
 export * from './migrations';
+export * from './reminders';
 export * from './random';
 export * from './apply';

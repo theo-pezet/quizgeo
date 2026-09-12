@@ -79,6 +79,19 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
         </Card>
       )}
 
+      {state.skipTest && (
+        <Card style={{ borderColor: state.skipTest.passed ? colors.success : colors.danger }}>
+          <Text variant="bodyBold">{state.skipTest.passed ? '⏩ Test de sortie réussi' : '⏩ Test de sortie raté'}</Text>
+          <Text variant="small" secondary>
+            {state.skipTest.passed
+              ? state.skipTest.validatedUnits.length > 0
+                ? `Validées d’office : ${state.skipTest.validatedUnits.map((id) => UNIT_BY_ID.get(id)?.title ?? id).join(', ')}.`
+                : 'Rien à valider : le chemin était déjà ouvert jusqu’ici.'
+              : `Il fallait ${8}/10. Tes réponses comptent quand même ; reprends le chemin ou retente plus tard.`}
+          </Text>
+        </Card>
+      )}
+
       {r && r.newlyUnlockedUnits.length > 0 && (
         <Card style={{ borderColor: color }}>
           <Text variant="bodyBold">🔓 Nouvelle unité ouverte</Text>

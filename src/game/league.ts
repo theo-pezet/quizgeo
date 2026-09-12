@@ -57,6 +57,8 @@ export interface Competitor {
   name: string;
   xp: number;
   isUser: boolean;
+  /** Un des trois rivaux qu'on retrouve chaque semaine. */
+  rival: boolean;
 }
 
 interface Opponent {
@@ -64,28 +66,63 @@ interface Opponent {
   /** XP par jour, avec une part d'irrégularité. */
   rate: number;
   jitter: number;
+  rival: boolean;
 }
 
-function opponents(seed: number, tier: number): Opponent[] {
-  const rng = mulberry32(seed);
+export const RIVALS = 3;
+
+/** Le rythme moyen d'une division, en XP par jour. */
+function tierBase(tier: number): number {
+  return 60 + tier * 40;
+}
+
+function draw(rng: () => number, names: string[]): string {
+  const idx = Math.floor(rng() * names.length);
+  const [first] = names.splice(idx, 1);
+  const initial = String.fromCharCode(65 + Math.floor(rng() * 26));
+  return `${first} ${initial}.`;
+}
+
+/**
+ * Les 29 adversaires : 3 rivaux, tirés une fois pour toutes et qu'on
+ * retrouve de semaine en semaine (au rythme de la division du moment), et
+ * 26 joueurs de passage tirés depuis la graine de la semaine.
+ */
+function opponents(seed: number, tier: number, rivalSeed: number): Opponent[] {
+  const base = tierBase(tier);
   const names = [...FIRST_NAMES];
   const out: Opponent[] = [];
-  const base = 60 + tier * 40;
-  for (let i = 0; i < LEAGUE_SIZE - 1; i += 1) {
-    const idx = Math.floor(rng() * names.length);
-    const [first] = names.splice(idx, 1);
-    const initial = String.fromCharCode(65 + Math.floor(rng() * 26));
-    out.push({ name: `${first} ${initial}.`, rate: base * (0.3 + 1.7 * rng()), jitter: rng() });
+
+  const rivalRng = mulberry32(rivalSeed || 1);
+  for (let i = 0; i < RIVALS; i += 1) {
+    // Des rivaux toujours dans la course : entre 0,8 et 1,4 fois le rythme moyen.
+    out.push({ name: draw(rivalRng, names), rate: base * (0.8 + 0.6 * rivalRng()), jitter: rivalRng(), rival: true });
+  }
+
+  const rng = mulberry32(seed);
+  while (out.length < LEAGUE_SIZE - 1) {
+    out.push({ name: draw(rng, names), rate: base * (0.3 + 1.7 * rng()), jitter: rng(), rival: false });
   }
   return out;
 }
 
-/** XP d'un adversaire après `days` jours de la semaine (1..7). */
-function opponentXp(o: Opponent, days: number): number {
-  const d = Math.max(0, Math.min(LEAGUE_DAYS, days));
-  // Une courbe légèrement irrégulière, mais croissante et déterministe.
-  const wobble = 0.85 + 0.3 * Math.abs(Math.sin(o.jitter * 7 + d));
-  return Math.floor(o.rate * d * wobble);
+/** Rythme d'un adversaire un jour donné : entre 0,5 et 1,5 fois son rythme moyen. */
+function dayFactor(o: Opponent, day: number): number {
+  return 1 + 0.5 * Math.sin(o.jitter * 31 + day * 2.4);
+}
+
+/**
+ * XP d'un adversaire après `days` jours (1..7), le dernier jour compté à
+ * hauteur de `fraction` (0..1, la part de la journée écoulée). Cumul de
+ * journées : croissant par construction, jour après jour et heure après heure.
+ */
+function opponentXp(o: Opponent, days: number, fraction: number): number {
+  const d = Math.max(1, Math.min(LEAGUE_DAYS, days));
+  const f = Math.max(0, Math.min(1, fraction));
+  let xp = 0;
+  for (let day = 1; day < d; day += 1) xp += o.rate * dayFactor(o, day);
+  xp += o.rate * dayFactor(o, d) * f;
+  return Math.floor(xp);
 }
 
 function elapsedDays(state: LeagueState, today: DayKey): number {
@@ -93,24 +130,34 @@ function elapsedDays(state: LeagueState, today: DayKey): number {
   return Math.max(1, Math.min(LEAGUE_DAYS, daysBetween(state.weekKey, today) + 1));
 }
 
-/** Le classement complet, meilleur XP en tête ; l'utilisateur est marqué. */
-export function leagueStandings(state: LeagueState, today: DayKey): Competitor[] {
+/**
+ * Le classement complet, meilleur XP en tête ; l'utilisateur est marqué.
+ * `dayFraction` : part de la journée écoulée (0..1), pour que les adversaires
+ * avancent au fil des heures et pas d'un bloc à minuit. 1 = journée entière.
+ */
+export function leagueStandings(state: LeagueState, today: DayKey, dayFraction = 1): Competitor[] {
   const days = elapsedDays(state, today);
-  const list: Competitor[] = opponents(state.seed, state.tier).map((o) => ({
+  const list: Competitor[] = opponents(state.seed, state.tier, state.rivalSeed).map((o) => ({
     name: o.name,
-    xp: opponentXp(o, days),
+    xp: opponentXp(o, days, dayFraction),
     isUser: false,
+    rival: o.rival,
   }));
   list.sort((a, b) => b.xp - a.xp || a.name.localeCompare(b.name));
   // À XP égal, l'utilisateur passe devant : on ne le relègue pas sur une égalité.
   let at = list.findIndex((c) => c.xp <= state.xpThisWeek);
   if (at === -1) at = list.length;
-  list.splice(at, 0, { name: 'Toi', xp: state.xpThisWeek, isUser: true });
+  list.splice(at, 0, { name: 'Toi', xp: state.xpThisWeek, isUser: true, rival: false });
   return list;
 }
 
-export function userRank(state: LeagueState, today: DayKey): number {
-  return leagueStandings(state, today).findIndex((c) => c.isUser) + 1;
+/** Part de la journée écoulée à l'instant `now`, 0..1. */
+export function dayFractionOf(now: Date): number {
+  return (now.getHours() * 60 + now.getMinutes()) / (24 * 60);
+}
+
+export function userRank(state: LeagueState, today: DayKey, dayFraction = 1): number {
+  return leagueStandings(state, today, dayFraction).findIndex((c) => c.isUser) + 1;
 }
 
 export function resultForRank(rank: number, tier: number): LeagueResult {
@@ -128,8 +175,10 @@ export function ensureLeague(state: LeagueState, today: DayKey): LeagueState {
   const week = weekKeyOf(today);
   if (state.weekKey === week) return state;
 
+  const rivalSeed = state.rivalSeed || hashString(`rivals:${week}`);
+
   if (state.weekKey === null) {
-    return { ...state, weekKey: week, seed: hashString(`league:${week}:${state.tier}`), xpThisWeek: 0 };
+    return { ...state, weekKey: week, seed: hashString(`league:${week}:${state.tier}`), xpThisWeek: 0, rivalSeed };
   }
 
   // Bilan de la semaine écoulée, sur son dernier jour.
@@ -146,6 +195,7 @@ export function ensureLeague(state: LeagueState, today: DayKey): LeagueState {
     xpThisWeek: 0,
     pendingOutcome: outcome,
     history: [outcome, ...state.history].slice(0, MAX_HISTORY),
+    rivalSeed,
   };
 }
 

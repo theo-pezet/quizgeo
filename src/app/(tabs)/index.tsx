@@ -39,13 +39,14 @@ export default function PathScreen() {
   const queue = reviewQueueSize(progress);
   const flame = isActiveToday(progress.streak, today);
 
-  const startUnit = (unit: Unit) => {
+  const startUnit = (unit: Unit, skipTest = false) => {
     if (!canStartLesson(progress.energy, new Date())) {
       setPicked(null);
       setNoEnergy(true);
       return;
     }
-    router.push({ pathname: '/session/[unitId]', params: { unitId: unit.id } });
+    setPicked(null);
+    router.push({ pathname: '/session/[unitId]', params: skipTest ? { unitId: unit.id, skip: '1' } : { unitId: unit.id } });
   };
 
   const sheet = picked ? (
@@ -79,9 +80,15 @@ export default function PathScreen() {
               onPress={() => startUnit(picked)}
             />
           ) : (
-            <Text variant="small" style={{ color: colors.danger }}>
-              🔒 Gagne une couronne sur l’unité précédente pour ouvrir celle-ci.
-            </Text>
+            <>
+              <Text variant="small" style={{ color: colors.danger }}>
+                🔒 Gagne une couronne sur l’unité précédente pour ouvrir celle-ci.
+              </Text>
+              <Button label="Tester pour sauter ici · 8/10 · ⚡ 5" tone="secondary" onPress={() => startUnit(picked, true)} />
+              <Text variant="small" secondary>
+                Tu connais déjà ? Réussis 8 exercices sur 10 de cette unité et les précédentes sont validées.
+              </Text>
+            </>
           )}
           <Button label="Fermer" tone="ghost" onPress={() => setPicked(null)} />
         </View>

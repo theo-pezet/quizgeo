@@ -8,6 +8,7 @@ import {
   LEAGUE_TIERS,
   PROMOTION_ZONE,
   applyLeagueOutcomeSeen,
+  dayFractionOf,
   daysLeftInWeek,
   leagueStandings,
   toDayKey,
@@ -24,8 +25,10 @@ export default function LeagueScreen() {
   const tick = useProgress((s) => s.tick);
   useFocusEffect(useCallback(() => tick(), [tick]));
 
-  const today = toDayKey(new Date());
-  const standings = useMemo(() => leagueStandings(progress.league, today), [progress.league, today]);
+  const now = new Date();
+  const today = toDayKey(now);
+  const fraction = dayFractionOf(now);
+  const standings = useMemo(() => leagueStandings(progress.league, today, fraction), [progress.league, today, fraction]);
   const rank = standings.findIndex((c) => c.isUser) + 1;
   const daysLeft = daysLeftInWeek(progress.league, today);
   const tier = progress.league.tier;
@@ -81,7 +84,8 @@ export default function LeagueScreen() {
               <Text variant="small" style={[styles.pos, { color: promo ? colors.success : demo ? colors.danger : colors.textSecondary }]}>
                 {pos}
               </Text>
-              <Text variant={c.isUser ? 'bodyBold' : 'body'} style={styles.name}>
+              <Text variant={c.isUser || c.rival ? 'bodyBold' : 'body'} style={styles.name}>
+                {c.rival ? '⚔️ ' : ''}
                 {c.name}
               </Text>
               <Text variant="small" secondary>
@@ -93,7 +97,7 @@ export default function LeagueScreen() {
       </View>
 
       <Text variant="small" secondary style={styles.note}>
-        Ligue hors ligne : les adversaires sont simulés. Le classement en ligne avec de vrais joueurs arrivera avec les comptes.
+        ⚔️ Tes trois rivaux te suivent de semaine en semaine. Ligue hors ligne : les adversaires sont simulés.
       </Text>
     </Screen>
   );

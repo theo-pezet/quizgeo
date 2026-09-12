@@ -37,6 +37,7 @@ const config: ExpoConfig = {
   },
   plugins: [
     'expo-router',
+    ['expo-notifications', { color: '#5B4BFF' }],
     [
       'expo-splash-screen',
       { backgroundColor: '#5B4BFF', image: './assets/images/splash-icon.png', imageWidth: 96 },

@@ -1,5 +1,7 @@
 import {
   DEMOTION_ZONE,
+  RIVALS,
+  dayFractionOf,
   LEAGUE_SIZE,
   LEAGUE_TIERS,
   MAX_HISTORY,
@@ -16,7 +18,7 @@ import {
 import type { LeagueState } from '../types';
 
 const MONDAY = '2026-09-07';
-const fresh: LeagueState = { tier: 0, weekKey: null, seed: 0, xpThisWeek: 0, pendingOutcome: null, history: [] };
+const fresh: LeagueState = { tier: 0, weekKey: null, seed: 0, xpThisWeek: 0, pendingOutcome: null, history: [], rivalSeed: 0 };
 
 describe('weekKeyOf', () => {
   it('rend le lundi de la semaine', () => {
@@ -129,6 +131,47 @@ describe('leagueStandings', () => {
     const high = ensureLeague({ ...fresh, tier: 9 }, '2026-09-07');
     const sum = (s: LeagueState) => leagueStandings(s, '2026-09-13').filter((c) => !c.isUser).reduce((a, c) => a + c.xp, 0);
     expect(sum(high)).toBeGreaterThan(sum(low) * 3);
+  });
+});
+
+describe('rivaux et journée', () => {
+  it('tire trois rivaux à l’inscription et les garde d’une semaine à l’autre', () => {
+    const s1 = ensureLeague(fresh, '2026-09-09');
+    expect(s1.rivalSeed).not.toBe(0);
+    const rivals1 = leagueStandings(s1, '2026-09-13').filter((c) => c.rival).map((c) => c.name);
+    expect(rivals1).toHaveLength(RIVALS);
+    const s2 = ensureLeague(s1, '2026-09-16');
+    expect(s2.rivalSeed).toBe(s1.rivalSeed);
+    const rivals2 = leagueStandings(s2, '2026-09-20').filter((c) => c.rival).map((c) => c.name);
+    expect(rivals2).toEqual(rivals1);
+    // Les joueurs de passage, eux, changent.
+    const others1 = leagueStandings(s1, '2026-09-13').filter((c) => !c.rival && !c.isUser).map((c) => c.name);
+    const others2 = leagueStandings(s2, '2026-09-20').filter((c) => !c.rival && !c.isUser).map((c) => c.name);
+    expect(others1).not.toEqual(others2);
+  });
+
+  it('fait avancer les adversaires au fil de la journée, sans jamais reculer', () => {
+    const s = ensureLeague(fresh, '2026-09-07');
+    const total = (day: string, f: number) =>
+      leagueStandings(s, day, f).filter((c) => !c.isUser).reduce((sum, c) => sum + c.xp, 0);
+    expect(total('2026-09-07', 0)).toBe(0);
+    expect(total('2026-09-07', 0.5)).toBeGreaterThan(0);
+    expect(total('2026-09-07', 1)).toBeGreaterThan(total('2026-09-07', 0.5));
+    expect(total('2026-09-08', 0)).toBe(total('2026-09-07', 1));
+    expect(total('2026-09-08', 0.25)).toBeGreaterThan(total('2026-09-08', 0));
+    expect(total('2026-09-09', 2)).toBe(total('2026-09-09', 1));
+  });
+
+  it('dayFractionOf va de 0 à minuit à presque 1 le soir', () => {
+    expect(dayFractionOf(new Date(2026, 8, 9, 0, 0))).toBe(0);
+    expect(dayFractionOf(new Date(2026, 8, 9, 12, 0))).toBe(0.5);
+    expect(dayFractionOf(new Date(2026, 8, 9, 23, 59))).toBeCloseTo(0.999, 2);
+  });
+
+  it('userRank tient compte de la fraction de journée', () => {
+    const s = addLeagueXp(ensureLeague(fresh, '2026-09-07'), 50);
+    expect(userRank(s, '2026-09-07', 0)).toBe(1);
+    expect(userRank(s, '2026-09-13', 1)).toBeGreaterThan(1);
   });
 });
 

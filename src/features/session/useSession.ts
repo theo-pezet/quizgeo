@@ -16,8 +16,10 @@ import {
   applyAnswerAction,
   applyCardReview,
   applySessionEnd,
+  applySkipTestPassed,
   applyStartLesson,
   PATH_TRAITS,
+  SKIP_TEST_MIN_SCORE,
   toDayKey,
   unitTraits,
   composeFreeSession,
@@ -34,7 +36,7 @@ import { ads } from '@/lib/ads';
 import { useProgress } from '@/store/progress';
 
 export type SessionSpec =
-  | { mode: 'unit'; unitId: string }
+  | { mode: 'unit'; unitId: string; skipTest?: boolean }
   | { mode: 'review' }
   | { mode: 'free'; subjectId: string };
 
@@ -62,6 +64,8 @@ export interface SessionState {
   bestCombo: number;
   result: SessionEndResult | null;
   adShown: boolean;
+  /** Test de sortie : réussi (unités validées), raté, ou sans objet. */
+  skipTest: { passed: boolean; validatedUnits: string[] } | null;
 }
 
 function compose(spec: SessionSpec, progress: Progress): Exercise[] {
@@ -115,6 +119,7 @@ export function useSession(spec: SessionSpec) {
     bestCombo: 0,
     result: null,
     adShown: false,
+    skipTest: null,
   });
 
   const current: Step | undefined = state.steps[state.index];
@@ -176,7 +181,15 @@ export function useSession(spec: SessionSpec) {
         bestCombo: s.bestCombo,
         progressAtSessionStart: startProgress.current,
       });
-      store.setProgress(result.progress);
+      let progress = result.progress;
+      let skipTest: SessionState['skipTest'] = null;
+      if (spec.mode === 'unit' && spec.skipTest) {
+        const passed = s.correctCount >= SKIP_TEST_MIN_SCORE;
+        const validatedUnits = passed ? applySkipTestPassed(progress, spec.unitId, EXERCISES, CATALOG, now) : null;
+        if (validatedUnits) progress = validatedUnits.progress;
+        skipTest = { passed, validatedUnits: validatedUnits?.validatedUnits ?? [] };
+      }
+      store.setProgress(progress);
 
       let adShown = false;
       if (shouldShowAd(result.progress, { mode, now, enabled: FEATURES.ads })) {
@@ -189,9 +202,9 @@ export function useSession(spec: SessionSpec) {
         });
         adShown = true;
       }
-      return { ...s, phase: 'done', feedback: null, result, adShown };
+      return { ...s, phase: 'done', feedback: null, result, adShown, skipTest };
     },
-    [mode, unitId],
+    [mode, unitId, spec],
   );
 
   /** « Continuer » après le retour sur la réponse. */

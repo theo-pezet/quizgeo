@@ -30,6 +30,7 @@ import { gradeIsCorrect, reviewCard, type Grade } from './srs';
 import { recordActiveDay, sessionCountsForStreak } from './streak';
 import { MIN_SESSION_LENGTH, XP_CORRECT_REVIEW, addXp, isPerfectSession, levelUp, xpForAnswer, xpForSession } from './xp';
 import {
+  emptyQuestionProgress,
   emptyUnitProgress,
   type Catalog,
   type Exercise,
@@ -426,6 +427,60 @@ export function applyBuyRefill(progress: Progress, now: Date): Progress | null {
 /** Le bilan de ligue a été affiché. */
 export function applyLeagueOutcomeSeen(progress: Progress): Progress {
   return { ...progress, league: clearLeagueOutcome(progress.league) };
+}
+
+/** Fin d'un Blitz : on retient le meilleur score par matière. */
+export function applyBlitzResult(
+  progress: Progress,
+  subjectId: string,
+  score: number,
+): { progress: Progress; isBest: boolean } {
+  const best = progress.blitz[subjectId] ?? 0;
+  if (score <= best) return { progress, isBest: false };
+  return { progress: { ...progress, blitz: { ...progress.blitz, [subjectId]: score } }, isBest: true };
+}
+
+/** Score minimal (sur 10) pour réussir un test de sortie. */
+export const SKIP_TEST_MIN_SCORE = 8;
+
+/**
+ * Test de sortie réussi sur `unitId` : toutes les unités qui la précèdent
+ * dans son chemin et n'ont pas encore de couronne sont validées (2 couronnes :
+ * tous leurs exercices vus et réussis une fois). Le chemin s'ouvre jusqu'ici.
+ */
+export function applySkipTestPassed(
+  progress: Progress,
+  unitId: UnitId,
+  exercises: readonly Exercise[],
+  catalog: Catalog,
+  now: Date,
+): { progress: Progress; validatedUnits: UnitId[] } {
+  const target = catalog.units.find((u) => u.id === unitId);
+  if (target === undefined) return { progress, validatedUnits: [] };
+  const nowIso = now.toISOString();
+  const questions = { ...progress.questions };
+  const units = { ...progress.units };
+  const validatedUnits: UnitId[] = [];
+
+  for (const unit of catalog.units) {
+    if (unit.subjectId !== target.subjectId || unit.index >= target.index) continue;
+    if (unitTraits(progress, unit.id, exercises) >= 1) continue;
+    validatedUnits.push(unit.id);
+    units[unit.id] = { ...(units[unit.id] ?? emptyUnitProgress(unit.id)), firstTraitEarned: true };
+    for (const e of exercises) {
+      if (e.unitId !== unit.id) continue;
+      const q = questions[e.key] ?? emptyQuestionProgress(e.key);
+      questions[e.key] = {
+        ...q,
+        seen: Math.max(1, q.seen),
+        correct: Math.max(1, q.correct),
+        streak: Math.max(1, q.streak),
+        lastAnswerCorrect: true,
+        lastSeenAt: nowIso,
+      };
+    }
+  }
+  return { progress: { ...progress, questions, units }, validatedUnits };
 }
 
 /** Une publicité a été affichée : on remet les compteurs d'espacement à zéro. */

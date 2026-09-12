@@ -4,6 +4,7 @@ import { StyleSheet, Switch, View } from 'react-native';
 import { CARDS, CATALOG, EXERCISES, SUBJECTS, UNITS } from '@/content';
 import { BADGES, MAX_FREEZES, SHOP, allUnitTraits, applyBuyRefill, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
 import { confirm } from '@/lib/confirm';
+import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
 import { Button, Card, EnergyBadge, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
 
@@ -14,6 +15,10 @@ export default function ProfileScreen() {
   const setProgress = useProgress((s) => s.setProgress);
   const hapticsOn = useSettings((s) => s.haptics);
   const setHaptics = useSettings((s) => s.setHaptics);
+  const remindersOn = useSettings((s) => s.reminders);
+  const setReminders = useSettings((s) => s.setReminders);
+  const reminderHour = useSettings((s) => s.reminderHour);
+  const setReminderHour = useSettings((s) => s.setReminderHour);
 
   const now = new Date();
   const today = toDayKey(now);
@@ -95,6 +100,21 @@ export default function ProfileScreen() {
       </Card>
 
       <Card>
+        <Text variant="h2">⏱️ Blitz</Text>
+        <Text variant="small" secondary>
+          60 secondes, un maximum de bonnes réponses, XP doublés. Coûte 5 ⚡.
+        </Text>
+        {SUBJECTS.map((s) => (
+          <Button
+            key={s.id}
+            label={`${s.emoji} ${s.title}${progress.blitz[s.id] ? ` · record ${progress.blitz[s.id]}` : ''}`}
+            tone="secondary"
+            onPress={() => router.push({ pathname: '/session/blitz', params: { subjectId: s.id } })}
+          />
+        ))}
+      </Card>
+
+      <Card>
         <Text variant="h2">
           Badges · {badgesEarned}/{BADGES.length}
         </Text>
@@ -118,6 +138,34 @@ export default function ProfileScreen() {
           <Text variant="body">Vibrations</Text>
           <Switch value={hapticsOn} onValueChange={setHaptics} />
         </View>
+        <View style={styles.row}>
+          <Text variant="body">Rappels (série, énergie)</Text>
+          <Switch
+            value={remindersOn}
+            onValueChange={async (on) => {
+              if (on && !(await requestReminderPermission())) {
+                setReminders(false);
+                return;
+              }
+              setReminders(on);
+            }}
+          />
+        </View>
+        {remindersOn && (
+          <View style={styles.row}>
+            <Text variant="small" secondary>
+              Rappel de série à {reminderHour} h
+            </Text>
+            <View style={styles.hours}>
+              {[8, 12, 19, 21].map((h) => (
+                <Button key={h} label={`${h} h`} tone={h === reminderHour ? 'primary' : 'secondary'} style={styles.hour} onPress={() => setReminderHour(h)} />
+              ))}
+            </View>
+          </View>
+        )}
+        <Text variant="small" secondary>
+          Les rappels ne fonctionnent que dans l’application Android, pas sur le site.
+        </Text>
         <Button
           label="Réinitialiser ma progression"
           tone="danger"
@@ -151,6 +199,8 @@ const styles = StyleSheet.create({
   tile: { width: '48%', flexGrow: 1, borderWidth: 1, borderRadius: radius.md, padding: space.md, gap: 2 },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   badge: { borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: space.md },
-  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.sm },
+  hours: { flexDirection: 'row', gap: 4 },
+  hour: { paddingVertical: 6, paddingHorizontal: 10 },
   footer: { textAlign: 'center', paddingBottom: space.xl },
 });
