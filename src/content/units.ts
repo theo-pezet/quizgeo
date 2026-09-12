@@ -21,6 +21,7 @@ export const UNITS: readonly Unit[] = [
   { id: 'mkt-seo-5', subjectId: 'marketing', title: 'Netlinking et maillage interne', description: 'Liens internes, externes, nofollow, DR, negative SEO.', cards: slice('seo', 33, 41) },
   { id: 'mkt-seo-6', subjectId: 'marketing', title: 'Audit et indexation', description: 'Disavow, hreflang, thin content, crawlabilité.', cards: slice('seo', 41, 54) },
   { id: 'mkt-geo-1', subjectId: 'marketing', title: 'GEO : être cité par les IA', description: 'Generative Engine Optimization : comment ChatGPT, Perplexity et les AI Overviews choisissent leurs sources.', cards: [] },
+  { id: 'mkt-case-2', subjectId: 'marketing', title: 'Cas pratiques : SEO, GEO et netlinking', description: 'Se faire citer par ChatGPT, réparer un netlinking toxique, mailler un gros site.', cards: [] },
   { id: 'mkt-paid-1', subjectId: 'marketing', title: 'Publicité : les bases', description: 'CPC, PPC, affiliation, remarketing, ROAS.', cards: slice('paid', 0, 8) },
   { id: 'mkt-paid-2', subjectId: 'marketing', title: 'Enchères et programmatique', description: 'Ad Rank, Quality Score, DSP / SSP, RTB.', cards: slice('paid', 11, 22) },
   { id: 'mkt-paid-3', subjectId: 'marketing', title: 'Google Ads avancé', description: 'PMax, types de correspondance, extensions, tCPA / tROAS.', cards: slice('paid', 22, 33) },
@@ -29,6 +30,7 @@ export const UNITS: readonly Unit[] = [
   { id: 'mkt-analytics-2', subjectId: 'marketing', title: 'Attribution et GA4', description: 'Cohortes, conversions assistées, UTM, GTM.', cards: slice('analytics', 8, 16) },
   { id: 'mkt-analytics-3', subjectId: 'marketing', title: 'Modèles d’attribution', description: 'Linéaire, time decay, data-driven, incrémentalité.', cards: slice('analytics', 22, 30) },
   { id: 'mkt-analytics-4', subjectId: 'marketing', title: 'Tracking et UTM', description: 'Cross-device, cookieless, source / medium / campaign.', cards: slice('analytics', 31, 39) },
+  { id: 'mkt-case-3', subjectId: 'marketing', title: 'Cas pratiques : Ads et analytics', description: 'ROAS en chute, chiffres qui ne collent pas, A/B test trop beau.', cards: [] },
   { id: 'mkt-cro-1', subjectId: 'marketing', title: 'Conversion et landing pages', description: 'CTA, taux de conversion, A/B test, heatmap.', cards: slice('cro', 0, 8) },
   { id: 'mkt-cro-2', subjectId: 'marketing', title: 'Tester sérieusement', description: 'Significativité, p-value, taille d’échantillon, friction.', cards: slice('cro', 12, 21) },
   { id: 'mkt-content-1', subjectId: 'marketing', title: 'Content marketing', description: 'Evergreen, copywriting, AIDA, pillar content.', cards: slice('content', 0, 8) },
@@ -40,7 +42,7 @@ export const UNITS: readonly Unit[] = [
   { id: 'mkt-strategy-1', subjectId: 'marketing', title: 'Personas et positionnement', description: 'Démographie, psychographie, USP, inbound / outbound.', cards: slice('strategy', 13, 24) },
   { id: 'mkt-strategy-2', subjectId: 'marketing', title: 'LTV, CAC et pricing', description: 'Segmentation, nurturing, freemium, upsell, NPS.', cards: slice('strategy', 24, 36) },
   { id: 'mkt-strategy-3', subjectId: 'marketing', title: 'Marché et croissance', description: 'Blue ocean, TAM / SAM / SOM, MVP, product-market fit.', cards: slice('strategy', 73, 85) },
-  { id: 'mkt-case-1', subjectId: 'marketing', title: 'Cas pratiques', description: 'Des situations réelles, plusieurs décisions à prendre.', cards: [] },
+  { id: 'mkt-case-1', subjectId: 'marketing', title: 'Cas pratiques : le grand mix', description: 'Trafic, budget Ads, mots-clés, email, rebond : plusieurs décisions à prendre.', cards: [] },
 
   // -------------------------------------------------------------------- IA
   { id: 'ia-1', subjectId: 'ia', title: 'Les mots de l’IA', description: 'Hallucination, fine-tuning, multimodal, paramètres, open source.', cards: slice('ai', 0, 8) },

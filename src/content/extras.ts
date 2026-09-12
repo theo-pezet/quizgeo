@@ -182,6 +182,214 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
     'Le nombre de followers',
   ], 'Un rebond massif venant d’une seule source de trafic pointe vers un décalage annonce → page (ou une page trop lente sur mobile). On commence par la cohérence du message et le temps de chargement.'),
 
+  // ============================================ Cas pratiques SEO & GEO (mkt-case-2)
+  {
+    kind: 'case',
+    key: 'mkt-case-2:x:1',
+    unitId: 'mkt-case-2',
+    title: 'Se faire citer par ChatGPT',
+    scenario: 'Tu es consultant GEO pour un cabinet d’expertise-comptable. Le client veut qu’à la question « quel expert-comptable pour une start-up à Lyon ? », ChatGPT et Perplexity le citent. Son site : 40 pages de services, jamais de contenu original, aucune mention ailleurs sur le web.',
+    steps: [
+      {
+        prompt: 'Par quel chantier commencer ?',
+        choices: ['Créer des contenus qui répondent directement aux questions posées aux IA (guides « start-up à Lyon », comparatifs, chiffres locaux inédits)', 'Acheter 200 backlinks', 'Ajouter un fichier llms.txt et attendre', 'Réécrire les 40 pages de services avec une IA'],
+        answer: 0,
+        feedback: 'Les moteurs génératifs citent ce qui répond à la question, avec une information qu’ils ne trouvent pas ailleurs. Sans contenu citable, rien à citer.',
+      },
+      {
+        prompt: 'Le contenu est prêt. Comment obtenir les mentions de marque qui font le reste ?',
+        choices: ['Relations presse locale, annuaires de référence, avis clients, interventions dans des médias spécialisés : des mentions, avec ou sans lien', 'Des commentaires spam sur des forums', 'Des liens payants sur des sites étrangers', 'Rien : le contenu suffit'],
+        answer: 0,
+        feedback: 'Un LLM associe une marque à un sujet par la fréquence et la qualité des mentions dans ses sources. Les annuaires reconnus et la presse locale pèsent lourd pour une requête géolocalisée.',
+      },
+      {
+        prompt: 'Comment prouver au client que ça marche ?',
+        choices: ['Un jeu de 30 questions posées chaque semaine à ChatGPT, Perplexity et Google AI Overviews, avec le taux de citation et la position, en plus du trafic référent depuis ces outils', 'Le nombre de pages publiées', 'Les positions Google classiques', 'Une capture d’écran un jour de chance'],
+        answer: 0,
+        feedback: 'Le GEO se mesure comme le SEO : un panel de requêtes, une fréquence, un taux. Le trafic référent depuis chatgpt.com ou perplexity.ai dans GA4 confirme.',
+      },
+    ],
+    explain: 'Contenu citable et original → mentions de marque → mesure hebdomadaire des citations.',
+  },
+  {
+    kind: 'case',
+    key: 'mkt-case-2:x:2',
+    unitId: 'mkt-case-2',
+    title: 'Le netlinking qui a mal tourné',
+    scenario: 'Un e-commerçant a acheté 500 backlinks à 2 € sur des plateformes. Six mois plus tard, la Search Console montre des milliers de liens depuis des sites russes et des annuaires vides, et le trafic organique a été divisé par deux après la dernière mise à jour anti-spam.',
+    steps: [
+      {
+        prompt: 'Que fais-tu en premier ?',
+        choices: ['Un audit du profil de liens : lister les domaines toxiques (thématique, langue, spam score) et couper les campagnes d’achat', 'Acheter des liens de meilleure qualité pour diluer', 'Supprimer le site et repartir sur un nouveau domaine', 'Ne rien faire, ça passera'],
+        answer: 0,
+        feedback: 'On arrête l’hémorragie et on qualifie le problème avant de traiter. Un nouveau domaine perd toute l’autorité légitime accumulée.',
+      },
+      {
+        prompt: 'Que faire des liens toxiques ?',
+        choices: ['Demander leur retrait quand c’est possible, puis soumettre un fichier de désaveu (disavow) pour le reste', 'Les laisser : Google les ignore de toute façon', 'Les rediriger', 'Les racheter'],
+        answer: 0,
+        feedback: 'Google dit ignorer la plupart des liens spam, mais après une sanction algorithmique le désaveu reste l’outil pour montrer patte blanche. Retrait d’abord, désaveu ensuite.',
+      },
+      {
+        prompt: 'Comment reconstruire un profil de liens sain ?',
+        choices: ['Des liens gagnés : contenus de référence (données, outils, études), relations presse, partenariats, mentions dans des guides d’achat', 'Un échange de liens massif avec des sites amis', 'Des commentaires de blog avec des liens', 'Un réseau de sites satellites'],
+        answer: 0,
+        feedback: 'Un lien de qualité est un lien qu’on aurait fait sans le SEO. Dix liens de médias et de guides d’achat valent plus que mille annuaires — et ne s’effondrent pas à la prochaine mise à jour.',
+      },
+    ],
+    explain: 'Audit et arrêt, retrait puis désaveu, reconstruction par des liens gagnés.',
+  },
+  {
+    kind: 'case',
+    key: 'mkt-case-2:x:3',
+    unitId: 'mkt-case-2',
+    title: 'Maillage interne d’un gros site',
+    scenario: 'Un site média de 12 000 articles : les nouveaux articles mettent des semaines à être indexés, et les articles de fond (les « piliers ») ne se classent pas malgré leur qualité. Le menu compte 8 liens, et les articles ne se lient qu’au hasard.',
+    steps: [
+      {
+        prompt: 'Quel est le diagnostic le plus probable ?',
+        choices: ['Une architecture plate et un maillage interne pauvre : le budget de crawl se perd et l’autorité ne remonte pas vers les piliers', 'Le site est trop rapide', 'Il y a trop d’articles', 'Les titres sont trop longs'],
+        answer: 0,
+        feedback: 'Sur un gros site, le maillage interne est le levier n°1 : il guide le crawl et distribue l’autorité. Un pilier sans liens entrants est invisible.',
+      },
+      {
+        prompt: 'Quelle structure mettre en place ?',
+        choices: ['Des hubs thématiques (topic clusters) : chaque pilier reçoit des liens contextuels de tous ses satellites, et renvoie vers eux', 'Mettre tous les articles dans le menu', 'Un lien vers la page d’accueil dans chaque article', 'Des liens en pied de page vers 200 pages'],
+        answer: 0,
+        feedback: 'Le cluster concentre les liens sur la page qui doit se classer et rend le sujet lisible pour Google — et pour les IA qui résument un site.',
+      },
+      {
+        prompt: 'Comment accélérer l’indexation des nouveaux articles ?',
+        choices: ['Les lier depuis des pages fortes et souvent crawlées (accueil, piliers, articles récents), un sitemap XML à jour, et corriger les chaînes de redirections', 'Les soumettre un par un chaque jour', 'Publier moins', 'Bloquer les vieux articles dans robots.txt'],
+        answer: 0,
+        feedback: 'Google découvre par les liens : un article lié depuis l’accueil est crawlé en heures, un article orphelin en semaines. Le sitemap aide, les liens décident.',
+      },
+    ],
+    explain: 'Diagnostic d’architecture, clusters thématiques, liens depuis les pages fortes.',
+  },
+  qcm('mkt-case-2', 4, 'Une page pilier est en position 3 depuis un an, avec un contenu excellent. Le concurrent en position 1 a un contenu moins bon. La différence la plus probable ?', ['L’autorité : le concurrent a plus de liens de qualité et de mentions', 'La longueur du texte', 'La couleur des boutons', 'Le nom de domaine'], 'À contenu comparable, l’autorité tranche. Reste à savoir d’où viennent ses liens : c’est le point de départ d’une stratégie de netlinking.'),
+  qcm('mkt-case-2', 5, 'Ton client veut « être premier sur ChatGPT ». Que lui réponds-tu ?', ['Qu’il n’y a pas de position : on vise d’être cité, souvent, sur un panel de questions, et ça se mesure', 'Qu’il faut payer OpenAI', 'Que c’est impossible', 'Qu’il suffit d’un fichier llms.txt'], 'Le GEO parle de fréquence de citation, pas de rang. Poser le bon indicateur dès le départ évite les déceptions.'),
+  vf('mkt-case-2', 6, 'Un texte qui repose sur des données originales a plus de chances d’être cité par une IA qu’un texte qui résume les autres.', true, 'Information gain : le modèle n’a aucune raison de citer une source qui répète ce que dix autres disent déjà.'),
+
+  // ============================================ Cas pratiques Ads & analytics (mkt-case-3)
+  {
+    kind: 'case',
+    key: 'mkt-case-3:x:1',
+    unitId: 'mkt-case-3',
+    title: 'ROAS en chute libre',
+    scenario: 'Une boutique en ligne dépense 8 000 € / mois sur Google Ads (Search + Shopping). Le ROAS est passé de 5 à 2,5 en trois mois. Le CPC a doublé sur les termes de marque, et Performance Max absorbe 60 % du budget avec des conversions « vues » plutôt que cliquées.',
+    steps: [
+      {
+        prompt: 'Première vérification ?',
+        choices: ['La cannibalisation : PMax et les campagnes de marque se disputent les mêmes recherches et s’attribuent les conversions organiques', 'Augmenter le budget', 'Changer d’agence', 'Couper toute la publicité'],
+        answer: 0,
+        feedback: 'PMax sans exclusions prend les requêtes de marque, gonfle le CPC et s’attribue des ventes qui seraient venues gratuitement. Symptôme classique.',
+      },
+      {
+        prompt: 'Que mets-tu en place ?',
+        choices: ['Exclure la marque de PMax, isoler une campagne de marque à petit budget, et analyser l’incrémentalité (test géographique ou pause partielle)', 'Passer tout le budget en PMax', 'Enchérir plus fort sur la marque', 'Supprimer le Shopping'],
+        answer: 0,
+        feedback: 'Séparer marque et hors-marque rend le ROAS lisible. Un test d’incrémentalité dit ce que la pub apporte vraiment au-delà de ce qui serait venu seul.',
+      },
+      {
+        prompt: 'Comment juger ensuite la performance sans se faire avoir par l’attribution ?',
+        choices: ['Suivre le chiffre d’affaires total et le coût marketing total (MER), en plus du ROAS par campagne', 'Le ROAS de PMax seul', 'Les impressions', 'Le taux de clic'],
+        answer: 0,
+        feedback: 'Le ROAS d’une plateforme s’auto-évalue avec ses propres règles. Le ratio revenu / dépense globale ne ment pas.',
+      },
+    ],
+    explain: 'Cannibalisation marque / PMax, séparation et test d’incrémentalité, pilotage au MER.',
+  },
+  {
+    kind: 'case',
+    key: 'mkt-case-3:x:2',
+    unitId: 'mkt-case-3',
+    title: 'Les chiffres ne collent pas',
+    scenario: 'GA4 annonce 320 achats le mois dernier ; la boutique en a encaissé 410 ; Meta Ads en revendique 250 et Google Ads 190. La direction demande « lequel a raison ».',
+    steps: [
+      {
+        prompt: 'Pourquoi GA4 sous-compte-t-il ?',
+        choices: ['Consentement refusé, bloqueurs de pubs, navigateurs qui limitent les cookies, et un tag parfois non déclenché : GA4 ne voit qu’une partie des visiteurs', 'GA4 est cassé', 'Les 90 achats sont des fraudes', 'La boutique se trompe'],
+        answer: 0,
+        feedback: 'La source de vérité pour les ventes, c’est le back-office. GA4 est un échantillon, utile pour les proportions, pas pour le total.',
+      },
+      {
+        prompt: 'Et pourquoi Meta + Google (440) dépassent-ils le total réel (410) ?',
+        choices: ['Chaque plateforme s’attribue toute conversion qu’elle a touchée (clic ou même vue) : les mêmes achats sont comptés deux fois', 'Ils inventent des chiffres', 'Le site a un bug', 'Les clients achètent deux fois'],
+        answer: 0,
+        feedback: 'Attribution « dernier clic de MA plateforme » + conversions post-vue : additionner les plateformes double-compte toujours.',
+      },
+      {
+        prompt: 'Que proposes-tu à la direction ?',
+        choices: ['Une seule source de vérité (les ventes réelles), des plateformes lues en tendance et en proportion, et des tests d’incrémentalité pour arbitrer le budget', 'Croire Meta, qui a le plus gros chiffre', 'Croire GA4, qui a le plus petit', 'Arrêter de mesurer'],
+        answer: 0,
+        feedback: 'On ne cherche plus « qui a raison » : on décide avec des ventes réelles et des expériences, et on utilise les plateformes pour optimiser à l’intérieur de leur périmètre.',
+      },
+    ],
+    explain: 'GA4 échantillonne, les plateformes double-comptent, la vérité est dans la caisse et les tests.',
+  },
+  {
+    kind: 'case',
+    key: 'mkt-case-3:x:3',
+    unitId: 'mkt-case-3',
+    title: 'Un A/B test trop beau',
+    scenario: 'Après 2 jours et 600 visiteurs, la variante B de la page de tarifs affiche +38 % de conversion. Le CEO veut la déployer tout de suite.',
+    steps: [
+      {
+        prompt: 'Ton avis ?',
+        choices: ['Trop tôt : à ce volume, la différence n’est probablement pas significative, et 2 jours ne couvrent pas une semaine complète', 'Déployer : +38 %, c’est énorme', 'Arrêter le test, il ne sert à rien', 'Tester une variante C en plus'],
+        answer: 0,
+        feedback: 'Quelques conversions de plus ou de moins font +38 % sur 600 visiteurs. Il faut la taille d’échantillon calculée à l’avance et au moins un cycle hebdomadaire.',
+      },
+      {
+        prompt: 'Comment fixer la durée du test ?',
+        choices: ['Calculer la taille d’échantillon à partir du taux de base et de l’effet minimal détectable, puis courir jusqu’à l’atteindre — sans regarder tous les jours', 'Attendre que B gagne', 'Une semaine, toujours', 'Jusqu’à ce que le CEO soit content'],
+        answer: 0,
+        feedback: 'Regarder chaque jour et s’arrêter au premier « significatif » est la façon la plus sûre de valider du bruit (peeking).',
+      },
+      {
+        prompt: 'Le test conclut : B gagne, p = 0,03. Que reste-t-il à vérifier ?',
+        choices: ['Que le gain tient sur les segments clés (mobile, nouveaux visiteurs) et qu’il ne dégrade pas la métrique suivante (panier moyen, churn)', 'Rien, on déploie', 'Que le CEO valide', 'Que le design est joli'],
+        answer: 0,
+        feedback: 'Une variante peut gagner en moyenne et perdre sur mobile, ou convertir plus de clients qui résilient. On regarde une marche plus loin.',
+      },
+    ],
+    explain: 'Taille d’échantillon avant, pas de peeking pendant, segments et métrique suivante après.',
+  },
+  qcm('mkt-case-3', 4, 'Ta campagne Meta a un CPA de 12 € sur les 7 premiers jours puis 30 € les jours suivants, sans changement. Cause la plus probable ?', ['La fatigue publicitaire : l’audience a trop vu la même création, la fréquence monte et le CTR baisse', 'Meta a changé ses prix', 'Le produit est devenu mauvais', 'Le pixel est cassé'], 'Fréquence > 3-4 et CTR en baisse = fatigue. Nouvelles créations, élargissement d’audience, ou pause.'),
+  qcm('mkt-case-3', 5, 'Un client veut « une campagne qui convertit » avec un budget de 300 € pour un produit à 2 000 €. Que dis-tu ?', ['Qu’à 300 € on ne peut ni apprendre ni conclure : proposer un test de notoriété ou de génération de leads, avec des objectifs réalistes', 'Que c’est faisable en Search', 'Qu’il faut passer en PMax', 'Qu’on garantit 5 ventes'], 'Une campagne a besoin d’assez de conversions pour apprendre (50 par mois, dit Google). Avec un panier à 2 000 € et 300 €, on mesure des leads, pas des ventes.'),
+  vf('mkt-case-3', 6, 'Si Google Ads affiche 190 conversions et Meta 250, la publicité a généré 440 ventes.', false, 'Chaque plateforme compte les conversions qu’elle a touchées, souvent en post-vue. Les mêmes ventes se retrouvent dans les deux colonnes.'),
+
+  // ============================================ Cas pratiques CRO & email (mkt-case-1, suite)
+  {
+    kind: 'case',
+    key: 'mkt-case-1:x:6',
+    unitId: 'mkt-case-1',
+    title: 'La newsletter que personne n’ouvre',
+    scenario: 'Une newsletter B2B hebdo : 12 000 abonnés, taux d’ouverture passé de 32 % à 14 % en un an, taux de désabonnement stable, aucun changement de fréquence.',
+    steps: [
+      {
+        prompt: 'Que vérifies-tu avant de toucher au contenu ?',
+        choices: ['La délivrabilité et la qualité de la liste : authentification (SPF, DKIM, DMARC), réputation, adresses inactives ou invalides accumulées', 'La couleur du bouton', 'Le jour d’envoi', 'La longueur du titre'],
+        answer: 0,
+        feedback: 'Une baisse lente et régulière avec désabonnement stable signe une liste qui vieillit et des emails qui finissent en spam ou dans des boîtes mortes.',
+      },
+      {
+        prompt: 'La liste contient 4 000 adresses sans ouverture depuis un an. Que faire ?',
+        choices: ['Une campagne de réactivation, puis retirer celles qui restent inactives : une liste plus petite mais vivante améliore la réputation', 'Les garder, un envoi ne coûte rien', 'Les envoyer deux fois plus', 'Les vendre'],
+        answer: 0,
+        feedback: 'Les FAI jugent la réputation sur l’engagement. Envoyer à des morts fait baisser la délivrabilité pour tout le monde.',
+      },
+      {
+        prompt: 'Une fois la liste saine, comment remonter l’ouverture ?',
+        choices: ['Tester les objets (A/B), segmenter par intérêt, et rendre le contenu attendu : un format reconnaissable, une promesse tenue', 'Mettre « URGENT » dans l’objet', 'Envoyer chaque jour', 'Ajouter plus d’images'],
+        answer: 0,
+        feedback: 'L’ouverture se gagne sur la durée : un expéditeur reconnu, une promesse claire, un contenu qui la tient.',
+      },
+    ],
+    explain: 'Délivrabilité et hygiène de liste d’abord, réactivation, puis objets et segmentation.',
+  },
+
   // ===================================================== Culture IA (ia-9)
   qcm('ia-9', 1, 'Qui développe Claude ?', ['Anthropic', 'OpenAI', 'Google DeepMind', 'Meta'], 'Anthropic, fondée en 2021 par d’anciens chercheurs d’OpenAI. Claude est sa famille de modèles ; l’entreprise met en avant la sécurité et l’alignement (Constitutional AI).'),
   qcm('ia-9', 2, 'Qui développe ChatGPT ?', ['OpenAI', 'Anthropic', 'Microsoft', 'Mistral AI'], 'OpenAI a lancé ChatGPT en novembre 2022, sur la base de GPT-3.5. C’est le lancement qui a fait entrer les LLM dans le grand public.'),
