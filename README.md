@@ -17,8 +17,14 @@ et des cas pratiques.
 - **Une explication à chaque réponse**, juste ou fausse, avec un exemple.
 - **Le deck et le chemin se parlent** : les leçons nourrissent la révision espacée.
 - **Des cas pratiques** à plusieurs décisions, avec un retour à chaque étape.
-- **Trois couronnes par unité**, qui peuvent redescendre : la maîtrise se garde.
-- Série quotidienne avec gels, badges, niveaux, sessions libres par matière.
+- **Cinq couronnes par unité** : le chemin avance à 3, la maîtrise va à 5,
+  et sans révision une couronne se fissure tous les 14 jours.
+- **Énergie** (25, une leçon en coûte 5, une erreur 1, un sans-faute en
+  rembourse 2, +1 toutes les 12 min) — les révisions restent gratuites.
+- **Gemmes** et boutique (recharge, gel de série, boost XP ×2), **quêtes du
+  jour**, **ligue hebdomadaire** (30 joueurs, 10 divisions ; adversaires
+  simulés hors ligne, remplaçables par un service en ligne).
+- Série quotidienne avec gels, 17 badges, niveaux, sessions libres par matière.
 
 ## Architecture
 
@@ -45,7 +51,7 @@ ordre, cas pratique.
 ```
 npm install
 npm run typecheck
-npm test              # 245 tests ; src/game/ doit rester à 100 % de couverture
+npm test              # 321 tests ; src/game/ doit rester à 100 % de couverture
 npx expo start        # puis w (web), a (Android)
 npx expo export --platform web   # build statique dans dist/
 ```

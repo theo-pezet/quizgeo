@@ -19,6 +19,7 @@ export default function TabsLayout() {
         tabBarLabelStyle: { fontWeight: '700', fontSize: 11 },
       }}>
       <Tabs.Screen name="index" options={{ title: 'Parcours', tabBarIcon: icon('🗺️') }} />
+      <Tabs.Screen name="league" options={{ title: 'Ligue', tabBarIcon: icon('🏆') }} />
       <Tabs.Screen name="deck" options={{ title: 'Deck', tabBarIcon: icon('🃏') }} />
       <Tabs.Screen name="profile" options={{ title: 'Profil', tabBarIcon: icon('🏅') }} />
     </Tabs>

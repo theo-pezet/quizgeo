@@ -2,21 +2,28 @@ import { router } from 'expo-router';
 import { StyleSheet, Switch, View } from 'react-native';
 
 import { CARDS, CATALOG, EXERCISES, SUBJECTS, UNITS } from '@/content';
-import { BADGES, allUnitTraits, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
+import { BADGES, MAX_FREEZES, SHOP, allUnitTraits, applyBuyRefill, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
 import { confirm } from '@/lib/confirm';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, Card, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
+import { Button, Card, EnergyBadge, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
 
 export default function ProfileScreen() {
   const colors = useColors();
   const progress = useProgress((s) => s.progress);
   const reset = useProgress((s) => s.reset);
+  const setProgress = useProgress((s) => s.setProgress);
   const hapticsOn = useSettings((s) => s.haptics);
   const setHaptics = useSettings((s) => s.setHaptics);
 
-  const today = toDayKey(new Date());
+  const now = new Date();
+  const today = toDayKey(now);
   const level = levelProgress(progress.xp);
-  const traits = allUnitTraits(progress, EXERCISES, CATALOG);
+  const traits = allUnitTraits(progress, EXERCISES, CATALOG, today);
+  const energyValue = currentEnergy(progress.energy, now);
+  const boostLeft = boostMinutesLeft(progress.boost, now);
+  const buy = (next: typeof progress | null) => {
+    if (next) setProgress(next);
+  };
   const crowns = Object.values(traits).reduce<number>((a, t) => a + t, 0);
   const queue = reviewQueueSize(progress);
   const deck = deckStats(progress.cards, CARDS.map((c) => c.id), today);
@@ -37,7 +44,7 @@ export default function ProfileScreen() {
       <View style={styles.grid}>
         <Tile emoji={isActiveToday(progress.streak, today) ? '🔥' : streakIsAtRisk(progress.streak, today) ? '⚠️' : '🩶'} value={`${progress.streak.current}`} label={`jours de série · record ${progress.streak.best}`} />
         <Tile emoji="🧊" value={`${progress.streak.freezes}`} label="gels (1 tous les 7 jours, max 2)" />
-        <Tile emoji="👑" value={`${crowns}`} label={`couronnes sur ${UNITS.length * 3}`} />
+        <Tile emoji="👑" value={`${crowns}`} label={`couronnes sur ${UNITS.length * 5}`} />
         <Tile emoji="🃏" value={`${deck.review}`} label={`cartes acquises sur ${deck.total}`} />
       </View>
 
@@ -49,6 +56,35 @@ export default function ProfileScreen() {
           </Text>
         </Card>
       )}
+
+      <Card>
+        <View style={styles.row}>
+          <Text variant="h2">Boutique</Text>
+          <Text variant="h2">💎 {progress.gems}</Text>
+        </View>
+        <EnergyBadge energy={progress.energy} now={now} />
+        <Button
+          label={`Recharger l’énergie · 💎 ${SHOP.refill.cost}`}
+          tone="secondary"
+          disabled={progress.gems < SHOP.refill.cost || energyValue >= 25}
+          onPress={() => buy(applyBuyRefill(progress, new Date()))}
+        />
+        <Button
+          label={`Gel de série (${progress.streak.freezes}/${MAX_FREEZES}) · 💎 ${SHOP.freeze.cost}`}
+          tone="secondary"
+          disabled={progress.gems < SHOP.freeze.cost || progress.streak.freezes >= MAX_FREEZES}
+          onPress={() => buy(buyFreeze(progress))}
+        />
+        <Button
+          label={boostLeft > 0 ? `Boost XP ×2 actif (${boostLeft} min) · prolonger 💎 ${SHOP.boost.cost}` : `Boost XP ×2 pendant ${SHOP.boost.minutes} min · 💎 ${SHOP.boost.cost}`}
+          tone="secondary"
+          disabled={progress.gems < SHOP.boost.cost}
+          onPress={() => buy(buyBoost(progress, new Date()))}
+        />
+        <Text variant="small" secondary>
+          Les gemmes se gagnent en jouant : leçon +10, sans-faute +20, quêtes, paliers de série (7 j : 50, 30 j : 200).
+        </Text>
+      </Card>
 
       <Card>
         <Text variant="h2">Entraînement</Text>

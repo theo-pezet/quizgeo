@@ -10,12 +10,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { emptyProgress, type Progress } from '@/game';
+import { applyTick, emptyProgress, migrateProgress, type Progress } from '@/game';
 
 interface ProgressStore {
   progress: Progress;
   hydrated: boolean;
   setProgress: (progress: Progress) => void;
+  /** Remet l'état au présent (quêtes du jour, ligue, énergie régénérée). */
+  tick: () => void;
   reset: () => void;
   markHydrated: () => void;
 }
@@ -26,15 +28,24 @@ export const useProgress = create<ProgressStore>()(
       progress: emptyProgress(),
       hydrated: false,
       setProgress: (progress) => set({ progress }),
-      reset: () => set({ progress: emptyProgress() }),
+      tick: () => set((state) => ({ progress: applyTick(state.progress, new Date()) })),
+      reset: () => set({ progress: applyTick(emptyProgress(), new Date()) }),
       markHydrated: () => set({ hydrated: true }),
     }),
     {
       name: 'progress.v1',
-      version: 1,
+      version: 2,
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({ progress: state.progress }),
-      onRehydrateStorage: () => (state) => state?.markHydrated(),
+      // Quelle que soit la version stockée, on complète les champs manquants.
+      migrate: (persisted) => {
+        const raw = (persisted as { progress?: unknown } | undefined)?.progress;
+        return { progress: migrateProgress(raw) } as unknown as ProgressStore;
+      },
+      onRehydrateStorage: () => (state) => {
+        state?.tick();
+        state?.markHydrated();
+      },
     },
   ),
 );

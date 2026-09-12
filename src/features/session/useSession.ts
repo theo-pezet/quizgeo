@@ -16,6 +16,7 @@ import {
   applyAnswerAction,
   applyCardReview,
   applySessionEnd,
+  applyStartLesson,
   composeFreeSession,
   composeReviewSession,
   composeUnitSession,
@@ -48,7 +49,7 @@ export interface Feedback {
 export interface SessionState {
   steps: Step[];
   index: number;
-  phase: 'question' | 'feedback' | 'done';
+  phase: 'question' | 'feedback' | 'done' | 'noEnergy';
   feedback: Feedback | null;
   /** Bonnes réponses sur les exercices du parcours principal (hors rattrapage). */
   correctCount: number;
@@ -72,22 +73,34 @@ function compose(spec: SessionSpec, progress: Progress): Exercise[] {
   }
 }
 
+/**
+ * Prélève l'énergie de la leçon et compose la file. Une seule fois par
+ * session : le résultat est mémorisé dans un ref par l'appelant.
+ */
+function start(spec: SessionSpec): { steps: Step[]; started: boolean; startProgress: Progress } {
+  const store = useProgress.getState();
+  const started = applyStartLesson(store.progress, spec.mode, new Date());
+  if (started === null) return { steps: [], started: false, startProgress: store.progress };
+  store.setProgress(started);
+  return {
+    steps: compose(spec, started).map((exercise) => ({ exercise, retry: false })),
+    started: true,
+    startProgress: started,
+  };
+}
+
 export function useSession(spec: SessionSpec) {
-  const startProgress = useRef<Progress>(useProgress.getState().progress);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const init = useMemo(() => start(spec), []);
+  const startProgress = useRef<Progress>(init.startProgress);
   const credited = useRef(new Set<string>());
   const retryQueue = useRef<Exercise[]>([]);
-
-  const initialSteps = useMemo(
-    () => compose(spec, startProgress.current).map((exercise) => ({ exercise, retry: false })),
-    // La composition ne doit se faire qu'une fois par session.
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const initialSteps = init.steps;
 
   const [state, setState] = useState<SessionState>({
     steps: initialSteps,
     index: 0,
-    phase: initialSteps.length === 0 ? 'done' : 'question',
+    phase: !init.started ? 'noEnergy' : initialSteps.length === 0 ? 'done' : 'question',
     feedback: null,
     correctCount: 0,
     mainCount: initialSteps.length,
@@ -153,6 +166,7 @@ export function useSession(spec: SessionSpec) {
         now,
         questions: EXERCISES,
         catalog: CATALOG,
+        bestCombo: s.bestCombo,
         progressAtSessionStart: startProgress.current,
       });
       store.setProgress(result.progress);

@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { UNIT_BY_ID } from '@/content';
-import { BADGES, levelProgress } from '@/game';
+import { BADGES, levelProgress, questLabel } from '@/game';
 import { useProgress } from '@/store/progress';
 import { Button, Card, Crowns, ProgressBar, Screen, Text, space, useColors } from '@/ui';
 
@@ -41,6 +41,28 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
         </Card>
       )}
 
+      {r && (r.gemsGained > 0 || r.energyRefunded > 0) && (
+        <Card>
+          <Text variant="bodyBold">
+            💎 +{r.gemsGained} gemmes{r.energyRefunded > 0 ? ` · ⚡ +${r.energyRefunded} énergie (sans faute)` : ''}
+          </Text>
+          <Text variant="small" secondary>
+            Solde : 💎 {progress.gems}. À dépenser dans le Profil : recharge, gel de série, boost XP.
+          </Text>
+        </Card>
+      )}
+
+      {r && r.questsCompleted.length > 0 && (
+        <Card style={{ borderColor: colors.success }}>
+          <Text variant="bodyBold">🎯 Quête accomplie</Text>
+          {r.questsCompleted.map((q) => (
+            <Text key={q.id} variant="small">
+              {questLabel(q)} · 💎 {q.reward}
+            </Text>
+          ))}
+        </Card>
+      )}
+
       {r && spec.mode === 'unit' && (
         <Card>
           <View style={styles.row}>
@@ -49,10 +71,10 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
           </View>
           <Text variant="small" secondary>
             {r.traitsAfter > r.traitsBefore
-              ? `Une de plus ! ${r.traitsAfter === 3 ? 'Unité maîtrisée.' : 'Refais l’unité pour la suivante.'}`
-              : r.traitsAfter === 3
-                ? 'Toujours maîtrisée.'
-                : 'Pas de nouvelle couronne : il faut voir tous les exercices et les réussir.'}
+              ? `Une de plus ! ${r.traitsAfter >= 5 ? 'Unité légendaire.' : r.traitsAfter >= 3 ? 'Le chemin avance ; il reste la maîtrise (5).' : 'Refais l’unité pour la suivante.'}`
+              : r.traitsAfter >= 5
+                ? 'Toujours légendaire.'
+                : 'Pas de nouvelle couronne : il faut réussir tous les exercices de l’unité, sur plusieurs sessions.'}
           </Text>
         </Card>
       )}

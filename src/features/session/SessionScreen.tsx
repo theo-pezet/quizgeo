@@ -4,7 +4,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import { SUBJECT_BY_ID, UNIT_BY_ID } from '@/content';
 import { confirm } from '@/lib/confirm';
 import { haptics } from '@/lib/haptics';
-import { Button, ProgressBar, Screen, Text, space, useColors } from '@/ui';
+import { boostMinutesLeft } from '@/game';
+import { useProgress } from '@/store/progress';
+import { Button, NoEnergySheet, ProgressBar, Screen, Text, space, useColors } from '@/ui';
 
 import { ExerciseView } from './ExerciseView';
 import { FeedbackPanel } from './FeedbackPanel';
@@ -14,6 +16,7 @@ import { useSession, type SessionSpec } from './useSession';
 export function SessionScreen({ spec, title }: { spec: SessionSpec; title: string }) {
   const colors = useColors();
   const { state, current, answer, next, ratio } = useSession(spec);
+  const boostLeft = useProgress((s) => boostMinutesLeft(s.progress.boost, new Date()));
   const unit = spec.mode === 'unit' ? UNIT_BY_ID.get(spec.unitId) : undefined;
   const color = unit ? (SUBJECT_BY_ID.get(unit.subjectId)?.color ?? colors.primary) : colors.primary;
 
@@ -21,6 +24,14 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
     confirm('Quitter la session ?', 'Tes réponses sont déjà enregistrées, mais cette session ne comptera pas dans ta série.', () =>
       router.back(),
     );
+
+  if (state.phase === 'noEnergy') {
+    return (
+      <Screen>
+        <NoEnergySheet onClose={() => router.back()} />
+      </Screen>
+    );
+  }
 
   if (state.phase === 'done') {
     return <SessionEnd state={state} spec={spec} color={color} />;
@@ -53,6 +64,8 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
       <Text variant="small" secondary>
         {title}
         {current.retry ? ' · rattrapage' : ''}
+        {boostLeft > 0 ? ` · ⚡ XP ×2 (${boostLeft} min)` : ''}
+        {state.combo >= 3 ? ` · 🔥 ×${state.combo}` : ''}
       </Text>
       <ExerciseView
         key={`${current.exercise.key}:${state.index}`}
