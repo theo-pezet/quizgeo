@@ -588,6 +588,107 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
   qcm('web-4', 7, 'Qu’affiche ce code ?', ['true', 'false', '"1"', 'Une erreur'], '=== compare valeur ET type : le nombre 1 et la chaîne "1" sont différents. == (double égal) aurait converti et rendu true — d’où la règle : toujours ===.', { code: { lang: 'js', src: 'console.log(1 === "1");' } }),
   vf('web-4', 8, 'fetch() permet d’appeler une API depuis le navigateur.', true, 'fetch("https://api…").then(r => r.json()) : c’est ainsi qu’une page charge des données sans se recharger (le « A » de AJAX, en version moderne).'),
 
+  // ================================================= HTML sémantique (web-html-2)
+  qcm('web-html-2', 101, 'Quel problème SEO dans ce code ?', ['Deux <h1> : il n’en faut qu’un, les autres titres passent en <h2>', 'Il manque un <h3>', 'Les <p> sont interdits', 'Aucun'], 'Le <h1> est le titre de la page ; les sections sont des <h2>. Deux <h1> diluent le sujet.', { code: { lang: 'html', src: '<h1>Guide des backlinks</h1>\n<p>…</p>\n<h1>Comment en obtenir</h1>\n<p>…</p>' } }),
+  qcm('web-html-2', 102, 'Que fait cette balise ?', ['Retire la page des résultats Google tout en laissant suivre ses liens', 'Bloque l’accès à la page', 'Accélère l’indexation', 'Cache la page aux utilisateurs'], 'noindex = pas dans l’index ; follow = les liens transmettent quand même. Parfait pour une page de remerciement.', { code: { lang: 'html', src: '<meta name="robots" content="noindex, follow">' } }),
+  qcm('web-html-2', 103, 'Ton site s’affiche minuscule sur mobile, en version bureau rétrécie. Cause probable ?', ['Il manque la meta viewport', 'Les images sont trop grandes', 'Le CSS est trop long', 'Le serveur est lent'], '<meta name="viewport" content="width=device-width, initial-scale=1"> dit au mobile d’utiliser sa vraie largeur.'),
+  qcm('web-html-2', 104, 'Le catalogue a /chaussures, /chaussures?tri=prix et /chaussures?tri=nom avec le même contenu. Que fais-tu ?', ['Un <link rel="canonical"> vers /chaussures sur les trois', 'Trois pages différentes, c’est plus de trafic', 'Bloquer /chaussures dans robots.txt', 'Rien'], 'Le canonical regroupe les signaux sur une URL et évite le contenu dupliqué.'),
+  {
+    kind: 'match',
+    key: 'web-html-2:x:105',
+    unitId: 'web-html-2',
+    prompt: 'Associe chaque balise sémantique à son rôle',
+    pairs: [
+      { left: '<nav>', right: 'Le menu de navigation' },
+      { left: '<main>', right: 'Le contenu principal, unique' },
+      { left: '<article>', right: 'Un contenu autonome (billet, fiche)' },
+      { left: '<footer>', right: 'Le pied de page' },
+    ],
+  },
+
+  // ================================================== CSS responsive (web-css-2)
+  qcm('web-css-2', 101, 'De quelle couleur est le texte du paragraphe ?', ['Rouge : l’id l’emporte sur la classe', 'Bleu : la dernière règle gagne', 'Noir', 'Les deux'], 'Spécificité : un id (#intro) pèse plus qu’une classe (.texte), quel que soit l’ordre.', { code: { lang: 'css', src: '.texte { color: blue; }\n#intro { color: red; }' } }),
+  qcm('web-css-2', 102, 'Sur un écran de 500 px, combien de colonnes ?', ['1', '3', '2', 'Aucune'], 'La règle de base (mobile-first) donne 1 colonne ; la media query n’active les 3 colonnes qu’à partir de 900 px.', { code: { lang: 'css', src: '.grille { display: grid; grid-template-columns: 1fr; }\n@media (min-width: 900px) {\n  .grille { grid-template-columns: repeat(3, 1fr); }\n}' } }),
+  qcm('web-css-2', 103, 'Quelle largeur totale occupe cette boîte ?', ['300 px : border-box inclut le padding', '340 px', '320 px', '260 px'], 'Avec box-sizing: border-box, width comprend padding et bordure. Sans, ce serait 300 + 2 × 20 = 340 px.', { code: { lang: 'css', src: '.carte {\n  box-sizing: border-box;\n  width: 300px;\n  padding: 20px;\n}' } }),
+  qcm('web-css-2', 104, 'Tu veux centrer horizontalement et verticalement un bouton dans son conteneur. Le plus simple ?', ['display: flex; justify-content: center; align-items: center; sur le conteneur', 'margin: auto sur le bouton seul', 'text-align: center', 'position: absolute'], 'Flexbox règle le centrage en deux propriétés ; c’est l’usage numéro un.'),
+  vf('web-css-2', 105, 'Déclarer width et height sur une <img> aide à réduire le CLS.', true, 'Le navigateur réserve la place avant que l’image arrive : le texte ne saute plus.'),
+
+  // ================================================== JS navigateur (web-js-2)
+  qcm('web-js-2', 101, 'Qu’affiche ce code ?', ['[2, 4]', '[1, 2, 3, 4]', '[1, 3]', 'Une erreur'], 'filter garde les éléments pour lesquels la fonction rend true : les nombres pairs.', { code: { lang: 'js', src: 'const n = [1, 2, 3, 4];\nconsole.log(n.filter((x) => x % 2 === 0));' } }),
+  qcm('web-js-2', 102, 'Qu’affiche ce code ?', ['undefined puis les produits', 'Les produits puis undefined', 'Une erreur', 'Rien'], 'Sans await, fetch rend une promesse et le code continue : produits n’est pas encore là. Il faut `const r = await fetch(url)`.', { code: { lang: 'js', src: 'let produits;\nfetch("/api/produits").then((r) => r.json()).then((d) => { produits = d; });\nconsole.log(produits);' } }),
+  qcm('web-js-2', 103, 'Que fait ce code ?', ['Empêche l’envoi classique du formulaire et affiche l’email saisi', 'Envoie le formulaire deux fois', 'Vide le formulaire', 'Rien : il manque un import'], 'preventDefault() bloque le rechargement de page ; on récupère ensuite la valeur du champ.', { code: { lang: 'js', src: 'form.addEventListener("submit", (e) => {\n  e.preventDefault();\n  console.log(form.email.value);\n});' } }),
+  qcm('web-js-2', 104, 'Qu’affiche ce code ?', ['1200', '"1200"', 'Une erreur', 'undefined'], 'JSON.parse transforme le texte en objet ; budget est un nombre.', { code: { lang: 'js', src: 'const texte = \'{"nom": "Été", "budget": 1200}\';\nconst data = JSON.parse(texte);\nconsole.log(data.budget);' } }),
+  qcm('web-js-2', 105, 'Pourquoi mettre async sur un script de tracking ?', ['Pour qu’il ne bloque pas l’affichage de la page pendant son chargement', 'Pour qu’il s’exécute plus vite', 'Pour le cacher', 'C’est obligatoire pour GTM'], 'Un script sans async/defer arrête le rendu jusqu’à son téléchargement : mauvais pour le LCP.'),
+
+  // ============================================== Web du marketeur (web-mkt-1)
+  qcm('web-mkt-1', 101, 'Que fait ce code ?', ['Pousse un événement « achat » dans le dataLayer, que GTM peut utiliser pour déclencher des tags', 'Envoie directement les données à Google Analytics', 'Crée un cookie', 'Affiche un message'], 'Le site parle au dataLayer ; GTM écoute et décide quels tags envoyer (GA4, Meta…).', { code: { lang: 'js', src: 'window.dataLayer = window.dataLayer || [];\ndataLayer.push({\n  event: "achat",\n  valeur: 89.9,\n  devise: "EUR"\n});' } }),
+  qcm('web-mkt-1', 102, 'Un tag GA4 doit partir quand on clique sur les boutons « Essayer ». Dans GTM, il te faut…', ['Un déclencheur « clic » filtré sur la classe ou l’attribut data-cta du bouton, relié au tag', 'Modifier le code du site', 'Un nouveau conteneur', 'Un pixel Meta'], 'Tag (quoi) + déclencheur (quand) ; une variable peut récupérer le texte du bouton pour le passer en paramètre.'),
+  qcm('web-mkt-1', 103, 'Que produit ce bloc ?', ['Des données structurées Produit, pouvant afficher prix et étoiles dans Google', 'Une balise cachée sans effet', 'Un lien vers schema.org', 'Une erreur JavaScript'], 'JSON-LD est lu par les moteurs, pas exécuté par le navigateur.', { code: { lang: 'html', src: '<script type="application/ld+json">\n{ "@context": "https://schema.org",\n  "@type": "Product",\n  "name": "Casque X",\n  "offers": { "@type": "Offer", "price": "89.90", "priceCurrency": "EUR" } }\n</script>' } }),
+  qcm('web-mkt-1', 104, 'Le partage LinkedIn de ton article montre le logo du site au lieu de l’illustration. Que régler ?', ['La balise og:image (et og:title, og:description) de la page', 'Le <title>', 'L’attribut alt', 'Le sitemap'], 'Open Graph pilote l’aperçu social ; sans og:image, la plateforme choisit une image au hasard ou le logo.'),
+  vf('web-mkt-1', 105, 'Avec le RGPD, les pixels publicitaires peuvent se charger avant le consentement si le bandeau est affiché.', false, 'Afficher un bandeau ne suffit pas : les tags non essentiels attendent un consentement explicite (Consent Mode dans GTM).'),
+
+  // ======================================================= Cas pratiques web
+  {
+    kind: 'case',
+    key: 'web-case-1:x:1',
+    unitId: 'web-case-1',
+    title: 'La conversion ne remonte pas',
+    scenario: 'Depuis la refonte du site, GA4 n’enregistre plus aucune inscription, alors que les emails d’inscription arrivent bien. Le tag GA4 « inscription » existe dans GTM, déclenché sur « envoi de formulaire ».',
+    steps: [
+      {
+        prompt: 'Premier réflexe ?',
+        choices: ['Ouvrir le mode Aperçu de GTM (ou la console) et vérifier si l’événement d’envoi apparaît', 'Recréer le tag', 'Changer de CMP', 'Attendre 48 h'],
+        answer: 0,
+        feedback: 'On observe avant de toucher : le mode Aperçu montre les événements reçus et les tags déclenchés.',
+      },
+      {
+        prompt: 'L’événement d’envoi n’apparaît pas. Le nouveau formulaire est en JavaScript et ne recharge pas la page. Solution ?',
+        choices: ['Faire pousser un événement personnalisé dans le dataLayer à la réussite de l’inscription, et déclencher le tag dessus', 'Utiliser un déclencheur « page vue »', 'Recharger la page après envoi', 'Désactiver le JavaScript'],
+        answer: 0,
+        feedback: 'Le déclencheur natif « envoi de formulaire » rate les formulaires JavaScript ; un dataLayer.push({ event: "inscription" }) est fiable.',
+      },
+      {
+        prompt: 'Ça marche en Aperçu, mais toujours rien en production. Piste ?',
+        choices: ['Le consentement : le tag est bloqué tant que l’utilisateur n’a pas accepté — vérifier Consent Mode et la CMP', 'GA4 est en panne', 'Le dataLayer est trop grand', 'Il faut un pixel Meta'],
+        answer: 0,
+        feedback: 'En Aperçu on a souvent consenti ; les visiteurs réels non. Le tag doit attendre le consentement, mais il faut que la CMP le transmette bien.',
+      },
+    ],
+    explain: 'Observer (Aperçu), instrumenter (dataLayer.push), vérifier le consentement.',
+  },
+  {
+    kind: 'case',
+    key: 'web-case-1:x:2',
+    unitId: 'web-case-1',
+    title: 'La page d’accueil est lente',
+    scenario: 'PageSpeed Insights donne un LCP de 5,2 s sur mobile. L’image du hero fait 3 Mo en PNG, chargée en lazy loading, et trois scripts de tracking sont en tête de page sans async.',
+    steps: [
+      {
+        prompt: 'Par quoi commencer ?',
+        choices: ['L’image du hero : la convertir (WebP/AVIF), la redimensionner, retirer le lazy loading et la précharger', 'Supprimer tout le CSS', 'Changer d’hébergeur', 'Ajouter un CDN pour les polices'],
+        answer: 0,
+        feedback: 'Le LCP, c’est presque toujours le plus gros élément visible. 3 Mo en lazy loading est le pire des deux mondes.',
+      },
+      {
+        prompt: 'Et les scripts de tracking ?',
+        choices: ['Les passer en async (ou les charger via GTM), pour ne plus bloquer le rendu', 'Les mettre dans le CSS', 'Les supprimer définitivement', 'Les dupliquer en bas de page'],
+        answer: 0,
+        feedback: 'Un script bloquant en <head> retarde tout l’affichage. async ou defer, et un seul conteneur GTM.',
+      },
+      {
+        prompt: 'Comment vérifier le gain ?',
+        choices: ['Remesurer avec PageSpeed / Lighthouse et suivre les Core Web Vitals réels dans la Search Console', 'Regarder si ça « semble » plus rapide', 'Demander à un collègue', 'Attendre la prochaine core update'],
+        answer: 0,
+        feedback: 'Mesure en labo (Lighthouse) pour itérer, mesure terrain (Search Console) pour valider sur de vrais utilisateurs.',
+      },
+    ],
+    explain: 'Image du hero d’abord, scripts bloquants ensuite, mesure avant / après.',
+  },
+  qcm('web-case-1', 3, 'Un lien de campagne : https://site.fr/offre?utm_source=newsletter&utm_medium=email&utm_campaign=rentree. Que voit GA4 ?', ['Source newsletter, medium email, campagne rentree — la session est attribuée à la newsletter', 'Rien : les UTM sont pour Google Ads', 'Une page 404', 'Un contenu dupliqué'], 'Les paramètres utm_* sont lus par GA4 pour attribuer la source. Ajouter un canonical sur /offre évite le dupliqué côté SEO.'),
+
+  qcm('web-case-1', 4, 'Après la refonte, 300 anciennes URL renvoient une 404 et le trafic SEO chute. La bonne réponse ?', ['Des redirections 301 de chaque ancienne URL vers la page équivalente', 'Laisser Google réindexer tout seul', 'Bloquer les 404 dans robots.txt', 'Supprimer le sitemap'], 'La 301 transfère l’autorité et guide l’utilisateur ; une 404 perd les deux. C’est la première tâche de toute migration.'),
+  vf('web-case-1', 5, 'Un bouton codé en <div onclick="…"> est aussi accessible et suivi qu’un vrai <button>.', false, 'Le <div> n’est ni focusable au clavier, ni annoncé comme bouton par les lecteurs d’écran, et les déclencheurs GTM « clic » le repèrent moins bien. Utiliser <button> ou <a>.'),
+
   // ==================================================== Python : lire du code
   qcm('py-2', 101, 'Qu’affiche ce code ?', ['Bonjour Lia', 'Bonjour {prenom}', 'prenom', 'Une erreur'], 'Le f devant la chaîne active l’interpolation : {prenom} est remplacé par la valeur de la variable.', { code: { lang: 'python', src: 'prenom = "Lia"\nprint(f"Bonjour {prenom}")' } }),
   qcm('py-2', 102, 'Qu’affiche ce code ?', ["<class 'str'>", "<class 'int'>", '42', 'Une erreur'], 'Entre guillemets, "42" est une chaîne de caractères, pas un nombre. int("42") le convertirait.', { code: { lang: 'python', src: 'x = "42"\nprint(type(x))' } }),
