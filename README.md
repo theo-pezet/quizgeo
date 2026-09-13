@@ -6,8 +6,10 @@ l'IA, Python et HTML / CSS / JavaScript. Un chemin d'unités par matière
 et des cas pratiques.
 
 - **Web** : https://theo-pezet.github.io/quizgeo/ (publié à chaque push sur `main`)
-- **APK Android** : onglet *Releases* (construit par GitHub Actions sur un tag `v*`,
-  ou à la main via *Actions → Android APK → Run workflow*)
+- **APK Android** : onglet *Releases* (construit et signé par GitHub Actions ;
+  *Actions → Android APK → Run workflow* avec le nom de version). Chrome
+  affiche « fichier dangereux » pour tout APK hors Play Store : **Conserver**,
+  puis **Installer**. La clé de signature : `docs/play-store/signature.md`.
 
 ## Ce qui est différent de Duolingo
 
