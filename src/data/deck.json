@@ -6938,7 +6938,7 @@
   },
   {
    "id": "web-javascript",
-   "subject": "web",
+   "subject": "html",
    "topic": "code",
    "level": "debutant",
    "term": "JavaScript",
@@ -6950,7 +6950,7 @@
   },
   {
    "id": "web-front-end",
-   "subject": "web",
+   "subject": "html",
    "topic": "code",
    "level": "debutant",
    "term": "Front-end",
@@ -6962,7 +6962,7 @@
   },
   {
    "id": "web-back-end",
-   "subject": "web",
+   "subject": "html",
    "topic": "code",
    "level": "debutant",
    "term": "Back-end",
@@ -6974,7 +6974,7 @@
   },
   {
    "id": "web-source-code",
-   "subject": "web",
+   "subject": "html",
    "topic": "code",
    "level": "debutant",
    "term": "Source Code",
@@ -6986,7 +6986,7 @@
   },
   {
    "id": "web-bug",
-   "subject": "web",
+   "subject": "html",
    "topic": "code",
    "level": "debutant",
    "term": "Bug",
@@ -6998,7 +6998,7 @@
   },
   {
    "id": "web-deployment",
-   "subject": "web",
+   "subject": "html",
    "topic": "code",
    "level": "debutant",
    "term": "Deployment",
@@ -7010,7 +7010,7 @@
   },
   {
    "id": "web-browser",
-   "subject": "web",
+   "subject": "html",
    "topic": "code",
    "level": "debutant",
    "term": "Browser",
@@ -7022,7 +7022,7 @@
   },
   {
    "id": "web-git",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Git",
@@ -7034,7 +7034,7 @@
   },
   {
    "id": "web-github",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "GitHub",
@@ -7046,7 +7046,7 @@
   },
   {
    "id": "web-stack-overflow",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Stack Overflow",
@@ -7058,7 +7058,7 @@
   },
   {
    "id": "web-variable",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Variable",
@@ -7070,7 +7070,7 @@
   },
   {
    "id": "web-function",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Function",
@@ -7082,7 +7082,7 @@
   },
   {
    "id": "web-database",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Database",
@@ -7094,7 +7094,7 @@
   },
   {
    "id": "web-framework",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Framework",
@@ -7106,7 +7106,7 @@
   },
   {
    "id": "web-library",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Library",
@@ -7118,7 +7118,7 @@
   },
   {
    "id": "web-sdk",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "SDK",
@@ -7130,7 +7130,7 @@
   },
   {
    "id": "web-iframe",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Iframe",
@@ -7142,7 +7142,7 @@
   },
   {
    "id": "web-minification",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Minification",
@@ -7154,7 +7154,7 @@
   },
   {
    "id": "web-cache",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Cache",
@@ -7166,7 +7166,7 @@
   },
   {
    "id": "web-ssl-certificate",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "SSL Certificate",
@@ -7178,7 +7178,7 @@
   },
   {
    "id": "web-open-source",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Open Source",
@@ -7190,7 +7190,7 @@
   },
   {
    "id": "web-devtools",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "DevTools",
@@ -7202,7 +7202,7 @@
   },
   {
    "id": "web-sitemap-xml",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Sitemap.xml",
@@ -7214,7 +7214,7 @@
   },
   {
    "id": "web-cookie-technical",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Cookie (Technical)",
@@ -7226,7 +7226,7 @@
   },
   {
    "id": "web-data-layer",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "intermediaire",
    "term": "Data Layer",
@@ -7238,7 +7238,7 @@
   },
   {
    "id": "web-ajax",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "AJAX",
@@ -7250,7 +7250,7 @@
   },
   {
    "id": "web-server-side-rendering-ssr",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Server-Side Rendering (SSR)",
@@ -7262,7 +7262,7 @@
   },
   {
    "id": "web-client-side-rendering-csr",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Client-Side Rendering (CSR)",
@@ -7274,7 +7274,7 @@
   },
   {
    "id": "web-headless-architecture",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Headless Architecture",
@@ -7286,7 +7286,7 @@
   },
   {
    "id": "web-dns",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "DNS",
@@ -7298,7 +7298,7 @@
   },
   {
    "id": "web-cdn",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "CDN",
@@ -7310,7 +7310,7 @@
   },
   {
    "id": "web-encryption",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Encryption",
@@ -7322,7 +7322,7 @@
   },
   {
    "id": "web-query-string",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Query String",
@@ -7334,7 +7334,7 @@
   },
   {
    "id": "web-regex",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Regex",
@@ -7346,7 +7346,7 @@
   },
   {
    "id": "web-slug",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Slug",
@@ -7358,7 +7358,7 @@
   },
   {
    "id": "web-lazy-loading",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "Lazy Loading",
@@ -7370,7 +7370,7 @@
   },
   {
    "id": "web-404-vs-301",
-   "subject": "web",
+   "subject": "js",
    "topic": "code",
    "level": "avance",
    "term": "404 vs 301",

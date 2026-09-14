@@ -3,6 +3,7 @@ import { StyleSheet, Switch, View } from 'react-native';
 
 import { CATALOG } from '@/content';
 import { useContent } from '@/content/useContent';
+import { useActiveSubjects } from '@/content/useSubjects';
 import { BADGES, DAILY_GOALS, MAX_FREEZES, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
 import { LANGS, useT, type Key } from '@/i18n';
 import { confirm } from '@/lib/confirm';
@@ -15,7 +16,11 @@ const HOURS = [8, 12, 19, 21];
 export default function ProfileScreen() {
   const colors = useColors();
   const t = useT();
-  const { CARDS, EXERCISES, SUBJECTS, UNITS } = useContent();
+  const { CARDS, EXERCISES, SUBJECTS: ALL_SUBJECTS, UNITS } = useContent();
+  const SUBJECTS = useActiveSubjects();
+  const chosen = useSettings((s) => s.subjects);
+  const setSubjects = useSettings((s) => s.setSubjects);
+  const placements = useSettings((s) => s.placements);
   const progress = useProgress((s) => s.progress);
   const reset = useProgress((s) => s.reset);
   const setProgress = useProgress((s) => s.setProgress);
@@ -114,6 +119,14 @@ export default function ProfileScreen() {
         {SUBJECTS.map((s) => (
           <Button key={s.id} label={`${s.emoji} ${t('profile.training.free', { subject: s.title })}`} color={s.color} onPress={() => router.push({ pathname: '/session/free', params: { subjectId: s.id } })} />
         ))}
+        {SUBJECTS.map((s) => (
+          <Button
+            key={`placement-${s.id}`}
+            label={`${t('profile.placement', { subject: s.title })}${placements[s.id] ? ` · ${placements[s.id].score}/${placements[s.id].total}` : ''}`}
+            tone="secondary"
+            onPress={() => router.push({ pathname: '/placement/[subjectId]', params: { subjectId: s.id } })}
+          />
+        ))}
       </Card>
 
       <Card>
@@ -151,6 +164,32 @@ export default function ProfileScreen() {
 
       <Card>
         <Text variant="h2">{t('profile.settings')}</Text>
+
+        <Text variant="bodyBold">{t('profile.subjects')}</Text>
+        <View style={styles.choices}>
+          {ALL_SUBJECTS.map((s) => {
+            const active = !chosen || chosen.length === 0 || chosen.includes(s.id);
+            return (
+              <Button
+                key={s.id}
+                label={`${s.emoji} ${s.title}`}
+                size="sm"
+                tone={active ? 'primary' : 'secondary'}
+                color={active ? s.color : undefined}
+                style={styles.choice}
+                onPress={() => {
+                  const current = !chosen || chosen.length === 0 ? ALL_SUBJECTS.map((x) => x.id) : chosen;
+                  const next = active ? current.filter((x) => x !== s.id) : [...current, s.id];
+                  if (next.length === 0) return;
+                  setSubjects(next.length === ALL_SUBJECTS.length ? null : next);
+                }}
+              />
+            );
+          })}
+        </View>
+        <Text variant="small" secondary>
+          {t('profile.subjects.hint')}
+        </Text>
 
         <Text variant="bodyBold">{t('common.language')}</Text>
         <View style={styles.choices}>

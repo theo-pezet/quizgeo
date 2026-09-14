@@ -54,11 +54,18 @@ export const WORLDS: readonly World[] = [
   w('python', 4, '📈', '#16A34A', { fr: 'Données', en: 'Data', es: 'Datos' }, { fr: 'Pandas de A à Z', en: 'Pandas from A to Z', es: 'Pandas de la A a la Z' }, ['py-9', 'py-10', 'py-11', 'py-data-1']),
   w('python', 5, '🌐', '#7C3AED', { fr: 'Python et le web', en: 'Python and the web', es: 'Python y la web' }, { fr: 'Requêtes, fichiers, API, automatisation', en: 'Requests, files, APIs, automation', es: 'Peticiones, archivos, API, automatización' }, ['py-12', 'py-13', 'py-web-1', 'py-case-1']),
 
-  // ------------------------------------------------------------------- Web
-  w('web', 1, '🧩', '#EA580C', { fr: 'HTML', en: 'HTML', es: 'HTML' }, { fr: 'La structure d’une page', en: 'The structure of a page', es: 'La estructura de una página' }, ['web-1', 'web-2', 'web-html-2']),
-  w('web', 2, '🎨', '#2563EB', { fr: 'CSS', en: 'CSS', es: 'CSS' }, { fr: 'Mettre en page et en couleur', en: 'Layout and colour', es: 'Maquetar y dar color' }, ['web-3', 'web-css-2']),
-  w('web', 3, '⚡', '#CA8A04', { fr: 'JavaScript', en: 'JavaScript', es: 'JavaScript' }, { fr: 'Rendre la page vivante', en: 'Bringing the page to life', es: 'Dar vida a la página' }, ['web-4', 'web-js-2', 'web-5']),
-  w('web', 4, '🚀', '#16A34A', { fr: 'Le web en production', en: 'The web in production', es: 'La web en producción' }, { fr: 'Performance, architecture, tracking', en: 'Performance, architecture, tracking', es: 'Rendimiento, arquitectura, tracking' }, ['web-6', 'web-7', 'web-mkt-1', 'web-case-1']),
+  // ------------------------------------------------------------------ HTML
+  w('html', 1, '🧩', '#F97316', { fr: 'Les bases', en: 'The basics', es: 'Las bases' }, { fr: 'Le web et la structure d’une page', en: 'The web and the structure of a page', es: 'La web y la estructura de una página' }, ['web-1', 'web-2']),
+  w('html', 2, '🔎', '#DB2777', { fr: 'HTML pro', en: 'Pro HTML', es: 'HTML pro' }, { fr: 'Sémantique, SEO, tracking', en: 'Semantics, SEO, tracking', es: 'Semántica, SEO, tracking' }, ['web-html-2', 'web-mkt-1']),
+
+  // ------------------------------------------------------------------- CSS
+  w('css', 1, '🎨', '#0EA5E9', { fr: 'Les bases', en: 'The basics', es: 'Las bases' }, { fr: 'Sélecteurs, box model, flexbox', en: 'Selectors, box model, flexbox', es: 'Selectores, box model, flexbox' }, ['web-3']),
+  w('css', 2, '📐', '#7C3AED', { fr: 'Mise en page et style', en: 'Layout and style', es: 'Maquetación y estilo' }, { fr: 'Responsive, couleurs, animations', en: 'Responsive, colours, animations', es: 'Responsive, colores, animaciones' }, ['web-css-2', 'web-css-3']),
+
+  // ------------------------------------------------------------ JavaScript
+  w('js', 1, '⚡', '#D97706', { fr: 'Les bases', en: 'The basics', es: 'Las bases' }, { fr: 'Variables, DOM, fetch', en: 'Variables, DOM, fetch', es: 'Variables, DOM, fetch' }, ['web-4', 'web-js-2']),
+  w('js', 2, '🛠️', '#0F766E', { fr: 'Outils', en: 'Tools', es: 'Herramientas' }, { fr: 'Git, frameworks, SDK', en: 'Git, frameworks, SDKs', es: 'Git, frameworks, SDK' }, ['web-5']),
+  w('js', 3, '🚀', '#16A34A', { fr: 'En production', en: 'In production', es: 'En producción' }, { fr: 'Performance, architecture, cas pratiques', en: 'Performance, architecture, case studies', es: 'Rendimiento, arquitectura, casos prácticos' }, ['web-6', 'web-7', 'web-case-1']),
 ];
 
 export const WORLD_BY_UNIT: ReadonlyMap<string, World> = new Map(WORLDS.flatMap((wd) => wd.unitIds.map((u) => [u, wd] as const)));

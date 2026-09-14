@@ -20,8 +20,9 @@ const card = (
   definition: string,
   example: string,
   level: Card['level'] = null,
+  idPrefix: string = subject,
 ): Card => ({
-  id: `${subject}-x-${term
+  id: `${idPrefix}-x-${term
     .toLowerCase()
     .normalize('NFD')
     .replace(/[̀-ͯ]/g, '')
@@ -40,8 +41,10 @@ const ia = (topic: string, term: string, definition: string, example: string, le
   card('ia', topic, term, definition, example, level);
 const py = (topic: string, term: string, definition: string, example: string, level: Card['level'] = null): Card =>
   card('python', topic, term, definition, example, level);
+/** HTML, CSS et JavaScript sont trois matières ; les identifiants gardent le préfixe historique `web-x-`. */
+const WEB_SUBJECT: Record<string, string> = { html: 'html', 'web-mkt': 'html', css: 'css', js: 'js' };
 const web = (topic: string, term: string, definition: string, example: string, level: Card['level'] = null): Card =>
-  card('web', topic, term, definition, example, level);
+  card(WEB_SUBJECT[topic] ?? 'js', topic, term, definition, example, level, 'web');
 
 export const EXTRA_CARDS: readonly Card[] = [
   // ------------------------------------------------------------ histoire
@@ -261,4 +264,14 @@ export const EXTRA_CARDS: readonly Card[] = [
   web('web-mkt', 'Open Graph', 'Balises <meta property="og:…"> qui contrôlent le titre, l’image et la description affichés quand la page est partagée sur les réseaux sociaux.', 'og:image en 1200×630 pour un aperçu net sur LinkedIn.', 'debutant'),
   web('web-mkt', 'Lazy loading', 'Charger les images seulement quand elles approchent de l’écran : loading="lazy" sur <img>. Accélère le premier affichage… sauf pour l’image principale, qui doit rester immédiate.', 'loading="lazy" sur les images de bas de page, jamais sur l’image du hero (LCP).', 'intermediaire'),
   web('web-mkt', 'LCP', 'Largest Contentful Paint : temps d’affichage du plus gros élément visible (souvent l’image du hero). Objectif < 2,5 s. Se soigne par un serveur rapide, des images optimisées et un chargement prioritaire.', 'Convertir le hero en WebP et le précharger fait passer le LCP de 4 s à 1,8 s.', 'intermediaire'),
+
+  // ------------------------------------------------------------ css (suite)
+  web('css', 'Couleurs CSS', 'Une couleur s’écrit en nom (red), en hexadécimal (#E8562B), en rgb() ou en hsl(). hsl est le plus lisible pour décliner une teinte : on ne touche qu’à la luminosité.', 'hsl(14 80% 54%) pour l’orange de la marque, hsl(14 80% 40%) pour son ombre.', 'debutant'),
+  web('css', 'Unités rem et em', 'rem est relatif à la taille de police de la racine (16 px par défaut), em à celle de l’élément parent. rem donne des tailles cohérentes et respecte le réglage de taille de texte du visiteur.', 'padding: 1.5rem vaut 24 px, quel que soit l’élément.', 'debutant'),
+  web('css', 'Pile de polices', 'font-family liste la police voulue, puis des solutions de repli, et enfin une famille générique (sans-serif). @font-face ou Google Fonts chargent une police externe.', 'font-family: "Nunito", Arial, sans-serif;', 'debutant'),
+  web('css', 'Position et z-index', 'position (static, relative, absolute, fixed, sticky) définit comment un élément est placé ; z-index ordonne les superpositions, seulement entre éléments positionnés.', 'position: sticky; top: 0; garde l’en-tête visible pendant le défilement.', 'intermediaire'),
+  web('css', 'Animation et @keyframes', '@keyframes décrit des étapes (0 %, 50 %, 100 %) ; animation les joue sur un élément avec une durée, une répétition et une courbe. Pour ce qui bouge sans interaction.', '@keyframes pulse { 50% { transform: scale(1.05) } } puis animation: pulse 2s infinite;', 'intermediaire'),
+  web('css', 'Pseudo-classes :hover et :focus', 'Une pseudo-classe cible un état : :hover (survol), :focus (champ actif ou clavier), :active (clic), :nth-child(). Sans :focus visible, la navigation au clavier est impossible.', 'button:focus-visible { outline: 3px solid #2563EB; }', 'intermediaire'),
+  web('css', 'Ombre et arrondi', 'box-shadow ajoute une ombre (décalage x, y, flou, couleur) ; border-radius arrondit les angles. Les deux donnent du relief sans image.', 'border-radius: 12px; box-shadow: 0 4px 0 #B8431F; pour un bouton à relief.', 'debutant'),
+  web('css', 'Mode sombre (prefers-color-scheme)', 'La media query @media (prefers-color-scheme: dark) applique des styles quand le système est en sombre. Avec des variables CSS, on ne redéfinit que les couleurs.', ':root { --fond: #fff } @media (prefers-color-scheme: dark) { :root { --fond: #14131C } }', 'intermediaire'),
 ];

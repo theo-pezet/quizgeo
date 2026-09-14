@@ -4,6 +4,7 @@ import { Pressable, ScrollView, StyleSheet, View } from 'react-native';
 
 import { CATALOG, isWorldComplete, worldProgress, worldsOf, type Unit, type World } from '@/content';
 import { useContent } from '@/content/useContent';
+import { useActiveSubjects } from '@/content/useSubjects';
 import {
   PATH_TRAITS,
   allUnitTraits,
@@ -21,13 +22,14 @@ import {
 } from '@/game';
 import { useLang, useT } from '@/i18n';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, Card, Crowns, EnergyBadge, Icon, NoEnergySheet, Pop, Pulse, QuestsCard, Ring, Screen, Stat, Text, radius, shade, space, tint, useColors, type IconName } from '@/ui';
+import { Button, Card, Crowns, EnergyBadge, Icon, NoEnergySheet, Pop, Pulse, QuestsCard, Ring, Screen, Stat, Text, Tutorial, radius, shade, space, tint, useColors, type IconName } from '@/ui';
 
 export default function PathScreen() {
   const colors = useColors();
   const t = useT();
   const lang = useLang();
-  const { SUBJECTS, UNITS, EXERCISES, UNIT_BY_ID } = useContent();
+  const { UNITS, EXERCISES, UNIT_BY_ID } = useContent();
+  const SUBJECTS = useActiveSubjects();
   const progress = useProgress((s) => s.progress);
   const setProgress = useProgress((s) => s.setProgress);
   const tick = useProgress((s) => s.tick);
@@ -35,10 +37,18 @@ export default function PathScreen() {
   const settingsHydrated = useSettings((s) => s.hydrated);
   const onboardingDone = useSettings((s) => s.onboardingDone);
   const favorite = useSettings((s) => s.favoriteSubject);
+  const tutorialDone = useSettings((s) => s.tutorialDone);
+  const setTutorialDone = useSettings((s) => s.setTutorialDone);
   const [subjectId, setSubjectId] = useState(favorite ?? SUBJECTS[0].id);
   useEffect(() => {
     if (favorite) setSubjectId(favorite);
   }, [favorite]);
+  const activeIds = SUBJECTS.map((s) => s.id).join(',');
+  useEffect(() => {
+    // La matière affichée doit rester parmi celles que l'utilisateur a choisies.
+    if (!SUBJECTS.some((s) => s.id === subjectId)) setSubjectId(SUBJECTS[0].id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [activeIds]);
   const [picked, setPicked] = useState<Unit | null>(null);
   const [noEnergy, setNoEnergy] = useState(false);
 
@@ -83,7 +93,10 @@ export default function PathScreen() {
 
   const pickedWorld = picked ? worlds.find((w) => w.unitIds.includes(picked.id)) : undefined;
   const pickedTraits = picked ? (traits[picked.id] ?? 0) : 0;
-  const sheet = picked ? (
+  const overlay = picked ? sheet(picked) : settingsHydrated && onboardingDone && !tutorialDone ? <Tutorial onDone={() => setTutorialDone(true)} /> : null;
+
+  function sheet(picked: Unit) {
+    return (
     <View style={[styles.sheet, { backgroundColor: colors.surface, borderColor: pickedWorld?.color ?? colors.border }]}>
       <View style={styles.sheetHead}>
         <Text variant="h2" style={styles.sheetTitle}>
@@ -126,10 +139,11 @@ export default function PathScreen() {
       )}
       <Button label={t('common.close')} tone="ghost" onPress={() => setPicked(null)} />
     </View>
-  ) : null;
+    );
+  }
 
   return (
-    <Screen overlay={sheet}>
+    <Screen overlay={overlay}>
       <View style={styles.header}>
         <View style={styles.stats}>
           <Stat icon={flame ? 'flame' : 'flame-outline'} color={flame ? colors.streak : colors.textSecondary} value={progress.streak.current} />

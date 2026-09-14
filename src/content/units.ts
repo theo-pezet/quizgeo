@@ -86,19 +86,24 @@ export const UNITS: readonly Unit[] = [
   { id: 'py-web-1', subjectId: 'python', title: 'API, JSON et scraping', description: 'REST, endpoints, clés d’API, timeouts, BeautifulSoup, gspread, cron.', cards: slice('web-py', 0, 10) },
   { id: 'py-case-1', subjectId: 'python', title: 'Cas pratiques', description: 'Automatiser un rapport, nettoyer un export, surveiller des prix.', cards: [] },
 
-  // ------------------------------------------------------------------- Web
-  { id: 'web-1', subjectId: 'web', title: 'Le web, côté client et serveur', description: 'Front-end, back-end, navigateur, déploiement, bug.', cards: slice('code', 0, 7) },
-  { id: 'web-2', subjectId: 'web', title: 'HTML : les bases', description: 'Balises, structure d’une page, titres, liens, images.', cards: [] },
-  { id: 'web-html-2', subjectId: 'web', title: 'HTML : sémantique et SEO', description: 'Balises sémantiques, titres, title, meta, canonical, robots, formulaires.', cards: slice('html', 0, 10) },
-  { id: 'web-3', subjectId: 'web', title: 'CSS : les bases', description: 'Sélecteurs, propriétés, box model, flexbox.', cards: [] },
-  { id: 'web-css-2', subjectId: 'web', title: 'CSS : mise en page responsive', description: 'Spécificité, flexbox, grid, media queries, unités, variables, CLS.', cards: slice('css', 0, 10) },
-  { id: 'web-4', subjectId: 'web', title: 'JavaScript : les bases', description: 'Variables, fonctions, tableaux, DOM, événements.', cards: [] },
-  { id: 'web-js-2', subjectId: 'web', title: 'JavaScript : le navigateur', description: 'DOM, événements, tableaux, JSON, async / await, fetch, console.', cards: slice('js', 0, 10) },
-  { id: 'web-5', subjectId: 'web', title: 'Outils du développeur', description: 'Git, GitHub, variables, fonctions, frameworks, SDK.', cards: slice('code', 7, 16) },
-  { id: 'web-6', subjectId: 'web', title: 'Performance et sécurité', description: 'Minification, cache, SSL, DevTools, cookies, data layer.', cards: slice('code', 16, 25) },
-  { id: 'web-7', subjectId: 'web', title: 'Rendu et architecture', description: 'AJAX, SSR / CSR, headless, DNS, CDN, lazy loading.', cards: slice('code', 25, 37) },
-  { id: 'web-mkt-1', subjectId: 'web', title: 'Le web du marketeur', description: 'GTM, dataLayer, pixels, consentement, JSON-LD, Open Graph, LCP.', cards: slice('web-mkt', 0, 10) },
-  { id: 'web-case-1', subjectId: 'web', title: 'Cas pratiques', description: 'Un tracking qui ne remonte pas, une page lente, un partage moche.', cards: [] },
+  // ------------------------------------------------------------------ HTML
+  { id: 'web-1', subjectId: 'html', title: 'Le web, côté client et serveur', description: 'Front-end, back-end, navigateur, déploiement, bug.', cards: slice('code', 0, 7) },
+  { id: 'web-2', subjectId: 'html', title: 'HTML : les bases', description: 'Balises, structure d’une page, titres, liens, images.', cards: [] },
+  { id: 'web-html-2', subjectId: 'html', title: 'HTML : sémantique et SEO', description: 'Balises sémantiques, titres, title, meta, canonical, robots, formulaires.', cards: slice('html', 0, 10) },
+  { id: 'web-mkt-1', subjectId: 'html', title: 'Le web du marketeur', description: 'GTM, dataLayer, pixels, consentement, JSON-LD, Open Graph, LCP.', cards: slice('web-mkt', 0, 10) },
+
+  // ------------------------------------------------------------------- CSS
+  { id: 'web-3', subjectId: 'css', title: 'CSS : les bases', description: 'Sélecteurs, propriétés, box model, flexbox.', cards: [] },
+  { id: 'web-css-2', subjectId: 'css', title: 'CSS : mise en page responsive', description: 'Spécificité, flexbox, grid, media queries, unités, variables, CLS.', cards: slice('css', 0, 10) },
+  { id: 'web-css-3', subjectId: 'css', title: 'CSS : couleurs, polices et animations', description: 'hsl, rem, font-family, transitions, @keyframes, :hover, ombres, mode sombre.', cards: ['web-x-couleurs-css', 'web-x-unites-rem-et-em', 'web-x-pile-de-polices', 'web-x-position-et-z-index', 'web-x-animation-et-keyframes', 'web-x-pseudo-classes-hover-et-focus', 'web-x-ombre-et-arrondi', 'web-x-mode-sombre-prefers-color-scheme'] },
+
+  // ------------------------------------------------------------ JavaScript
+  { id: 'web-4', subjectId: 'js', title: 'JavaScript : les bases', description: 'Variables, fonctions, tableaux, DOM, événements.', cards: [] },
+  { id: 'web-js-2', subjectId: 'js', title: 'JavaScript : le navigateur', description: 'DOM, événements, tableaux, JSON, async / await, fetch, console.', cards: slice('js', 0, 10) },
+  { id: 'web-5', subjectId: 'js', title: 'Outils du développeur', description: 'Git, GitHub, variables, fonctions, frameworks, SDK.', cards: slice('code', 0, 9) },
+  { id: 'web-6', subjectId: 'js', title: 'Performance et sécurité', description: 'Minification, cache, SSL, DevTools, cookies, data layer.', cards: slice('code', 9, 18) },
+  { id: 'web-7', subjectId: 'js', title: 'Rendu et architecture', description: 'AJAX, SSR / CSR, headless, DNS, CDN, lazy loading.', cards: slice('code', 18, 30) },
+  { id: 'web-case-1', subjectId: 'js', title: 'Cas pratiques', description: 'Un tracking qui ne remonte pas, une page lente, un partage moche.', cards: [] },
 ];
 
 export const UNIT_BY_ID: ReadonlyMap<string, Unit> = new Map(UNITS.map((u) => [u.id, u]));

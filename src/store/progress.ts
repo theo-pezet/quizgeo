@@ -52,6 +52,14 @@ export const useProgress = create<ProgressStore>()(
 
 export type SettingsLang = 'fr' | 'en' | 'es';
 
+export interface PlacementRecord {
+  score: number;
+  total: number;
+  self: number;
+  skip: number;
+  at: string;
+}
+
 interface SettingsStore {
   /** Langue de l'interface et du contenu ; null tant que l'utilisateur n'a pas choisi. */
   lang: SettingsLang | null;
@@ -63,6 +71,12 @@ interface SettingsStore {
   sound: boolean;
   /** Matière ouverte par défaut sur le parcours. */
   favoriteSubject: string | null;
+  /** Matières que l'utilisateur veut voir ; null = toutes. */
+  subjects: string[] | null;
+  /** Le mini-tuto du parcours a été vu. */
+  tutorialDone: boolean;
+  /** Résultats des tests de niveau, par matière. */
+  placements: Record<string, PlacementRecord>;
   /** Les réglages ont été relus depuis le disque. */
   hydrated: boolean;
   setLang: (lang: SettingsLang) => void;
@@ -72,6 +86,9 @@ interface SettingsStore {
   setReminderHour: (hour: number) => void;
   setSound: (on: boolean) => void;
   setFavoriteSubject: (id: string | null) => void;
+  setSubjects: (ids: string[] | null) => void;
+  setTutorialDone: (done: boolean) => void;
+  setPlacement: (subjectId: string, record: PlacementRecord) => void;
   markHydrated: () => void;
 }
 
@@ -86,6 +103,9 @@ export const useSettings = create<SettingsStore>()(
       reminderHour: 19,
       sound: true,
       favoriteSubject: null,
+      subjects: null,
+      tutorialDone: false,
+      placements: {},
       hydrated: false,
       setLang: (lang) => set({ lang }),
       setOnboardingDone: (onboardingDone) => set({ onboardingDone }),
@@ -94,11 +114,21 @@ export const useSettings = create<SettingsStore>()(
       setReminderHour: (reminderHour) => set({ reminderHour }),
       setSound: (sound) => set({ sound }),
       setFavoriteSubject: (favoriteSubject) => set({ favoriteSubject }),
+      setSubjects: (subjects) => set({ subjects }),
+      setTutorialDone: (tutorialDone) => set({ tutorialDone }),
+      setPlacement: (subjectId, record) => set((state) => ({ placements: { ...state.placements, [subjectId]: record } })),
       markHydrated: () => set({ hydrated: true }),
     }),
     {
       name: 'settings.v1',
-      version: 1,
+      version: 2,
+      // v2 : la matière « web » est devenue html / css / js.
+      migrate: (persisted) => {
+        const raw = (persisted ?? {}) as Record<string, unknown>;
+        const favorite = raw.favoriteSubject === 'web' ? 'html' : raw.favoriteSubject;
+        const subjects = Array.isArray(raw.subjects) ? raw.subjects.flatMap((s) => (s === 'web' ? ['html', 'css', 'js'] : [s])) : null;
+        return { ...raw, favoriteSubject: favorite ?? null, subjects } as unknown as SettingsStore;
+      },
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
         lang: state.lang,
@@ -108,6 +138,9 @@ export const useSettings = create<SettingsStore>()(
         reminderHour: state.reminderHour,
         sound: state.sound,
         favoriteSubject: state.favoriteSubject,
+        subjects: state.subjects,
+        tutorialDone: state.tutorialDone,
+        placements: state.placements,
       }),
       onRehydrateStorage: () => (state) => state?.markHydrated(),
     },

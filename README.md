@@ -40,6 +40,16 @@ le Profil).
 - **Mondes.** `src/content/worlds.ts` regroupe les unités en sections avec
   nom, couleur et emblème ; un monde est terminé quand toutes ses unités ont
   3 couronnes (écran dédié en fin de leçon).
+- **Six matières au choix** (marketing, IA, Python, HTML, CSS, JavaScript) :
+  l'utilisateur coche celles qu'il veut au premier lancement ou dans le
+  Profil, et seules celles-là apparaissent dans le parcours, le deck et
+  l'entraînement.
+- **Test de niveau** par matière (`src/game/placement.ts`) : dix QCM pris
+  dans les premiers 70 % du chemin, une auto-évaluation sur 10, et un
+  placement qui valide les premières unités à 3 couronnes. Un score faible ne
+  saute rien ; un sans-faute ne dépasse jamais 70 % du chemin.
+- **Mini-tuto** en quatre cartes au premier parcours (parcours, énergie,
+  objectif et quêtes, couronnes).
 
 ## Architecture
 

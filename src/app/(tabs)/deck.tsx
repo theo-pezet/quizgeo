@@ -4,6 +4,7 @@ import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 import type { Card as DeckCard } from '@/content';
 import { useContent } from '@/content/useContent';
+import { useActiveSubjects } from '@/content/useSubjects';
 import { deckStats, toDayKey } from '@/game';
 import { useT } from '@/i18n';
 import { useProgress } from '@/store/progress';
@@ -12,7 +13,13 @@ import { Button, Card, Screen, Text, fonts, radius, shade, space, useColors } fr
 export default function DeckScreen() {
   const colors = useColors();
   const t = useT();
-  const { CARDS, SUBJECTS, cardIdsOf } = useContent();
+  const { CARDS: ALL_CARDS, cardIdsOf } = useContent();
+  const SUBJECTS = useActiveSubjects();
+  // Le deck ne montre que les matières choisies.
+  const CARDS = useMemo(() => {
+    const ids = new Set(SUBJECTS.map((s) => s.id));
+    return ALL_CARDS.filter((c) => ids.has(c.subject));
+  }, [ALL_CARDS, SUBJECTS]);
   const progress = useProgress((s) => s.progress);
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const [query, setQuery] = useState('');

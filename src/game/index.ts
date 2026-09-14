@@ -25,3 +25,4 @@ export * from './reminders';
 export * from './daily';
 export * from './random';
 export * from './apply';
+export * from './placement';

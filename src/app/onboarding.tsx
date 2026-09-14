@@ -11,10 +11,11 @@ import { Button, FadeUp, Icon, Pop, ProgressBar, Screen, Text, radius, space, ti
 
 const GOAL_MINUTES: Record<number, number> = { 20: 5, 50: 10, 100: 20, 200: 40 };
 const HOURS = [8, 12, 19, 21];
-const STEPS = 4;
+const STEPS = 5;
 
 /**
- * Quatre écrans, une minute : la langue, la matière, l'objectif, les rappels.
+ * Cinq écrans, deux minutes : la langue, les matières (une ou plusieurs),
+ * le niveau (partir de zéro ou passer un test), l'objectif, les rappels.
  * Tout se change ensuite dans le Profil. Le choix de langue s'applique
  * immédiatement : l'écran suivant est déjà traduit.
  */
@@ -25,7 +26,9 @@ export default function OnboardingScreen() {
   const lang = useSettings((s) => s.lang);
   const setLang = useSettings((s) => s.setLang);
   const [step, setStep] = useState(0);
-  const [subject, setSubject] = useState<string>(SUBJECTS[0].id);
+  const previous = useSettings((s) => s.subjects);
+  const [subjects, setSubjects] = useState<string[]>(previous && previous.length > 0 ? previous : [SUBJECTS[0].id]);
+  const [tests, setTests] = useState<string[]>([]);
   const [goal, setGoal] = useState<number>(50);
   const [reminders, setReminders] = useState(true);
   const [hour, setHour] = useState(19);
@@ -35,13 +38,23 @@ export default function OnboardingScreen() {
     const settings = useSettings.getState();
     const progress = useProgress.getState();
     if (!settings.lang) settings.setLang(chosenLang);
-    settings.setFavoriteSubject(subject);
+    const chosen = SUBJECTS.filter((x) => subjects.includes(x.id)).map((x) => x.id);
+    settings.setSubjects(chosen.length === SUBJECTS.length ? null : chosen);
+    settings.setFavoriteSubject(chosen[0] ?? SUBJECTS[0].id);
     progress.setProgress(applySetDailyGoal(progress.progress, goal));
     settings.setReminderHour(hour);
     settings.setReminders(reminders ? await requestReminderPermission() : false);
     settings.setOnboardingDone(true);
-    router.replace('/');
+    const queue = chosen.filter((id) => tests.includes(id));
+    if (queue.length > 0) {
+      router.replace({ pathname: '/placement/[subjectId]', params: { subjectId: queue[0], queue: queue.slice(1).join(',') } });
+    } else {
+      router.replace('/');
+    }
   };
+  const toggleSubject = (id: string) =>
+    setSubjects((cur) => (cur.includes(id) ? (cur.length > 1 ? cur.filter((x) => x !== id) : cur) : [...cur, id]));
+  const toggleTest = (id: string) => setTests((cur) => (cur.includes(id) ? cur.filter((x) => x !== id) : [...cur, id]));
 
   const footer =
     step === 0 ? (
@@ -98,17 +111,17 @@ export default function OnboardingScreen() {
           <Pop>
             <Text style={styles.big}>🗺️</Text>
           </Pop>
-          <Text variant="title">{t('onboarding.subject.title')}</Text>
+          <Text variant="title">{t('onboarding.subjects.title')}</Text>
           <Text variant="body" secondary>
-            {t('onboarding.subject.body')}
+            {t('onboarding.subjects.body')}
           </Text>
           <View style={styles.list}>
             {SUBJECTS.map((s) => {
-              const active = s.id === subject;
+              const active = subjects.includes(s.id);
               return (
                 <Pressable
                   key={s.id}
-                  onPress={() => setSubject(s.id)}
+                  onPress={() => toggleSubject(s.id)}
                   style={[styles.card, { borderColor: active ? s.color : colors.border, backgroundColor: active ? tint(s.color, 0.88) : colors.surface }]}>
                   <Text style={styles.emoji}>{s.emoji}</Text>
                   <View style={styles.cardText}>
@@ -117,6 +130,7 @@ export default function OnboardingScreen() {
                       {s.tagline}
                     </Text>
                   </View>
+                  <Icon name={active ? 'checkbox' : 'square-outline'} size={24} color={active ? s.color : colors.borderStrong} />
                 </Pressable>
               );
             })}
@@ -126,6 +140,32 @@ export default function OnboardingScreen() {
 
       {step === 2 && (
         <FadeUp key="s2" style={styles.stepWrap}>
+          <Pop>
+            <Text style={styles.big}>🎓</Text>
+          </Pop>
+          <Text variant="title">{t('onboarding.level.title')}</Text>
+          <Text variant="body" secondary>
+            {t('onboarding.level.body')}
+          </Text>
+          <View style={styles.list}>
+            {SUBJECTS.filter((s) => subjects.includes(s.id)).map((s) => {
+              const test = tests.includes(s.id);
+              return (
+                <View key={s.id} style={[styles.levelCard, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+                  <Text variant="bodyBold">
+                    {s.emoji} {s.title}
+                  </Text>
+                  <Button label={t('onboarding.level.zero')} size="sm" tone={test ? 'secondary' : 'primary'} color={test ? undefined : s.color} onPress={() => test && toggleTest(s.id)} />
+                  <Button label={t('onboarding.level.test')} size="sm" tone={test ? 'primary' : 'secondary'} color={test ? s.color : undefined} onPress={() => !test && toggleTest(s.id)} />
+                </View>
+              );
+            })}
+          </View>
+        </FadeUp>
+      )}
+
+      {step === 3 && (
+        <FadeUp key="s3" style={styles.stepWrap}>
           <Pop>
             <Text style={styles.big}>🎯</Text>
           </Pop>
@@ -157,8 +197,8 @@ export default function OnboardingScreen() {
         </FadeUp>
       )}
 
-      {step === 3 && (
-        <FadeUp key="s3" style={styles.stepWrap}>
+      {step === 4 && (
+        <FadeUp key="s4" style={styles.stepWrap}>
           <Pop>
             <Text style={styles.big}>🔥</Text>
           </Pop>
@@ -213,5 +253,6 @@ const styles = StyleSheet.create({
   grow: { flex: 1 },
   hours: { flexDirection: 'row', gap: space.sm },
   rules: { borderRadius: radius.md, padding: space.md, gap: space.md },
+  levelCard: { borderWidth: 2, borderRadius: radius.lg, padding: space.md, gap: space.sm },
   rule: { flexDirection: 'row', gap: space.sm, alignItems: 'flex-start' },
 });
