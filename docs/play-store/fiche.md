@@ -16,7 +16,7 @@ celles de Google (titre 30, description courte 80, description longue 4 000).
 | Achats intégrés | Non |
 | Adresse e-mail de contact | à renseigner |
 | Site web | https://theo-pezet.github.io/quizgeo/ |
-| Politique de confidentialité | https://theo-pezet.github.io/quizgeo/privacy |
+| Politique de confidentialité | https://theo-pezet.github.io/quizgeo/privacy.html |
 
 ## Description courte (80)
 

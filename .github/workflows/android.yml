@@ -1,5 +1,6 @@
-# Construit l'APK Android (signé avec la clé de debug : installable pour tester,
-# pas pour le Play Store). Se lance à la main, ou sur un tag v*.
+# Construit l'APK Android (téléchargement direct, hors Play Store) et l'App
+# Bundle .aab (à téléverser dans la Play Console), signés avec la clé de
+# release. Se lance à la main, ou sur un tag v*.
 name: Android APK
 
 on:
@@ -22,6 +23,11 @@ jobs:
       # Clé de signature de release (secret du dépôt). Sans elle, l'APK est
       # signé avec la clé de debug — que Chrome et Play Protect jugent dangereuse.
       ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      # Facultatif : mots de passe du keystore s'ils diffèrent de ceux par défaut
+      # (voir tools/android-signing.js et docs/play-store/signature.md).
+      ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+      ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+      ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -53,17 +59,26 @@ jobs:
         run: |
           echo "::warning::Secret ANDROID_KEYSTORE_BASE64 absent : APK signé en debug (Chrome le bloquera). Voir docs/play-store/signature.md"
           echo "SIGNING=debug" >> "$GITHUB_ENV"
-      - name: Compiler
-        run: cd android && chmod +x gradlew && ./gradlew assembleRelease --no-daemon
+      - name: Compiler l'APK et l'App Bundle
+        run: cd android && chmod +x gradlew && ./gradlew assembleRelease bundleRelease --no-daemon
       - name: Nom de version
         id: version
         run: echo "tag=${{ github.event.inputs.tag || github.ref_name }}" >> "$GITHUB_OUTPUT"
       - name: Renommer
-        run: cp android/app/build/outputs/apk/release/app-release.apk quizgeo-${{ steps.version.outputs.tag }}.apk
+        run: |
+          cp android/app/build/outputs/apk/release/app-release.apk quizgeo-${{ steps.version.outputs.tag }}.apk
+          cp android/app/build/outputs/bundle/release/app-release.aab quizgeo-${{ steps.version.outputs.tag }}.aab
+      - name: Vérifier le manifeste (permissions, targetSdk)
+        run: |
+          AAPT="$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)/aapt2"
+          "$AAPT" dump permissions quizgeo-*.apk
+          "$AAPT" dump badging quizgeo-*.apk | grep -E "sdkVersion|targetSdkVersion|package:"
       - uses: actions/upload-artifact@v4
         with:
-          name: quizgeo-apk
-          path: quizgeo-*.apk
+          name: quizgeo-android
+          path: |
+            quizgeo-*.apk
+            quizgeo-*.aab
       - name: Vérifier la signature de l'APK
         run: |
           "$ANDROID_HOME/build-tools/$(ls "$ANDROID_HOME/build-tools" | sort -V | tail -1)/apksigner" verify --print-certs quizgeo-*.apk | grep -E "Signer|SHA-256" || true
@@ -74,7 +89,9 @@ jobs:
           tag_name: ${{ steps.version.outputs.tag }}
           target_commitish: ${{ github.sha }}
           name: Quiz GEO ${{ steps.version.outputs.tag }}
-          files: quizgeo-*.apk
+          files: |
+            quizgeo-*.apk
+            quizgeo-*.aab
           generate_release_notes: true
           body: |
             ## Installer sur Android
@@ -85,3 +102,5 @@ jobs:
             4. Si Play Protect s'en mêle : **Plus de détails → Installer quand même**.
 
             L'application est signée (`${{ env.SIGNING }}`), sans publicité, sans compte, et ne transmet aucune donnée. Les mises à jour s'installent par-dessus sans perdre la progression.
+
+            Le fichier `.aab` est l'App Bundle destiné à la Play Console (pas installable directement).

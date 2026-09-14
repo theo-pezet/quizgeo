@@ -12,7 +12,7 @@ const basePath = process.env.EXPO_PUBLIC_BASE_PATH ?? '';
 const config: ExpoConfig = {
   name: 'Quiz GEO',
   slug: 'quizgeo',
-  version: '0.8.0',
+  version: '0.8.1',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'quizgeo',
@@ -21,7 +21,7 @@ const config: ExpoConfig = {
     // Ne jamais changer : la fiche Play Store et l'app AdMob y seront liées.
     package: 'fr.citeparlia.quizgeo',
     // Incrémenté automatiquement par EAS en production (eas.json).
-    versionCode: 9,
+    versionCode: 10,
     adaptiveIcon: {
       backgroundColor: '#5B4BFF',
       foregroundImage: './assets/images/android-icon-foreground.png',
@@ -29,6 +29,18 @@ const config: ExpoConfig = {
       monochromeImage: './assets/images/android-icon-monochrome.png',
     },
     predictiveBackGestureEnabled: false,
+    // Aucune de ces permissions n'est utile : on les retire du manifeste
+    // final (expo-audio ajoute RECORD_AUDIO, le gabarit ajoute le stockage
+    // et la fenêtre superposée du menu de développement).
+    blockedPermissions: [
+      'android.permission.RECORD_AUDIO',
+      'android.permission.MODIFY_AUDIO_SETTINGS',
+      'android.permission.FOREGROUND_SERVICE',
+      'android.permission.FOREGROUND_SERVICE_MEDIA_PLAYBACK',
+      'android.permission.SYSTEM_ALERT_WINDOW',
+      'android.permission.READ_EXTERNAL_STORAGE',
+      'android.permission.WRITE_EXTERNAL_STORAGE',
+    ],
   },
   web: {
     // Un seul index.html : le routage est côté client, et GitHub Pages sert

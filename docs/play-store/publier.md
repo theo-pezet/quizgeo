@@ -30,6 +30,24 @@ eas build -p android --profile production
 - `versionCode` s'incrémente tout seul à chaque build de production
   (`autoIncrement` dans `eas.json`).
 
+
+## Sans EAS : l'App Bundle produit par GitHub Actions
+
+Le workflow *Android APK* (Actions → Run workflow, avec un nom de version)
+produit aussi `quizgeo-vX.Y.Z.aab`, signé avec la clé de release du dépôt
+(secret `ANDROID_KEYSTORE_BASE64`, voir `signature.md`). Ce fichier se dépose
+tel quel dans la Play Console (Tests → Test interne → Créer une version).
+
+- À la création de l'application dans la Play Console, accepte la **signature
+  d'application par Google Play** : la clé du dépôt devient la *clé de
+  téléversement* (upload key) et Google signe les APK distribués.
+- Le `versionCode` (app.config.ts) doit augmenter à chaque envoi : il est
+  incrémenté à chaque version dans ce dépôt.
+- targetSdk / compileSdk suivent Expo SDK 57 (Android 16, API 36), minSdk 24
+  (Android 7). Le manifeste ne contient que INTERNET, VIBRATE et
+  POST_NOTIFICATIONS (rappels locaux) ; les permissions inutiles sont bloquées
+  dans app.config.ts.
+
 ## 3. Premier envoi
 
 Play Console → Tests → **Test interne** → Créer une version → déposer le .aab.
