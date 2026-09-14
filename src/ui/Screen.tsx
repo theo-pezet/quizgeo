@@ -24,11 +24,11 @@ export function Screen({
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: background ?? colors.background }]} edges={['top', 'left', 'right']}>
       {scroll ? (
-        <ScrollView contentContainerStyle={[styles.scroll, footer ? styles.withFooter : null]} keyboardShouldPersistTaps="handled">
+        <ScrollView contentContainerStyle={[styles.scroll, footer ? styles.withFooter : { paddingBottom: insets.bottom + space.md }]} keyboardShouldPersistTaps="handled">
           {inner}
         </ScrollView>
       ) : (
-        <View style={styles.scroll}>{inner}</View>
+        <View style={[styles.scroll, footer ? null : { paddingBottom: insets.bottom }]}>{inner}</View>
       )}
       {footer ? (
         <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.md), backgroundColor: background ?? colors.background, borderTopColor: colors.border }]}>

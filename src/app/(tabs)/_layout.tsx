@@ -1,5 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import type { ComponentProps } from 'react';
 import type { ColorValue } from 'react-native';
 
@@ -15,13 +16,16 @@ function icon(active: Name, inactive: Name) {
 export default function TabsLayout() {
   const colors = useColors();
   const t = useT();
+  const insets = useSafeAreaInsets();
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
-        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, borderTopWidth: 2, height: 64, paddingTop: 6 },
+        // Hauteur explicite + marge basse : sur Android 15+ (edge-to-edge) la barre
+        // système recouvre le bas de l'écran, il faut la compenser nous-mêmes.
+        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, borderTopWidth: 2, height: 62 + insets.bottom, paddingTop: 6, paddingBottom: insets.bottom + 6 },
         tabBarLabelStyle: { fontFamily: fonts.extraBold, fontSize: 11 },
       }}>
       <Tabs.Screen name="index" options={{ title: t('tabs.path'), tabBarIcon: icon('map', 'map-outline') }} />
