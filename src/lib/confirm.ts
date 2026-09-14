@@ -1,5 +1,7 @@
 import { Alert, Platform } from 'react-native';
 
+import { t } from '@/i18n';
+
 /** Confirmation qui marche aussi sur le web, où Alert.alert n'existe pas. */
 export function confirm(title: string, message: string, onConfirm: () => void): void {
   if (Platform.OS === 'web') {
@@ -7,7 +9,7 @@ export function confirm(title: string, message: string, onConfirm: () => void): 
     return;
   }
   Alert.alert(title, message, [
-    { text: 'Annuler', style: 'cancel' },
-    { text: 'Confirmer', style: 'destructive', onPress: onConfirm },
+    { text: t('common.cancel'), style: 'cancel' },
+    { text: t('common.confirm'), style: 'destructive', onPress: onConfirm },
   ]);
 }

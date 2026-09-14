@@ -47,7 +47,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
     'Un long paragraphe d’introduction avant d’arriver au fait',
     'Des mots-clés répétés dix fois',
     'Une police de caractères plus grande',
-  ], 'Les moteurs génératifs extraient des passages. Un bloc court, qui répond seul à la question posée par le titre, se cite sans réécriture — c’est exactement ce que le modèle cherche.'),
+  ], 'Les moteurs génératifs extraient des passages. Un bloc court, qui répond seul à la question posée par le titre, se cite sans réécriture : c’est exactement ce que le modèle cherche.'),
   qcm('mkt-geo-1', 4, 'Que signifie « Information Gain » pour un contenu ?', [
     'Il apporte une information que les autres sources n’ont pas (données, retour d’expérience, exemple original)',
     'Il est plus long que la concurrence',
@@ -135,7 +135,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
         prompt: 'Comment vérifier que la nouvelle page fait mieux ?',
         choices: ['Un A/B test avec assez de trafic pour être significatif', 'Comparer au feeling après deux jours', 'Demander l’avis de l’équipe', 'Regarder uniquement le CTR'],
         answer: 0,
-        feedback: 'On teste, on attend la significativité statistique, on décide sur le taux de conversion — pas sur l’impression.',
+        feedback: 'On teste, on attend la significativité statistique, on décide sur le taux de conversion, pas sur l’impression.',
       },
     ],
     explain: 'Bon CTR + mauvaise conversion = problème de page, pas d’annonce. Landing dédiée, un CTA, A/B test.',
@@ -234,7 +234,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
         prompt: 'Comment reconstruire un profil de liens sain ?',
         choices: ['Des liens gagnés : contenus de référence (données, outils, études), relations presse, partenariats, mentions dans des guides d’achat', 'Un échange de liens massif avec des sites amis', 'Des commentaires de blog avec des liens', 'Un réseau de sites satellites'],
         answer: 0,
-        feedback: 'Un lien de qualité est un lien qu’on aurait fait sans le SEO. Dix liens de médias et de guides d’achat valent plus que mille annuaires — et ne s’effondrent pas à la prochaine mise à jour.',
+        feedback: 'Un lien de qualité est un lien qu’on aurait fait sans le SEO. Dix liens de médias et de guides d’achat valent plus que mille annuaires, et ne s’effondrent pas à la prochaine mise à jour.',
       },
     ],
     explain: 'Audit et arrêt, retrait puis désaveu, reconstruction par des liens gagnés.',
@@ -256,7 +256,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
         prompt: 'Quelle structure mettre en place ?',
         choices: ['Des hubs thématiques (topic clusters) : chaque pilier reçoit des liens contextuels de tous ses satellites, et renvoie vers eux', 'Mettre tous les articles dans le menu', 'Un lien vers la page d’accueil dans chaque article', 'Des liens en pied de page vers 200 pages'],
         answer: 0,
-        feedback: 'Le cluster concentre les liens sur la page qui doit se classer et rend le sujet lisible pour Google — et pour les IA qui résument un site.',
+        feedback: 'Le cluster concentre les liens sur la page qui doit se classer et rend le sujet lisible pour Google, et pour les IA qui résument un site.',
       },
       {
         prompt: 'Comment accélérer l’indexation des nouveaux articles ?',
@@ -343,7 +343,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
       },
       {
         prompt: 'Comment fixer la durée du test ?',
-        choices: ['Calculer la taille d’échantillon à partir du taux de base et de l’effet minimal détectable, puis courir jusqu’à l’atteindre — sans regarder tous les jours', 'Attendre que B gagne', 'Une semaine, toujours', 'Jusqu’à ce que le CEO soit content'],
+        choices: ['Calculer la taille d’échantillon à partir du taux de base et de l’effet minimal détectable, puis courir jusqu’à l’atteindre, sans regarder tous les jours', 'Attendre que B gagne', 'Une semaine, toujours', 'Jusqu’à ce que le CEO soit content'],
         answer: 0,
         feedback: 'Regarder chaque jour et s’arrêter au premier « significatif » est la façon la plus sûre de valider du bruit (peeking).',
       },
@@ -502,7 +502,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
   // ============================================= Tokens et coût (ia-llm-2)
   qcm('ia-llm-2', 1, 'Un modèle facture 3 $ par million de tokens en entrée et 15 $ en sortie. Un appel envoie 10 000 tokens et en reçoit 1 000. Coût ?', ['0,045 $', '0,45 $', '0,03 $', '4,5 $'], '10 000 × 3 $ / 1 000 000 = 0,03 $ ; 1 000 × 15 $ / 1 000 000 = 0,015 $. Total 0,045 $. La sortie coûte cinq fois plus cher par token, mais on en produit moins.'),
   qcm('ia-llm-2', 2, 'Pourquoi une longue conversation coûte-t-elle de plus en plus cher à chaque message ?', ['Parce que tout l’historique est renvoyé au modèle à chaque tour et facturé en entrée', 'Parce que le modèle se fatigue', 'Parce que le prix du token augmente avec le temps', 'Elle ne coûte pas plus cher'], 'Le modèle n’a pas de mémoire entre les appels : on lui renvoie toute la conversation. Le cache de prompt atténue ce coût.'),
-  qcm('ia-llm-2', 3, 'Un document de 300 pages ne tient pas dans la fenêtre de contexte. Que fais-tu ?', ['Le découper (ou le résumer par parties) et ne fournir que les passages utiles — c’est le principe du RAG', 'Le coller quand même : le modèle lira ce qu’il peut', 'Augmenter la température', 'Changer de tokenizer'], 'Un prompt trop long est tronqué ou refusé. Découper, indexer, retrouver les bons passages : c’est exactement le RAG.'),
+  qcm('ia-llm-2', 3, 'Un document de 300 pages ne tient pas dans la fenêtre de contexte. Que fais-tu ?', ['Le découper (ou le résumer par parties) et ne fournir que les passages utiles : c’est le principe du RAG', 'Le coller quand même : le modèle lira ce qu’il peut', 'Augmenter la température', 'Changer de tokenizer'], 'Un prompt trop long est tronqué ou refusé. Découper, indexer, retrouver les bons passages : c’est exactement le RAG.'),
   vf('ia-llm-2', 4, 'Un score élevé sur un benchmark public garantit de bons résultats sur mes propres tâches.', false, 'Les benchmarks sont publics, donc dans les données d’entraînement ; ils mesurent des tâches génériques. Seul un jeu d’évaluation sur vos cas réels compte.'),
   vf('ia-llm-2', 5, 'Le français consomme souvent plus de tokens que l’anglais pour un même texte.', true, 'Les tokenizers sont surtout optimisés sur l’anglais : un mot français est plus souvent découpé en plusieurs morceaux, donc plus cher.'),
 
@@ -577,7 +577,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
         prompt: 'Quelle étape doit rester sous validation humaine ?',
         choices: ['L’envoi de l’email à la direction', 'La lecture des données', 'Le calcul des variations', 'Aucune : tout automatiser'],
         answer: 0,
-        feedback: 'L’action irréversible et visible de l’extérieur — envoyer — attend un clic humain. Le reste peut être automatique.',
+        feedback: 'L’action irréversible et visible de l’extérieur (envoyer) attend un clic humain. Le reste peut être automatique.',
       },
       {
         prompt: 'Un lundi, l’API Ads renvoie une erreur. Que doit faire l’agent ?',
@@ -602,7 +602,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
     key: 'ia-mkt-1:x:1',
     unitId: 'ia-mkt-1',
     title: 'Les AI Overviews mangent le trafic',
-    scenario: 'Ton blog garde ses positions Google, mais le trafic organique baisse de 20 % en six mois. Sur tes requêtes principales, un AI Overview s’affiche désormais en haut de page — et ne te cite pas.',
+    scenario: 'Ton blog garde ses positions Google, mais le trafic organique baisse de 20 % en six mois. Sur tes requêtes principales, un AI Overview s’affiche désormais en haut de page, et ne te cite pas.',
     steps: [
       {
         prompt: 'Quelle est la cause la plus probable ?',
@@ -625,7 +625,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
     ],
     explain: 'Zero-click par les réponses générées → contenu citable et original → suivi de visibilité IA.',
   },
-  qcm('ia-mkt-1', 2, 'Un « persona synthétique » sert à…', ['Explorer rapidement des réactions à un message avant de le tester sur de vrais clients — jamais pour conclure', 'Remplacer les études clients', 'Générer de faux avis', 'Prédire le chiffre d’affaires'], 'Utile pour repérer les objections évidentes ; un LLM ne remplace pas une vraie personne pour décider.'),
+  qcm('ia-mkt-1', 2, 'Un « persona synthétique » sert à…', ['Explorer rapidement des réactions à un message avant de le tester sur de vrais clients, jamais pour conclure', 'Remplacer les études clients', 'Générer de faux avis', 'Prédire le chiffre d’affaires'], 'Utile pour repérer les objections évidentes ; un LLM ne remplace pas une vraie personne pour décider.'),
   vf('ia-mkt-1', 3, 'Une mention de marque sans lien n’a aucune valeur pour la visibilité dans les IA.', false, 'Les modèles apprennent l’association marque ↔ sujet à partir de toutes les mentions, liens ou pas. La notoriété textuelle devient un levier.'),
 
   // ================================================ Python : concepts (1)
@@ -646,7 +646,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
   qcm('py-pratiques-1', 101, 'Qu’affiche ce code ?', ['Fichier introuvable', 'Une erreur non gérée', 'Rien', 'None'], 'open() sur un fichier absent lève FileNotFoundError, attrapée par le except : le message s’affiche et le programme continue.', { code: { lang: 'python', src: 'try:\n    f = open("inexistant.csv")\nexcept FileNotFoundError:\n    print("Fichier introuvable")' } }),
   qcm('py-pratiques-1', 102, 'Que se passe-t-il ?', ['AssertionError : le programme s’arrête avec le message', 'Rien, le code continue', 'Le CPA vaut 0', 'Une division par zéro'], 'La condition est fausse (0 conversion), assert lève une AssertionError avec le message. Mieux vaut planter tôt et clairement qu’afficher un CPA infini.', { code: { lang: 'python', src: 'conversions = 0\nassert conversions > 0, "aucune conversion"\ncpa = 120 / conversions' } }),
   qcm('py-pratiques-1', 103, 'Lequel de ces noms respecte PEP 8 pour une variable ?', ['taux_de_clic', 'TauxDeClic', 'tauxDeClic', 'TAUXDECLIC'], 'snake_case pour variables et fonctions ; CamelCase est réservé aux classes ; MAJUSCULES aux constantes.'),
-  vf('py-pratiques-1', 104, 'Les type hints font planter le programme si on passe un mauvais type.', false, 'Python les ignore à l’exécution. Ce sont l’éditeur (VS Code) et des outils comme mypy qui les vérifient — et surtout, ils documentent.'),
+  vf('py-pratiques-1', 104, 'Les type hints font planter le programme si on passe un mauvais type.', false, 'Python les ignore à l’exécution. Ce sont l’éditeur (VS Code) et des outils comme mypy qui les vérifient. Et surtout, ils documentent.'),
 
   // ================================================ Python : outils
   qcm('py-outils-1', 101, 'Ce fichier est importé depuis un autre script. Que se passe-t-il ?', ['Rien ne s’affiche : le bloc __main__ ne s’exécute qu’en lancement direct', '« Rapport envoyé » s’affiche', 'Une erreur', 'Le script s’arrête'], 'Le garde `if __name__ == "__main__"` empêche l’exécution du code principal à l’import : on peut réutiliser les fonctions sans déclencher l’envoi.', { code: { lang: 'python', src: 'def envoyer_rapport():\n    print("Rapport envoyé")\n\nif __name__ == "__main__":\n    envoyer_rapport()' } }),
@@ -685,7 +685,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
     steps: [
       {
         prompt: 'Par quoi commences-tu ?',
-        choices: ['Un notebook qui lit le CSV avec pandas et reproduit le tableau croisé — pour valider le calcul', 'Le cron, pour que ça tourne tout de suite', 'L’envoi d’email', 'Tout écrire d’un coup sans tester'],
+        choices: ['Un notebook qui lit le CSV avec pandas et reproduit le tableau croisé, pour valider le calcul', 'Le cron, pour que ça tourne tout de suite', 'L’envoi d’email', 'Tout écrire d’un coup sans tester'],
         answer: 0,
         feedback: 'On explore en notebook, on valide les chiffres contre l’Excel actuel, puis on industrialise.',
       },
@@ -715,7 +715,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
         prompt: 'Pour les emails, la bonne chaîne d’opérations ?',
         choices: ['df["email"].str.strip().str.lower(), puis drop_duplicates(subset="email")', 'df["email"].upper()', 'Supprimer la colonne', 'Les corriger à la main dans Excel'],
         answer: 0,
-        feedback: 'strip retire les espaces, lower normalise la casse, drop_duplicates dédoublonne sur l’email normalisé — dans cet ordre.',
+        feedback: 'strip retire les espaces, lower normalise la casse, drop_duplicates dédoublonne sur l’email normalisé, dans cet ordre.',
       },
       {
         prompt: 'Pour la colonne « ca » avec « 1 200 € » ?',
@@ -793,7 +793,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
   qcm('web-4', 4, 'Qu’affiche ce code ?', ['3', '2', '[1, 2, 3]', 'undefined'], '.length donne le nombre d’éléments d’un tableau.', { code: { lang: 'js', src: 'const liste = ["seo", "sea", "geo"];\nconsole.log(liste.length);' } }),
   qcm('web-4', 5, 'Comment sélectionner le premier élément qui a la classe "cta" ?', ['document.querySelector(".cta")', 'document.getElement(".cta")', 'document.find("cta")', 'window.select(".cta")'], 'querySelector accepte n’importe quel sélecteur CSS et rend le premier élément trouvé ; querySelectorAll les rend tous.'),
   qcm('web-4', 6, 'Que fait ce code ?', ['Affiche « Merci ! » dans la console quand on clique sur le bouton', 'Affiche « Merci ! » au chargement', 'Crée un bouton', 'Rien : il manque un point-virgule'], 'addEventListener attache une fonction (ici une fonction fléchée) à un événement. C’est la base de l’interactivité.', { code: { lang: 'js', src: 'const btn = document.querySelector("button");\nbtn.addEventListener("click", () => {\n  console.log("Merci !");\n});' } }),
-  qcm('web-4', 7, 'Qu’affiche ce code ?', ['true', 'false', '"1"', 'Une erreur'], '=== compare valeur ET type : le nombre 1 et la chaîne "1" sont différents. == (double égal) aurait converti et rendu true — d’où la règle : toujours ===.', { code: { lang: 'js', src: 'console.log(1 === "1");' } }),
+  qcm('web-4', 7, 'Qu’affiche ce code ?', ['true', 'false', '"1"', 'Une erreur'], '=== compare valeur ET type : le nombre 1 et la chaîne "1" sont différents. == (double égal) aurait converti et rendu true. D’où la règle : toujours ===.', { code: { lang: 'js', src: 'console.log(1 === "1");' } }),
   vf('web-4', 8, 'fetch() permet d’appeler une API depuis le navigateur.', true, 'fetch("https://api…").then(r => r.json()) : c’est ainsi qu’une page charge des données sans se recharger (le « A » de AJAX, en version moderne).'),
 
   // ================================================= HTML sémantique (web-html-2)
@@ -857,7 +857,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
       },
       {
         prompt: 'Ça marche en Aperçu, mais toujours rien en production. Piste ?',
-        choices: ['Le consentement : le tag est bloqué tant que l’utilisateur n’a pas accepté — vérifier Consent Mode et la CMP', 'GA4 est en panne', 'Le dataLayer est trop grand', 'Il faut un pixel Meta'],
+        choices: ['Le consentement : le tag est bloqué tant que l’utilisateur n’a pas accepté : vérifier Consent Mode et la CMP', 'GA4 est en panne', 'Le dataLayer est trop grand', 'Il faut un pixel Meta'],
         answer: 0,
         feedback: 'En Aperçu on a souvent consenti ; les visiteurs réels non. Le tag doit attendre le consentement, mais il faut que la CMP le transmette bien.',
       },
@@ -892,7 +892,7 @@ export const EXTRA_EXERCISES: readonly Exercise[] = [
     ],
     explain: 'Image du hero d’abord, scripts bloquants ensuite, mesure avant / après.',
   },
-  qcm('web-case-1', 3, 'Un lien de campagne : https://site.fr/offre?utm_source=newsletter&utm_medium=email&utm_campaign=rentree. Que voit GA4 ?', ['Source newsletter, medium email, campagne rentree — la session est attribuée à la newsletter', 'Rien : les UTM sont pour Google Ads', 'Une page 404', 'Un contenu dupliqué'], 'Les paramètres utm_* sont lus par GA4 pour attribuer la source. Ajouter un canonical sur /offre évite le dupliqué côté SEO.'),
+  qcm('web-case-1', 3, 'Un lien de campagne : https://site.fr/offre?utm_source=newsletter&utm_medium=email&utm_campaign=rentree. Que voit GA4 ?', ['Source newsletter, medium email, campagne rentree : la session est attribuée à la newsletter', 'Rien : les UTM sont pour Google Ads', 'Une page 404', 'Un contenu dupliqué'], 'Les paramètres utm_* sont lus par GA4 pour attribuer la source. Ajouter un canonical sur /offre évite le dupliqué côté SEO.'),
 
   qcm('web-case-1', 4, 'Après la refonte, 300 anciennes URL renvoient une 404 et le trafic SEO chute. La bonne réponse ?', ['Des redirections 301 de chaque ancienne URL vers la page équivalente', 'Laisser Google réindexer tout seul', 'Bloquer les 404 dans robots.txt', 'Supprimer le sitemap'], 'La 301 transfère l’autorité et guide l’utilisateur ; une 404 perd les deux. C’est la première tâche de toute migration.'),
   vf('web-case-1', 5, 'Un bouton codé en <div onclick="…"> est aussi accessible et suivi qu’un vrai <button>.', false, 'Le <div> n’est ni focusable au clavier, ni annoncé comme bouton par les lecteurs d’écran, et les déclencheurs GTM « clic » le repèrent moins bien. Utiliser <button> ou <a>.'),

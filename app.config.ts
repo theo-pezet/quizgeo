@@ -12,7 +12,7 @@ const basePath = process.env.EXPO_PUBLIC_BASE_PATH ?? '';
 const config: ExpoConfig = {
   name: 'Quiz GEO',
   slug: 'quizgeo',
-  version: '0.7.2',
+  version: '0.8.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'quizgeo',
@@ -21,7 +21,7 @@ const config: ExpoConfig = {
     // Ne jamais changer : la fiche Play Store et l'app AdMob y seront liées.
     package: 'fr.citeparlia.quizgeo',
     // Incrémenté automatiquement par EAS en production (eas.json).
-    versionCode: 8,
+    versionCode: 9,
     adaptiveIcon: {
       backgroundColor: '#5B4BFF',
       foregroundImage: './assets/images/android-icon-foreground.png',

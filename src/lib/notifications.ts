@@ -8,7 +8,17 @@
 
 import { Platform } from 'react-native';
 
-import { planReminders, type ReminderPrefs, type Progress } from '@/game';
+import { planReminders, type ReminderPrefs, type ReminderTexts, type Progress } from '@/game';
+import { t } from '@/i18n';
+
+function texts(): ReminderTexts {
+  return {
+    streakTitle: (count) => (count > 0 ? t('reminder.streak.title', { count }) : t('reminder.streak.titleNew')),
+    streakBody: (count) => (count > 0 ? t('reminder.streak.body') : t('reminder.streak.bodyNew')),
+    energyTitle: t('reminder.energy.title'),
+    energyBody: t('reminder.energy.body'),
+  };
+}
 
 type NotificationsModule = typeof import('expo-notifications');
 
@@ -44,7 +54,7 @@ export async function syncReminders(progress: Progress, enabled: boolean, prefs:
   try {
     await mod.cancelAllScheduledNotificationsAsync();
     if (!enabled) return;
-    for (const reminder of planReminders(progress, new Date(), prefs)) {
+    for (const reminder of planReminders(progress, new Date(), prefs, texts())) {
       await mod.scheduleNotificationAsync({
         identifier: reminder.id,
         content: { title: reminder.title, body: reminder.body },

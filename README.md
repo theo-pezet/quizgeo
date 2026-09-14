@@ -1,9 +1,11 @@
 # Quiz GEO
 
 Application mobile (Android, et web) pour apprendre le marketing digital,
-l'IA, Python et HTML / CSS / JavaScript. Un chemin d'unités par matière
-(comme Duolingo), un deck de vocabulaire en répétition espacée (comme Anki),
-et des cas pratiques.
+l'IA, Python et HTML / CSS / JavaScript. Un chemin d'unités par matière,
+découpé en **mondes** thématiques (comme Duolingo), un deck de vocabulaire en
+répétition espacée (comme Anki), et des cas pratiques. Interface et contenu
+en **français, anglais et espagnol** (choix au premier lancement, puis dans
+le Profil).
 
 - **Web** : https://theo-pezet.github.io/quizgeo/ (publié à chaque push sur `main`)
 - **APK Android** : onglet *Releases* (construit et signé par GitHub Actions ;
@@ -29,7 +31,15 @@ et des cas pratiques.
 - Série quotidienne avec gels, 17 badges, niveaux, sessions libres par matière.
 - **Blitz** (60 s, XP ×2), **test de sortie** (8/10 sur une unité verrouillée
   valide les précédentes), **rappels locaux** (série en danger, énergie
-  rechargée — Android uniquement), trois **rivaux** récurrents en ligue.
+  rechargée, Android uniquement), trois **rivaux** récurrents en ligue.
+- **Trois langues.** Le classeur Excel (anglais) est traduit vers le français
+  et l'espagnol (`src/data/i18n/deck.*.json`), les cartes et exercices écrits
+  à la main (français) vers l'anglais et l'espagnol (`xcards.*.json`,
+  `extras.*.json`). Les identifiants ne changent jamais : la progression
+  survit à un changement de langue. Textes d'interface : `src/i18n/`.
+- **Mondes.** `src/content/worlds.ts` regroupe les unités en sections avec
+  nom, couleur et emblème ; un monde est terminé quand toutes ses unités ont
+  3 couronnes (écran dédié en fin de leçon).
 
 ## Architecture
 

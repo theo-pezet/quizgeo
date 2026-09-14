@@ -2,52 +2,56 @@ import { router } from 'expo-router';
 import { useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
-import { CARDS, SUBJECTS, cardIdsOf, type Card as DeckCard } from '@/content';
+import type { Card as DeckCard } from '@/content';
+import { useContent } from '@/content/useContent';
 import { deckStats, toDayKey } from '@/game';
+import { useT } from '@/i18n';
 import { useProgress } from '@/store/progress';
-import { Button, Card, Screen, Text, radius, space, useColors } from '@/ui';
+import { Button, Card, Screen, Text, fonts, radius, shade, space, useColors } from '@/ui';
 
 export default function DeckScreen() {
   const colors = useColors();
+  const t = useT();
+  const { CARDS, SUBJECTS, cardIdsOf } = useContent();
   const progress = useProgress((s) => s.progress);
   const [subjectId, setSubjectId] = useState<string | null>(null);
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState<string | null>(null);
   const today = toDayKey(new Date());
 
-  const ids = useMemo(() => (subjectId ? cardIdsOf(subjectId) : CARDS.map((c) => c.id)), [subjectId]);
+  const ids = useMemo(() => (subjectId ? cardIdsOf(subjectId) : CARDS.map((c) => c.id)), [subjectId, cardIdsOf, CARDS]);
   const stats = useMemo(() => deckStats(progress.cards, ids, today), [progress.cards, ids, today]);
   const filtered = useMemo(() => {
     const q = query.trim().toLowerCase();
     return CARDS.filter((c) => (!subjectId || c.subject === subjectId) && (q === '' || c.term.toLowerCase().includes(q) || c.definition.toLowerCase().includes(q)));
-  }, [query, subjectId]);
+  }, [query, subjectId, CARDS]);
 
   const header = (
     <View style={styles.header}>
-      <Text variant="title">Deck</Text>
+      <Text variant="title">{t('deck.title')}</Text>
       <Text variant="small" secondary>
-        {CARDS.length} cartes, révision espacée type Anki. Les erreurs de leçon y reviennent automatiquement.
+        {t('deck.blurb', { count: CARDS.length })}
       </Text>
       <View style={styles.chips}>
-        <Chip label="Tout" active={subjectId === null} onPress={() => setSubjectId(null)} />
+        <Chip label={t('deck.all')} active={subjectId === null} onPress={() => setSubjectId(null)} />
         {SUBJECTS.map((s) => (
           <Chip key={s.id} label={`${s.emoji} ${s.title}`} active={subjectId === s.id} color={s.color} onPress={() => setSubjectId(s.id)} />
         ))}
       </View>
       <Card>
         <View style={styles.statsRow}>
-          <Stat label="À revoir" value={stats.dueToday} color={colors.danger} />
-          <Stat label="En cours" value={stats.learning} color={colors.primary} />
-          <Stat label="Acquises" value={stats.review} color={colors.success} />
-          <Stat label="Nouvelles" value={stats.new} color={colors.textSecondary} />
+          <Stat label={t('deck.due')} value={stats.dueToday} color={colors.danger} />
+          <Stat label={t('deck.learning')} value={stats.learning} color={colors.primary} />
+          <Stat label={t('deck.known')} value={stats.review} color={colors.success} />
+          <Stat label={t('deck.new')} value={stats.new} color={colors.textSecondary} />
         </View>
         <Button
-          label={stats.dueToday > 0 ? `Réviser (${stats.dueToday} due${stats.dueToday > 1 ? 's' : ''} + nouvelles)` : 'Apprendre de nouvelles cartes'}
+          label={stats.dueToday > 0 ? t('deck.reviewDue', { count: stats.dueToday }) : t('deck.learnNew')}
           onPress={() => router.push({ pathname: '/deck/review', params: subjectId ? { subjectId } : {} })}
         />
       </Card>
       <TextInput
-        placeholder="Chercher un terme…"
+        placeholder={t('deck.search')}
         placeholderTextColor={colors.textSecondary}
         value={query}
         onChangeText={setQuery}
@@ -72,6 +76,8 @@ export default function DeckScreen() {
 
 function Row({ card, open, onPress }: { card: DeckCard; open: boolean; onPress: () => void }) {
   const colors = useColors();
+  const t = useT();
+  const { SUBJECTS } = useContent();
   const progress = useProgress((s) => s.progress.cards[card.id]);
   const subject = SUBJECTS.find((s) => s.id === card.subject);
   return (
@@ -89,13 +95,13 @@ function Row({ card, open, onPress }: { card: DeckCard; open: boolean; onPress: 
           <Text variant="small">{card.definition}</Text>
           {card.example ? (
             <Text variant="small" secondary>
-              Ex. : {card.example}
+              {t('common.example', { text: card.example })}
             </Text>
           ) : null}
           <Text variant="small" secondary>
             {progress === undefined || progress.phase === 'new'
-              ? 'Jamais révisée'
-              : `${progress.phase === 'learning' ? 'En apprentissage' : 'Acquise'} · prochaine révision le ${progress.due} · ${progress.reps} révision${progress.reps > 1 ? 's' : ''}`}
+              ? t('deck.never')
+              : t('deck.state.detail', { state: progress.phase === 'learning' ? t('deck.state.learning') : t('deck.state.known'), due: progress.due ?? '', count: progress.reps })}
           </Text>
         </View>
       )}
@@ -105,9 +111,9 @@ function Row({ card, open, onPress }: { card: DeckCard; open: boolean; onPress: 
 
 function Chip({ label, active, color, onPress }: { label: string; active: boolean; color?: string; onPress: () => void }) {
   const colors = useColors();
-  const tint = color ?? colors.primary;
+  const tintColor = color ?? colors.primary;
   return (
-    <Pressable onPress={onPress} style={[styles.chip, { backgroundColor: active ? tint : colors.surface, borderColor: active ? tint : colors.border }]}>
+    <Pressable onPress={onPress} style={[styles.chip, { backgroundColor: active ? tintColor : colors.surface, borderColor: active ? shade(tintColor) : colors.border, borderBottomWidth: active ? 4 : 2 }]}>
       <Text variant="small" style={{ color: active ? '#fff' : colors.text }}>
         {label}
       </Text>
@@ -133,11 +139,11 @@ const styles = StyleSheet.create({
   list: { padding: space.lg, gap: space.sm, paddingBottom: space.xxl },
   header: { gap: space.md, marginBottom: space.sm },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  chip: { borderWidth: 1, borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: space.md },
+  chip: { borderWidth: 2, borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: space.md },
   statsRow: { flexDirection: 'row', justifyContent: 'space-around' },
   stat: { alignItems: 'center' },
-  input: { borderWidth: 1, borderRadius: radius.md, padding: space.md, fontSize: 16 },
-  row: { borderWidth: 1, borderRadius: radius.md, padding: space.md, gap: space.sm },
+  input: { borderWidth: 2, borderRadius: radius.md, padding: space.md, fontSize: 16, fontFamily: fonts.regular },
+  row: { borderWidth: 2, borderRadius: radius.md, padding: space.md, gap: space.sm },
   rowHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.sm },
   term: { flex: 1 },
   rowBody: { gap: space.xs },

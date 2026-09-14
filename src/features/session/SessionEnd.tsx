@@ -1,243 +1,306 @@
 import { router } from 'expo-router';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
-import { UNIT_BY_ID } from '@/content';
-import { BADGES, levelProgress, questLabel } from '@/game';
+import { CATALOG, WORLD_BY_UNIT, isWorldComplete } from '@/content';
+import { useContent } from '@/content/useContent';
+import { PATH_TRAITS, allUnitTraits, levelProgress, toDayKey, type Quest } from '@/game';
+import { useLang, useT, type Key } from '@/i18n';
 import { sounds, type SoundName } from '@/lib/sounds';
 import { useProgress } from '@/store/progress';
-import { Button, Card, Confetti, Crowns, FadeUp, Pop, ProgressBar, Ring, Screen, Text, space, useColors, useCountUp } from '@/ui';
+import { Button, Confetti, Crowns, FadeUp, Icon, Pop, ProgressBar, Ring, Screen, Text, radius, space, tint, useColors, useCountUp, type IconName } from '@/ui';
 
 import type { SessionSpec, SessionState } from './useSession';
 
+type Page =
+  | { kind: 'recap' }
+  | { kind: 'skip' }
+  | { kind: 'levelUp' }
+  | { kind: 'crown' }
+  | { kind: 'world' }
+  | { kind: 'quest'; quests: Quest[] }
+  | { kind: 'badge' }
+  | { kind: 'streak' };
+
+const QUEST_KEYS: Record<Quest['kind'], Key> = {
+  xp: 'quest.xp',
+  lessons: 'quest.lessons',
+  perfect: 'quest.perfect',
+  combo: 'quest.combo',
+  cards: 'quest.cards',
+  recover: 'quest.recover',
+};
+
 /**
- * L'écran de fin : une cascade de cartes, chacune avec son petit moment.
- * Un seul son, le plus important (niveau > badge > couronne > sans-faute > objectif).
+ * L'écran de fin : une page par événement, chacune tenant dans l'écran, avec
+ * un seul bouton fixe en bas. La première page résume ; les suivantes
+ * n'existent que s'il s'est passé quelque chose (niveau, couronne, monde,
+ * quête, badge, série).
  */
 export function SessionEnd({ state, spec, color }: { state: SessionState; spec: SessionSpec; color: string }) {
   const colors = useColors();
+  const t = useT();
+  const lang = useLang();
+  const { EXERCISES, UNIT_BY_ID } = useContent();
   const progress = useProgress((s) => s.progress);
   const r = state.result;
-  const level = levelProgress(progress.xp);
-  const score = `${state.correctCount}/${state.mainCount}`;
   const perfect = state.mainCount > 0 && state.correctCount === state.mainCount;
   const good = state.correctCount >= state.mainCount * 0.6;
-  const crownGained = !!r && r.traitsAfter > r.traitsBefore;
-  const answersXp = r ? r.progress.xp - state.xpAtStart - r.xpGained : 0;
-  const totalXp = r ? r.progress.xp - state.xpAtStart : 0;
-  const shownXp = useCountUp(Math.max(0, totalXp), 900, 300);
+  const crownGained = !!r && spec.mode === 'unit' && r.traitsAfter > r.traitsBefore;
+  const world = spec.mode === 'unit' ? WORLD_BY_UNIT.get(spec.unitId) : undefined;
 
-  const sound = useMemo<SoundName | null>(() => {
-    if (!r) return null;
-    if (r.levelUp.crossed) return 'levelup';
-    if (r.newBadges.length > 0) return 'badge';
-    if (crownGained) return 'crown';
-    if (perfect) return 'perfect';
-    if (r.goalReached) return 'goal';
-    return null;
-  }, [r, crownGained, perfect]);
+  const worldDone = useMemo(() => {
+    if (!r || !world || r.traitsAfter < PATH_TRAITS || r.traitsBefore >= PATH_TRAITS) return false;
+    const traits = allUnitTraits(r.progress, EXERCISES, CATALOG, toDayKey(new Date()));
+    return isWorldComplete(world, traits, PATH_TRAITS);
+  }, [r, world, EXERCISES]);
+
+  const pages = useMemo<Page[]>(() => {
+    const out: Page[] = [{ kind: 'recap' }];
+    if (!r) return out;
+    if (state.skipTest) out.push({ kind: 'skip' });
+    if (r.levelUp.crossed) out.push({ kind: 'levelUp' });
+    if (crownGained || r.newlyUnlockedUnits.length > 0) out.push({ kind: 'crown' });
+    if (worldDone) out.push({ kind: 'world' });
+    if (r.questsCompleted.length > 0) out.push({ kind: 'quest', quests: r.questsCompleted });
+    if (r.newBadges.length > 0) out.push({ kind: 'badge' });
+    if (r.streakIncremented || r.freezeConsumedFor) out.push({ kind: 'streak' });
+    return out;
+  }, [r, state.skipTest, crownGained, worldDone]);
+
+  const [index, setIndex] = useState(0);
+  const page = pages[index];
 
   useEffect(() => {
+    const sound: SoundName | null =
+      page.kind === 'recap' ? (perfect ? 'perfect' : r?.goalReached ? 'goal' : null)
+      : page.kind === 'levelUp' ? 'levelup'
+      : page.kind === 'crown' || page.kind === 'world' ? 'crown'
+      : page.kind === 'badge' || page.kind === 'quest' ? 'badge'
+      : null;
     if (sound) {
-      const t = setTimeout(() => sounds.play(sound), 250);
-      return () => clearTimeout(t);
+      const timer = setTimeout(() => sounds.play(sound), 200);
+      return () => clearTimeout(timer);
     }
-  }, [sound]);
+  }, [page, perfect, r]);
 
-  let delay = 0;
-  const next = () => (delay += 140);
+  const last = index === pages.length - 1;
+  const footer = <Button label={t('common.continue')} color={color} onPress={() => (last ? router.back() : setIndex(index + 1))} />;
 
   return (
-    <Screen>
-      {perfect && <Confetti />}
-      <View style={styles.hero}>
-        <Pop>
-          <Text style={styles.big}>{perfect ? '🏆' : good ? '🎉' : '💪'}</Text>
-        </Pop>
-        <FadeUp delay={100}>
-          <Text variant="title" style={styles.center}>
-            {perfect ? 'Sans faute !' : good ? 'Bien joué !' : 'Ça rentre.'}
-          </Text>
-          <Text variant="body" secondary style={styles.center}>
-            Score {score}
-            {state.bestCombo >= 3 ? ` · meilleure série ×${state.bestCombo}` : ''}
-          </Text>
-        </FadeUp>
-      </View>
-
-      {r && (
-        <FadeUp delay={next()}>
-          <Card>
-            <View style={styles.row}>
-              <View style={styles.grow}>
-                <Text variant="bodyBold">✨ XP gagnés</Text>
-                <Text variant="small" secondary>
-                  {answersXp} pour les réponses{r.xpGained > 0 ? ` + ${r.xpGained} de bonus de session` : ''}.
-                </Text>
-              </View>
-              <Text variant="title" style={{ color }}>
-                +{shownXp}
-              </Text>
-            </View>
-            <ProgressBar ratio={level.ratio} color={color} />
-            <Text variant="small" secondary>
-              Niveau {level.level} · {level.xpToNextLevel} XP avant le suivant
-            </Text>
-          </Card>
-        </FadeUp>
+    <Screen footer={footer}>
+      {(perfect && page.kind === 'recap') || page.kind === 'world' || page.kind === 'levelUp' ? <Confetti /> : null}
+      {page.kind === 'recap' && (
+        <Recap state={state} color={color} perfect={perfect} good={good} />
       )}
-
-      {r && r.levelUp.crossed && (
-        <Pop delay={next() + 200}>
-          <Card style={{ borderColor: color, backgroundColor: colors.surfaceAlt }}>
-            <Text variant="h2">🆙 Niveau {r.levelUp.to} !</Text>
-            <Text variant="small" secondary>
-              Tu passes du niveau {r.levelUp.from} au niveau {r.levelUp.to}.
-            </Text>
-          </Card>
-        </Pop>
+      {page.kind === 'skip' && state.skipTest && (
+        <Moment
+          key="skip"
+          icon={state.skipTest.passed ? 'rocket' : 'refresh'}
+          color={state.skipTest.passed ? colors.success : colors.danger}
+          title={state.skipTest.passed ? t('end.skip.passed') : t('end.skip.failed')}
+          body={
+            state.skipTest.passed
+              ? state.skipTest.validatedUnits.length > 0
+                ? t('end.skip.validated', { units: state.skipTest.validatedUnits.map((id) => UNIT_BY_ID.get(id)?.title ?? id).join(', ') })
+                : t('end.skip.nothing')
+              : t('end.skip.failedBody')
+          }
+        />
       )}
-
-      {r && (
-        <FadeUp delay={next()}>
-          <Card style={r.goalReached ? { borderColor: colors.success } : undefined}>
-            <View style={styles.row}>
-              <Ring ratio={r.dailyRatio} size={56} color={r.dailyRatio >= 1 ? colors.success : color}>
-                <Text variant="small">{r.dailyRatio >= 1 ? '✓' : `${Math.round(r.dailyRatio * 100)}%`}</Text>
-              </Ring>
-              <View style={styles.grow}>
-                <Text variant="bodyBold">{r.goalReached ? '🎯 Objectif du jour atteint !' : r.dailyRatio >= 1 ? '🎯 Objectif du jour déjà atteint' : '🎯 Objectif du jour'}</Text>
-                <Text variant="small" secondary>
-                  {Math.min(r.progress.daily.xp, r.progress.daily.goal)} / {r.progress.daily.goal} XP
-                  {r.goalReached ? ' · +15 gemmes' : ''}
-                </Text>
-              </View>
-            </View>
-          </Card>
-        </FadeUp>
+      {page.kind === 'levelUp' && r && (
+        <Moment key="level" icon="arrow-up-circle" color={color} title={t('end.levelUp.title', { level: r.levelUp.to })} body={t('end.levelUp.body', { from: r.levelUp.from, to: r.levelUp.to })} />
       )}
-
-      {r && (r.gemsGained > 0 || r.energyRefunded > 0) && (
-        <FadeUp delay={next()}>
-          <Card>
-            <Text variant="bodyBold">
-              💎 +{r.gemsGained} gemmes{r.energyRefunded > 0 ? ` · ⚡ +${r.energyRefunded} énergie (sans faute)` : ''}
-            </Text>
-            <Text variant="small" secondary>
-              Solde : 💎 {progress.gems}. À dépenser dans le Profil : recharge, gel de série, boost XP.
-            </Text>
-          </Card>
-        </FadeUp>
-      )}
-
-      {r && r.questsCompleted.length > 0 && (
-        <Pop delay={next()}>
-          <Card style={{ borderColor: colors.success }}>
-            <Text variant="bodyBold">🎯 Quête accomplie</Text>
-            {r.questsCompleted.map((q) => (
-              <Text key={q.id} variant="small">
-                {questLabel(q)} · 💎 {q.reward}
-              </Text>
-            ))}
-          </Card>
-        </Pop>
-      )}
-
-      {state.skipTest && (
-        <FadeUp delay={next()}>
-          <Card style={{ borderColor: state.skipTest.passed ? colors.success : colors.danger }}>
-            <Text variant="bodyBold">{state.skipTest.passed ? '⏩ Test de sortie réussi' : '⏩ Test de sortie raté'}</Text>
-            <Text variant="small" secondary>
-              {state.skipTest.passed
-                ? state.skipTest.validatedUnits.length > 0
-                  ? `Validées d’office : ${state.skipTest.validatedUnits.map((id) => UNIT_BY_ID.get(id)?.title ?? id).join(', ')}.`
-                  : 'Rien à valider : le chemin était déjà ouvert jusqu’ici.'
-                : 'Il fallait 8/10. Tes réponses comptent quand même ; reprends le chemin ou retente plus tard.'}
-            </Text>
-          </Card>
-        </FadeUp>
-      )}
-
-      {r && spec.mode === 'unit' && (
-        <FadeUp delay={next()}>
-          <Card style={crownGained ? { borderColor: colors.gold } : undefined}>
-            <View style={styles.row}>
-              <Text variant="bodyBold">👑 Couronnes</Text>
-              {crownGained ? (
-                <Pop delay={delay + 300}>
-                  <Crowns count={r.traitsAfter} size={20} />
-                </Pop>
-              ) : (
-                <Crowns count={r.traitsAfter} size={18} />
-              )}
-            </View>
-            <Text variant="small" secondary>
-              {crownGained
-                ? `Une de plus ! ${r.traitsAfter >= 5 ? 'Unité légendaire.' : r.traitsAfter >= 3 ? 'Le chemin avance ; il reste la maîtrise (5).' : 'Refais l’unité pour la suivante.'}`
-                : r.traitsAfter >= 5
-                  ? 'Toujours légendaire.'
-                  : 'Pas de nouvelle couronne : il faut réussir tous les exercices de l’unité, sur plusieurs sessions.'}
-            </Text>
-          </Card>
-        </FadeUp>
-      )}
-
-      {r && r.newlyUnlockedUnits.length > 0 && (
-        <Pop delay={next()}>
-          <Card style={{ borderColor: color }}>
-            <Text variant="bodyBold">🔓 Nouvelle unité ouverte</Text>
-            {r.newlyUnlockedUnits.map((id) => (
-              <Text key={id} variant="small">
-                {UNIT_BY_ID.get(id)?.title ?? id}
-              </Text>
-            ))}
-          </Card>
-        </Pop>
-      )}
-
-      {r && (r.streakIncremented || r.freezeConsumedFor) && (
-        <FadeUp delay={next()}>
-          <Card>
-            <Text variant="bodyBold">🔥 Série : {progress.streak.current} jour{progress.streak.current > 1 ? 's' : ''}</Text>
-            {r.freezeConsumedFor && (
+      {page.kind === 'crown' && r && (
+        <Moment
+          key="crown"
+          emoji="👑"
+          color={colors.gold}
+          title={crownGained ? t('end.crown.title') : t('end.unlocked.title')}
+          body={crownGained ? (r.traitsAfter >= 5 ? t('end.crown.body5') : r.traitsAfter >= PATH_TRAITS ? t('end.crown.body3') : t('end.crown.body1')) : ''}>
+          {crownGained && (
+            <Pop delay={300}>
+              <Crowns count={r.traitsAfter} size={30} />
+            </Pop>
+          )}
+          {r.newlyUnlockedUnits.length > 0 && (
+            <View style={[styles.list, { backgroundColor: colors.surfaceAlt }]}>
               <Text variant="small" secondary>
-                Un gel a couvert le {r.freezeConsumedFor}.
+                {t('end.unlocked.title')}
               </Text>
-            )}
-          </Card>
-        </FadeUp>
+              {r.newlyUnlockedUnits.map((id) => (
+                <View key={id} style={styles.listRow}>
+                  <Icon name="lock-open" size={16} color={color} />
+                  <Text variant="bodyBold">{UNIT_BY_ID.get(id)?.title ?? id}</Text>
+                </View>
+              ))}
+            </View>
+          )}
+        </Moment>
       )}
-
-      {r && r.newBadges.length > 0 && (
-        <Pop delay={next() + 200}>
-          <Card style={{ borderColor: colors.gold, backgroundColor: colors.surfaceAlt }}>
-            <Text variant="bodyBold">🏅 Nouveau badge</Text>
-            {r.newBadges.map((id) => (
-              <Text key={id} variant="h2">
-                {BADGES.find((b) => b.id === id)?.name ?? id}
-              </Text>
+      {page.kind === 'world' && world && (
+        <Moment key="world" emoji={world.emoji} color={world.color} title={t('end.world.title')} body={t('end.world.body', { world: world.title[lang] })} />
+      )}
+      {page.kind === 'quest' && (
+        <Moment key="quest" icon="flag" color={colors.success} title={t('end.quest.title')} body="">
+          <View style={[styles.list, { backgroundColor: colors.surfaceAlt }]}>
+            {page.quests.map((q) => (
+              <View key={q.id} style={styles.listRow}>
+                <Icon name="checkmark-circle" size={18} color={colors.success} />
+                <Text variant="bodyBold" style={styles.grow}>
+                  {t(QUEST_KEYS[q.kind], { n: q.target })}
+                </Text>
+                <Icon name="diamond" size={16} color={colors.gem} />
+                <Text variant="bodyBold" style={{ color: colors.gem }}>
+                  {q.reward}
+                </Text>
+              </View>
             ))}
-          </Card>
-        </Pop>
+          </View>
+        </Moment>
       )}
-
-      {state.adShown && (
-        <Text variant="small" secondary>
-          (Emplacement publicitaire : désactivé dans cette version.)
+      {page.kind === 'badge' && r && (
+        <Moment key="badge" icon="medal" color={colors.gold} title={t('end.badge.title')} body="">
+          <View style={styles.badges}>
+            {r.newBadges.map((id) => (
+              <View key={id} style={[styles.badge, { backgroundColor: colors.goldSoft, borderColor: colors.gold }]}>
+                <Text variant="h2">{t(`badge.${id}` as Key)}</Text>
+              </View>
+            ))}
+          </View>
+        </Moment>
+      )}
+      {page.kind === 'streak' && r && (
+        <Moment
+          key="streak"
+          icon="flame"
+          color={colors.streak}
+          title={t('end.streak.title', { count: progress.streak.current })}
+          body={r.freezeConsumedFor ? t('end.streak.freeze', { day: r.freezeConsumedFor }) : t('end.streak.body')}
+        />
+      )}
+      {state.adShown && page.kind === 'recap' && (
+        <Text variant="small" secondary style={styles.center}>
+          {t('end.ad')}
         </Text>
       )}
-
-      <FadeUp delay={next()}>
-        <Button label="Continuer" color={color} onPress={() => router.back()} />
-      </FadeUp>
     </Screen>
   );
 }
 
+function Recap({ state, color, perfect, good }: { state: SessionState; color: string; perfect: boolean; good: boolean }) {
+  const colors = useColors();
+  const t = useT();
+  const progress = useProgress((s) => s.progress);
+  const r = state.result;
+  const level = levelProgress(progress.xp);
+  const totalXp = r ? r.progress.xp - state.xpAtStart : 0;
+  const shownXp = useCountUp(Math.max(0, totalXp), 900, 300);
+  const accuracy = state.mainCount > 0 ? Math.round((state.correctCount / state.mainCount) * 100) : 0;
+  return (
+    <View style={styles.page}>
+      <Pop>
+        <Text style={styles.big}>{perfect ? '🏆' : good ? '🎉' : '💪'}</Text>
+      </Pop>
+      <FadeUp delay={100}>
+        <Text variant="title" style={styles.center}>
+          {perfect ? t('end.perfect') : good ? t('end.good') : t('end.ok')}
+        </Text>
+      </FadeUp>
+      <FadeUp delay={220} style={styles.tiles}>
+        <Tile color={color} icon="sparkles" label={t('end.tile.xp')} value={`+${shownXp}`} />
+        <Tile color={accuracy === 100 ? colors.success : colors.gem} icon="locate" label={t('end.tile.accuracy')} value={`${accuracy}%`} />
+        {r && r.gemsGained > 0 ? (
+          <Tile color={colors.gem} icon="diamond" label={t('end.tile.gems')} value={`+${r.gemsGained}`} />
+        ) : (
+          <Tile color={colors.streak} icon="flame" label={t('end.tile.combo')} value={`×${state.bestCombo}`} />
+        )}
+      </FadeUp>
+      {r && (
+        <FadeUp delay={360} style={styles.fullWidth}>
+          <View style={[styles.goalRow, { backgroundColor: colors.surface, borderColor: r.goalReached ? colors.success : colors.border }]}>
+            <Ring ratio={r.dailyRatio} size={56} color={r.dailyRatio >= 1 ? colors.success : color}>
+              {r.dailyRatio >= 1 ? <Icon name="checkmark" size={22} color={colors.success} /> : <Text variant="small">{Math.round(r.dailyRatio * 100)}%</Text>}
+            </Ring>
+            <View style={styles.grow}>
+              <Text variant="bodyBold">{r.dailyRatio >= 1 ? t('end.goal.reached') : t('end.goal.progress')}</Text>
+              <Text variant="small" secondary>
+                {t('end.goal.detail', { xp: Math.min(r.progress.daily.xp, r.progress.daily.goal), goal: r.progress.daily.goal })}
+                {r.goalReached ? ` · ${t('end.goal.bonus')}` : ''}
+              </Text>
+            </View>
+          </View>
+          <View style={styles.levelBox}>
+            <ProgressBar ratio={level.ratio} color={color} />
+            <Text variant="small" secondary>
+              {t('end.levelLine', { level: level.level, toNext: level.xpToNextLevel })}
+              {r.energyRefunded > 0 ? ` · ${t('end.energyRefund', { count: r.energyRefunded })}` : ''}
+            </Text>
+          </View>
+        </FadeUp>
+      )}
+    </View>
+  );
+}
+
+function Tile({ color, icon, label, value }: { color: string; icon: IconName; label: string; value: string }) {
+  const colors = useColors();
+  return (
+    <View style={[styles.tile, { borderColor: color, backgroundColor: colors.surface }]}>
+      <View style={[styles.tileHead, { backgroundColor: color }]}>
+        <Icon name={icon} size={14} color="#fff" />
+        <Text variant="small" style={styles.tileLabel} numberOfLines={1}>
+          {label}
+        </Text>
+      </View>
+      <Text variant="h2" style={[styles.center, { color }]}>
+        {value}
+      </Text>
+    </View>
+  );
+}
+
+/** Une page « moment » : grande icône ou emoji, titre, texte, contenu libre. */
+function Moment({ icon, emoji, color, title, body, children }: { icon?: IconName; emoji?: string; color: string; title: string; body: string; children?: React.ReactNode }) {
+  return (
+    <View style={styles.page}>
+      <Pop>
+        <View style={[styles.halo, { backgroundColor: tint(color, 0.82) }]}>
+          {emoji ? <Text style={styles.big}>{emoji}</Text> : icon ? <Icon name={icon} size={64} color={color} /> : null}
+        </View>
+      </Pop>
+      <FadeUp delay={120} style={styles.fullWidth}>
+        <Text variant="title" style={styles.center}>
+          {title}
+        </Text>
+        {body !== '' && (
+          <Text variant="body" secondary style={styles.center}>
+            {body}
+          </Text>
+        )}
+      </FadeUp>
+      <FadeUp delay={240} style={styles.fullWidth}>
+        {children}
+      </FadeUp>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
-  hero: { alignItems: 'center', gap: space.sm, paddingVertical: space.xl },
+  page: { flex: 1, alignItems: 'center', justifyContent: 'center', gap: space.lg, paddingVertical: space.xl },
   big: { fontSize: 64, lineHeight: 76, textAlign: 'center' },
+  halo: { width: 140, height: 140, borderRadius: 70, alignItems: 'center', justifyContent: 'center' },
   center: { textAlign: 'center' },
-  row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.md },
+  fullWidth: { width: '100%', gap: space.md, alignItems: 'center' },
+  tiles: { flexDirection: 'row', gap: space.sm, width: '100%' },
+  tile: { flex: 1, borderWidth: 2, borderRadius: radius.md, overflow: 'hidden', paddingBottom: space.md, gap: space.sm },
+  tileHead: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4, paddingVertical: 4, paddingHorizontal: 6 },
+  tileLabel: { color: '#fff', fontSize: 11 },
+  goalRow: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderWidth: 2, borderRadius: radius.lg, padding: space.md, width: '100%' },
+  levelBox: { width: '100%', gap: space.xs },
   grow: { flex: 1 },
+  list: { width: '100%', borderRadius: radius.md, padding: space.md, gap: space.sm },
+  listRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  badges: { gap: space.sm, alignItems: 'center' },
+  badge: { borderWidth: 2, borderRadius: radius.pill, paddingVertical: space.sm, paddingHorizontal: space.xl },
 });

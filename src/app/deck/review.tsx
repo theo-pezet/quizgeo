@@ -2,24 +2,26 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { CARDS, CARD_BY_ID, CATALOG, EXERCISES, SUBJECT_BY_ID, cardIdsOf } from '@/content';
+import { CATALOG } from '@/content';
+import { useContent } from '@/content/useContent';
 import { applyCardReview, applySessionEnd, composeDeckSession, previewIntervals, toDayKey, type Grade } from '@/game';
+import { useT, type T } from '@/i18n';
 import { confirm } from '@/lib/confirm';
 import { haptics } from '@/lib/haptics';
 import { useProgress } from '@/store/progress';
-import { Button, Card, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
+import { Button, Card, Icon, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
 
-const GRADE_LABEL: Record<Grade, string> = { again: 'Encore', hard: 'Difficile', good: 'Bien', easy: 'Facile' };
-
-function intervalLabel(days: number): string {
-  if (days === 0) return "aujourd'hui";
-  if (days === 1) return 'demain';
-  if (days < 30) return `${days} j`;
-  return `${Math.round(days / 30)} mois`;
+function intervalLabel(t: T, days: number): string {
+  if (days === 0) return t('deck.interval.today');
+  if (days === 1) return t('deck.interval.tomorrow');
+  if (days < 30) return t('deck.interval.days', { count: days });
+  return t('deck.interval.months', { count: Math.round(days / 30) });
 }
 
 export default function DeckReviewRoute() {
   const colors = useColors();
+  const t = useT();
+  const { CARDS, CARD_BY_ID, EXERCISES, SUBJECT_BY_ID, cardIdsOf } = useContent();
   const { subjectId } = useLocalSearchParams<{ subjectId?: string }>();
   const startProgress = useRef(useProgress.getState().progress);
   const today = toDayKey(new Date());
@@ -82,57 +84,52 @@ export default function DeckReviewRoute() {
       router.back();
       return;
     }
-    confirm('Arrêter ici ?', `${done} carte${done > 1 ? 's' : ''} révisée${done > 1 ? 's' : ''}. Le reste attendra la prochaine fois.`, () =>
-      finish(done, done - counts.again),
-    );
+    confirm(t('deck.stop.title'), t('deck.stop.body', { count: done }), () => finish(done, done - counts.again));
   };
 
   if (ended) {
     const total = queue.length;
     const reviewed = counts.again + counts.hard + counts.good + counts.easy;
     return (
-      <Screen>
+      <Screen footer={<Button label={t('deck.done.back')} onPress={() => router.back()} />}>
         <View style={styles.hero}>
           <Text style={styles.big}>🃏</Text>
-          <Text variant="title">Session terminée</Text>
+          <Text variant="title">{t('deck.done.title')}</Text>
           <Text variant="body" secondary>
-            {reviewed} carte{reviewed > 1 ? 's' : ''} sur {total} · +{xp + ended.bonus} XP
+            {t('deck.done.body', { reviewed, total, xp: xp + ended.bonus })}
           </Text>
         </View>
         <Card>
-          <Text variant="small">Encore : {counts.again} · Difficile : {counts.hard} · Bien : {counts.good} · Facile : {counts.easy}</Text>
+          <Text variant="small">{t('deck.done.counts', counts)}</Text>
           <Text variant="small" secondary>
-            {ended.bonus > 0 ? `Bonus de session +${ended.bonus} XP · série : ${ended.streak} jour${ended.streak > 1 ? 's' : ''}` : 'Révise au moins 5 cartes pour le bonus et la série.'}
+            {ended.bonus > 0 ? t('deck.done.bonus', { bonus: ended.bonus, streak: ended.streak, count: ended.streak }) : t('deck.done.noBonus')}
           </Text>
         </Card>
-        <Button label="Retour au deck" onPress={() => router.back()} />
       </Screen>
     );
   }
 
   if (!card || !preview) {
     return (
-      <Screen>
-        <Text variant="h2">Rien à réviser aujourd’hui 🎉</Text>
+      <Screen footer={<Button label={t('common.back')} onPress={() => router.back()} />}>
+        <Text variant="h2">{t('deck.empty.title')}</Text>
         <Text variant="small" secondary>
-          Toutes les cartes de ce deck sont planifiées plus tard. Reviens demain, ou fais une leçon.
+          {t('deck.empty.body')}
         </Text>
-        <Button label="Retour" onPress={() => router.back()} />
       </Screen>
     );
   }
 
   const subject = SUBJECT_BY_ID.get(card.subject);
+  const grades: Grade[] = ['again', 'hard', 'good', 'easy'];
   return (
     <Screen>
       <View style={styles.top}>
-        <Pressable onPress={quit} hitSlop={12}>
-          <Text variant="h2" secondary>
-            ✕
-          </Text>
+        <Pressable onPress={quit} hitSlop={12} accessibilityRole="button">
+          <Icon name="close" size={26} color={colors.textSecondary} />
         </Pressable>
         <View style={styles.bar}>
-          <ProgressBar ratio={index / queue.length} color={subject?.color} />
+          <ProgressBar ratio={index / queue.length} color={subject?.color} height={14} />
         </View>
         <Text variant="small" secondary>
           {index + 1}/{queue.length}
@@ -142,7 +139,7 @@ export default function DeckReviewRoute() {
       <Pressable onPress={() => setFlipped(true)} style={[styles.flash, { backgroundColor: colors.surface, borderColor: subject?.color ?? colors.border }]}>
         <Text variant="small" style={{ color: subject?.color }}>
           {subject?.emoji} {card.topic}
-          {cardState === undefined || cardState.phase === 'new' ? ' · nouvelle' : ''}
+          {cardState === undefined || cardState.phase === 'new' ? ` · ${t('deck.review.new')}` : ''}
         </Text>
         <Text variant="title" style={styles.term}>
           {card.term}
@@ -152,20 +149,20 @@ export default function DeckReviewRoute() {
             <Text variant="body">{card.definition}</Text>
             {card.example ? (
               <Text variant="small" secondary>
-                Ex. : {card.example}
+                {t('common.example', { text: card.example })}
               </Text>
             ) : null}
           </View>
         ) : (
           <Text variant="small" secondary>
-            Touche pour voir la réponse
+            {t('deck.review.tap')}
           </Text>
         )}
       </Pressable>
 
       {flipped ? (
         <View style={styles.grades}>
-          {(['again', 'hard', 'good', 'easy'] as Grade[]).map((g) => (
+          {grades.map((g) => (
             <Pressable
               key={g}
               onPress={() => grade(g)}
@@ -173,18 +170,18 @@ export default function DeckReviewRoute() {
                 styles.grade,
                 {
                   backgroundColor: g === 'again' ? colors.dangerSoft : g === 'easy' ? colors.successSoft : colors.surfaceAlt,
-                  borderColor: g === 'again' ? colors.danger : g === 'easy' ? colors.success : colors.border,
+                  borderColor: g === 'again' ? colors.danger : g === 'easy' ? colors.success : colors.borderStrong,
                 },
               ]}>
-              <Text variant="bodyBold">{GRADE_LABEL[g]}</Text>
+              <Text variant="bodyBold">{t(`deck.grade.${g}`)}</Text>
               <Text variant="small" secondary>
-                {intervalLabel(preview[g])}
+                {intervalLabel(t, preview[g])}
               </Text>
             </Pressable>
           ))}
         </View>
       ) : (
-        <Button label="Voir la réponse" color={subject?.color} onPress={() => setFlipped(true)} />
+        <Button label={t('deck.review.show')} color={subject?.color} onPress={() => setFlipped(true)} />
       )}
     </Screen>
   );
@@ -197,7 +194,7 @@ const styles = StyleSheet.create({
   term: { textAlign: 'center' },
   back: { gap: space.sm },
   grades: { flexDirection: 'row', gap: space.sm },
-  grade: { flex: 1, borderWidth: 2, borderRadius: radius.md, padding: space.sm, alignItems: 'center', gap: 2 },
+  grade: { flex: 1, borderWidth: 2, borderBottomWidth: 4, borderRadius: radius.md, padding: space.sm, alignItems: 'center', gap: 2 },
   hero: { alignItems: 'center', gap: space.sm, paddingVertical: space.xl },
   big: { fontSize: 64, lineHeight: 76, textAlign: 'center' },
 });

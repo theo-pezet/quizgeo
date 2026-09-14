@@ -1,4 +1,4 @@
-# Fiche Google Play — Quiz GEO
+# Fiche Google Play, Quiz GEO
 
 Textes prêts à coller dans la Play Console. Les longueurs maximales sont
 celles de Google (titre 30, description courte 80, description longue 4 000).
@@ -25,7 +25,7 @@ celles de Google (titre 30, description courte 80, description longue 4 000).
 ## Description longue (4 000)
 
 ```
-Le marketing digital, l'intelligence artificielle, Python et le web — en 5 minutes par jour, sans cours, sans compte, sans publicité.
+Le marketing digital, l'intelligence artificielle, Python et le web, en 5 minutes par jour, sans cours, sans compte, sans publicité. Disponible en français, en anglais et en espagnol.
 
 Quiz GEO transforme ton temps mort en compétences : un chemin d'unités par matière, des exercices variés, une révision espacée qui te fait revenir sur ce que tu oublies, et une vraie boucle de jeu pour tenir dans la durée.
 
@@ -43,7 +43,7 @@ COMMENT TU APPRENDS
 
 POUR TENIR DANS LA DURÉE
 • Objectif du jour, série quotidienne et gels, quêtes tirées au sort chaque jour.
-• 5 couronnes par unité — qui se fissurent si tu ne reviens pas.
+• 5 couronnes par unité, qui se fissurent si tu ne reviens pas.
 • Énergie : une leçon coûte 5 points, ils reviennent avec le temps ; réviser est toujours gratuit.
 • Gemmes gagnées en jouant, jamais achetées : recharge d'énergie, gel de série, boost d'XP.
 • Ligue hebdomadaire de 30 joueurs, 10 divisions, trois rivaux qui te suivent.
@@ -55,7 +55,7 @@ SANS RIEN DEMANDER
 • Aucune publicité, aucun achat intégré.
 • Fonctionne hors ligne, dans le métro comme dans l'avion.
 
-Pensé par un consultant en visibilité IA (cite-par-lia.fr) pour les marketeurs qui veulent comprendre — et pratiquer — l'IA et le code sans y passer leurs soirées.
+Pensé par un consultant en visibilité IA (cite-par-lia.fr) pour les marketeurs qui veulent comprendre, et pratiquer, l'IA et le code sans y passer leurs soirées.
 ```
 
 ## Mots-clés (pour la description et l'ASO)

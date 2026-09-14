@@ -1,27 +1,33 @@
+import { Ionicons } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
-import { Text } from 'react-native';
+import type { ComponentProps } from 'react';
+import type { ColorValue } from 'react-native';
 
-import { useColors } from '@/ui';
+import { useT } from '@/i18n';
+import { fonts, useColors } from '@/ui';
 
-function icon(emoji: string) {
-  return ({ focused }: { focused: boolean }) => <Text style={{ fontSize: 20, opacity: focused ? 1 : 0.5 }}>{emoji}</Text>;
+type Name = ComponentProps<typeof Ionicons>['name'];
+
+function icon(active: Name, inactive: Name) {
+  return ({ focused, color }: { focused: boolean; color: ColorValue }) => <Ionicons name={focused ? active : inactive} size={24} color={color} />;
 }
 
 export default function TabsLayout() {
   const colors = useColors();
+  const t = useT();
   return (
     <Tabs
       screenOptions={{
         headerShown: false,
         tabBarActiveTintColor: colors.primary,
         tabBarInactiveTintColor: colors.textSecondary,
-        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border },
-        tabBarLabelStyle: { fontWeight: '700', fontSize: 11 },
+        tabBarStyle: { backgroundColor: colors.surface, borderTopColor: colors.border, borderTopWidth: 2, height: 64, paddingTop: 6 },
+        tabBarLabelStyle: { fontFamily: fonts.extraBold, fontSize: 11 },
       }}>
-      <Tabs.Screen name="index" options={{ title: 'Parcours', tabBarIcon: icon('🗺️') }} />
-      <Tabs.Screen name="league" options={{ title: 'Ligue', tabBarIcon: icon('🏆') }} />
-      <Tabs.Screen name="deck" options={{ title: 'Deck', tabBarIcon: icon('🃏') }} />
-      <Tabs.Screen name="profile" options={{ title: 'Profil', tabBarIcon: icon('🏅') }} />
+      <Tabs.Screen name="index" options={{ title: t('tabs.path'), tabBarIcon: icon('map', 'map-outline') }} />
+      <Tabs.Screen name="league" options={{ title: t('tabs.league'), tabBarIcon: icon('trophy', 'trophy-outline') }} />
+      <Tabs.Screen name="deck" options={{ title: t('tabs.deck'), tabBarIcon: icon('albums', 'albums-outline') }} />
+      <Tabs.Screen name="profile" options={{ title: t('tabs.profile'), tabBarIcon: icon('person-circle', 'person-circle-outline') }} />
     </Tabs>
   );
 }

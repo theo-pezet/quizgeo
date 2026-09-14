@@ -1,8 +1,8 @@
-import { Pressable, StyleSheet, Text, type ViewStyle } from 'react-native';
+import { Pressable, StyleSheet, Text, View, type ViewStyle } from 'react-native';
 
-import { radius, space, useColors } from './tokens';
+import { fonts, radius, shade, space, useColors } from './tokens';
 
-export type ButtonTone = 'primary' | 'secondary' | 'success' | 'danger' | 'ghost';
+export type ButtonTone = 'primary' | 'secondary' | 'success' | 'danger' | 'ghost' | 'outline';
 
 interface Props {
   label: string;
@@ -10,10 +10,19 @@ interface Props {
   tone?: ButtonTone;
   disabled?: boolean;
   style?: ViewStyle;
+  /** Couleur de fond (ton `primary`) : la matière ou le monde en cours. */
   color?: string;
+  size?: 'md' | 'sm';
+  icon?: React.ReactNode;
 }
 
-export function Button({ label, onPress, tone = 'primary', disabled, style, color }: Props) {
+const LIFT = 4;
+
+/**
+ * Bouton à relief : une bordure basse plus sombre qui s'écrase à l'appui.
+ * La hauteur totale ne bouge pas (la marge compense), donc rien ne saute.
+ */
+export function Button({ label, onPress, tone = 'primary', disabled, style, color, size = 'md', icon }: Props) {
   const colors = useColors();
   const bg = {
     primary: color ?? colors.primary,
@@ -21,14 +30,18 @@ export function Button({ label, onPress, tone = 'primary', disabled, style, colo
     success: colors.success,
     danger: colors.danger,
     ghost: 'transparent',
+    outline: colors.surface,
   }[tone];
   const fg = {
-    primary: '#FFFFFF',
+    primary: color ? '#FFFFFF' : colors.primaryText,
     secondary: colors.text,
     success: '#FFFFFF',
     danger: '#FFFFFF',
     ghost: colors.textSecondary,
+    outline: colors.text,
   }[tone];
+  const edge = tone === 'ghost' ? 'transparent' : tone === 'secondary' ? colors.borderStrong : tone === 'outline' ? colors.borderStrong : shade(bg);
+  const flat = tone === 'ghost';
   return (
     <Pressable
       accessibilityRole="button"
@@ -36,21 +49,37 @@ export function Button({ label, onPress, tone = 'primary', disabled, style, colo
       onPress={onPress}
       style={({ pressed }) => [
         styles.base,
-        { backgroundColor: bg, opacity: disabled ? 0.45 : pressed ? 0.85 : 1 },
+        size === 'sm' && styles.sm,
+        {
+          backgroundColor: bg,
+          borderBottomColor: edge,
+          borderBottomWidth: flat ? 0 : pressed ? 0 : LIFT,
+          marginTop: flat ? 0 : pressed ? LIFT : 0,
+          opacity: disabled ? 0.45 : 1,
+        },
+        tone === 'outline' && { borderWidth: 2, borderColor: colors.borderStrong, borderBottomWidth: pressed ? 2 : LIFT },
         style,
       ]}>
-      <Text style={[styles.label, { color: fg }]}>{label}</Text>
+      <View style={styles.inner}>
+        {icon}
+        <Text numberOfLines={1} style={[styles.label, size === 'sm' && styles.labelSm, { color: fg }]}>
+          {label}
+        </Text>
+      </View>
     </Pressable>
   );
 }
 
 const styles = StyleSheet.create({
   base: {
-    paddingVertical: 14,
-    paddingHorizontal: space.xl,
+    paddingVertical: 13,
+    paddingHorizontal: space.lg,
     borderRadius: radius.md,
     alignItems: 'center',
     justifyContent: 'center',
   },
-  label: { fontSize: 16, fontWeight: '700', letterSpacing: 0.2 },
+  sm: { paddingVertical: 8, paddingHorizontal: space.md, borderRadius: radius.sm },
+  inner: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  label: { fontSize: 16, fontFamily: fonts.extraBold, letterSpacing: 0.3 },
+  labelSm: { fontSize: 14 },
 });

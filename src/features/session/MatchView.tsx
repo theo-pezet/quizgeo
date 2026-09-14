@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { shuffle, type MatchExercise } from '@/game';
+import { useT } from '@/i18n';
 import { Text, radius, space, useColors } from '@/ui';
 
 interface Props {
@@ -15,6 +16,7 @@ const TOLERATED_MISTAKES = 1;
 
 export function MatchView({ exercise, onAnswer, locked }: Props) {
   const colors = useColors();
+  const t = useT();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const rights = useMemo(() => shuffle(exercise.pairs.map((p) => p.right), Math.random), [exercise.key]);
   const [left, setLeft] = useState<number | null>(null);
@@ -40,7 +42,7 @@ export function MatchView({ exercise, onAnswer, locked }: Props) {
 
   return (
     <View style={styles.wrap}>
-      <Text variant="h2">{exercise.prompt ?? 'Associe les paires'}</Text>
+      <Text variant="h2">{exercise.prompt ?? t('session.match.title')}</Text>
       <View style={styles.cols}>
         <View style={styles.col}>
           {exercise.pairs.map((p, i) => {
@@ -86,8 +88,8 @@ export function MatchView({ exercise, onAnswer, locked }: Props) {
         </View>
       </View>
       <Text variant="small" secondary>
-        {left === null ? 'Choisis un terme à gauche…' : 'Maintenant sa définition à droite.'}
-        {mistakes > 0 ? ` (${mistakes} erreur${mistakes > 1 ? 's' : ''})` : ''}
+        {left === null ? t('session.match.pickLeft') : t('session.match.pickRight')}
+        {mistakes > 0 ? ` ${t('session.match.mistakes', { count: mistakes })}` : ''}
       </Text>
     </View>
   );

@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { shuffle, type OrderExercise } from '@/game';
+import { useT } from '@/i18n';
 import { Button, Text, radius, space, useColors } from '@/ui';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 export function OrderView({ exercise, onAnswer, locked }: Props) {
   const colors = useColors();
+  const t = useT();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const pool = useMemo(() => shuffle(exercise.steps, Math.random), [exercise.key]);
   const [chosen, setChosen] = useState<string[]>([]);
@@ -44,14 +46,14 @@ export function OrderView({ exercise, onAnswer, locked }: Props) {
         ))}
         {chosen.length === 0 && (
           <Text variant="small" secondary>
-            Touche les étapes ci-dessous dans le bon ordre.
+            {t('session.order.hint')}
           </Text>
         )}
       </View>
       {locked && !isCorrect && (
         <View style={[styles.solution, { backgroundColor: colors.successSoft }]}>
           <Text variant="small" style={{ color: colors.success }}>
-            Bon ordre :
+            {t('session.order.solution')}
           </Text>
           {exercise.steps.map((s, i) => (
             <Text key={s} variant="small">
@@ -72,7 +74,7 @@ export function OrderView({ exercise, onAnswer, locked }: Props) {
         ))}
       </View>
       {!locked && (
-        <Button label="Vérifier" disabled={chosen.length !== exercise.steps.length} onPress={() => onAnswer(isCorrect)} />
+        <Button label={t('common.check')} disabled={chosen.length !== exercise.steps.length} onPress={() => onAnswer(isCorrect)} />
       )}
     </View>
   );

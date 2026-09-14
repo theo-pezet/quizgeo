@@ -1,18 +1,26 @@
 import { router } from 'expo-router';
 import { StyleSheet, Switch, View } from 'react-native';
 
-import { CARDS, CATALOG, EXERCISES, SUBJECTS, UNITS } from '@/content';
+import { CATALOG } from '@/content';
+import { useContent } from '@/content/useContent';
 import { BADGES, DAILY_GOALS, MAX_FREEZES, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
+import { LANGS, useT, type Key } from '@/i18n';
 import { confirm } from '@/lib/confirm';
 import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, Card, EnergyBadge, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
+import { Button, Card, EnergyBadge, Icon, ProgressBar, Screen, Text, radius, space, useColors, type IconName } from '@/ui';
+
+const HOURS = [8, 12, 19, 21];
 
 export default function ProfileScreen() {
   const colors = useColors();
+  const t = useT();
+  const { CARDS, EXERCISES, SUBJECTS, UNITS } = useContent();
   const progress = useProgress((s) => s.progress);
   const reset = useProgress((s) => s.reset);
   const setProgress = useProgress((s) => s.setProgress);
+  const lang = useSettings((s) => s.lang);
+  const setLang = useSettings((s) => s.setLang);
   const hapticsOn = useSettings((s) => s.haptics);
   const setHaptics = useSettings((s) => s.setHaptics);
   const remindersOn = useSettings((s) => s.reminders);
@@ -32,85 +40,94 @@ export default function ProfileScreen() {
   const buy = (next: typeof progress | null) => {
     if (next) setProgress(next);
   };
-  const crowns = Object.values(traits).reduce<number>((a, t) => a + t, 0);
+  const crowns = Object.values(traits).reduce<number>((a, tr) => a + tr, 0);
   const queue = reviewQueueSize(progress);
   const deck = deckStats(progress.cards, CARDS.map((c) => c.id), today);
   const badgesEarned = Object.keys(progress.badges).length;
+  const streakActive = isActiveToday(progress.streak, today);
+  const atRisk = streakIsAtRisk(progress.streak, today);
+  const gems = (cost: number) => `${cost} ${t('common.gems')}`;
 
   return (
     <Screen>
-      <Text variant="title">Profil</Text>
+      <Text variant="title">{t('profile.title')}</Text>
 
       <Card>
-        <Text variant="h2">Niveau {level.level}</Text>
+        <Text variant="h2">{t('common.level', { level: level.level })}</Text>
         <ProgressBar ratio={level.ratio} />
         <Text variant="small" secondary>
-          {progress.xp} XP · {level.xpToNextLevel} XP avant le niveau {level.level + 1}
+          {t('profile.level.detail', { xp: progress.xp, toNext: level.xpToNextLevel, next: level.level + 1 })}
         </Text>
       </Card>
 
       <View style={styles.grid}>
-        <Tile emoji={isActiveToday(progress.streak, today) ? '🔥' : streakIsAtRisk(progress.streak, today) ? '⚠️' : '🩶'} value={`${progress.streak.current}`} label={`jours de série · record ${progress.streak.best}`} />
-        <Tile emoji="🧊" value={`${progress.streak.freezes}`} label="gels (1 tous les 7 jours, max 2)" />
-        <Tile emoji="👑" value={`${crowns}`} label={`couronnes sur ${UNITS.length * 5}`} />
-        <Tile emoji="🃏" value={`${deck.review}`} label={`cartes acquises sur ${deck.total}`} />
+        <Tile icon={streakActive ? 'flame' : atRisk ? 'alert-circle' : 'flame-outline'} color={streakActive ? colors.streak : atRisk ? colors.danger : colors.textSecondary} value={`${progress.streak.current}`} label={t('profile.tile.streak', { best: progress.streak.best })} />
+        <Tile icon="snow" color={colors.gem} value={`${progress.streak.freezes}`} label={t('profile.tile.freezes')} />
+        <Tile icon="trophy" color={colors.gold} value={`${crowns}`} label={t('profile.tile.crowns', { total: UNITS.length * 5 })} />
+        <Tile icon="albums" color={colors.success} value={`${deck.review}`} label={t('profile.tile.cards', { total: deck.total })} />
       </View>
 
-      {streakIsAtRisk(progress.streak, today) && (
-        <Card style={{ borderColor: colors.danger }}>
-          <Text variant="bodyBold">Ta série est en jeu aujourd’hui</Text>
+      {atRisk && (
+        <Card color={colors.danger}>
+          <Text variant="bodyBold">{t('profile.risk.title')}</Text>
           <Text variant="small" secondary>
-            Termine une session d’au moins 5 exercices ou 5 cartes avant minuit.
+            {t('profile.risk.body')}
           </Text>
         </Card>
       )}
 
       <Card>
         <View style={styles.row}>
-          <Text variant="h2">Boutique</Text>
-          <Text variant="h2">💎 {progress.gems}</Text>
+          <Text variant="h2">{t('profile.shop')}</Text>
+          <View style={styles.inline}>
+            <Icon name="diamond" size={20} color={colors.gem} />
+            <Text variant="h2">{progress.gems}</Text>
+          </View>
         </View>
         <EnergyBadge energy={progress.energy} now={now} />
         <Button
-          label={`Recharger l’énergie · 💎 ${SHOP.refill.cost}`}
+          label={t('profile.shop.refill', { cost: gems(SHOP.refill.cost) })}
           tone="secondary"
           disabled={progress.gems < SHOP.refill.cost || energyValue >= 25}
           onPress={() => buy(applyBuyRefill(progress, new Date()))}
         />
         <Button
-          label={`Gel de série (${progress.streak.freezes}/${MAX_FREEZES}) · 💎 ${SHOP.freeze.cost}`}
+          label={t('profile.shop.freeze', { have: progress.streak.freezes, max: MAX_FREEZES, cost: gems(SHOP.freeze.cost) })}
           tone="secondary"
           disabled={progress.gems < SHOP.freeze.cost || progress.streak.freezes >= MAX_FREEZES}
           onPress={() => buy(buyFreeze(progress))}
         />
         <Button
-          label={boostLeft > 0 ? `Boost XP ×2 actif (${boostLeft} min) · prolonger 💎 ${SHOP.boost.cost}` : `Boost XP ×2 pendant ${SHOP.boost.minutes} min · 💎 ${SHOP.boost.cost}`}
+          label={boostLeft > 0 ? t('profile.shop.boostActive', { minutes: boostLeft, cost: gems(SHOP.boost.cost) }) : t('profile.shop.boost', { minutes: SHOP.boost.minutes, cost: gems(SHOP.boost.cost) })}
           tone="secondary"
           disabled={progress.gems < SHOP.boost.cost}
           onPress={() => buy(buyBoost(progress, new Date()))}
         />
         <Text variant="small" secondary>
-          Les gemmes se gagnent en jouant : leçon +10, sans-faute +20, quêtes, paliers de série (7 j : 50, 30 j : 200).
+          {t('profile.shop.hint')}
         </Text>
       </Card>
 
       <Card>
-        <Text variant="h2">Entraînement</Text>
-        <Button label={queue > 0 ? `Revoir mes ${queue} erreur${queue > 1 ? 's' : ''}` : 'Aucune erreur à revoir'} tone="secondary" disabled={queue === 0} onPress={() => router.push('/session/review')} />
+        <Text variant="h2">{t('profile.training')}</Text>
+        <Button label={queue > 0 ? t('profile.training.review', { count: queue }) : t('profile.training.none')} tone="secondary" disabled={queue === 0} onPress={() => router.push('/session/review')} />
         {SUBJECTS.map((s) => (
-          <Button key={s.id} label={`${s.emoji} Session libre · ${s.title}`} color={s.color} onPress={() => router.push({ pathname: '/session/free', params: { subjectId: s.id } })} />
+          <Button key={s.id} label={`${s.emoji} ${t('profile.training.free', { subject: s.title })}`} color={s.color} onPress={() => router.push({ pathname: '/session/free', params: { subjectId: s.id } })} />
         ))}
       </Card>
 
       <Card>
-        <Text variant="h2">⏱️ Blitz</Text>
+        <View style={styles.inline}>
+          <Icon name="timer" size={22} color={colors.streak} />
+          <Text variant="h2">{t('profile.blitz')}</Text>
+        </View>
         <Text variant="small" secondary>
-          60 secondes, un maximum de bonnes réponses, XP doublés. Coûte 5 ⚡.
+          {t('profile.blitz.body')}
         </Text>
         {SUBJECTS.map((s) => (
           <Button
             key={s.id}
-            label={`${s.emoji} ${s.title}${progress.blitz[s.id] ? ` · record ${progress.blitz[s.id]}` : ''}`}
+            label={`${s.emoji} ${s.title}${progress.blitz[s.id] ? ` · ${t('common.record', { value: progress.blitz[s.id] })}` : ''}`}
             tone="secondary"
             onPress={() => router.push({ pathname: '/session/blitz', params: { subjectId: s.id } })}
           />
@@ -118,17 +135,14 @@ export default function ProfileScreen() {
       </Card>
 
       <Card>
-        <Text variant="h2">
-          Badges · {badgesEarned}/{BADGES.length}
-        </Text>
+        <Text variant="h2">{t('profile.badges', { earned: badgesEarned, total: BADGES.length })}</Text>
         <View style={styles.badges}>
           {BADGES.map((b) => {
             const earned = progress.badges[b.id] !== undefined;
             return (
-              <View key={b.id} style={[styles.badge, { backgroundColor: earned ? colors.successSoft : colors.surfaceAlt, opacity: earned ? 1 : 0.6 }]}>
-                <Text variant="small">
-                  {earned ? '🏅' : '🔒'} {b.name}
-                </Text>
+              <View key={b.id} style={[styles.badge, { backgroundColor: earned ? colors.goldSoft : colors.surfaceAlt, borderColor: earned ? colors.gold : colors.border, opacity: earned ? 1 : 0.6 }]}>
+                <Icon name={earned ? 'medal' : 'lock-closed'} size={14} color={earned ? colors.gold : colors.textSecondary} />
+                <Text variant="small">{t(`badge.${b.id}` as Key)}</Text>
               </View>
             );
           })}
@@ -136,27 +150,37 @@ export default function ProfileScreen() {
       </Card>
 
       <Card>
-        <Text variant="h2">Réglages</Text>
+        <Text variant="h2">{t('profile.settings')}</Text>
+
+        <Text variant="bodyBold">{t('common.language')}</Text>
+        <View style={styles.choices}>
+          {LANGS.map((l) => (
+            <Button key={l.id} label={`${l.flag} ${l.label}`} size="sm" tone={l.id === lang ? 'primary' : 'secondary'} style={styles.choice} onPress={() => setLang(l.id)} />
+          ))}
+        </View>
+
+        <Text variant="bodyBold">{t('profile.settings.goal')}</Text>
+        <View style={styles.choices}>
+          {DAILY_GOALS.map((g) => (
+            <Button key={g} label={`${g}`} size="sm" tone={g === progress.daily.goal ? 'primary' : 'secondary'} style={styles.choice} onPress={() => setProgress(applySetDailyGoal(progress, g))} />
+          ))}
+        </View>
+
         <View style={styles.row}>
-          <Text variant="body">Objectif du jour</Text>
-          <View style={styles.hours}>
-            {DAILY_GOALS.map((g) => (
-              <Button key={g} label={`${g}`} tone={g === progress.daily.goal ? 'primary' : 'secondary'} style={styles.hour} onPress={() => setProgress(applySetDailyGoal(progress, g))} />
-            ))}
-          </View>
+          <Text variant="body">{t('profile.settings.sound')}</Text>
+          <Switch value={soundOn} onValueChange={setSound} trackColor={{ true: colors.success }} />
         </View>
         <View style={styles.row}>
-          <Text variant="body">Sons</Text>
-          <Switch value={soundOn} onValueChange={setSound} />
+          <Text variant="body">{t('profile.settings.haptics')}</Text>
+          <Switch value={hapticsOn} onValueChange={setHaptics} trackColor={{ true: colors.success }} />
         </View>
         <View style={styles.row}>
-          <Text variant="body">Vibrations</Text>
-          <Switch value={hapticsOn} onValueChange={setHaptics} />
-        </View>
-        <View style={styles.row}>
-          <Text variant="body">Rappels (série, énergie)</Text>
+          <Text variant="body" style={styles.grow}>
+            {t('profile.settings.reminders')}
+          </Text>
           <Switch
             value={remindersOn}
+            trackColor={{ true: colors.success }}
             onValueChange={async (on) => {
               if (on && !(await requestReminderPermission())) {
                 setReminders(false);
@@ -167,43 +191,40 @@ export default function ProfileScreen() {
           />
         </View>
         {remindersOn && (
-          <View style={styles.row}>
+          <>
             <Text variant="small" secondary>
-              Rappel de série à {reminderHour} h
+              {t('profile.settings.reminderHour', { hour: reminderHour })}
             </Text>
-            <View style={styles.hours}>
-              {[8, 12, 19, 21].map((h) => (
-                <Button key={h} label={`${h} h`} tone={h === reminderHour ? 'primary' : 'secondary'} style={styles.hour} onPress={() => setReminderHour(h)} />
+            <View style={styles.choices}>
+              {HOURS.map((h) => (
+                <Button key={h} label={t('common.hours', { count: h })} size="sm" tone={h === reminderHour ? 'primary' : 'secondary'} style={styles.choice} onPress={() => setReminderHour(h)} />
               ))}
             </View>
-          </View>
+          </>
         )}
         <Text variant="small" secondary>
-          Les rappels ne fonctionnent que dans l’application Android, pas sur le site.
+          {t('profile.settings.remindersNote')}
         </Text>
-        <Button label="Revoir l’introduction" tone="secondary" onPress={() => { setOnboardingDone(false); router.push('/onboarding'); }} />
-        <Button label="Confidentialité" tone="secondary" onPress={() => router.push('/privacy')} />
-        <Button
-          label="Réinitialiser ma progression"
-          tone="danger"
-          onPress={() => confirm('Tout effacer ?', 'XP, série, couronnes, badges et deck repartent de zéro. Irréversible.', reset)}
-        />
+        <Button label={t('profile.settings.intro')} tone="secondary" onPress={() => { setOnboardingDone(false); router.push('/onboarding'); }} />
+        <Button label={t('profile.settings.privacy')} tone="secondary" onPress={() => router.push('/privacy')} />
+        <Button label={t('profile.settings.reset')} tone="danger" onPress={() => confirm(t('profile.reset.title'), t('profile.reset.body'), reset)} />
       </Card>
 
       <Text variant="small" secondary style={styles.footer}>
-        Quiz GEO · {UNITS.length} unités · {EXERCISES.length} exercices · {CARDS.length} cartes · sans publicité
+        {t('profile.footer', { units: UNITS.length, exercises: EXERCISES.length, cards: CARDS.length })}
       </Text>
     </Screen>
   );
 }
 
-function Tile({ emoji, value, label }: { emoji: string; value: string; label: string }) {
+function Tile({ icon, color, value, label }: { icon: IconName; color: string; value: string; label: string }) {
   const colors = useColors();
   return (
     <View style={[styles.tile, { backgroundColor: colors.surface, borderColor: colors.border }]}>
-      <Text variant="h2">
-        {emoji} {value}
-      </Text>
+      <View style={styles.inline}>
+        <Icon name={icon} size={20} color={color} />
+        <Text variant="h2">{value}</Text>
+      </View>
       <Text variant="small" secondary>
         {label}
       </Text>
@@ -213,11 +234,13 @@ function Tile({ emoji, value, label }: { emoji: string; value: string; label: st
 
 const styles = StyleSheet.create({
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  tile: { width: '48%', flexGrow: 1, borderWidth: 1, borderRadius: radius.md, padding: space.md, gap: 2 },
+  tile: { width: '48%', flexGrow: 1, borderWidth: 2, borderRadius: radius.md, padding: space.md, gap: 2 },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  badge: { borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: space.md },
+  badge: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 2, borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: space.md },
   row: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.sm },
-  hours: { flexDirection: 'row', gap: 4 },
-  hour: { paddingVertical: 6, paddingHorizontal: 10 },
+  inline: { flexDirection: 'row', alignItems: 'center', gap: 6 },
+  grow: { flex: 1 },
+  choices: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
+  choice: { flexGrow: 1, minWidth: 64 },
   footer: { textAlign: 'center', paddingBottom: space.xl },
 });

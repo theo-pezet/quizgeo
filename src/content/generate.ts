@@ -12,6 +12,21 @@ import { hashString, mulberry32 } from '@/lib/random';
 
 import type { Card, CardSlice, Unit } from './types';
 
+/** Les textes des exercices générés, dans la langue de l'utilisateur. */
+export interface GenTexts {
+  whatMeans: (term: string) => string;
+  whichTerm: string;
+  match: string;
+  example: (text: string) => string;
+}
+
+export const GEN_TEXTS_FR: GenTexts = {
+  whatMeans: (term) => `Que signifie « ${term} » ?`,
+  whichTerm: 'Quel terme correspond à cette définition ?',
+  match: 'Associe chaque terme à sa définition',
+  example: (text) => `Exemple : ${text}`,
+};
+
 const CLOZE = /\{\{c\d+::(.*?)(?:::.*?)?\}\}/g;
 
 export function resolveUnitCards(unit: Unit, deck: readonly Card[]): Card[] {
@@ -59,14 +74,16 @@ function distractorPool(card: Card, subjectCards: readonly Card[]): readonly Car
   return sameTopic.length >= 6 ? sameTopic : subjectCards.filter((c) => c.id !== card.id);
 }
 
-function explainFor(card: Card): string {
-  return card.example ? `${card.term} — ${card.definition}\n\nExemple : ${card.example}` : `${card.term} — ${card.definition}`;
+function explainFor(card: Card, texts: GenTexts): string {
+  const head = `${card.term} : ${card.definition}`;
+  return card.example ? `${head}\n\n${texts.example(card.example)}` : head;
 }
 
 export function generateExercises(
   unit: Unit,
   unitCards: readonly Card[],
   subjectCards: readonly Card[],
+  texts: GenTexts = GEN_TEXTS_FR,
 ): Exercise[] {
   const rng = mulberry32(hashString(unit.id));
   const out: Exercise[] = [];
@@ -81,10 +98,10 @@ export function generateExercises(
         key: `${unit.id}:def:${card.id}`,
         unitId: unit.id,
         cardId: card.id,
-        prompt: `Que signifie « ${card.term} » ?`,
+        prompt: texts.whatMeans(card.term),
         choices: [card.definition, ...wrong.map((c) => c.definition)],
         answer: 0,
-        explain: explainFor(card),
+        explain: explainFor(card, texts),
       };
       out.push(qcm);
     } else {
@@ -94,10 +111,10 @@ export function generateExercises(
         key: `${unit.id}:term:${card.id}`,
         unitId: unit.id,
         cardId: card.id,
-        prompt: `Quel terme correspond à cette définition ?\n\n${card.definition}`,
+        prompt: `${texts.whichTerm}\n\n${card.definition}`,
         choices: [card.term, ...wrong.map((c) => c.term)],
         answer: 0,
-        explain: explainFor(card),
+        explain: explainFor(card, texts),
         typed: { answer: card.term },
       };
       out.push(qcm);
@@ -124,7 +141,7 @@ export function generateExercises(
           text: `${card.term} : ${text}`,
           answer: answers[0],
           bank: bank.filter((b) => b !== answers[0]),
-          explain: explainFor(card),
+          explain: explainFor(card, texts),
         });
       }
     }
@@ -137,7 +154,7 @@ export function generateExercises(
       kind: 'match',
       key: `${unit.id}:match:${i / 4}`,
       unitId: unit.id,
-      prompt: 'Associe chaque terme à sa définition',
+      prompt: texts.match,
       pairs: group.map((c) => ({ left: c.term, right: shortDefinition(c.definition) })),
     };
     out.push(match);

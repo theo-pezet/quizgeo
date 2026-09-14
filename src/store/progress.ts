@@ -50,7 +50,11 @@ export const useProgress = create<ProgressStore>()(
   ),
 );
 
+export type SettingsLang = 'fr' | 'en' | 'es';
+
 interface SettingsStore {
+  /** Langue de l'interface et du contenu ; null tant que l'utilisateur n'a pas choisi. */
+  lang: SettingsLang | null;
   onboardingDone: boolean;
   haptics: boolean;
   /** Rappels (série en danger, énergie rechargée). Demande la permission à l'activation. */
@@ -61,6 +65,7 @@ interface SettingsStore {
   favoriteSubject: string | null;
   /** Les réglages ont été relus depuis le disque. */
   hydrated: boolean;
+  setLang: (lang: SettingsLang) => void;
   setOnboardingDone: (done: boolean) => void;
   setHaptics: (on: boolean) => void;
   setReminders: (on: boolean) => void;
@@ -74,6 +79,7 @@ interface SettingsStore {
 export const useSettings = create<SettingsStore>()(
   persist(
     (set) => ({
+      lang: null,
       onboardingDone: false,
       haptics: true,
       reminders: false,
@@ -81,6 +87,7 @@ export const useSettings = create<SettingsStore>()(
       sound: true,
       favoriteSubject: null,
       hydrated: false,
+      setLang: (lang) => set({ lang }),
       setOnboardingDone: (onboardingDone) => set({ onboardingDone }),
       setHaptics: (haptics) => set({ haptics }),
       setReminders: (reminders) => set({ reminders }),
@@ -94,6 +101,7 @@ export const useSettings = create<SettingsStore>()(
       version: 1,
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
+        lang: state.lang,
         onboardingDone: state.onboardingDone,
         haptics: state.haptics,
         reminders: state.reminders,

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { CaseExercise } from '@/game';
+import { useT } from '@/i18n';
 import { Button, Card, Text, radius, space, useColors } from '@/ui';
 
 interface Props {
@@ -13,6 +14,7 @@ interface Props {
 /** Cas pratique : une décision à la fois, un retour immédiat, puis la suivante. */
 export function CaseView({ exercise, onAnswer, locked }: Props) {
   const colors = useColors();
+  const t = useT();
   const [stepIndex, setStepIndex] = useState(0);
   const [selected, setSelected] = useState<number | null>(null);
   const [checked, setChecked] = useState(false);
@@ -40,12 +42,12 @@ export function CaseView({ exercise, onAnswer, locked }: Props) {
 
   return (
     <View style={styles.wrap}>
-      <Text variant="h2">📋 {exercise.title}</Text>
+      <Text variant="h2">{exercise.title}</Text>
       <Card>
         <Text variant="body">{exercise.scenario}</Text>
       </Card>
       <Text variant="small" secondary>
-        Décision {stepIndex + 1} / {exercise.steps.length}
+        {t('session.case.decision', { index: stepIndex + 1, total: exercise.steps.length })}
       </Text>
       <Text variant="bodyBold">{step.prompt}</Text>
       <View style={styles.choices}>
@@ -80,9 +82,9 @@ export function CaseView({ exercise, onAnswer, locked }: Props) {
       )}
       {!locked &&
         (checked ? (
-          <Button label={isLast ? 'Terminer le cas' : 'Décision suivante'} onPress={proceed} />
+          <Button label={isLast ? t('session.case.finish') : t('session.case.next')} onPress={proceed} />
         ) : (
-          <Button label="Valider" disabled={selected === null} onPress={check} />
+          <Button label={t('common.validate')} disabled={selected === null} onPress={check} />
         ))}
     </View>
   );

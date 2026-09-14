@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { presentQcm, type QcmExercise } from '@/game';
+import { useT } from '@/i18n';
 import { Button, CodeBlock, Text, radius, space, useColors } from '@/ui';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 export function QcmView({ exercise, onAnswer, locked }: Props) {
   const colors = useColors();
+  const t = useT();
   // Mélangé à chaque affichage, y compris entre deux apparitions.
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const presented = useMemo(() => presentQcm(exercise, Math.random), [exercise.key]);
@@ -49,7 +51,7 @@ export function QcmView({ exercise, onAnswer, locked }: Props) {
         })}
       </View>
       {!locked && (
-        <Button label="Vérifier" disabled={selected === null} onPress={() => onAnswer(selected === presented.answer)} />
+        <Button label={t('common.check')} disabled={selected === null} onPress={() => onAnswer(selected === presented.answer)} />
       )}
     </View>
   );

@@ -2,34 +2,39 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { Pressable, StyleSheet, Switch, View } from 'react-native';
 
-import { SUBJECTS } from '@/content';
+import { useContent } from '@/content/useContent';
 import { DAILY_GOALS, applySetDailyGoal } from '@/game';
+import { LANGS, detectLang, useT, type Lang } from '@/i18n';
 import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, FadeUp, Pop, ProgressBar, Screen, Text, radius, space, useColors } from '@/ui';
+import { Button, FadeUp, Icon, Pop, ProgressBar, Screen, Text, radius, space, tint, useColors } from '@/ui';
 
-const GOAL_LABELS: Record<number, [string, string]> = {
-  20: ['Tranquille', '5 min par jour'],
-  50: ['Régulier', '10 min par jour'],
-  100: ['Sérieux', '20 min par jour'],
-  200: ['Intense', '40 min par jour'],
-};
+const GOAL_MINUTES: Record<number, number> = { 20: 5, 50: 10, 100: 20, 200: 40 };
+const HOURS = [8, 12, 19, 21];
+const STEPS = 4;
 
 /**
- * Trois écrans, une minute : la matière, l'objectif, les rappels.
- * Tout se change ensuite dans le Profil.
+ * Quatre écrans, une minute : la langue, la matière, l'objectif, les rappels.
+ * Tout se change ensuite dans le Profil. Le choix de langue s'applique
+ * immédiatement : l'écran suivant est déjà traduit.
  */
 export default function OnboardingScreen() {
   const colors = useColors();
+  const t = useT();
+  const { SUBJECTS } = useContent();
+  const lang = useSettings((s) => s.lang);
+  const setLang = useSettings((s) => s.setLang);
   const [step, setStep] = useState(0);
   const [subject, setSubject] = useState<string>(SUBJECTS[0].id);
   const [goal, setGoal] = useState<number>(50);
   const [reminders, setReminders] = useState(true);
   const [hour, setHour] = useState(19);
+  const chosenLang: Lang = lang ?? detectLang();
 
   const finish = async () => {
     const settings = useSettings.getState();
     const progress = useProgress.getState();
+    if (!settings.lang) settings.setLang(chosenLang);
     settings.setFavoriteSubject(subject);
     progress.setProgress(applySetDailyGoal(progress.progress, goal));
     settings.setReminderHour(hour);
@@ -38,25 +43,64 @@ export default function OnboardingScreen() {
     router.replace('/');
   };
 
+  const footer =
+    step === 0 ? (
+      <Button label={t('common.continue')} onPress={() => setStep(1)} />
+    ) : (
+      <View style={styles.row}>
+        <Button label={t('common.back')} tone="ghost" onPress={() => setStep(step - 1)} />
+        <Button label={step === STEPS - 1 ? t('onboarding.go') : t('common.continue')} style={styles.grow} onPress={() => (step === STEPS - 1 ? void finish() : setStep(step + 1))} />
+      </View>
+    );
+
   return (
-    <Screen>
+    <Screen footer={footer}>
       <View style={styles.top}>
         <Text variant="small" secondary>
-          {step + 1} / 3
+          {t('onboarding.step', { step: step + 1, total: STEPS })}
         </Text>
         <View style={styles.bar}>
-          <ProgressBar ratio={(step + 1) / 3} height={6} />
+          <ProgressBar ratio={(step + 1) / STEPS} height={8} />
         </View>
       </View>
 
       {step === 0 && (
         <FadeUp key="s0" style={styles.stepWrap}>
           <Pop>
+            <Text style={styles.big}>🌍</Text>
+          </Pop>
+          <Text variant="title">{t('onboarding.lang.title')}</Text>
+          <Text variant="body" secondary>
+            {t('onboarding.lang.body')}
+          </Text>
+          <View style={styles.list}>
+            {LANGS.map((l) => {
+              const active = l.id === chosenLang;
+              return (
+                <Pressable
+                  key={l.id}
+                  onPress={() => setLang(l.id)}
+                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? tint(colors.primary, 0.9) : colors.surface }]}>
+                  <Text style={styles.emoji}>{l.flag}</Text>
+                  <Text variant="bodyBold" style={styles.grow}>
+                    {l.label}
+                  </Text>
+                  {active && <Icon name="checkmark-circle" size={22} color={colors.primary} />}
+                </Pressable>
+              );
+            })}
+          </View>
+        </FadeUp>
+      )}
+
+      {step === 1 && (
+        <FadeUp key="s1" style={styles.stepWrap}>
+          <Pop>
             <Text style={styles.big}>🗺️</Text>
           </Pop>
-          <Text variant="title">Par quoi on commence ?</Text>
+          <Text variant="title">{t('onboarding.subject.title')}</Text>
           <Text variant="body" secondary>
-            Quatre chemins, indépendants. Tu pourras changer à tout moment — celui-ci s’ouvrira en premier.
+            {t('onboarding.subject.body')}
           </Text>
           <View style={styles.list}>
             {SUBJECTS.map((s) => {
@@ -65,7 +109,7 @@ export default function OnboardingScreen() {
                 <Pressable
                   key={s.id}
                   onPress={() => setSubject(s.id)}
-                  style={[styles.card, { borderColor: active ? s.color : colors.border, backgroundColor: active ? colors.surfaceAlt : colors.surface }]}>
+                  style={[styles.card, { borderColor: active ? s.color : colors.border, backgroundColor: active ? tint(s.color, 0.88) : colors.surface }]}>
                   <Text style={styles.emoji}>{s.emoji}</Text>
                   <View style={styles.cardText}>
                     <Text variant="bodyBold">{s.title}</Text>
@@ -77,80 +121,81 @@ export default function OnboardingScreen() {
               );
             })}
           </View>
-          <Button label="Continuer" onPress={() => setStep(1)} />
-        </FadeUp>
-      )}
-
-      {step === 1 && (
-        <FadeUp key="s1" style={styles.stepWrap}>
-          <Pop>
-            <Text style={styles.big}>🎯</Text>
-          </Pop>
-          <Text variant="title">Ton objectif du jour</Text>
-          <Text variant="body" secondary>
-            Des XP à gagner chaque jour. Un anneau sur l’accueil te montre où tu en es ; l’atteindre rapporte des gemmes.
-          </Text>
-          <View style={styles.list}>
-            {DAILY_GOALS.map((g) => {
-              const active = g === goal;
-              const [name, time] = GOAL_LABELS[g];
-              return (
-                <Pressable
-                  key={g}
-                  onPress={() => setGoal(g)}
-                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? colors.surfaceAlt : colors.surface }]}>
-                  <Text variant="h2" style={styles.goalNumber}>
-                    {g}
-                  </Text>
-                  <View style={styles.cardText}>
-                    <Text variant="bodyBold">{name}</Text>
-                    <Text variant="small" secondary>
-                      {time} · {g} XP
-                    </Text>
-                  </View>
-                </Pressable>
-              );
-            })}
-          </View>
-          <View style={styles.row}>
-            <Button label="Retour" tone="ghost" onPress={() => setStep(0)} />
-            <Button label="Continuer" style={styles.grow} onPress={() => setStep(2)} />
-          </View>
         </FadeUp>
       )}
 
       {step === 2 && (
         <FadeUp key="s2" style={styles.stepWrap}>
           <Pop>
+            <Text style={styles.big}>🎯</Text>
+          </Pop>
+          <Text variant="title">{t('onboarding.goal.title')}</Text>
+          <Text variant="body" secondary>
+            {t('onboarding.goal.body')}
+          </Text>
+          <View style={styles.list}>
+            {DAILY_GOALS.map((g) => {
+              const active = g === goal;
+              return (
+                <Pressable
+                  key={g}
+                  onPress={() => setGoal(g)}
+                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? tint(colors.primary, 0.9) : colors.surface }]}>
+                  <Text variant="h2" style={styles.goalNumber}>
+                    {g}
+                  </Text>
+                  <View style={styles.cardText}>
+                    <Text variant="bodyBold">{t(`onboarding.goal.${g}` as 'onboarding.goal.20')}</Text>
+                    <Text variant="small" secondary>
+                      {t('onboarding.goal.time', { minutes: GOAL_MINUTES[g], xp: g })}
+                    </Text>
+                  </View>
+                </Pressable>
+              );
+            })}
+          </View>
+        </FadeUp>
+      )}
+
+      {step === 3 && (
+        <FadeUp key="s3" style={styles.stepWrap}>
+          <Pop>
             <Text style={styles.big}>🔥</Text>
           </Pop>
-          <Text variant="title">Garde ta série</Text>
+          <Text variant="title">{t('onboarding.reminders.title')}</Text>
           <Text variant="body" secondary>
-            Une session par jour entretient la série. Un rappel le soir évite de la perdre bêtement — sur Android, pas sur le site.
+            {t('onboarding.reminders.body')}
           </Text>
           <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface, justifyContent: 'space-between' }]}>
-            <Text variant="bodyBold">Me rappeler</Text>
-            <Switch value={reminders} onValueChange={setReminders} />
+            <Text variant="bodyBold">{t('onboarding.reminders.toggle')}</Text>
+            <Switch value={reminders} onValueChange={setReminders} trackColor={{ true: colors.success }} />
           </View>
           {reminders && (
             <View style={styles.hours}>
-              {[8, 12, 19, 21].map((h) => (
-                <Button key={h} label={`${h} h`} tone={h === hour ? 'primary' : 'secondary'} style={styles.grow} onPress={() => setHour(h)} />
+              {HOURS.map((h) => (
+                <Button key={h} label={t('common.hours', { count: h })} size="sm" tone={h === hour ? 'primary' : 'secondary'} style={styles.grow} onPress={() => setHour(h)} />
               ))}
             </View>
           )}
           <View style={[styles.rules, { backgroundColor: colors.surfaceAlt }]}>
-            <Text variant="small">⚡ Une leçon coûte 5 points d’énergie sur 25 ; ils reviennent avec le temps. Réviser est gratuit.</Text>
-            <Text variant="small">👑 Chaque unité a 5 couronnes : 3 pour avancer, 5 pour la maîtriser — et elles se fissurent si tu ne reviens pas.</Text>
-            <Text variant="small">💎 Les gemmes s’achètent en jouant, jamais avec de l’argent.</Text>
-          </View>
-          <View style={styles.row}>
-            <Button label="Retour" tone="ghost" onPress={() => setStep(1)} />
-            <Button label="C’est parti !" style={styles.grow} onPress={() => void finish()} />
+            <Rule icon="flash" color={colors.energy} text={t('onboarding.rule.energy')} />
+            <Rule icon="ribbon" color={colors.gold} text={t('onboarding.rule.crowns')} />
+            <Rule icon="diamond" color={colors.gem} text={t('onboarding.rule.gems')} />
           </View>
         </FadeUp>
       )}
     </Screen>
+  );
+}
+
+function Rule({ icon, color, text }: { icon: 'flash' | 'ribbon' | 'diamond'; color: string; text: string }) {
+  return (
+    <View style={styles.rule}>
+      <Icon name={icon} size={18} color={color} />
+      <Text variant="small" style={styles.grow}>
+        {text}
+      </Text>
+    </View>
   );
 }
 
@@ -167,5 +212,6 @@ const styles = StyleSheet.create({
   row: { flexDirection: 'row', gap: space.sm, alignItems: 'center' },
   grow: { flex: 1 },
   hours: { flexDirection: 'row', gap: space.sm },
-  rules: { borderRadius: radius.md, padding: space.md, gap: space.sm },
+  rules: { borderRadius: radius.md, padding: space.md, gap: space.md },
+  rule: { flexDirection: 'row', gap: space.sm, alignItems: 'flex-start' },
 });

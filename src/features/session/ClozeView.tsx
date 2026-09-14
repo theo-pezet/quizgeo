@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { shuffle, type ClozeExercise } from '@/game';
+import { useT } from '@/i18n';
 import { Button, Text, radius, space, useColors } from '@/ui';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 export function ClozeView({ exercise, onAnswer, locked }: Props) {
   const colors = useColors();
+  const t = useT();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const bank = useMemo(() => shuffle([exercise.answer, ...exercise.bank], Math.random), [exercise.key]);
   const [picked, setPicked] = useState<string | null>(null);
@@ -19,7 +21,7 @@ export function ClozeView({ exercise, onAnswer, locked }: Props) {
 
   return (
     <View style={styles.wrap}>
-      <Text variant="h2">Complète la phrase</Text>
+      <Text variant="h2">{t('session.cloze.title')}</Text>
       <Text variant="body">
         {before}
         <Text
@@ -34,7 +36,7 @@ export function ClozeView({ exercise, onAnswer, locked }: Props) {
       </Text>
       {locked && picked !== exercise.answer && (
         <Text variant="small" style={{ color: colors.success }}>
-          Réponse : {exercise.answer}
+          {t('session.cloze.answer', { answer: exercise.answer })}
         </Text>
       )}
       <View style={styles.bank}>
@@ -54,7 +56,7 @@ export function ClozeView({ exercise, onAnswer, locked }: Props) {
           </Pressable>
         ))}
       </View>
-      {!locked && <Button label="Vérifier" disabled={picked === null} onPress={() => onAnswer(picked === exercise.answer)} />}
+      {!locked && <Button label={t('common.check')} disabled={picked === null} onPress={() => onAnswer(picked === exercise.answer)} />}
     </View>
   );
 }

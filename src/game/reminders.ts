@@ -27,13 +27,28 @@ export interface ReminderPrefs {
 
 export const DEFAULT_REMINDER_PREFS: ReminderPrefs = { streak: true, energy: true, streakHour: 19 };
 
+/** Les textes des rappels : l'interface les fournit dans la langue de l'utilisateur. */
+export interface ReminderTexts {
+  streakTitle: (current: number) => string;
+  streakBody: (current: number) => string;
+  energyTitle: string;
+  energyBody: string;
+}
+
+export const DEFAULT_REMINDER_TEXTS: ReminderTexts = {
+  streakTitle: (current) => (current > 0 ? `🔥 Série de ${current} jour${current > 1 ? 's' : ''} en jeu` : '🔥 Une leçon aujourd’hui ?'),
+  streakBody: (current) => (current > 0 ? 'Une session de 5 exercices avant minuit et la série continue.' : 'Cinq minutes suffisent pour démarrer une série.'),
+  energyTitle: '⚡ Énergie rechargée',
+  energyBody: 'Tes 25 points sont revenus : cinq leçons t’attendent.',
+};
+
 function atHour(base: Date, hour: number, daysAhead: number): Date {
   const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + daysAhead, hour, 0, 0, 0);
   return d;
 }
 
 /** Les rappels à programmer à partir de `now`. Toujours dans le futur. */
-export function planReminders(progress: Progress, now: Date, prefs: ReminderPrefs): Reminder[] {
+export function planReminders(progress: Progress, now: Date, prefs: ReminderPrefs, texts: ReminderTexts = DEFAULT_REMINDER_TEXTS): Reminder[] {
   const out: Reminder[] = [];
   const today = toDayKey(now);
 
@@ -45,11 +60,8 @@ export function planReminders(progress: Progress, now: Date, prefs: ReminderPref
     out.push({
       id: 'streak',
       at,
-      title: current > 0 ? `🔥 Série de ${current} jour${current > 1 ? 's' : ''} en jeu` : '🔥 Une leçon aujourd’hui ?',
-      body:
-        current > 0
-          ? 'Une session de 5 exercices avant minuit et la série continue.'
-          : 'Cinq minutes suffisent pour démarrer une série.',
+      title: texts.streakTitle(current),
+      body: texts.streakBody(current),
     });
   }
 
@@ -60,8 +72,8 @@ export function planReminders(progress: Progress, now: Date, prefs: ReminderPref
       out.push({
         id: 'energy',
         at: new Date(now.getTime() + minutes * 60000),
-        title: '⚡ Énergie rechargée',
-        body: 'Tes 25 points sont revenus : cinq leçons t’attendent.',
+        title: texts.energyTitle,
+        body: texts.energyBody,
       });
     }
   }

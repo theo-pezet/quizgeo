@@ -9,7 +9,8 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { CATALOG, EXERCISES, EXERCISE_BY_KEY, exercisesOfSubject, exercisesOfUnit } from '@/content';
+import { CATALOG } from '@/content';
+import { content } from '@/content/useContent';
 import { FEATURES } from '@/config/features';
 import {
   applyAdShown,
@@ -72,6 +73,7 @@ export interface SessionState {
 
 function compose(spec: SessionSpec, progress: Progress): Exercise[] {
   const rng = Math.random;
+  const { exercisesOfUnit, exercisesOfSubject, EXERCISE_BY_KEY } = content();
   switch (spec.mode) {
     case 'unit':
       return composeUnitSession(exercisesOfUnit(spec.unitId), rng);
@@ -93,7 +95,7 @@ function start(spec: SessionSpec): { steps: Step[]; started: boolean; startProgr
   if (started === null) return { steps: [], started: false, startProgress: store.progress, hard: false };
   store.setProgress(started);
   // Mode maîtrise : dès 3 couronnes, les QCM typables se tapent.
-  const hard = spec.mode === 'unit' && unitTraits(started, spec.unitId, EXERCISES, toDayKey(now)) >= PATH_TRAITS;
+  const hard = spec.mode === 'unit' && unitTraits(started, spec.unitId, content().EXERCISES, toDayKey(now)) >= PATH_TRAITS;
   return {
     steps: compose(spec, started).map((exercise) => ({ exercise, retry: false })),
     started: true,
@@ -172,6 +174,7 @@ export function useSession(spec: SessionSpec) {
     (s: SessionState): SessionState => {
       const store = useProgress.getState();
       const now = new Date();
+      const { EXERCISES } = content();
       const result = applySessionEnd(store.progress, {
         mode,
         unitId,
