@@ -7,6 +7,8 @@
 
 import type { SubjectId } from '@/game';
 
+import { EXTRA_UNIT_WORLDS } from './extra';
+
 export type WorldText = { fr: string; en: string; es: string };
 
 export interface World {
@@ -31,7 +33,7 @@ const w = (
   unitIds: string[],
 ): World => ({ id: `${subjectId}-w${index}`, subjectId, index, emoji, color, title, subtitle, unitIds });
 
-export const WORLDS: readonly World[] = [
+const BASE_WORLDS: World[] = [
   // ------------------------------------------------------------- Marketing
   w('marketing', 1, '🌱', '#E8562B', { fr: 'Premiers pas', en: 'First steps', es: 'Primeros pasos' }, { fr: 'Le vocabulaire et le funnel', en: 'Vocabulary and the funnel', es: 'El vocabulario y el funnel' }, ['mkt-bases-1', 'mkt-bases-2']),
   w('marketing', 2, '🔍', '#D9480F', { fr: 'SEO', en: 'SEO', es: 'SEO' }, { fr: 'Être trouvé sur Google', en: 'Getting found on Google', es: 'Que te encuentren en Google' }, ['mkt-seo-1', 'mkt-seo-2', 'mkt-seo-3', 'mkt-seo-4', 'mkt-seo-5', 'mkt-seo-6']),
@@ -40,12 +42,15 @@ export const WORLDS: readonly World[] = [
   w('marketing', 5, '📊', '#0891B2', { fr: 'Analytics', en: 'Analytics', es: 'Analítica' }, { fr: 'Mesurer et attribuer', en: 'Measuring and attributing', es: 'Medir y atribuir' }, ['mkt-analytics-1', 'mkt-analytics-2', 'mkt-analytics-3', 'mkt-analytics-4', 'mkt-case-3']),
   w('marketing', 6, '✍️', '#16A34A', { fr: 'Conversion et contenu', en: 'Conversion and content', es: 'Conversión y contenido' }, { fr: 'Pages, emails, réseaux', en: 'Pages, emails, social', es: 'Páginas, emails, redes' }, ['mkt-cro-1', 'mkt-cro-2', 'mkt-content-1', 'mkt-email-1', 'mkt-social-1']),
   w('marketing', 7, '🚀', '#7C3AED', { fr: 'Growth et stratégie', en: 'Growth and strategy', es: 'Growth y estrategia' }, { fr: 'Du produit au marché', en: 'From product to market', es: 'Del producto al mercado' }, ['mkt-growth-1', 'mkt-growth-2', 'mkt-growth-3', 'mkt-strategy-1', 'mkt-strategy-2', 'mkt-strategy-3', 'mkt-case-1']),
+  w('marketing', 8, '💌', '#DB2777', { fr: 'Relation client', en: 'Customer relationship', es: 'Relación con el cliente' }, { fr: 'CRM, automation, e-commerce', en: 'CRM, automation, e-commerce', es: 'CRM, automatización, e-commerce' }, []),
+  w('marketing', 9, '🎬', '#9333EA', { fr: 'Marque et influence', en: 'Brand and influence', es: 'Marca e influencia' }, { fr: 'Branding, vidéo, créateurs', en: 'Branding, video, creators', es: 'Branding, vídeo, creadores' }, []),
 
   // -------------------------------------------------------------------- IA
   w('ia', 1, '🧠', '#7C3AED', { fr: 'Découvrir l’IA', en: 'Discovering AI', es: 'Descubrir la IA' }, { fr: 'Les mots, l’histoire, les acteurs', en: 'The words, the history, the players', es: 'Las palabras, la historia, los actores' }, ['ia-1', 'ia-hist-1', 'ia-2', 'ia-9']),
   w('ia', 2, '⚙️', '#2563EB', { fr: 'Dans la machine', en: 'Inside the machine', es: 'Dentro de la máquina' }, { fr: 'Comment un LLM lit et répond', en: 'How an LLM reads and answers', es: 'Cómo lee y responde un LLM' }, ['ia-4', 'ia-llm-2', 'ia-3', 'ia-prompt-2']),
   w('ia', 3, '🏗️', '#0F766E', { fr: 'Construire', en: 'Building', es: 'Construir' }, { fr: 'RAG, données, entraînement, agents', en: 'RAG, data, training, agents', es: 'RAG, datos, entrenamiento, agentes' }, ['ia-5', 'ia-data-1', 'ia-6', 'ia-train-2', 'ia-agents-1', 'ia-8']),
   w('ia', 4, '⚖️', '#DC2626', { fr: 'Responsabilité', en: 'Responsibility', es: 'Responsabilidad' }, { fr: 'Sécurité, loi, usages marketing', en: 'Safety, law, marketing uses', es: 'Seguridad, ley, usos en marketing' }, ['ia-7', 'ia-reg-1', 'ia-mkt-1', 'ia-case-1']),
+  w('ia', 5, '🧰', '#0891B2', { fr: 'L’IA au quotidien', en: 'AI every day', es: 'La IA en el día a día' }, { fr: 'Outils, images, automatisations', en: 'Tools, images, automations', es: 'Herramientas, imágenes, automatizaciones' }, []),
 
   // ---------------------------------------------------------------- Python
   w('python', 1, '🐣', '#2563EB', { fr: 'Démarrer', en: 'Getting started', es: 'Empezar' }, { fr: 'Terminal, variables, boucles', en: 'Terminal, variables, loops', es: 'Terminal, variables, bucles' }, ['py-1', 'py-2', 'py-concepts-1', 'py-3']),
@@ -61,12 +66,21 @@ export const WORLDS: readonly World[] = [
   // ------------------------------------------------------------------- CSS
   w('css', 1, '🎨', '#0EA5E9', { fr: 'Les bases', en: 'The basics', es: 'Las bases' }, { fr: 'Sélecteurs, box model, flexbox', en: 'Selectors, box model, flexbox', es: 'Selectores, box model, flexbox' }, ['web-3']),
   w('css', 2, '📐', '#7C3AED', { fr: 'Mise en page et style', en: 'Layout and style', es: 'Maquetación y estilo' }, { fr: 'Responsive, couleurs, animations', en: 'Responsive, colours, animations', es: 'Responsive, colores, animaciones' }, ['web-css-2', 'web-css-3']),
+  w('css', 3, '🧪', '#16A34A', { fr: 'CSS pro', en: 'Pro CSS', es: 'CSS pro' }, { fr: 'Typographie, transformations, organisation', en: 'Typography, transforms, organisation', es: 'Tipografía, transformaciones, organización' }, []),
 
   // ------------------------------------------------------------ JavaScript
   w('js', 1, '⚡', '#D97706', { fr: 'Les bases', en: 'The basics', es: 'Las bases' }, { fr: 'Variables, DOM, fetch', en: 'Variables, DOM, fetch', es: 'Variables, DOM, fetch' }, ['web-4', 'web-js-2']),
   w('js', 2, '🛠️', '#0F766E', { fr: 'Outils', en: 'Tools', es: 'Herramientas' }, { fr: 'Git, frameworks, SDK', en: 'Git, frameworks, SDKs', es: 'Git, frameworks, SDK' }, ['web-5']),
   w('js', 3, '🚀', '#16A34A', { fr: 'En production', en: 'In production', es: 'En producción' }, { fr: 'Performance, architecture, cas pratiques', en: 'Performance, architecture, case studies', es: 'Rendimiento, arquitectura, casos prácticos' }, ['web-6', 'web-7', 'web-case-1']),
 ];
+
+// Les unités rédigées en JSON rejoignent le monde qu'elles déclarent, à la suite.
+for (const extra of EXTRA_UNIT_WORLDS) {
+  const world = BASE_WORLDS.find((wd) => wd.id === extra.world);
+  if (world && !world.unitIds.includes(extra.id)) (world.unitIds as string[]).push(extra.id);
+}
+
+export const WORLDS: readonly World[] = BASE_WORLDS;
 
 export const WORLD_BY_UNIT: ReadonlyMap<string, World> = new Map(WORLDS.flatMap((wd) => wd.unitIds.map((u) => [u, wd] as const)));
 

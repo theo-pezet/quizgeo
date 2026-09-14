@@ -13,3 +13,4 @@ export { Stat } from './Stat';
 export { Text } from './Text';
 export { font, fonts, palette, radius, shade, space, tint, useColors } from './tokens';
 export { Tutorial } from './Tutorial';
+export { MonthlyCard } from './MonthlyCard';

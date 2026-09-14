@@ -246,7 +246,7 @@ export const en: Record<keyof typeof fr, string> = {
   'profile.settings.reset': 'Reset my progress',
   'profile.reset.title': 'Erase everything?',
   'profile.reset.body': 'XP, streak, crowns, badges and deck start from zero. This cannot be undone.',
-  'profile.footer': 'Quiz GEO · {units} units · {exercises} exercises · {cards} cards · no ads',
+  'profile.footer': 'Skilltrail · {units} units · {exercises} exercises · {cards} cards · no ads',
 
   'blitz.title': 'Blitz · {subject}',
   'blitz.correct': '{count} correct answer(one:|other:s)',
@@ -315,6 +315,15 @@ export const en: Record<keyof typeof fr, string> = {
   'reminder.streak.titleNew': 'A lesson today?',
   'reminder.streak.body': 'A 5-exercise session before midnight and the streak goes on.',
   'reminder.streak.bodyNew': 'Five minutes is enough to start a streak.',
+  'reminder.lapse.title': 'It’s been {count} days…',
+  'reminder.lapse.body': 'Five minutes is enough to pick up where you left off.',
+  'monthly.title': '{month} challenge',
+  'monthly.body': '{lessons} / {target} lessons this month · a medal and 100 gems at stake',
+  'monthly.done': 'Monthly challenge done: {month} medal and 100 gems.',
+  'monthly.end.title': 'Monthly challenge complete!',
+  'monthly.end.body': '{target} lessons in {month}. Medal added to your collection, plus 100 gems.',
+  'profile.medals': 'Monthly medals',
+  'profile.medals.empty': 'Finish {target} lessons in a month to earn the first one.',
   'reminder.energy.title': 'Energy refilled',
   'reminder.energy.body': 'Your 25 points are back: five lessons are waiting.',
 
@@ -338,7 +347,7 @@ export const en: Record<keyof typeof fr, string> = {
 
   'privacy.title': 'Privacy',
   'privacy.local.title': 'No data leaves your device.',
-  'privacy.local.body': 'Quiz GEO works entirely offline. Your progress (XP, streak, crowns, deck, gems, settings) is stored only on your phone or in your browser. The app creates no account, asks for no email or name, sends nothing to a server and uses no analytics tool.',
+  'privacy.local.body': 'Skilltrail works entirely offline. Your progress (XP, streak, crowns, deck, gems, settings) is stored only on your phone or in your browser. The app creates no account, asks for no email or name, sends nothing to a server and uses no analytics tool.',
   'privacy.permissions.title': 'Permissions',
   'privacy.permissions.body': 'Notifications (optional): only for the local reminders you enable in your Profile, scheduled on the device, without a server. Vibrations: for answer feedback. Nothing else.',
   'privacy.league.title': 'League',
@@ -347,5 +356,5 @@ export const en: Record<keyof typeof fr, string> = {
   'privacy.ads.body': 'This version contains no ads and no advertising SDK. If a future version adds some, your consent will be asked first and this page will be updated.',
   'privacy.delete.title': 'Erase my data',
   'privacy.delete.body': 'Profile → “Reset my progress”, or uninstall the app: nothing remains anywhere else.',
-  'privacy.footer': 'Quiz GEO · {units} units · {exercises} exercises · {cards} cards · publisher: Cité par l’IA (cite-par-lia.fr). Last update: September 2026.',
+  'privacy.footer': 'Skilltrail · {units} units · {exercises} exercises · {cards} cards · publisher: Cité par l’IA (cite-par-lia.fr). Last update: September 2026.',
 };

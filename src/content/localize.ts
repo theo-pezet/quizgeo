@@ -19,6 +19,7 @@ import xcardsEs from '@/data/i18n/xcards.es.json';
 import type { Exercise } from '@/game';
 
 import { EXTRA_CARDS } from './cards.extra';
+import { extraCards, extraExercises } from './extra';
 import { EXTRA_EXERCISES } from './extras';
 import type { Card } from './types';
 
@@ -49,11 +50,15 @@ function overlayCard(card: Card, table: CardTable | undefined): Card {
 
 /** Toutes les cartes (classeur puis cartes manuelles), dans la langue demandée. */
 export function localizedCards(lang: ContentLang): Card[] {
-  return [...DECK.map((c) => overlayCard(c, DECK_TEXT[lang])), ...EXTRA_CARDS.map((c) => overlayCard(c, XCARDS_TEXT[lang]))];
+  return [...DECK.map((c) => overlayCard(c, DECK_TEXT[lang])), ...EXTRA_CARDS.map((c) => overlayCard(c, XCARDS_TEXT[lang])), ...extraCards(lang)];
 }
 
 /** Les exercices écrits à la main, dans la langue demandée. */
 export function localizedExtras(lang: ContentLang): Exercise[] {
+  return [...localizedHandWritten(lang), ...extraExercises(lang)];
+}
+
+function localizedHandWritten(lang: ContentLang): Exercise[] {
   const table = EXTRAS_TEXT[lang];
   if (!table) return [...EXTRA_EXERCISES];
   return EXTRA_EXERCISES.map((e) => {

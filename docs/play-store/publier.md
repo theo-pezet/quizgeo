@@ -6,7 +6,7 @@ commande à lancer par version.
 ## 1. Les comptes (une fois)
 
 1. **Google Play Console** — https://play.google.com/console — 25 $ une fois
-   pour la vie. Créer l'application « Quiz GEO », langue par défaut français,
+   pour la vie. Créer l'application « Skilltrail », langue par défaut français,
    type application, gratuite.
 2. **Expo (EAS)** — https://expo.dev — gratuit. C'est le service qui compile
    et **signe** l'application. Il génère et garde la clé de signature : ne

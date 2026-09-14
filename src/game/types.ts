@@ -343,6 +343,17 @@ export interface Progress {
   /** Meilleur score Blitz par matière. */
   blitz: Record<string, number>;
   daily: DailyState;
+  monthly: MonthlyState;
+}
+
+/** Le défi du mois (voir monthly.ts). */
+export interface MonthlyState {
+  /** « AAAA-MM » du compteur courant ; null avant la première leçon. */
+  month: string | null;
+  lessons: number;
+  claimed: boolean;
+  /** Mois gagnés, « AAAA-MM », dans l'ordre. */
+  medals: string[];
 }
 
 export type SessionMode = 'unit' | 'review' | 'free' | 'deck';
@@ -406,5 +417,6 @@ export function emptyProgress(): Progress {
     boost: { activeUntil: null },
     blitz: {},
     daily: { day: null, xp: 0, goal: DEFAULT_DAILY_GOAL, metOn: null },
+    monthly: { month: null, lessons: 0, claimed: false, medals: [] },
   };
 }

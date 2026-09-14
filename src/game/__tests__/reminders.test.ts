@@ -55,3 +55,34 @@ describe('planReminders — énergie', () => {
     expect(planReminders(p, MORNING, { ...DEFAULT_REMINDER_PREFS, energy: false }).some((x) => x.id === 'energy')).toBe(false);
   });
 });
+
+describe('planReminders — relances', () => {
+  const at = (day: string, hour: number) => {
+    const [y, m, d] = day.split('-').map(Number);
+    return new Date(y, m - 1, d, hour, 0, 0, 0);
+  };
+
+  it('programme les relances à venir (3, 7, 14 jours) après la dernière session', () => {
+    const p = progressWith();
+    p.streak = { ...p.streak, current: 2, lastActiveDay: '2026-09-10' };
+    const now = at('2026-09-15', 10);
+    const ids = planReminders(p, now, DEFAULT_REMINDER_PREFS).map((r) => r.id);
+    expect(ids).toContain('lapse-7');
+    expect(ids).toContain('lapse-14');
+    expect(ids).not.toContain('lapse-3');
+    const seven = planReminders(p, now, DEFAULT_REMINDER_PREFS).find((r) => r.id === 'lapse-7');
+    expect(seven?.at).toEqual(at('2026-09-17', DEFAULT_REMINDER_PREFS.streakHour));
+    expect(seven?.title).toContain('7');
+  });
+
+  it('ne relance pas sans historique, ni quand la journée est déjà active, ni si les rappels de série sont coupés', () => {
+    const fresh = progressWith();
+    expect(planReminders(fresh, at('2026-09-15', 10), DEFAULT_REMINDER_PREFS).some((r) => r.id.startsWith('lapse'))).toBe(false);
+    const active = progressWith();
+    active.streak = { ...active.streak, current: 1, lastActiveDay: '2026-09-15' };
+    expect(planReminders(active, at('2026-09-15', 10), DEFAULT_REMINDER_PREFS).some((r) => r.id.startsWith('lapse'))).toBe(false);
+    const off = progressWith();
+    off.streak = { ...off.streak, current: 1, lastActiveDay: '2026-09-10' };
+    expect(planReminders(off, at('2026-09-15', 10), { ...DEFAULT_REMINDER_PREFS, streak: false }).some((r) => r.id.startsWith('lapse'))).toBe(false);
+  });
+});

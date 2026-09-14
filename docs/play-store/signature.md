@@ -51,6 +51,6 @@ les utilisateurs de l'ancienne devront désinstaller / réinstaller.
 keytool -genkeypair -v -keystore quizgeo-release.jks -alias quizgeo \
   -keyalg RSA -keysize 2048 -validity 10000 \
   -storepass quizgeo-android -keypass quizgeo-android \
-  -dname "CN=Quiz GEO, O=Cite par l IA, C=FR"
+  -dname "CN=Skilltrail, O=Cite par l IA, C=FR"
 base64 -w0 quizgeo-release.jks > ANDROID_KEYSTORE_BASE64.txt
 ```

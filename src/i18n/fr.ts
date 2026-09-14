@@ -256,7 +256,7 @@ export const fr = {
   'profile.settings.reset': 'Réinitialiser ma progression',
   'profile.reset.title': 'Tout effacer ?',
   'profile.reset.body': 'XP, série, couronnes, badges et deck repartent de zéro. Irréversible.',
-  'profile.footer': 'Quiz GEO · {units} unités · {exercises} exercices · {cards} cartes · sans publicité',
+  'profile.footer': 'Skilltrail · {units} unités · {exercises} exercices · {cards} cartes · sans publicité',
 
   // ------------------------------------------------------------ blitz
   'blitz.title': 'Blitz · {subject}',
@@ -329,6 +329,15 @@ export const fr = {
   'reminder.streak.titleNew': 'Une leçon aujourd’hui ?',
   'reminder.streak.body': 'Une session de 5 exercices avant minuit et la série continue.',
   'reminder.streak.bodyNew': 'Cinq minutes suffisent pour démarrer une série.',
+  'reminder.lapse.title': 'Ça fait {count} jours…',
+  'reminder.lapse.body': 'Cinq minutes suffisent pour reprendre là où tu t’étais arrêté.',
+  'monthly.title': 'Défi de {month}',
+  'monthly.body': '{lessons} / {target} leçons ce mois-ci · médaille et 100 gemmes à la clé',
+  'monthly.done': 'Défi du mois relevé : médaille de {month} et 100 gemmes.',
+  'monthly.end.title': 'Défi du mois relevé !',
+  'monthly.end.body': '{target} leçons en {month}. Médaille ajoutée à ta collection, et 100 gemmes.',
+  'profile.medals': 'Médailles mensuelles',
+  'profile.medals.empty': 'Termine {target} leçons dans le mois pour gagner la première.',
   'reminder.energy.title': 'Énergie rechargée',
   'reminder.energy.body': 'Tes 25 points sont revenus : cinq leçons t’attendent.',
 
@@ -355,7 +364,7 @@ export const fr = {
   // ------------------------------------------------------------ confidentialité
   'privacy.title': 'Confidentialité',
   'privacy.local.title': 'Aucune donnée ne quitte ton appareil.',
-  'privacy.local.body': 'Quiz GEO fonctionne entièrement hors ligne. Ta progression (XP, série, couronnes, deck, gemmes, réglages) est enregistrée uniquement sur ton téléphone ou dans ton navigateur. L’application ne crée pas de compte, ne demande ni email ni nom, n’envoie rien à un serveur et n’utilise aucun outil de mesure d’audience.',
+  'privacy.local.body': 'Skilltrail fonctionne entièrement hors ligne. Ta progression (XP, série, couronnes, deck, gemmes, réglages) est enregistrée uniquement sur ton téléphone ou dans ton navigateur. L’application ne crée pas de compte, ne demande ni email ni nom, n’envoie rien à un serveur et n’utilise aucun outil de mesure d’audience.',
   'privacy.permissions.title': 'Permissions',
   'privacy.permissions.body': 'Notifications (facultatif) : uniquement pour les rappels locaux que tu actives dans le Profil, programmés sur l’appareil, sans serveur. Vibrations : pour le retour des réponses. Rien d’autre.',
   'privacy.league.title': 'Ligue',
@@ -364,5 +373,5 @@ export const fr = {
   'privacy.ads.body': 'Cette version ne contient aucune publicité ni aucun SDK publicitaire. Si une version future en intègre, ton consentement sera demandé au préalable et cette page sera mise à jour.',
   'privacy.delete.title': 'Effacer mes données',
   'privacy.delete.body': 'Profil → « Réinitialiser ma progression », ou désinstaller l’application : il ne reste rien ailleurs.',
-  'privacy.footer': 'Quiz GEO · {units} unités · {exercises} exercices · {cards} cartes · éditeur : Cité par l’IA (cite-par-lia.fr). Dernière mise à jour : septembre 2026.',
+  'privacy.footer': 'Skilltrail · {units} unités · {exercises} exercices · {cards} cartes · éditeur : Cité par l’IA (cite-par-lia.fr). Dernière mise à jour : septembre 2026.',
 } as const;

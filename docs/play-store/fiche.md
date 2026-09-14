@@ -1,4 +1,4 @@
-# Fiche Google Play, Quiz GEO
+# Fiche Google Play, Skilltrail
 
 Textes prêts à coller dans la Play Console. Les longueurs maximales sont
 celles de Google (titre 30, description courte 80, description longue 4 000).
@@ -7,7 +7,7 @@ celles de Google (titre 30, description courte 80, description longue 4 000).
 
 | Champ | Valeur |
 |---|---|
-| Nom de l'application (30) | `Quiz GEO : marketing, IA, code` |
+| Nom de l'application (30) | `Skilltrail: Marketing IA Code` (29 caractères ; marque + mots-clés, le format que Google privilégie) |
 | Package | `fr.citeparlia.quizgeo` (ne jamais changer) |
 | Catégorie | Éducation |
 | Type | Application |
@@ -27,7 +27,7 @@ celles de Google (titre 30, description courte 80, description longue 4 000).
 ```
 Le marketing digital, l'intelligence artificielle, Python et le web, en 5 minutes par jour, sans cours, sans compte, sans publicité. Disponible en français, en anglais et en espagnol.
 
-Quiz GEO transforme ton temps mort en compétences : un chemin d'unités par matière, des exercices variés, une révision espacée qui te fait revenir sur ce que tu oublies, et une vraie boucle de jeu pour tenir dans la durée.
+Skilltrail transforme ton temps mort en compétences : un chemin d'unités par matière, des exercices variés, une révision espacée qui te fait revenir sur ce que tu oublies, et une vraie boucle de jeu pour tenir dans la durée.
 
 CE QUE TU APPRENDS
 • Marketing digital : SEO, GEO (être cité par ChatGPT et les AI Overviews), netlinking et maillage interne, publicité Google et Meta, analytics et attribution, conversion, email, growth.
@@ -36,9 +36,9 @@ CE QUE TU APPRENDS
 • HTML, CSS et JavaScript : le web côté navigateur, le SEO technique, GTM et le dataLayer, les Core Web Vitals.
 
 COMMENT TU APPRENDS
-• 79 unités et près de 1 000 exercices : QCM, vrai/faux, textes à trous, associations, remises en ordre, lecture de code, et des cas pratiques à plusieurs décisions tirés de situations réelles.
+• 103 unités et près de 1 400 exercices : QCM, vrai/faux, textes à trous, associations, remises en ordre, lecture de code, et des cas pratiques à plusieurs décisions tirés de situations réelles.
 • Une explication à chaque réponse, juste ou fausse, avec un exemple concret.
-• Un deck de 1 300 cartes en répétition espacée (Encore / Difficile / Bien / Facile) : ce que tu rates en leçon revient dans le deck.
+• Un deck de 1 500 cartes en répétition espacée (Encore / Difficile / Bien / Facile) : ce que tu rates en leçon revient dans le deck.
 • Le mode maîtrise : à partir de 3 couronnes, plus de choix, tu tapes la réponse.
 
 POUR TENIR DANS LA DURÉE

@@ -53,3 +53,14 @@ export function detectLang(): Lang {
   }
   return 'en';
 }
+
+/** « septembre 2026 » depuis « 2026-09 », dans la langue demandée. */
+export function monthLabel(lang: Lang, month: string): string {
+  const [y, m] = month.split('-').map(Number);
+  try {
+    const label = new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' }).format(new Date(y, (m || 1) - 1, 1));
+    return label.charAt(0).toUpperCase() + label.slice(1);
+  } catch {
+    return month;
+  }
+}

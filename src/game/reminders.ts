@@ -6,13 +6,13 @@
  * la série en danger, en fin de journée ; l'énergie revenue à plein.
  */
 
-import { toDayKey } from './dates';
+import { addDays, toDayKey } from './dates';
 import { MAX_ENERGY, currentEnergy, minutesToNextEnergy, ENERGY_REGEN_MINUTES } from './energy';
 import { isActiveToday } from './streak';
 import type { Progress } from './types';
 
 export interface Reminder {
-  id: 'streak' | 'energy';
+  id: 'streak' | 'energy' | 'lapse-3' | 'lapse-7' | 'lapse-14';
   at: Date;
   title: string;
   body: string;
@@ -33,6 +33,9 @@ export interface ReminderTexts {
   streakBody: (current: number) => string;
   energyTitle: string;
   energyBody: string;
+  /** Relance après `days` jours sans session (3, 7, 14). */
+  lapseTitle: (days: number) => string;
+  lapseBody: (days: number) => string;
 }
 
 export const DEFAULT_REMINDER_TEXTS: ReminderTexts = {
@@ -40,7 +43,17 @@ export const DEFAULT_REMINDER_TEXTS: ReminderTexts = {
   streakBody: (current) => (current > 0 ? 'Une session de 5 exercices avant minuit et la série continue.' : 'Cinq minutes suffisent pour démarrer une série.'),
   energyTitle: '⚡ Énergie rechargée',
   energyBody: 'Tes 25 points sont revenus : cinq leçons t’attendent.',
+  lapseTitle: (days) => `Ça fait ${days} jours…`,
+  lapseBody: () => 'Cinq minutes suffisent pour reprendre là où tu t’étais arrêté.',
 };
+
+/** Jours d'inactivité après lesquels on relance. */
+export const LAPSE_DAYS = [3, 7, 14] as const;
+
+function dayAt(day: string, hour: number): Date {
+  const [y, m, d] = day.split('-').map(Number);
+  return new Date(y, m - 1, d, hour, 0, 0, 0);
+}
 
 function atHour(base: Date, hour: number, daysAhead: number): Date {
   const d = new Date(base.getFullYear(), base.getMonth(), base.getDate() + daysAhead, hour, 0, 0, 0);
@@ -63,6 +76,15 @@ export function planReminders(progress: Progress, now: Date, prefs: ReminderPref
       title: texts.streakTitle(current),
       body: texts.streakBody(current),
     });
+  }
+
+  // Relances : 3, 7 et 14 jours après la dernière session, seulement celles à venir.
+  if (prefs.streak && progress.streak.lastActiveDay && !isActiveToday(progress.streak, today)) {
+    for (const days of LAPSE_DAYS) {
+      const at = dayAt(addDays(progress.streak.lastActiveDay, days), prefs.streakHour);
+      if (at.getTime() <= now.getTime()) continue;
+      out.push({ id: `lapse-${days}` as Reminder['id'], at, title: texts.lapseTitle(days), body: texts.lapseBody(days) });
+    }
   }
 
   if (prefs.energy) {

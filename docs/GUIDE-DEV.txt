@@ -1,0 +1,430 @@
+SKILLTRAIL, GUIDE DU DÉVELOPPEUR
+=================================
+
+Ce document explique comment l'application est construite, comment chaque
+fonctionnalité marche, où vit le contenu, et comment livrer une version.
+Il s'adresse à un développeur qui reprend le projet sans l'avoir écrit.
+
+Dépôt : https://github.com/theo-pezet/quizgeo (le slug « quizgeo » est
+historique ; le nom public est Skilltrail). Package Android permanent :
+fr.citeparlia.quizgeo. Ne jamais le changer : la fiche Play Store et la
+progression des utilisateurs y sont liées.
+
+
+0. EN UNE MINUTE
+----------------
+
+- Application mobile Android (et site web) pour apprendre le marketing digital,
+  l'IA, Python, HTML, CSS et JavaScript, façon Duolingo : un chemin d'unités
+  découpé en mondes, des exercices, une révision espacée (Anki), une boucle
+  de jeu (énergie, gemmes, série, ligue, quêtes, défi du mois).
+- 100 % hors ligne, pas de compte, pas de serveur, pas de pub (prévue, désactivée).
+- Trois langues : français (référence), anglais, espagnol. Interface ET contenu.
+- Stack : Expo SDK 57 (React Native 0.86), TypeScript, expo-router, zustand,
+  jest. Un moteur de règles pur, testé à 100 %, séparé de l'interface.
+- Livraison : GitHub Actions construit l'APK (téléchargement direct) et l'App
+  Bundle .aab (Play Console), signés avec la clé de release ; le site est
+  publié sur GitHub Pages à chaque push sur main.
+
+
+1. INSTALLER ET LANCER
+----------------------
+
+Prérequis : Node 22, npm. Python 3 (avec Pillow et numpy) seulement pour les
+scripts d'outils (icônes, sons, deck).
+
+    npm ci                 # dépendances
+    npx tsc --noEmit       # vérification de types (doit être vide)
+    npm test               # jest : 378 tests, couverture 100 % exigée sur src/game
+    npx expo start --web   # lance le site en local (http://localhost:8081)
+    npx expo start         # + Expo Go / émulateur pour Android
+
+Le site local ne gère pas les liens profonds avec `python -m http.server` ;
+sur GitHub Pages, 404.html (copie d'index.html) s'en charge.
+
+Vérification visuelle sans téléphone : Playwright est utilisable (Chromium
+préinstallé sur l'environnement de dev distant). Voir les scripts smoke*.mjs
+dans l'historique du projet pour l'idée : lancer un serveur sur le dossier
+exporté, jouer l'onboarding et une leçon, capturer des écrans.
+
+
+2. ARBORESCENCE
+---------------
+
+    app.config.ts            configuration Expo (nom, version, versionCode,
+                             icônes, plugins, permissions bloquées)
+    eas.json                 profils EAS (alternative à GitHub Actions)
+    assets/images            icônes générées par tools/make_icons.py
+    assets/sounds            8 sons WAV générés par tools/make_sounds.py
+    public/privacy.html      politique de confidentialité (FR/EN/ES), copiée
+                             telle quelle sur le site
+    src/app/                 écrans (expo-router : un fichier = une route)
+    src/features/session/    la session d'exercices (machine à états + vues)
+    src/features/reminders/  synchronisation des notifications locales
+    src/game/                LE MOTEUR : règles pures, sans React, testées à 100 %
+    src/content/             le contenu : matières, mondes, unités, cartes,
+                             exercices, génération, localisation
+    src/data/                données : deck.json (Excel importé), i18n/*.json
+                             (traductions du contenu), units.extra.json
+                             (unités rédigées en JSON, 3 langues)
+    src/i18n/                textes de l'interface (fr.ts référence, en.ts, es.ts)
+    src/store/               persistance (zustand + AsyncStorage)
+    src/lib/                 adaptateurs : sons, vibrations, notifications,
+                             confirmation, comparaison de texte, aléa
+    src/ui/                  composants et jetons de design
+    tools/                   scripts : build_deck.py, integrate_units.py,
+                             make_icons.py, make_sounds.py, android-signing.js
+    docs/                    fiche Play Store, guide de publication, signature,
+                             captures, veille 2026, ce guide
+    .github/workflows/       ci.yml (types + tests), pages.yml (site),
+                             android.yml (APK + AAB + release GitHub)
+
+
+3. LE MOTEUR (src/game)
+-----------------------
+
+Principe : toute règle de jeu est une fonction pure `(état, action) => état`.
+Aucun module de src/game n'importe React, Expo ou le store. L'horloge et
+l'aléa sont passés en paramètre (`now: Date`, `rng: () => number`), ce qui
+rend tout testable et déterministe. La couverture à 100 % est imposée par
+jest (package.json, coverageThreshold) : un `npm test` échoue si une ligne
+de src/game n'est pas couverte.
+
+Le reste de l'app n'importe QUE depuis `@/game` (src/game/index.ts).
+
+Fichiers et rôles :
+
+- types.ts       : tous les types (Progress, Exercise, Catalog…), emptyProgress(),
+                   catalogFrom(). Progress est l'état complet d'un utilisateur.
+- apply.ts       : les transitions. applyTick (remise au présent), applyStartLesson
+                   (énergie), applyAnswerAction (une réponse), applySessionEnd
+                   (fin de session : XP, gemmes, couronnes, série, quêtes,
+                   objectif du jour, défi du mois, badges), applyCardReview,
+                   applyBuyRefill, applyBlitzResult, applySkipTestPassed,
+                   applySetDailyGoal, applyUnlockAnimationPlayed, applyAdShown…
+- xp.ts          : XP par réponse et par session, niveaux (levelProgress).
+- mastery.ts     : les COURONNES. unitTraits() dérive 0 à 5 couronnes d'une
+                   unité depuis les streaks de ses exercices : 1 = tous vus et
+                   première session ≥ 6/10 (verrou firstTraitEarned), puis
+                   2/3/4/5 = streak minimal ≥ 1/2/3/4. PATH_TRAITS = 3 (le
+                   chemin avance à 3), MAX_TRAITS = 5. effectiveStreak() fait
+                   perdre un cran par 14 jours sans revoir (DECAY_DAYS) : les
+                   couronnes « se fissurent ». isUnitUnlocked : une unité
+                   s'ouvre quand la précédente de la même matière a ≥ 1 couronne.
+- review.ts      : la file « à revoir » (STREAK_CAP = 5) : un exercice raté
+                   entre dans la file et en sort après deux bonnes réponses
+                   d'affilée.
+- srs.ts         : répétition espacée du deck, type SM-2 (grades again / hard /
+                   good / easy, intervalles, previewIntervals, deckStats,
+                   composeDeckSession).
+- session.ts     : composition des sessions (composeUnitSession = 10 exercices
+                   d'une unité, composeReviewSession, composeFreeSession),
+                   presentQcm (mélange des choix).
+- energy.ts      : 25 points max, une leçon en coûte 5, une erreur 1, un
+                   sans-faute rembourse 2, +1 toutes les 12 minutes. Révision
+                   et deck gratuits. canStartLesson, currentEnergy, minutesToLesson.
+- economy.ts     : gemmes (GEMS : leçon 10, sans-faute 20, deck 5, objectif 15,
+                   paliers de série), boutique (SHOP : recharge 150, gel 200,
+                   boost ×2 pendant 15 min 100), buyFreeze, buyBoost, xpMultiplier.
+- streak.ts      : série quotidienne, gels (1 gagné tous les 7 jours, max 2),
+                   sessionCountsForStreak (≥ 5 questions), streakIsAtRisk.
+- daily.ts       : objectif du jour (20/50/100/200 XP), anneau d'avancement.
+- quests.ts      : 3 quêtes tirées chaque jour (graine = la date, donc
+                   identiques pour tous), progression, récompenses.
+- monthly.ts     : DÉFI DU MOIS : 20 leçons dans le mois civil = une médaille
+                   (progress.monthly.medals, « AAAA-MM ») et 100 gemmes. Compté
+                   dans applySessionEnd pour toute leçon (unit / free) d'au
+                   moins 5 questions. Remis à zéro au changement de mois.
+- league.ts      : ligue hebdomadaire de 30, 10 divisions, promotion des 7
+                   premiers, relégation des 5 derniers, 3 rivaux persistants
+                   (rivalSeed), adversaires simulés (déterministes par semaine
+                   et division, avec progression intra-journée via dayFraction).
+                   Conçu pour être remplacé par un service en ligne : seule
+                   leagueStandings() produirait alors des vrais joueurs.
+- badges.ts      : 18 badges à conditions (BADGES). Les noms affichés sont
+                   dans src/i18n (clé badge.<id>).
+- placement.ts   : TEST DE NIVEAU. pickPlacementQuestions (10 QCM répartis sur
+                   les premiers 70 % des unités), placementSkip (score sur 10 +
+                   auto-évaluation sur 10, pondérés 60/40, plancher 0,3, jamais
+                   plus de 70 % du chemin, toujours ≥ 2 unités restantes),
+                   applyPlacement (valide les n premières unités à 3 couronnes).
+- reminders.ts   : QUOI rappeler et QUAND : série en danger (le soir à l'heure
+                   choisie), énergie revenue à plein, relances 3 / 7 / 14 jours
+                   après la dernière session. Les textes sont injectés par
+                   l'interface (ReminderTexts) pour être traduits.
+- ads.ts         : politique de publicité (fréquence, intervalle) derrière
+                   FEATURES.ads = false (src/config/features.ts). Aucun SDK.
+- migrations.ts  : migrateProgress() complète un état persistant ancien avec
+                   les champs manquants, sans rien perdre.
+- dates.ts, random.ts : clés de jour « AAAA-MM-JJ », mulberry32, hashString.
+
+Règle d'or : pour changer une règle de jeu, on modifie src/game, on ajoute
+un test dans src/game/__tests__, et on ne touche pas aux écrans.
+
+
+4. LE CONTENU (src/content, src/data)
+-------------------------------------
+
+4.1 Matières, mondes, unités
+
+- subjects.ts : six matières (marketing, ia, python, html, css, js) avec
+  emoji et couleur. Titres traduits via i18n (subject.<id>.title / tagline).
+- worlds.ts   : les MONDES (sections du chemin) : id `<matière>-w<n>`,
+  emoji, couleur, titre et sous-titre en 3 langues, liste d'unités DANS
+  L'ORDRE. Les unités rédigées en JSON (units.extra.json) rejoignent le
+  monde qu'elles déclarent, à la suite. L'ordre du chemin = l'ordre des
+  mondes puis des unités dans chaque monde (src/content/index.ts, STRUCTURE).
+- units.ts    : les unités historiques écrites en TypeScript : id, matière,
+  titre et description (français), et leurs cartes : soit une tranche d'un
+  sous-thème du deck (`slice('seo', 0, 8)` = les 8 premières cartes SEO de la
+  matière), soit une liste d'identifiants, soit rien (unité composée
+  uniquement d'exercices écrits à la main). Titres EN/ES dans units.i18n.ts.
+- Chiffres en v1.0.0 (identiques dans les 3 langues) : 103 unités, 27 mondes,
+  1518 cartes, 1395 exercices. Répartition : marketing 36 unités (9 mondes),
+  IA 22 (5), Python 24 (5), HTML 6 (2), CSS 5 (3), JavaScript 10 (3). Les
+  21 unités de src/data/units.extra.json sont celles ajoutées en v1.0 pour
+  couvrir les trous du programme (CRM, e-commerce, marque, vidéo, SEO local,
+  machine learning, vision, outils IA, images, POO, regex, fonctions
+  avancées, SQL, formulaires, accessibilité, typographie, organisation CSS,
+  objets, tableaux, navigateur, Node/TypeScript/React).
+- Un identifiant d'unité ou d'exercice ne se renomme JAMAIS : la progression
+  des utilisateurs y est rattachée (progress.questions[clé], progress.units[id]).
+
+4.2 Les cartes (deck)
+
+- src/data/deck.json : 1118 cartes importées du classeur Excel de l'auteur
+  (docs/deck-source.xlsx) par tools/build_deck.py. Anglais d'origine.
+  Champs : id, subject, topic, level, term, definition, example, tags, cloze.
+- src/content/cards.extra.ts : ~190 cartes écrites à la main en français
+  (histoire de l'IA, acteurs, agents, données, HTML/CSS/JS…). Identifiants
+  `<matière>-x-<slug>` (préfixe historique `web-x-` conservé pour html/css/js).
+- Traductions : src/data/i18n/deck.fr.json, deck.es.json (id → term,
+  definition, example, cloze) pour le deck Excel ; xcards.en.json,
+  xcards.es.json pour les cartes manuelles. src/content/localize.ts superpose
+  la traduction à la carte d'origine ; une traduction absente retombe sur
+  la langue d'origine.
+
+4.3 Les exercices
+
+Cinq sortes (types.ts) : qcm (2 à 4 choix, optionnellement un bloc de code
+et une variante `typed` tapée au clavier), cloze (texte à trou avec banque),
+match (associer 4 paires), order (remettre des étapes en ordre), case (cas
+pratique en plusieurs décisions avec retour à chaque étape).
+
+Trois origines :
+- Générés depuis les cartes (src/content/generate.ts) : pour chaque carte
+  d'une unité, en alternance un QCM « Que signifie X ? » et un QCM « Quel
+  terme correspond… ? » (tapable en mode maîtrise), plus un texte à trou si
+  la carte a un cloze, plus une association par groupe de 4 cartes. Les
+  distracteurs viennent du même sous-thème. Déterministe (graine = id de
+  l'unité) : les clés `<unité>:def:<carte>` etc. sont stables.
+- Écrits à la main en TypeScript (src/content/extras.ts, français) : clés
+  `<unité>:x:<n>`. Traductions dans src/data/i18n/extras.en.json / es.json
+  (clé → champs traduits), superposées par localize.ts.
+- Rédigés en JSON, trois langues d'un coup (src/data/units.extra.json) :
+  voir « Ajouter une unité » ci-dessous. Chargés par src/content/extra.ts.
+
+4.4 Le point d'entrée : contentFor(lang)
+
+src/content/index.ts construit, pour une langue, l'objet Content : SUBJECTS,
+UNITS (ordonnées), CARDS, EXERCISES, index par id, et les sélecteurs
+(exercisesOfUnit, cardsOf…). Mémorisé par langue. Dans un composant :
+`useContent()` (src/content/useContent.ts) ; hors React : `content()`.
+CATALOG (identifiants + matière + index) est la structure indépendante de
+la langue, passée au moteur.
+
+`useActiveSubjects()` (useSubjects.ts) filtre les matières selon le choix
+de l'utilisateur (settings.subjects).
+
+4.5 Tests d'intégrité
+
+src/content/__tests__/content.test.ts vérifie, dans les 3 langues : ids
+uniques, textes non vides, mêmes clés d'exercice qu'en français, choix
+cohérents, au moins 5 exercices par unité, mondes couvrant chaque unité
+exactement une fois, aucun tiret cadratin dans les textes manuels.
+
+4.6 AJOUTER UNE UNITÉ (la méthode recommandée)
+
+1. Écrire un fichier JSON au format décrit dans tools/integrate_units.py
+   (une unité, 10 cartes, 8 exercices, chaque texte en fr/en/es ; le
+   premier choix est toujours le bon). Le gabarit complet est dans l'en-tête
+   du script. Un modèle IA fait ça très bien avec ce gabarit.
+2. Si besoin, créer le monde d'accueil dans worlds.ts (ou viser un monde
+   existant par son id, ex. « python-w2 »).
+3.     python3 tools/integrate_units.py chemin/unite.json
+   Le script valide, dérive les identifiants, fusionne dans
+   src/data/units.extra.json.
+4. `npm test` : les tests de contenu doivent rester verts.
+5. Optionnel : ajouter le sujet dans docs/play-store/fiche.md.
+
+Pour une carte seule : cards.extra.ts (+ xcards.en/es.json). Pour un
+exercice seul dans une unité existante : extras.ts (+ extras.en/es.json).
+
+4.7 Régénérer le deck depuis l'Excel
+
+    python3 tools/build_deck.py docs/deck-source.xlsx src/data/deck.json
+
+Attention : les traductions deck.fr/es.json sont indexées par id ; une
+nouvelle carte n'aura pas de traduction tant qu'on ne l'ajoute pas.
+
+
+5. LES TRADUCTIONS DE L'INTERFACE (src/i18n)
+-------------------------------------------
+
+- fr.ts est la référence ; en.ts et es.ts sont typés `Record<keyof typeof fr,
+  string>` : une clé manquante est une erreur de compilation.
+- Syntaxe : `{nom}` interpole un paramètre ; `(one:jour|other:jours)` choisit
+  selon le paramètre `count`.
+- Dans un composant : `const t = useT(); t('common.continue')`. Hors React :
+  `t()` de src/i18n (lit la langue courante). Le contenu (src/content) utilise
+  `translate(lang, clé)` de src/i18n/translate.ts, sans dépendance au store.
+- La langue : settings.lang (null tant que l'utilisateur n'a pas choisi ;
+  detectLang() propose celle du téléphone). Changer la langue re-rend toute
+  l'app et recharge le contenu, la progression ne bouge pas.
+- monthLabel(lang, « AAAA-MM ») donne « septembre 2026 » via Intl.
+
+
+6. LA PERSISTANCE (src/store/progress.ts)
+-----------------------------------------
+
+Deux stores zustand persistés dans AsyncStorage :
+
+- useProgress (clé « progress.v1 ») : { progress: Progress }. Chaque écriture
+  est persistée aussitôt. À la relecture : migrateProgress() puis applyTick().
+  `reset()` remet un état vide.
+- useSettings (clé « settings.v1 », version 2) : langue, onboardingDone,
+  matières choisies (subjects, null = toutes), tutorialDone, placements
+  (résultats des tests de niveau), sons, vibrations, rappels et heure,
+  matière favorite. La migration v2 renomme la matière « web » en html/css/js.
+
+Réinitialiser la progression ne touche pas aux réglages.
+
+
+7. LES ÉCRANS (src/app) ET LES FONCTIONNALITÉS
+----------------------------------------------
+
+Navigation expo-router : _layout.tsx (Stack : onglets + modales plein écran),
+(tabs)/_layout.tsx (4 onglets, hauteur = 62 + inset bas pour l'edge-to-edge
+d'Android 15+).
+
+- onboarding.tsx : 5 étapes. Langue → matières (multi) → niveau (par matière :
+  zéro ou test) → objectif du jour → rappels. À la fin, enchaîne les tests de
+  niveau demandés (/placement/[subjectId]?queue=…). Relançable depuis le Profil.
+- placement/[subjectId].tsx : intro, 10 QCM sans correction, auto-évaluation
+  1 à 10, résultat (unités sautées listées), application.
+- (tabs)/index.tsx : le PARCOURS. En-tête (série, énergie, gemmes, niveau,
+  anneau de l'objectif du jour), quêtes du jour, défi du mois, matières
+  actives (chips), carte « à revoir », puis les mondes : bannière colorée
+  (numéro, titre, progression, verrou) et nœuds en zigzag (verrouillé, en
+  cours avec bulle COMMENCER/CONTINUER, validé, légendaire, fissuré). Toucher
+  un nœud ouvre une feuille en surimpression (Screen.overlay) : description,
+  couronnes, bouton de lancement (coût ⚡ 5) ou test de sortie si verrouillé.
+  Le mini-tuto (src/ui/Tutorial.tsx, 4 cartes) s'affiche une fois.
+- session/[unitId].tsx, session/review.tsx, session/free.tsx : une SESSION
+  (src/features/session). useSession.ts est la machine à états : compose la
+  file, prélève l'énergie, applique chaque réponse (applyAnswerAction), remet
+  les exercices ratés en fin de session (rattrapage), et à la fin appelle
+  applySessionEnd, le test de sortie, la politique de pub. Mode maîtrise :
+  dès 3 couronnes, les QCM typables se tapent (TypeView, comparaison
+  tolérante dans src/lib/text.ts). SessionScreen affiche la barre, l'exercice
+  (ExerciseView → Qcm/Cloze/Match/Order/Case/TypeView) et le retour
+  (FeedbackPanel). SessionEnd : une page par événement (récap en tuiles,
+  test de sortie, niveau, couronne + unités ouvertes, monde terminé, quête,
+  badge, défi du mois, série), bouton fixe en bas.
+- session/blitz.tsx : 60 secondes de QCM sans correction, XP ×2, record par
+  matière (progress.blitz).
+- (tabs)/league.tsx : classement de la semaine, zone (promotion / maintien /
+  relégation), issue de la semaine précédente.
+- (tabs)/deck.tsx et deck/review.tsx : le deck filtré par matières actives,
+  statistiques SRS, révision en cartes (again / hard / good / easy avec
+  aperçu des intervalles). Une erreur en leçon replanifie la carte pour
+  aujourd'hui (pont leçon → deck dans useSession).
+- (tabs)/profile.tsx : niveau, tuiles, alerte de série, boutique, entraînement
+  (révision des erreurs, sessions libres, tests de niveau), Blitz, badges,
+  médailles mensuelles, réglages (matières, langue, objectif, sons,
+  vibrations, rappels + heure, revoir l'intro, confidentialité, réinitialiser).
+- privacy.tsx : politique de confidentialité dans l'app (public/privacy.html
+  est la version en ligne, exigée par Google).
+
+Adaptateurs (src/lib) : sounds.ts (expo-audio, 8 sons, respecte le réglage),
+haptics.ts (expo-haptics), notifications.ts (expo-notifications, chargé à la
+demande, rien sur le web), confirm.ts (Alert natif ou confirm() web),
+ads.ts (adaptateur vide en attendant un SDK), text.ts (normalisation et
+distance d'édition pour les réponses tapées).
+
+Design (src/ui) : tokens.ts (palette clair/sombre, espaces, rayons, police
+Nunito chargée dans _layout.tsx via @expo-google-fonts/nunito), Button
+(relief 4 px qui s'écrase), Card (bordure 2 px), Screen (zone sûre, largeur
+max 560, overlay, footer fixe), Text, Icon (Ionicons), Stat, Crowns, Ring,
+ProgressBar, anim.tsx (FadeUp, Pop, Pulse, Shake, Confetti, useCountUp),
+QuestsCard, MonthlyCard, NoEnergySheet, Tutorial.
+
+
+8. CONSTRUIRE ET LIVRER
+-----------------------
+
+8.1 Versions
+
+app.config.ts : `version` (affichée) et `android.versionCode` (doit augmenter
+à chaque envoi Play). package.json garde la même version. Le tag Git de la
+release = « v » + version.
+
+8.2 GitHub Actions
+
+- ci.yml : à chaque push, types + tests.
+- pages.yml : à chaque push sur main, `expo export --platform web` avec
+  EXPO_PUBLIC_BASE_PATH=/quizgeo, publie sur la branche gh-pages
+  → https://theo-pezet.github.io/quizgeo/ (privacy.html inclus).
+- android.yml : Actions → « Android APK » → Run workflow, saisir le tag
+  (ex. v1.0.0). Étapes : prebuild (génère android/ à la volée, jamais
+  commité), signature avec la clé du secret ANDROID_KEYSTORE_BASE64
+  (tools/android-signing.js patche build.gradle), bundleRelease (AAB,
+  arm64 + armeabi-v7a, pour la Play Console), assembleRelease en arm64 seul
+  (APK de téléchargement direct, plus léger), vérification du manifeste
+  (aapt2 : permissions, targetSdk 36) et de la signature (apksigner), puis
+  release GitHub avec les deux fichiers. Sans le secret, l'APK sort signé en
+  debug (Chrome le bloque) : voir docs/play-store/signature.md.
+- R8 (minification) et le retrait des ressources inutilisées sont activés
+  via expo-build-properties dans app.config.ts. Les permissions inutiles
+  (micro, stockage, fenêtre superposée, services de premier plan) sont
+  bloquées dans app.config.ts (blockedPermissions).
+
+8.3 Play Store
+
+docs/play-store/publier.md détaille la marche à suivre (avec ou sans EAS),
+fiche.md contient les textes de la fiche (titre « Skilltrail: Marketing IA
+Code », descriptions), screenshots/ et feature-graphic.png les visuels.
+targetSdk 36 (Android 16), minSdk 24. Politique de confidentialité :
+https://theo-pezet.github.io/quizgeo/privacy.html. Formulaire « Sécurité des
+données » : aucune donnée collectée ni partagée.
+
+8.4 Outils
+
+    python3 tools/make_icons.py assets/images     # icône, adaptative, splash, favicon, bannière
+    python3 tools/make_sounds.py assets/sounds    # sons synthétisés
+    python3 tools/build_deck.py <xlsx> src/data/deck.json
+    python3 tools/integrate_units.py <json…>      # unités JSON → units.extra.json
+
+
+9. CONVENTIONS
+--------------
+
+- Langue du code et des commentaires : français ; identifiants en anglais.
+- Pas de tiret cadratin dans les textes visibles (les tests le vérifient
+  pour le contenu manuel).
+- Toute règle dans src/game avec test ; les écrans ne contiennent pas de
+  logique de jeu.
+- Une clé i18n par texte visible, dans les trois dictionnaires.
+- Les identifiants (unités, exercices, cartes, mondes, badges) sont stables.
+- Aucun appel réseau dans l'app ; si un service arrive un jour (ligue en
+  ligne, assistant IA), il passe par un adaptateur dans src/lib et un
+  consentement explicite, et la politique de confidentialité est mise à jour.
+
+
+10. PISTES (voir docs/veille-2026.md)
+-------------------------------------
+
+Streak Society (statut à 7 jours), retour d'erreur enrichi, défis
+hebdomadaires, récap hebdomadaire, projets guidés par monde, score
+partageable, ligue en ligne, assistant IA, widget Android, difficulté
+adaptative. Le moteur est prêt pour la plupart : ce sont surtout des écrans.

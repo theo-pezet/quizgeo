@@ -1,4 +1,4 @@
-# Quiz GEO
+# Skilltrail
 
 Application mobile (Android, et web) pour apprendre le marketing digital,
 l'IA, Python et HTML / CSS / JavaScript. Un chemin d'unités par matière,
@@ -77,7 +77,7 @@ ordre, cas pratique.
 ```
 npm install
 npm run typecheck
-npm test              # 349 tests ; src/game/ doit rester à 100 % de couverture
+npm test              # 380 tests ; src/game/ doit rester à 100 % de couverture
 npx expo start        # puis w (web), a (Android)
 npx expo export --platform web   # build statique dans dist/
 ```

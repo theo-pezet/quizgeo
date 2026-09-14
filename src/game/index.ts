@@ -26,3 +26,4 @@ export * from './daily';
 export * from './random';
 export * from './apply';
 export * from './placement';
+export * from './monthly';

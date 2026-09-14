@@ -133,6 +133,35 @@ describe('les exercices', () => {
     for (const e of EXERCISES) expect(known.has(e.unitId)).toBe(true);
   });
 
+  it('remise en ordre : au moins 3 étapes, toutes distinctes et non vides', () => {
+    for (const lang of ['fr', 'en', 'es'] as const) {
+      for (const ex of contentFor(lang).EXERCISES) {
+        if (ex.kind !== 'order') continue;
+        expect(ex.steps.length).toBeGreaterThanOrEqual(3);
+        expect(new Set(ex.steps).size).toBe(ex.steps.length);
+        for (const st of ex.steps) expect(st.trim().length).toBeGreaterThan(0);
+      }
+    }
+  });
+
+  it('cas pratiques : titre, scénario, décisions avec 2 à 4 choix et réponse dans les bornes', () => {
+    for (const lang of ['fr', 'en', 'es'] as const) {
+      for (const ex of contentFor(lang).EXERCISES) {
+        if (ex.kind !== 'case') continue;
+        expect(ex.title.trim().length).toBeGreaterThan(0);
+        expect(ex.scenario.trim().length).toBeGreaterThan(0);
+        expect(ex.steps.length).toBeGreaterThanOrEqual(2);
+        for (const st of ex.steps) {
+          expect(st.choices.length).toBeGreaterThanOrEqual(2);
+          expect(st.choices.length).toBeLessThanOrEqual(4);
+          expect(st.answer).toBeGreaterThanOrEqual(0);
+          expect(st.answer).toBeLessThan(st.choices.length);
+          expect(st.feedback.trim().length).toBeGreaterThan(0);
+        }
+      }
+    }
+  });
+
   it('QCM : 2 à 4 choix, réponse dans les bornes', () => {
     for (const e of EXERCISES) {
       if (e.kind !== 'qcm') continue;

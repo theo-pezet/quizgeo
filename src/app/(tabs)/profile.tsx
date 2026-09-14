@@ -4,8 +4,8 @@ import { StyleSheet, Switch, View } from 'react-native';
 import { CATALOG } from '@/content';
 import { useContent } from '@/content/useContent';
 import { useActiveSubjects } from '@/content/useSubjects';
-import { BADGES, DAILY_GOALS, MAX_FREEZES, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
-import { LANGS, useT, type Key } from '@/i18n';
+import { BADGES, DAILY_GOALS, MAX_FREEZES, MONTHLY_TARGET, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
+import { LANGS, monthLabel, useLang, useT, type Key } from '@/i18n';
 import { confirm } from '@/lib/confirm';
 import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
@@ -16,6 +16,7 @@ const HOURS = [8, 12, 19, 21];
 export default function ProfileScreen() {
   const colors = useColors();
   const t = useT();
+  const uiLang = useLang();
   const { CARDS, EXERCISES, SUBJECTS: ALL_SUBJECTS, UNITS } = useContent();
   const SUBJECTS = useActiveSubjects();
   const chosen = useSettings((s) => s.subjects);
@@ -160,6 +161,24 @@ export default function ProfileScreen() {
             );
           })}
         </View>
+      </Card>
+
+      <Card>
+        <Text variant="h2">{t('profile.medals')}</Text>
+        {progress.monthly.medals.length === 0 ? (
+          <Text variant="small" secondary>
+            {t('profile.medals.empty', { target: MONTHLY_TARGET })}
+          </Text>
+        ) : (
+          <View style={styles.badges}>
+            {progress.monthly.medals.map((m) => (
+              <View key={m} style={[styles.badge, { backgroundColor: colors.goldSoft, borderColor: colors.gold }]}>
+                <Icon name="medal" size={14} color={colors.gold} />
+                <Text variant="small">{monthLabel(uiLang, m)}</Text>
+              </View>
+            ))}
+          </View>
+        )}
       </Card>
 
       <Card>

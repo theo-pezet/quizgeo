@@ -246,7 +246,7 @@ export const es: Record<keyof typeof fr, string> = {
   'profile.settings.reset': 'Reiniciar mi progreso',
   'profile.reset.title': '¿Borrar todo?',
   'profile.reset.body': 'XP, racha, coronas, insignias y mazo vuelven a cero. Irreversible.',
-  'profile.footer': 'Quiz GEO · {units} unidades · {exercises} ejercicios · {cards} tarjetas · sin publicidad',
+  'profile.footer': 'Skilltrail · {units} unidades · {exercises} ejercicios · {cards} tarjetas · sin publicidad',
 
   'blitz.title': 'Blitz · {subject}',
   'blitz.correct': '{count} respuesta(one:|other:s) correcta(one:|other:s)',
@@ -315,6 +315,15 @@ export const es: Record<keyof typeof fr, string> = {
   'reminder.streak.titleNew': '¿Una lección hoy?',
   'reminder.streak.body': 'Una sesión de 5 ejercicios antes de medianoche y la racha continúa.',
   'reminder.streak.bodyNew': 'Cinco minutos bastan para empezar una racha.',
+  'reminder.lapse.title': 'Han pasado {count} días…',
+  'reminder.lapse.body': 'Cinco minutos bastan para retomar donde lo dejaste.',
+  'monthly.title': 'Reto de {month}',
+  'monthly.body': '{lessons} / {target} lecciones este mes · una medalla y 100 gemas en juego',
+  'monthly.done': 'Reto del mes superado: medalla de {month} y 100 gemas.',
+  'monthly.end.title': '¡Reto del mes superado!',
+  'monthly.end.body': '{target} lecciones en {month}. Medalla añadida a tu colección, más 100 gemas.',
+  'profile.medals': 'Medallas mensuales',
+  'profile.medals.empty': 'Termina {target} lecciones en un mes para ganar la primera.',
   'reminder.energy.title': 'Energía recargada',
   'reminder.energy.body': 'Tus 25 puntos han vuelto: cinco lecciones te esperan.',
 
@@ -338,7 +347,7 @@ export const es: Record<keyof typeof fr, string> = {
 
   'privacy.title': 'Privacidad',
   'privacy.local.title': 'Ningún dato sale de tu dispositivo.',
-  'privacy.local.body': 'Quiz GEO funciona completamente sin conexión. Tu progreso (XP, racha, coronas, mazo, gemas, ajustes) se guarda únicamente en tu teléfono o en tu navegador. La app no crea cuentas, no pide email ni nombre, no envía nada a un servidor y no usa ninguna herramienta de analítica.',
+  'privacy.local.body': 'Skilltrail funciona completamente sin conexión. Tu progreso (XP, racha, coronas, mazo, gemas, ajustes) se guarda únicamente en tu teléfono o en tu navegador. La app no crea cuentas, no pide email ni nombre, no envía nada a un servidor y no usa ninguna herramienta de analítica.',
   'privacy.permissions.title': 'Permisos',
   'privacy.permissions.body': 'Notificaciones (opcional): solo para los recordatorios locales que actives en el Perfil, programados en el dispositivo, sin servidor. Vibraciones: para la respuesta a tus contestaciones. Nada más.',
   'privacy.league.title': 'Liga',
@@ -347,5 +356,5 @@ export const es: Record<keyof typeof fr, string> = {
   'privacy.ads.body': 'Esta versión no contiene publicidad ni ningún SDK publicitario. Si una versión futura la incluye, se te pedirá consentimiento antes y esta página se actualizará.',
   'privacy.delete.title': 'Borrar mis datos',
   'privacy.delete.body': 'Perfil → «Reiniciar mi progreso», o desinstalar la app: no queda nada en ningún otro sitio.',
-  'privacy.footer': 'Quiz GEO · {units} unidades · {exercises} ejercicios · {cards} tarjetas · editor: Cité par l’IA (cite-par-lia.fr). Última actualización: septiembre de 2026.',
+  'privacy.footer': 'Skilltrail · {units} unidades · {exercises} ejercicios · {cards} tarjetas · editor: Cité par l’IA (cite-par-lia.fr). Última actualización: septiembre de 2026.',
 };

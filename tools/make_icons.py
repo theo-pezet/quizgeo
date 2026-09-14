@@ -1,104 +1,117 @@
 #!/usr/bin/env python3
-"""Génère l'icône de l'app et ses déclinaisons (Pillow, sans asset externe).
+"""Génère l'icône de l'app et ses déclinaisons (Pillow, police Nunito du projet).
 
     python3 tools/make_icons.py assets/images
 
-Motif : une couronne blanche à trois gemmes sur un dégradé violet, et le
-mot « GEO ». Fichiers produits : icon.png (1024, coins carrés, Android et
-web), android-icon-foreground.png (1024, transparent, zone sûre 66 %),
-android-icon-background.png (1024, dégradé), android-icon-monochrome.png
-(1024, silhouette blanche), splash-icon.png (512, transparent), favicon.png (64).
+Motif : un sentier blanc qui monte en zigzag, trois étapes rondes, la
+dernière dorée avec une étoile, sur un dégradé orange → corail. C'est le
+parcours de l'app, reconnaissable en 48 px comme en 512 px.
+
+Fichiers : icon.png (1024, coins carrés), android-icon-foreground.png (1024,
+transparent, zone sûre 66 %), android-icon-background.png (1024, dégradé),
+android-icon-monochrome.png (1024, silhouette blanche), splash-icon.png (512,
+transparent), favicon.png (64), notification-icon.png (96, silhouette blanche).
 """
 
+import math
 import sys
 from pathlib import Path
 
 from PIL import Image, ImageDraw, ImageFont
 
-PRIMARY = (91, 75, 255)
-PRIMARY_DARK = (76, 29, 149)
-GOLD = (245, 179, 1)
-ORANGE = (255, 107, 53)
+ORANGE = (249, 115, 22)
+CORAL = (232, 86, 43)
+INK = (31, 27, 46)
+GOLD = (242, 183, 5)
 WHITE = (255, 255, 255)
-FONT = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+SS = 4  # sur-échantillonnage pour l'anticrénelage
+FONT = "node_modules/@expo-google-fonts/nunito/900Black/Nunito_900Black.ttf"
 
 
 def gradient(size: int) -> Image.Image:
-    img = Image.new("RGB", (size, size), PRIMARY)
+    img = Image.new("RGB", (size, size), ORANGE)
     px = img.load()
     for y in range(size):
         for x in range(size):
-            t = (x + y) / (2 * size)
-            px[x, y] = tuple(int(PRIMARY[i] * (1 - t) + PRIMARY_DARK[i] * t) for i in range(3))
+            t = (x * 0.4 + y * 0.6) / size
+            px[x, y] = tuple(int(ORANGE[i] * (1 - t) + CORAL[i] * t) for i in range(3))
     return img
 
 
-def crown(draw: ImageDraw.ImageDraw, cx: float, cy: float, w: float, color, gems=True):
-    """Couronne centrée en (cx, cy), largeur w."""
-    h = w * 0.62
-    left, right = cx - w / 2, cx + w / 2
-    top, bottom = cy - h / 2, cy + h / 2
-    base_h = h * 0.28
-    # corps : trois pointes
-    pts = [
-        (left, bottom - base_h),
-        (left, top + h * 0.25),
-        (cx - w * 0.25, bottom - base_h - h * 0.12),
-        (cx, top),
-        (cx + w * 0.25, bottom - base_h - h * 0.12),
-        (right, top + h * 0.25),
-        (right, bottom - base_h),
-    ]
+def star(draw: ImageDraw.ImageDraw, cx: float, cy: float, r: float, color):
+    pts = []
+    for i in range(10):
+        a = -math.pi / 2 + i * math.pi / 5
+        rr = r if i % 2 == 0 else r * 0.45
+        pts.append((cx + rr * math.cos(a), cy + rr * math.sin(a)))
     draw.polygon(pts, fill=color)
-    draw.rounded_rectangle([left, bottom - base_h, right, bottom], radius=base_h * 0.35, fill=color)
-    if gems:
-        r = w * 0.055
-        for gx, gy, c in ((left + w * 0.02, top + h * 0.25, ORANGE), (cx, top, GOLD), (right - w * 0.02, top + h * 0.25, ORANGE)):
-            draw.ellipse([gx - r, gy - r, gx + r, gy + r], fill=c)
-        for gx in (cx - w * 0.25, cx + w * 0.25):
-            gy = bottom - base_h / 2
-            draw.ellipse([gx - r * 0.7, gy - r * 0.7, gx + r * 0.7, gy + r * 0.7], fill=GOLD)
 
 
-def wordmark(draw: ImageDraw.ImageDraw, cx: float, cy: float, size: int, color):
-    font = ImageFont.truetype(FONT, size)
-    text = "GEO"
-    box = draw.textbbox((0, 0), text, font=font)
-    w, h = box[2] - box[0], box[3] - box[1]
-    draw.text((cx - w / 2 - box[0], cy - h / 2 - box[1]), text, font=font, fill=color)
-
-
-def glyph(size: int, color, gems: bool, scale: float = 1.0, with_text: bool = True) -> Image.Image:
-    """Couronne + GEO sur fond transparent, occupant `scale` de la taille."""
-    img = Image.new("RGBA", (size, size), (0, 0, 0, 0))
+def trail(size: int, scale: float = 1.0, mono: bool = False, shadow: bool = True) -> Image.Image:
+    """Le motif, transparent, centré ; `scale` réduit le motif (zone sûre adaptative)."""
+    s = size * SS
+    img = Image.new("RGBA", (s, s), (0, 0, 0, 0))
     d = ImageDraw.Draw(img)
-    w = size * 0.56 * scale
-    if with_text:
-        crown(d, size / 2, size * 0.42, w, color, gems)
-        wordmark(d, size / 2, size * 0.74, int(size * 0.2 * scale), color)
-    else:
-        crown(d, size / 2, size / 2, w, color, gems)
-    return img
+    u = s * scale  # unité : le motif occupe un carré de côté u, centré
+    ox, oy = (s - u) / 2, (s - u) / 2
+    nodes = [(0.24, 0.76), (0.50, 0.50), (0.76, 0.26)]
+    pts = [(ox + x * u, oy + y * u) for x, y in nodes]
+    w = u * 0.11
+    r = u * 0.12
+    if shadow and not mono:
+        sh = (0, 0, 0, 60)
+        off = u * 0.03
+        d.line([(x, y + off) for x, y in pts], fill=sh, width=int(w), joint="curve")
+        for x, y in pts:
+            d.ellipse([x - r, y - r + off, x + r, y + r + off], fill=sh)
+    d.line(pts, fill=WHITE, width=int(w), joint="curve")
+    for i, (x, y) in enumerate(pts):
+        d.ellipse([x - r, y - r, x + r, y + r], fill=WHITE)
+        inner = r * 0.55
+        if i == 2:
+            if mono:
+                d.ellipse([x - inner, y - inner, x + inner, y + inner], fill=(0, 0, 0, 0))
+            else:
+                d.ellipse([x - r, y - r, x + r, y + r], fill=GOLD)
+                star(d, x, y, r * 0.62, WHITE)
+        else:
+            d.ellipse([x - inner, y - inner, x + inner, y + inner], fill=(0, 0, 0, 0) if mono else (CORAL if i == 0 else ORANGE))
+    return img.resize((size, size), Image.LANCZOS)
 
 
 def main(out_dir: str) -> None:
     out = Path(out_dir)
     out.mkdir(parents=True, exist_ok=True)
-    S = 1024
 
-    icon = gradient(S).convert("RGBA")
-    icon.alpha_composite(glyph(S, WHITE, True))
-    icon.save(out / "icon.png")
+    icon = gradient(1024).convert("RGBA")
+    icon.alpha_composite(trail(1024, 0.78))
+    icon.convert("RGB").save(out / "icon.png")
 
-    gradient(S).save(out / "android-icon-background.png")
-    # Zone sûre de l'icône adaptative : les 66 % centraux.
-    glyph(S, WHITE, True, scale=0.62).save(out / "android-icon-foreground.png")
-    glyph(S, WHITE, False, scale=0.62).save(out / "android-icon-monochrome.png")
-    glyph(512, WHITE, True, scale=0.9, with_text=False).save(out / "splash-icon.png")
-    icon.resize((64, 64), Image.LANCZOS).save(out / "favicon.png")
+    gradient(1024).save(out / "android-icon-background.png")
+    trail(1024, 0.56).save(out / "android-icon-foreground.png")
+    trail(1024, 0.56, mono=True, shadow=False).save(out / "android-icon-monochrome.png")
+    trail(512, 0.9).save(out / "splash-icon.png")
+    trail(96, 0.95, mono=True, shadow=False).save(out / "notification-icon.png")
+    fav = gradient(64).convert("RGBA")
+    fav.alpha_composite(trail(64, 0.85, shadow=False))
+    fav.convert("RGB").save(out / "favicon.png")
 
-    # Icône de notification Android : silhouette blanche, 96 px.
-    glyph(96, WHITE, False, scale=0.9, with_text=False).save(out / "notification-icon.png")
+    # Bannière Play Store (1024 × 500) : logo + nom + promesse.
+    banner = Image.new("RGB", (1024, 500), (251, 248, 242))
+    b = ImageDraw.Draw(banner)
+    logo = gradient(300).convert("RGBA")
+    logo.alpha_composite(trail(300, 0.78))
+    mask = Image.new("L", (300, 300), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, 299, 299], radius=64, fill=255)
+    banner.paste(logo.convert("RGB"), (72, 100), mask)
+    title_font = ImageFont.truetype(FONT, 86)
+    sub_font = ImageFont.truetype(FONT, 34)
+    name = sys.argv[2] if len(sys.argv) > 2 else "Skilltrail"
+    b.text((420, 150), name, font=title_font, fill=INK)
+    b.text((424, 262), "Marketing digital, IA, Python, web", font=sub_font, fill=(111, 106, 126))
+    b.text((424, 312), "5 minutes par jour, façon jeu.", font=sub_font, fill=CORAL)
+    banner.save(Path("docs/play-store/feature-graphic.png"))
+
     for f in sorted(out.glob("*.png")):
         print(f.name, Image.open(f).size)
 

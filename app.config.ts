@@ -10,9 +10,9 @@ import type { ExpoConfig } from 'expo/config';
 const basePath = process.env.EXPO_PUBLIC_BASE_PATH ?? '';
 
 const config: ExpoConfig = {
-  name: 'Quiz GEO',
+  name: 'Skilltrail',
   slug: 'quizgeo',
-  version: '0.9.0',
+  version: '1.0.0',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'quizgeo',
@@ -21,7 +21,7 @@ const config: ExpoConfig = {
     // Ne jamais changer : la fiche Play Store et l'app AdMob y seront liées.
     package: 'fr.citeparlia.quizgeo',
     // Incrémenté automatiquement par EAS en production (eas.json).
-    versionCode: 12,
+    versionCode: 13,
     adaptiveIcon: {
       backgroundColor: '#5B4BFF',
       foregroundImage: './assets/images/android-icon-foreground.png',
@@ -50,7 +50,17 @@ const config: ExpoConfig = {
   },
   plugins: [
     'expo-router',
-    ['expo-notifications', { color: '#5B4BFF', icon: './assets/images/notification-icon.png' }],
+    ['expo-notifications', { color: '#E8562B', icon: './assets/images/notification-icon.png' }],
+    [
+      'expo-build-properties',
+      {
+        android: {
+          // R8 : code Java/Kotlin minifié et ressources inutilisées retirées (quelques Mo).
+          enableMinifyInReleaseBuilds: true,
+          enableShrinkResourcesInReleaseBuilds: true,
+        },
+      },
+    ],
     [
       'expo-splash-screen',
       { backgroundColor: '#5B4BFF', image: './assets/images/splash-icon.png', imageWidth: 96 },

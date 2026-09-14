@@ -9,19 +9,35 @@
 import { catalogFrom, type Catalog, type Exercise } from '@/game';
 import { translate, type Lang } from '@/i18n/translate';
 
+import { extraUnits } from './extra';
 import { generateExercises, resolveUnitCards, type GenTexts } from './generate';
 import { localizedCards, localizedExtras } from './localize';
 import { SUBJECTS as SUBJECTS_BASE } from './subjects';
 import type { Card, Subject, Unit } from './types';
 import { UNITS as UNITS_BASE } from './units';
 import { UNIT_TEXT } from './units.i18n';
+import { WORLDS } from './worlds';
 
 export { WORLDS, WORLD_BY_UNIT, isWorldComplete, worldProgress, worldsOf, type World } from './worlds';
 export type { Card, Subject, Unit } from './types';
 
+/**
+ * L'ordre du chemin : matière par matière, monde par monde, unité par unité.
+ * Les unités écrites en TypeScript (units.ts) et celles rédigées en JSON
+ * (units.extra.json) se rangent toutes derrière les mondes (worlds.ts).
+ */
+const STRUCTURE: readonly { id: string; subjectId: string }[] = SUBJECTS_BASE.flatMap((s) =>
+  WORLDS.filter((w) => w.subjectId === s.id).flatMap((w) => w.unitIds.map((id) => ({ id, subjectId: s.id }))),
+);
+
+function orderUnits(units: readonly Unit[]): Unit[] {
+  const byId = new Map(units.map((u) => [u.id, u]));
+  return STRUCTURE.map((s) => byId.get(s.id)).filter((u): u is Unit => u !== undefined);
+}
+
 /** Identifiants et matières des unités : la structure, indépendante de la langue. */
-export const CATALOG: Catalog = catalogFrom(UNITS_BASE.map((u) => ({ id: u.id, subjectId: u.subjectId })));
-export const UNIT_IDS: readonly string[] = UNITS_BASE.map((u) => u.id);
+export const CATALOG: Catalog = catalogFrom(STRUCTURE);
+export const UNIT_IDS: readonly string[] = STRUCTURE.map((u) => u.id);
 
 export interface Content {
   lang: Lang;
@@ -46,7 +62,7 @@ function build(lang: Lang): Content {
     title: translate(lang, `subject.${s.id}.title` as 'subject.marketing.title'),
     tagline: translate(lang, `subject.${s.id}.tagline` as 'subject.marketing.tagline'),
   }));
-  const UNITS: Unit[] = UNITS_BASE.map((u) => (lang === 'fr' ? u : { ...u, ...(UNIT_TEXT[lang][u.id] ?? {}) }));
+  const UNITS: Unit[] = orderUnits([...UNITS_BASE.map((u) => (lang === 'fr' ? u : { ...u, ...(UNIT_TEXT[lang][u.id] ?? {}) })), ...extraUnits(lang)]);
   const CARDS = localizedCards(lang);
   const texts: GenTexts = {
     whatMeans: (term) => translate(lang, 'gen.whatMeans', { term }),

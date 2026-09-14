@@ -17,6 +17,8 @@ function texts(): ReminderTexts {
     streakBody: (count) => (count > 0 ? t('reminder.streak.body') : t('reminder.streak.bodyNew')),
     energyTitle: t('reminder.energy.title'),
     energyBody: t('reminder.energy.body'),
+    lapseTitle: (days) => t('reminder.lapse.title', { count: days }),
+    lapseBody: () => t('reminder.lapse.body'),
   };
 }
 

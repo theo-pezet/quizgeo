@@ -4,8 +4,8 @@ import { StyleSheet, View } from 'react-native';
 
 import { CATALOG, WORLD_BY_UNIT, isWorldComplete } from '@/content';
 import { useContent } from '@/content/useContent';
-import { PATH_TRAITS, allUnitTraits, levelProgress, toDayKey, type Quest } from '@/game';
-import { useLang, useT, type Key } from '@/i18n';
+import { MONTHLY_TARGET, PATH_TRAITS, allUnitTraits, levelProgress, toDayKey, type Quest } from '@/game';
+import { monthLabel, useLang, useT, type Key } from '@/i18n';
 import { sounds, type SoundName } from '@/lib/sounds';
 import { useProgress } from '@/store/progress';
 import { Button, Confetti, Crowns, FadeUp, Icon, Pop, ProgressBar, Ring, Screen, Text, radius, space, tint, useColors, useCountUp, type IconName } from '@/ui';
@@ -20,6 +20,7 @@ type Page =
   | { kind: 'world' }
   | { kind: 'quest'; quests: Quest[] }
   | { kind: 'badge' }
+  | { kind: 'monthly' }
   | { kind: 'streak' };
 
 const QUEST_KEYS: Record<Quest['kind'], Key> = {
@@ -64,6 +65,7 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
     if (worldDone) out.push({ kind: 'world' });
     if (r.questsCompleted.length > 0) out.push({ kind: 'quest', quests: r.questsCompleted });
     if (r.newBadges.length > 0) out.push({ kind: 'badge' });
+    if (r.monthlyCompleted) out.push({ kind: 'monthly' });
     if (r.streakIncremented || r.freezeConsumedFor) out.push({ kind: 'streak' });
     return out;
   }, [r, state.skipTest, crownGained, worldDone]);
@@ -76,7 +78,7 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
       page.kind === 'recap' ? (perfect ? 'perfect' : r?.goalReached ? 'goal' : null)
       : page.kind === 'levelUp' ? 'levelup'
       : page.kind === 'crown' || page.kind === 'world' ? 'crown'
-      : page.kind === 'badge' || page.kind === 'quest' ? 'badge'
+      : page.kind === 'badge' || page.kind === 'quest' || page.kind === 'monthly' ? 'badge'
       : null;
     if (sound) {
       const timer = setTimeout(() => sounds.play(sound), 200);
@@ -89,7 +91,7 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
 
   return (
     <Screen footer={footer}>
-      {(perfect && page.kind === 'recap') || page.kind === 'world' || page.kind === 'levelUp' ? <Confetti /> : null}
+      {(perfect && page.kind === 'recap') || page.kind === 'world' || page.kind === 'levelUp' || page.kind === 'monthly' ? <Confetti /> : null}
       {page.kind === 'recap' && (
         <Recap state={state} color={color} perfect={perfect} good={good} />
       )}
@@ -169,6 +171,9 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
             ))}
           </View>
         </Moment>
+      )}
+      {page.kind === 'monthly' && r && (
+        <Moment key="monthly" icon="medal" color={colors.gold} title={t('monthly.end.title')} body={t('monthly.end.body', { target: MONTHLY_TARGET, month: monthLabel(lang, r.progress.monthly.month ?? '') })} />
       )}
       {page.kind === 'streak' && r && (
         <Moment

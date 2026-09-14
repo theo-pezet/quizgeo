@@ -26,6 +26,7 @@ import {
 import { addLeagueXp, clearLeagueOutcome, ensureLeague } from './league';
 import { applyQuestEvent, ensureQuests, questsReward, type QuestEvent } from './quests';
 import { allUnitTraits, applyUnitSessionResult, newlyUnlocked, unitTraits } from './mastery';
+import { MONTHLY_REWARD, ensureMonthly, recordMonthlyLesson } from './monthly';
 import { applyAnswer } from './review';
 import { gradeIsCorrect, reviewCard, type Grade } from './srs';
 import { recordActiveDay, sessionCountsForStreak } from './streak';
@@ -55,6 +56,7 @@ export function applyTick(progress: Progress, now: Date): Progress {
     league: ensureLeague(progress.league, today),
     energy: settleEnergy(progress.energy, now),
     daily: ensureDaily(progress.daily, today),
+    monthly: ensureMonthly(progress.monthly, today),
   };
 }
 
@@ -225,6 +227,8 @@ export interface SessionEndResult {
   goalReached: boolean;
   /** Avancement de l'objectif du jour après la session, 0..1. */
   dailyRatio: number;
+  /** Le défi du mois vient d'être accompli (20 leçons). */
+  monthlyCompleted: boolean;
 }
 
 /**
@@ -344,6 +348,18 @@ export function applySessionEnd(
   next = daily.progress;
   if (daily.goalReached) gemsGained += GEMS.dailyGoal;
 
+  // 4d. Le défi du mois : une leçon complète de plus.
+  let monthlyCompleted = false;
+  if (lesson && counted) {
+    const m = recordMonthlyLesson(next.monthly, today);
+    next = { ...next, monthly: m.state };
+    monthlyCompleted = m.completed;
+    if (m.completed) {
+      gemsGained += MONTHLY_REWARD;
+      next = { ...next, gems: addGems(next.gems, MONTHLY_REWARD) };
+    }
+  }
+
   // 5. Les traits, une fois tout le reste écrit.
   const traitsMapAfter = allUnitTraits(next, questions, catalog, today);
   const traitsAfter = unitId ? (traitsMapAfter[unitId] ?? 0) : 0;
@@ -367,6 +383,7 @@ export function applySessionEnd(
     questsCompleted,
     goalReached: daily.goalReached,
     dailyRatio: dailyRatio(next.daily, today),
+    monthlyCompleted,
   };
 }
 

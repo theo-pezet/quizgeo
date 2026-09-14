@@ -22,7 +22,7 @@ import {
 } from '@/game';
 import { useLang, useT } from '@/i18n';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, Card, Crowns, EnergyBadge, Icon, NoEnergySheet, Pop, Pulse, QuestsCard, Ring, Screen, Stat, Text, Tutorial, radius, shade, space, tint, useColors, type IconName } from '@/ui';
+import { Button, Card, Crowns, EnergyBadge, Icon, MonthlyCard, NoEnergySheet, Pop, Pulse, QuestsCard, Ring, Screen, Stat, Text, Tutorial, radius, shade, space, tint, useColors, type IconName } from '@/ui';
 
 export default function PathScreen() {
   const colors = useColors();
@@ -166,6 +166,7 @@ export default function PathScreen() {
 
       {noEnergy && <NoEnergySheet onClose={() => setNoEnergy(false)} />}
       {progress.quests.items.length > 0 && <QuestsCard quests={progress.quests.items} />}
+      <MonthlyCard monthly={progress.monthly} month={today.slice(0, 7)} />
 
       <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chips}>
         {SUBJECTS.map((s) => {
