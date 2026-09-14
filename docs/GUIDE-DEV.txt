@@ -35,7 +35,7 @@ scripts d'outils (icônes, sons, deck).
 
     npm ci                 # dépendances
     npx tsc --noEmit       # vérification de types (doit être vide)
-    npm test               # jest : 378 tests, couverture 100 % exigée sur src/game
+    npm test               # jest : 380 tests, couverture 100 % exigée sur src/game
     npx expo start --web   # lance le site en local (http://localhost:8081)
     npx expo start         # + Expo Go / émulateur pour Android
 
