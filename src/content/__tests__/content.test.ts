@@ -4,7 +4,7 @@
  */
 
 import { CATALOG, WORLDS, WORLD_BY_UNIT, contentFor, type Content } from '..';
-import { resolveUnitCards, shortDefinition } from '../generate';
+import { isConfusable, resolveUnitCards, shortDefinition } from '../generate';
 import type { Lang } from '@/i18n/translate';
 
 const MIN_EXERCISES_PER_UNIT = 5;
@@ -159,6 +159,29 @@ describe('les exercices', () => {
           expect(st.feedback.trim().length).toBeGreaterThan(0);
         }
       }
+    }
+  });
+
+  it('QCM générés : aucun distracteur confondable avec la bonne réponse, aucun choix en double', () => {
+    for (const lang of ['fr', 'en', 'es'] as const) {
+      const c = contentFor(lang);
+      const byId = new Map(c.CARDS.map((card) => [card.id, card]));
+      const defToId = new Map<string, string>();
+      for (const card of c.CARDS) defToId.set(card.definition, card.id);
+      const termToId = new Map<string, string>();
+      for (const card of c.CARDS) termToId.set(card.term.toLowerCase(), card.id);
+      for (const ex of c.EXERCISES) {
+        if (ex.kind !== 'qcm' || !ex.cardId) continue;
+        expect(new Set(ex.choices.map((x) => x.trim().toLowerCase())).size).toBe(ex.choices.length);
+        const isDef = ex.key.includes(':def:');
+        for (let i = 0; i < ex.choices.length; i++) {
+          if (i === ex.answer) continue;
+          const other = isDef ? defToId.get(ex.choices[i]) : termToId.get(ex.choices[i].toLowerCase());
+          if (!other || other === ex.cardId) continue;
+          expect({ key: ex.key, other, confusable: isConfusable(ex.cardId, other) }).toEqual({ key: ex.key, other, confusable: false });
+        }
+      }
+      expect(byId.size).toBe(c.CARDS.length);
     }
   });
 

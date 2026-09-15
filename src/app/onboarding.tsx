@@ -82,8 +82,8 @@ export default function OnboardingScreen() {
           <Pop>
             <Text style={styles.big}>🌍</Text>
           </Pop>
-          <Text variant="title">{t('onboarding.lang.title')}</Text>
-          <Text variant="body" secondary>
+          <Text variant="title" style={styles.centerText}>{t('onboarding.lang.title')}</Text>
+          <Text variant="body" secondary style={styles.centerText}>
             {t('onboarding.lang.body')}
           </Text>
           <View style={styles.list}>
@@ -111,8 +111,8 @@ export default function OnboardingScreen() {
           <Pop>
             <Text style={styles.big}>🗺️</Text>
           </Pop>
-          <Text variant="title">{t('onboarding.subjects.title')}</Text>
-          <Text variant="body" secondary>
+          <Text variant="title" style={styles.centerText}>{t('onboarding.subjects.title')}</Text>
+          <Text variant="body" secondary style={styles.centerText}>
             {t('onboarding.subjects.body')}
           </Text>
           <View style={styles.list}>
@@ -143,8 +143,8 @@ export default function OnboardingScreen() {
           <Pop>
             <Text style={styles.big}>🎓</Text>
           </Pop>
-          <Text variant="title">{t('onboarding.level.title')}</Text>
-          <Text variant="body" secondary>
+          <Text variant="title" style={styles.centerText}>{t('onboarding.level.title')}</Text>
+          <Text variant="body" secondary style={styles.centerText}>
             {t('onboarding.level.body')}
           </Text>
           <View style={styles.list}>
@@ -169,8 +169,8 @@ export default function OnboardingScreen() {
           <Pop>
             <Text style={styles.big}>🎯</Text>
           </Pop>
-          <Text variant="title">{t('onboarding.goal.title')}</Text>
-          <Text variant="body" secondary>
+          <Text variant="title" style={styles.centerText}>{t('onboarding.goal.title')}</Text>
+          <Text variant="body" secondary style={styles.centerText}>
             {t('onboarding.goal.body')}
           </Text>
           <View style={styles.list}>
@@ -202,8 +202,8 @@ export default function OnboardingScreen() {
           <Pop>
             <Text style={styles.big}>🔥</Text>
           </Pop>
-          <Text variant="title">{t('onboarding.reminders.title')}</Text>
-          <Text variant="body" secondary>
+          <Text variant="title" style={styles.centerText}>{t('onboarding.reminders.title')}</Text>
+          <Text variant="body" secondary style={styles.centerText}>
             {t('onboarding.reminders.body')}
           </Text>
           <View style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface, justifyContent: 'space-between' }]}>
@@ -243,6 +243,7 @@ const styles = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   bar: { flex: 1 },
   stepWrap: { gap: space.lg },
+  centerText: { textAlign: 'center' },
   big: { fontSize: 56, lineHeight: 68, textAlign: 'center' },
   list: { gap: space.sm },
   card: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderWidth: 2, borderRadius: radius.lg, padding: space.md },

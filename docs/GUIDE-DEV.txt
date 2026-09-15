@@ -243,7 +243,41 @@ uniques, textes non vides, mêmes clés d'exercice qu'en français, choix
 cohérents, au moins 5 exercices par unité, mondes couvrant chaque unité
 exactement une fois, aucun tiret cadratin dans les textes manuels.
 
-4.6 AJOUTER UNE UNITÉ (la méthode recommandée)
+4.6 RELIRE ET CORRIGER LE CONTENU (chaîne de relecture, v1.0.1)
+
+Le contenu a été relu intégralement en v1.0.1 (1518 cartes et 338 exercices
+écrits, dans les trois langues) avec cette chaîne, à réutiliser pour toute
+campagne de relecture :
+
+1. Exporter le contenu localisé en JSON :
+     EXPORT_CONTENT_DIR=tools/review/export npx jest src/content/__tests__/export.test.ts
+2. Découper en lots relisibles (≈ 55 cartes ou 45 exercices par lot) :
+     python3 tools/review/extract_batches.py tools/review/export tools/review/batches
+3. Faire relire chaque lot (par un expert, ou par un modèle IA avec le
+   prompt « lis tools/review/GUIDE.md puis relis <lot> ») : le relecteur
+   écrit <lot>.fixes.json (corrections par langue + groupes de cartes
+   « confondables »). Le format est décrit dans tools/review/GUIDE.md.
+4. Appliquer les corrections dans les sources (deck.json, deck.fr/es.json,
+   cards.extra.ts, xcards.*.json, units.extra.json, extras.ts, extras.*.json) :
+     python3 tools/review/apply_fixes.py tools/review/export tools/review/out
+   Les groupes confondables s'ajoutent à tools/review/confusables.manual.json.
+5. Régénérer la liste des distracteurs interdits, puis tester :
+     python3 tools/build_confusables.py tools/review/export
+     npm test
+
+src/data/confusables.json : pour chaque carte, les cartes de la même matière
+qui ne seront JAMAIS proposées comme distracteur ni dans une banque de texte à
+trous (heuristique lexicale : mot significatif commun dans les termes ou
+définitions qui se recoupent à 30 %, plus les groupes relevés à la relecture).
+C'est ce qui évite les QCM à deux réponses défendables (« Domain Authority »
+face à « Domain Rating »). Le test « QCM générés : aucun distracteur
+confondable » le garantit.
+
+IMPORTANT : depuis cette relecture, src/data/deck.json et les fichiers
+deck.fr/es.json sont la source de vérité. Ne pas relancer tools/build_deck.py
+depuis le classeur Excel sans y reporter d'abord les corrections.
+
+4.7 AJOUTER UNE UNITÉ (la méthode recommandée)
 
 1. Écrire un fichier JSON au format décrit dans tools/integrate_units.py
    (une unité, 10 cartes, 8 exercices, chaque texte en fr/en/es ; le

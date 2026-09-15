@@ -94,8 +94,10 @@ export default function DeckReviewRoute() {
       <Screen footer={<Button label={t('deck.done.back')} onPress={() => router.back()} />}>
         <View style={styles.hero}>
           <Text style={styles.big}>🃏</Text>
-          <Text variant="title">{t('deck.done.title')}</Text>
-          <Text variant="body" secondary>
+          <Text variant="title" style={styles.term}>
+            {t('deck.done.title')}
+          </Text>
+          <Text variant="body" secondary style={styles.term}>
             {t('deck.done.body', { reviewed, total, xp: xp + ended.bonus })}
           </Text>
         </View>

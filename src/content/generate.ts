@@ -7,6 +7,7 @@
  * assez, sinon de la même matière.
  */
 
+import confusablesJson from '@/data/confusables.json';
 import type { Exercise, MatchExercise, QcmExercise } from '@/game';
 import { hashString, mulberry32 } from '@/lib/random';
 
@@ -69,9 +70,21 @@ function pick<T>(items: readonly T[], n: number, rng: () => number, exclude: (t:
   return out;
 }
 
+/**
+ * Cartes qu'on ne propose jamais comme distracteur d'une carte donnée, parce
+ * qu'un apprenant pourrait légitimement les confondre (« Domain Authority »
+ * et « Domain Rating »…). Construit par tools/build_confusables.py.
+ */
+const CONFUSABLES: Record<string, readonly string[]> = confusablesJson as Record<string, string[]>;
+
+export function isConfusable(a: string, b: string): boolean {
+  return CONFUSABLES[a]?.includes(b) ?? false;
+}
+
 function distractorPool(card: Card, subjectCards: readonly Card[]): readonly Card[] {
-  const sameTopic = subjectCards.filter((c) => c.topic === card.topic && c.id !== card.id);
-  return sameTopic.length >= 6 ? sameTopic : subjectCards.filter((c) => c.id !== card.id);
+  const ok = (c: Card) => c.id !== card.id && !isConfusable(card.id, c.id);
+  const sameTopic = subjectCards.filter((c) => c.topic === card.topic && ok(c));
+  return sameTopic.length >= 6 ? sameTopic : subjectCards.filter(ok);
 }
 
 function explainFor(card: Card, texts: GenTexts): string {
@@ -127,7 +140,7 @@ export function generateExercises(
         return '___';
       });
       if (answers.length === 1) {
-        const others = subjectCards.filter((c) => c.cloze && c.id !== card.id);
+        const others = subjectCards.filter((c) => c.cloze && c.id !== card.id && !isConfusable(card.id, c.id));
         const bank = pick(others, 3, rng, () => false).map((c) => {
           const m = CLOZE.exec(c.cloze as string);
           CLOZE.lastIndex = 0;

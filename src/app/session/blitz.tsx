@@ -129,8 +129,10 @@ export default function BlitzRoute() {
       <Screen>
         <View style={styles.hero}>
           <Text style={styles.big}>{ended.isBest ? '🏆' : '⏱️'}</Text>
-          <Text variant="title">{t('blitz.correct', { count: correct })}</Text>
-          <Text variant="body" secondary>
+          <Text variant="title" style={styles.centerText}>
+            {t('blitz.correct', { count: correct })}
+          </Text>
+          <Text variant="body" secondary style={styles.centerText}>
             {t('blitz.summary', { answered: index, seconds: BLITZ_SECONDS })} · {ended.isBest ? t('blitz.newRecord') : t('common.record', { value: ended.best })}
           </Text>
         </View>
@@ -207,5 +209,6 @@ const styles = StyleSheet.create({
   choice: { borderWidth: 2, borderRadius: radius.md, padding: space.md },
   choiceText: { fontSize: 15, lineHeight: 21 },
   hero: { alignItems: 'center', gap: space.sm, paddingVertical: space.xl },
+  centerText: { textAlign: 'center' },
   big: { fontSize: 64, lineHeight: 76, textAlign: 'center' },
 });

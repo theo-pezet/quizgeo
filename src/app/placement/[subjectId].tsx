@@ -84,8 +84,13 @@ export default function PlacementRoute() {
             <Text style={styles.big}>{subject.emoji}</Text>
           </View>
           <Text variant="title" style={styles.center}>
-            {t('placement.intro.title', { subject: subject.title })}
+            {t('placement.intro.title')}
           </Text>
+          <View style={[styles.chip, { backgroundColor: tint(color, 0.85) }]}>
+            <Text variant="bodyBold" style={{ color }}>
+              {subject.title}
+            </Text>
+          </View>
           <Text variant="body" secondary style={styles.center}>
             {t('placement.intro.body')}
           </Text>
@@ -116,6 +121,7 @@ export default function PlacementRoute() {
           key={q.key}
           exercise={q}
           locked={false}
+          checkLabel={index + 1 >= questions.length ? t('placement.finish') : t('placement.next')}
           onAnswer={(correct) => {
             void haptics.tap();
             if (correct) setScore((s) => s + 1);
@@ -204,6 +210,7 @@ const styles = StyleSheet.create({
   halo: { width: 120, height: 120, borderRadius: 60, alignItems: 'center', justifyContent: 'center' },
   big: { fontSize: 56, lineHeight: 68, textAlign: 'center' },
   center: { textAlign: 'center' },
+  chip: { paddingHorizontal: space.md, paddingVertical: space.xs, borderRadius: radius.pill },
   scale: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm, justifyContent: 'center' },
   scaleItem: { width: 52, height: 52, borderRadius: radius.md, borderWidth: 2, borderBottomWidth: 4, alignItems: 'center', justifyContent: 'center' },
   scaleLabels: { flexDirection: 'row', justifyContent: 'space-between' },

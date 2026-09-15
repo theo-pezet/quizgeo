@@ -68,7 +68,7 @@
    "topic": "analytics",
    "level": null,
    "term": "CPA",
-   "definition": "Cost Per Acquisition: The total cost of acquiring one paying customer on a specific campaign or channel.",
+   "definition": "Cost Per Acquisition: The average cost of one defined conversion (sale, lead, sign-up) on a given campaign or channel. Formula: Ad spend / Number of conversions.",
    "example": "If you spend $100 on ads and get 5 sales, your CPA is $20.",
    "tags": [
     "#Analytics"
@@ -81,7 +81,7 @@
    "level": null,
    "term": "ROI",
    "definition": "Return on Investment: A measure used to evaluate the efficiency of an investment. Formula: (Net Profit / Cost of Investment) * 100.",
-   "example": "Spending $1,000 on a campaign that generates $3,000 in profit results in a 200% ROI.",
+   "example": "Spending $1,000 on a campaign that brings in $3,000, i.e. $2,000 of net profit, gives a 200% ROI.",
    "tags": [
     "#Strategy"
    ],
@@ -117,7 +117,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Bounce Rate",
-   "definition": "The percentage of visitors who enter the site and then leave rather than continuing to view other pages.",
+   "definition": "In the classic sense (Universal Analytics, Matomo): the percentage of single-page sessions, where the visitor leaves without viewing anything else. GA4 uses a different, engagement-based definition.",
    "example": "A high bounce rate on a product page might mean the content doesn't match what the ad promised.",
    "tags": [
     "#Analytics"
@@ -166,8 +166,8 @@
    "topic": "seo",
    "level": null,
    "term": "Backlink",
-   "definition": "An incoming hyperlink from one web page to another website.",
-   "example": "A tech blog linking to your startup's website, which boosts your domain authority.",
+   "definition": "An inbound link: a link placed on a third-party site that points to your site. From your site's point of view it is a received link, one of Google's main popularity signals.",
+   "example": "A tech blog linking to your startup's website: you receive a backlink that strengthens your site's credibility in Google's eyes.",
    "tags": [
     "#SEO"
    ]
@@ -178,8 +178,8 @@
    "topic": "seo",
    "level": null,
    "term": "Domain Authority",
-   "definition": "A search engine ranking score that predicts how likely a website is to rank on search engine result pages (SERPs).",
-   "example": "A link from the New York Times (High DA) is more valuable than a link from a brand new personal blog.",
+   "definition": "Moz's 0 to 100 score estimating how well a domain can rank on Google based on its link profile. A comparative prediction, not a signal Google uses.",
+   "example": "A link from the New York Times (Moz DA close to 95) is worth more than a link from a brand new personal blog (DA 5).",
    "tags": [
     "#SEO"
    ]
@@ -250,7 +250,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Funnel",
-   "definition": "A consumer-focused marketing model which illustrates the theoretical customer journey towards the purchase of a good or service.",
+   "definition": "A funnel-shaped model that breaks the path to purchase into stages (awareness, consideration, conversion), with fewer people remaining at each level.",
    "example": "Awareness (Top), Consideration (Middle), and Conversion (Bottom).",
    "tags": [
     "#Strategy"
@@ -382,7 +382,7 @@
    "topic": "tech",
    "level": null,
    "term": "CMS",
-   "definition": "Content Management System: A software application used to manage the creation and modification of digital content.",
+   "definition": "Content Management System: software that lets you create, edit and publish a site's content without coding, and that also renders it for visitors (themes, pages), such as WordPress.",
    "example": "Using WordPress, Shopify, or Webflow to build and update your website.",
    "tags": [
     "#Tech"
@@ -406,8 +406,8 @@
    "topic": "seo",
    "level": null,
    "term": "Alt Text",
-   "definition": "Alternative Text: A word or phrase that can be inserted as an attribute in an HTML document to tell website viewers the nature or contents of an image.",
-   "example": "Adding \"Man playing badminton\" to an image file so Google can \"read\" what is in the picture.",
+   "definition": "Alternative Text: The alt attribute of an img tag that describes the image for screen readers, search engines, and display when the image fails to load.",
+   "example": "Setting alt=\"Man playing badminton\" on the img tag so a screen reader can describe the photo and Google understands what it shows.",
    "tags": [
     "#SEO"
    ]
@@ -466,7 +466,7 @@
    "topic": "paid",
    "level": null,
    "term": "Native Advertising",
-   "definition": "The use of paid ads that match the look, feel, and function of the media format in which they appear.",
+   "definition": "An advertising approach where paid ads adopt the look, tone, and function of the medium that carries them, so they don't interrupt the experience. Refers to the practice as a whole.",
    "example": "A \"Sponsored Content\" article on a news site that looks just like a regular news story.",
    "tags": [
     "#Paid_Ads"
@@ -502,7 +502,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Customer Journey",
-   "definition": "The complete sum of experiences that customers go through when interacting with your company and brand.",
+   "definition": "The full set of interactions and experiences a customer actually has with your brand across every touchpoint, before, during and after the purchase.",
    "example": "A user seeing a LinkedIn post, then visiting the site, then receiving an email, then buying.",
    "tags": [
     "#Strategy"
@@ -526,7 +526,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Referral Traffic",
-   "definition": "The segment of traffic that arrives on your website through another source, like through a link on another domain.",
+   "definition": "Visitors who arrive on your site by clicking a link placed on another website, excluding search engines and social networks (which GA4 groups separately).",
    "example": "Traffic coming from a mention of your blog on a Wikipedia page.",
    "tags": [
     "#Analytics"
@@ -538,7 +538,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Direct Traffic",
-   "definition": "Visitors who arrive at your website by typing your URL into their browser or via bookmarks.",
+   "definition": "Visitors who arrive on your site with no identifiable source (no referrer): a URL typed into the browser, a bookmark, or a link opened from an app or a document.",
    "example": "A fan of your newsletter typing \"theopezet.com\" directly into Chrome.",
    "tags": [
     "#Analytics"
@@ -586,7 +586,7 @@
    "topic": "paid",
    "level": null,
    "term": "Remarketing",
-   "definition": "A way to connect with people who previously interacted with your website or mobile app.",
+   "definition": "The umbrella term for reaching, with ads, people who have already visited your site or used your app, whatever the format or platform.",
    "example": "Showing a Facebook ad for a pair of shoes to a user who added them to their cart but didn't buy.",
    "tags": [
     "#Paid_Ads"
@@ -622,8 +622,8 @@
    "topic": "seo",
    "level": null,
    "term": "Sitemap",
-   "definition": "A file where you provide information about the pages, videos, and other files on your site, and the relationships between them.",
-   "example": "Submitting an XML sitemap to Google Search Console to help bots crawl your site faster.",
+   "definition": "A site map: a page or file listing a site's pages and how they are organized. It can be HTML, for visitors, or XML, for search engine bots.",
+   "example": "A \"Site map\" page in the footer that lists every section to help visitors (and bots) find their way around.",
    "tags": [
     "#SEO"
    ]
@@ -658,7 +658,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Word of Mouth",
-   "definition": "The process of actively influencing and encouraging organic discussions about a brand, organization, or event.",
+   "definition": "Consumers spontaneously recommending a brand or product to each other in their own conversations. Word-of-mouth marketing tries to trigger and amplify it.",
    "example": "A happy customer telling their friend \"You have to try this new coaching program!\".",
    "tags": [
     "#Strategy"
@@ -778,7 +778,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Social Proof",
-   "definition": "The psychological phenomenon where people copy the actions of others in an attempt to undertake behavior in a given situation.",
+   "definition": "The psychological phenomenon where people copy the actions of others to decide how to behave in a given situation.",
    "example": "Displaying \"Join 10,000+ subscribers\" on your newsletter signup form.",
    "tags": [
     "#Strategy"
@@ -803,7 +803,7 @@
    "level": null,
    "term": "Broken Link",
    "definition": "A link on a website that no longer works, usually because the page has been moved or deleted.",
-   "example": "Clicking a link and being redirected to a \"404 Not Found\" error page.",
+   "example": "Clicking a link and landing on a \"404 Not Found\" error page because the article was deleted.",
    "tags": [
     "#SEO"
    ]
@@ -970,8 +970,8 @@
    "topic": "tech",
    "level": null,
    "term": "Bot",
-   "definition": "A software application that runs automated tasks over the Internet, often imitating human behavior.",
-   "example": "A \"Chatbot\" answering customer questions on a website 24/7.",
+   "definition": "A program that automatically runs repetitive tasks over the Internet (crawling pages, clicking, posting), often imitating a human, without necessarily holding a conversation.",
+   "example": "Googlebot, the Google crawler that visits your pages to index them, or fake bot clicks that inflate your analytics.",
    "tags": [
     "#Tech"
    ]
@@ -982,7 +982,7 @@
    "topic": "tech",
    "level": null,
    "term": "Cookie",
-   "definition": "A small piece of data stored on the user's computer by the web browser while browsing a website.",
+   "definition": "A small text file the browser stores on the user's device at a website's request, so the site can recognize them from one page or visit to the next (session, preferences, tracking).",
    "example": "Using cookies to remember what items a user put in their shopping cart.",
    "tags": [
     "#Tech"
@@ -1042,7 +1042,7 @@
    "topic": "growth",
    "level": null,
    "term": "Lead Scoring",
-   "definition": "The process of assigning values, often in the form of numerical \"points,\" to each lead you generate for the business.",
+   "definition": "Assigning points to each lead based on profile and behavior to estimate how likely they are to buy, so sales can prioritize which leads to contact first.",
    "example": "Giving a lead +10 points for downloading a guide and +50 for requesting a demo.",
    "tags": [
     "#Growth"
@@ -1078,7 +1078,7 @@
    "topic": "strategy",
    "level": null,
    "term": "USP",
-   "definition": "Unique Selling Proposition: The one thing that makes your business better than the competition.",
+   "definition": "Unique Selling Proposition: The one specific advantage that sets you apart from every competitor, summed up in a short promise.",
    "example": "\"Fresh hot pizza delivered in 30 minutes or it's free.\" (Domino's).",
    "tags": [
     "#Strategy"
@@ -1174,12 +1174,12 @@
    "topic": "strategy",
    "level": null,
    "term": "LTV",
-   "definition": "Lifetime Value: The total revenue a business can expect from a single customer account throughout the business relationship. Formula: Average Purchase Value * Number of Purchases * Average Customer Lifespan.",
+   "definition": "Lifetime Value: The total revenue a business can expect from a single customer over the whole business relationship. Formula: Average Purchase Value * Purchases per Year * Customer Lifespan in Years.",
    "example": "A gym member paying $50/month for 3 years has an LTV of $1,800.",
    "tags": [
     "#Strategy_Growth"
    ],
-   "cloze": "Lifetime Value: The total revenue a business can expect from a single customer account throughout the business relationship. Formula: {{c1::Average Purchase Value * Number of Purchases * Average Customer Lifespan}}."
+   "cloze": "Lifetime Value: The total revenue a business can expect from a single customer over the whole business relationship. Formula: {{c1::Average Purchase Value * Purchases per Year * Customer Lifespan in Years}}."
   },
   {
    "id": "marketing-cac",
@@ -1187,12 +1187,12 @@
    "topic": "strategy",
    "level": null,
    "term": "CAC",
-   "definition": "Customer Acquisition Cost: The total cost of sales and marketing efforts needed to acquire a new customer. Formula: Total Marketing Expenses / Number of New Customers.",
+   "definition": "Customer Acquisition Cost: The average cost of winning one new customer. Formula: (Marketing Spend + Sales Spend) / Number of New Customers.",
    "example": "If you spend $5,000 to get 100 customers, your CAC is $50.",
    "tags": [
     "#Strategy_Analytics"
    ],
-   "cloze": "Customer Acquisition Cost: The total cost of sales and marketing efforts needed to acquire a new customer. Formula: {{c1::Total Marketing Expenses / Number of New Customers}}."
+   "cloze": "Customer Acquisition Cost: The average cost of winning one new customer. Formula: {{c1::(Marketing Spend + Sales Spend) / Number of New Customers}}."
   },
   {
    "id": "marketing-roas",
@@ -1310,7 +1310,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Cohort Analysis",
-   "definition": "A study of the behavior of a specific group of users who share a common characteristic over a given time period.",
+   "definition": "A study over time of the behavior of a group of users who share a common characteristic, most often their sign-up or first-purchase date (acquisition cohort).",
    "example": "Tracking if users who joined in January spend more than users who joined in June.",
    "tags": [
     "#Analytics"
@@ -1346,7 +1346,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Lead Nurturing",
-   "definition": "The process of developing and maintaining relationships with customers at every stage of the sales funnel.",
+   "definition": "Keeping a relationship going with leads who are not ready to buy yet (emails, helpful content) at every stage of the funnel, until they are ripe for a sale.",
    "example": "Sending helpful educational content to a lead who downloaded a whitepaper to keep your brand top-of-mind.",
    "tags": [
     "#Strategy"
@@ -1394,7 +1394,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Value Proposition",
-   "definition": "A statement that summarizes why a consumer should buy a product or use a service.",
+   "definition": "A statement summing up the full set of benefits a customer gets from your product or service and why they should choose it. Broader than a USP, which keeps a single differentiator.",
    "example": "\"The easiest way to build a professional website in under 10 minutes.\".",
    "tags": [
     "#Strategy"
@@ -1442,7 +1442,7 @@
    "topic": "paid",
    "level": null,
    "term": "Retargeting Pixel",
-   "definition": "A small piece of code on your website that allows you to track visitors and show them ads later on other platforms.",
+   "definition": "A small piece of JavaScript placed on your site and run in the visitor's browser that records their visits so you can show them ads later on other platforms.",
    "example": "Installing the Meta Pixel to track who visited your \"Pricing\" page but didn't buy.",
    "tags": [
     "#Paid_Ads"
@@ -1490,8 +1490,8 @@
    "topic": "analytics",
    "level": null,
    "term": "UTM Parameters",
-   "definition": "Snippets of text added to the end of a URL to help track the source, medium, and campaign name of traffic.",
-   "example": "Using \"?utm_source=linkedin\" to know exactly which post drove a sale.",
+   "definition": "Parameters appended to the end of a URL (utm_source, utm_medium, utm_campaign, etc.) so that your analytics tool can identify the source, channel, and campaign the traffic came from.",
+   "example": "Adding \"?utm_source=linkedin&utm_medium=social&utm_campaign=launch\" to your link to see in GA4 how many sales came from that post.",
    "tags": [
     "#Analytics"
    ]
@@ -1514,7 +1514,7 @@
    "topic": "analytics",
    "level": null,
    "term": "GA4",
-   "definition": "Google Analytics 4: The latest version of Google's web analytics service that tracks both website and app data.",
+   "definition": "Google Analytics 4: The current version of Google Analytics, which replaced Universal Analytics in 2023. Built on an event-based model, it measures websites and apps in a single property.",
    "example": "Analyzing \"Events\" instead of \"Sessions\" to understand user behavior on a deep level.",
    "tags": [
     "#Analytics"
@@ -1526,7 +1526,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Bounce Rate (GA4)",
-   "definition": "In GA4, the percentage of sessions that were not \"engaged\" (less than 10 seconds or no conversion).",
+   "definition": "In GA4, the percentage of non-engaged sessions: under 10 seconds, no key event (conversion), and only one page viewed. It is exactly the inverse of the engagement rate.",
    "example": "A user landing on a page, staying for 2 seconds, and leaving without clicking anything.",
    "tags": [
     "#Analytics"
@@ -1721,12 +1721,12 @@
    "topic": "strategy",
    "level": null,
    "term": "NPS",
-   "definition": "Net Promoter Score: A metric used to measure customer loyalty and satisfaction. Formula: % Promoters - % Detractors.",
+   "definition": "Net Promoter Score: A customer loyalty metric based on a single question, how likely you are to recommend the company, rated from 0 to 10. Formula: % Promoters - % Detractors.",
    "example": "Asking customers \"On a scale of 0-10, how likely are you to recommend us?\".",
    "tags": [
     "#Strategy_Analytics"
    ],
-   "cloze": "Net Promoter Score: A metric used to measure customer loyalty and satisfaction. Formula: {{c1::% Promoters - % Detractors}}."
+   "cloze": "Net Promoter Score: A customer loyalty metric based on a single question, how likely you are to recommend the company, rated from 0 to 10. Formula: {{c1::% Promoters - % Detractors}}."
   },
   {
    "id": "marketing-influencer-tiers",
@@ -1794,7 +1794,7 @@
    "topic": "seo",
    "level": null,
    "term": "Canonical Tag",
-   "definition": "A way of telling search engines that a specific URL represents the master copy of a page to avoid duplicate content.",
+   "definition": "Canonical Tag: The HTML element link rel=\"canonical\", placed in a page's head, that tells search engines the reference URL for that content to avoid duplicate content. It is the technical means; canonicalization is the process.",
    "example": "Using rel=\"canonical\" so Google knows which version of a product page to rank.",
    "tags": [
     "#SEO_Technical"
@@ -1806,7 +1806,7 @@
    "topic": "seo",
    "level": null,
    "term": "301 Redirect",
-   "definition": "A permanent redirect from one URL to another.",
+   "definition": "A permanent redirect (HTTP status 301) from one URL to another: it tells search engines the page has moved for good and passes most of its SEO value to the new address.",
    "example": "Moving your blog from /old-blog to /new-blog and sending all traffic to the new address.",
    "tags": [
     "#SEO_Technical"
@@ -1830,8 +1830,8 @@
    "topic": "seo",
    "level": null,
    "term": "Schema Markup",
-   "definition": "A form of microdata that helps search engines understand your content and provide richer search results.",
-   "example": "Adding code to a recipe page so Google shows the star rating and cooking time in the SERP.",
+   "definition": "Structured data based on the schema.org vocabulary, added to a page's code (most often as JSON-LD), that helps search engines understand the content and show rich results.",
+   "example": "Adding a Recipe JSON-LD block to a recipe page so Google shows the star rating and cooking time in the SERP.",
    "tags": [
     "#SEO_Technical"
    ]
@@ -1842,7 +1842,7 @@
    "topic": "seo",
    "level": null,
    "term": "E-E-A-T",
-   "definition": "Experience, Expertise, Authoritativeness, and Trustworthiness: The criteria Google uses to evaluate the quality of content.",
+   "definition": "Experience, Expertise, Authoritativeness, and Trustworthiness: The criteria in Google's Search Quality Rater Guidelines for judging content quality. An evaluation framework, not a direct ranking score.",
    "example": "Showing the credentials of the coach who wrote a fitness article to prove expertise.",
    "tags": [
     "#SEO"
@@ -1890,7 +1890,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Lead Magnet (Advanced)",
-   "definition": "A high-value offer used to capture lead information, often gated behind a form.",
+   "definition": "A high-perceived-value lead magnet (tool, calculator, ready-to-use template) that attracts better-qualified leads, often in exchange for a business email through a form.",
    "example": "Offering a \"Revenue Calculator Spreadsheet\" in exchange for a business email.",
    "tags": [
     "#Strategy"
@@ -1914,7 +1914,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Customer Persona (Detailed)",
-   "definition": "A deep dive into a target user, including their daily routine, fears, and tech stack.",
+   "definition": "An enriched version of a persona that goes beyond demographics: daily routine, fears, goals, tools used and buying objections.",
    "example": "\"Persona: Freelance Sarah, uses Notion, fears missing tax deadlines, wants time-saving tools.\"",
    "tags": [
     "#Strategy"
@@ -1963,7 +1963,7 @@
    "level": null,
    "term": "Ad Fatigue",
    "definition": "A phenomenon where an audience sees the same ad too many times, leading to a drop in CTR and performance.",
-   "example": "Rotating your ad creative every 2 weeks to keep the audience interested.",
+   "example": "After three weeks with the same visual, your Facebook ad's CTR drops from 2% to 0.6% and the CPC climbs: time to refresh the creative.",
    "tags": [
     "#Paid_Ads"
    ]
@@ -1986,12 +1986,12 @@
    "topic": "paid",
    "level": null,
    "term": "Ad Rank",
-   "definition": "A value that's used to determine your ad position on a page. Formula: Bid Amount * Quality Score.",
+   "definition": "The value Google Ads computes at each auction to decide whether your ad shows and in which position. Simplified formula: Bid Amount * Quality Score (Google also factors in thresholds, search context and the impact of assets).",
    "example": "Winning the top spot on Google Search even with a lower bid because your ad is more relevant.",
    "tags": [
     "#Paid_Ads"
    ],
-   "cloze": "A value that's used to determine your ad position on a page. Formula: {{c1::Bid Amount * Quality Score}}."
+   "cloze": "The value Google Ads computes at each auction to decide whether your ad shows and in which position. Simplified formula: {{c1::Bid Amount * Quality Score}} (Google also factors in thresholds, search context and the impact of assets)."
   },
   {
    "id": "marketing-quality-score",
@@ -1999,7 +1999,7 @@
    "topic": "paid",
    "level": null,
    "term": "Quality Score",
-   "definition": "Google's rating of the quality and relevance of both your keywords and PPC ads.",
+   "definition": "A 1 to 10 rating Google Ads gives each keyword to estimate how relevant your ads and landing page are. The higher it is, the less you pay for the same position.",
    "example": "Improving your landing page speed to increase your Quality Score and lower your CPC.",
    "tags": [
     "#Paid_Ads"
@@ -2023,7 +2023,7 @@
    "topic": "paid",
    "level": null,
    "term": "Programmatic Advertising",
-   "definition": "The automated buying and selling of online advertising space in real-time.",
+   "definition": "The automated buying and selling of online ad space through software (DSPs, SSPs, ad exchanges) rather than human negotiation. Covers both real-time bidding (RTB) and guaranteed deals.",
    "example": "Using a platform to automatically bid on banner space across thousands of websites in milliseconds.",
    "tags": [
     "#Paid_Ads"
@@ -2035,8 +2035,8 @@
    "topic": "paid",
    "level": null,
    "term": "DSP",
-   "definition": "Demand Side Platform: Software used by advertisers to buy mobile, search, and video ads from a marketplace.",
-   "example": "Using a DSP to manage multiple ad exchange accounts in one place.",
+   "definition": "Demand Side Platform: The advertiser-side software that automatically buys impressions (display, video, mobile, connected TV) across multiple ad exchanges, bidding according to your data and budget.",
+   "example": "Using The Trade Desk or Display & Video 360 to bid from a single interface on banners across thousands of websites.",
    "tags": [
     "#Paid_Ads_Tech"
    ]
@@ -2059,7 +2059,7 @@
    "topic": "paid",
    "level": null,
    "term": "RTB",
-   "definition": "Real-Time Bidding: The process in which advertising inventory is bought and sold on a per-impression basis, via programmatic auction.",
+   "definition": "Real-Time Bidding: The programmatic buying mode where each impression is auctioned individually, in milliseconds, at the moment the page loads.",
    "example": "The millisecond-long auction that happens every time you load a webpage with an ad.",
    "tags": [
     "#Paid_Ads_Tech"
@@ -2347,7 +2347,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Dark Social",
-   "definition": "Web traffic that comes from social media and messaging apps but is not easily tracked by web analytics tools.",
+   "definition": "Traffic that comes from private shares (messaging apps, email, SMS, closed groups) which analytics tools cannot attribute, and which therefore shows up as direct traffic.",
    "example": "A link shared in a private WhatsApp group or Slack DM.",
    "tags": [
     "#Analytics"
@@ -2371,8 +2371,8 @@
    "topic": "seo",
    "level": null,
    "term": "Zero-Click Search",
-   "definition": "A search engine results page (SERP) that answers the user's query directly at the top so they don't need to click any links.",
-   "example": "Searching for \"Weather in Paris\" and seeing the result immediately on Google.",
+   "definition": "A search that ends without any click on a result: the user gets the answer directly on the SERP (snippet, AI Overview, weather, conversion, business listing).",
+   "example": "Searching \"weather in Paris\", reading the temperature right on Google and closing the tab without opening any site.",
    "tags": [
     "#SEO"
    ]
@@ -2383,12 +2383,12 @@
    "topic": "growth",
    "level": null,
    "term": "LTV/CAC Ratio",
-   "definition": "A key metric to determine the efficiency of a marketing machine. Formula: LTV / CAC.;A ratio of 3:1 is considered healthy",
+   "definition": "Ratio comparing what a customer brings in over their lifetime with what it cost to acquire them. Formula: LTV / CAC. A ratio of about 3:1 is considered healthy.",
    "example": "1:1 means you are losing money after operational costs.",
    "tags": [
     "#Growth_Finance"
    ],
-   "cloze": "A key metric to determine the efficiency of a marketing machine. Formula: {{c1::LTV / CAC}}.;A ratio of 3:1 is considered healthy"
+   "cloze": "Ratio comparing what a customer brings in over their lifetime with what it cost to acquire them. Formula: {{c1::LTV / CAC}}. A ratio of about 3:1 is considered healthy."
   },
   {
    "id": "marketing-payback-period",
@@ -2481,8 +2481,8 @@
    "topic": "strategy",
    "level": null,
    "term": "North Star Metric",
-   "definition": "The single key measurement that best captures the core value that your product delivers to customers.;For Airbnb, it's \"Nights Booked\"",
-   "example": "for WhatsApp, it's \"Messages Sent\".",
+   "definition": "The single, lasting metric that best captures the core value your product delivers to customers, which the whole company aligns on for the long run.",
+   "example": "For Airbnb it's \"Nights Booked\"; for WhatsApp, \"Messages Sent\".",
    "tags": [
     "#Strategy"
    ]
@@ -2493,7 +2493,7 @@
    "topic": "strategy",
    "level": null,
    "term": "OMTM",
-   "definition": "One Metric That Matters: The one metric you focus on above all else for a specific period.",
+   "definition": "One Metric That Matters: The single metric you focus all your attention on during a given phase, and which changes when the phase changes.",
    "example": "Focusing 100% on \"Email Signups\" during a pre-launch phase.",
    "tags": [
     "#Strategy"
@@ -2505,7 +2505,7 @@
    "topic": "growth",
    "level": null,
    "term": "Lead Velocity Rate (LVR)",
-   "definition": "The month-over-month growth percentage of qualified leads.",
+   "definition": "LVR: Lead Velocity Rate. The month-over-month growth percentage in the number of qualified leads generated. A leading indicator of future revenue, not a measure of funnel speed.",
    "example": "Tracking if you are generating leads faster this month than last month to predict future revenue.",
    "tags": [
     "#Growth"
@@ -2541,7 +2541,7 @@
    "topic": "strategy",
    "level": null,
    "term": "SAL",
-   "definition": "Sales Accepted Lead: An MQL that has been passed to sales and meets the agreed-upon criteria.",
+   "definition": "Sales Accepted Lead: An MQL that the sales team agrees to take on because it meets the agreed criteria. The intermediate step between MQL and SQL.",
    "example": "A lead that the sales team agrees to work on after a quick manual review.",
    "tags": [
     "#Strategy"
@@ -2615,7 +2615,7 @@
    "topic": "tech",
    "level": null,
    "term": "DMARC",
-   "definition": "Domain-based Message Authentication, Reporting, and Conformance: An email authentication protocol.",
+   "definition": "Domain-based Message Authentication, Reporting and Conformance: a DNS record that builds on SPF and DKIM to tell receiving servers what to do with emails that fail (reject, quarantine) and sends you reports.",
    "example": "Setting up DMARC to prevent hackers from spoofing your domain for phishing.",
    "tags": [
     "#Tech_Email"
@@ -2627,7 +2627,7 @@
    "topic": "tech",
    "level": null,
    "term": "DKIM",
-   "definition": "DomainKeys Identified Mail: An email authentication method designed to detect forged sender addresses in email.",
+   "definition": "DomainKeys Identified Mail: a cryptographic signature added to each email's header and checked against a public key published in DNS, proving the message really comes from your domain and was not altered.",
    "example": "A digital \"signature\" that proves an email was actually sent by your brand.",
    "tags": [
     "#Tech_Email"
@@ -2640,7 +2640,7 @@
    "level": null,
    "term": "SPF",
    "definition": "Sender Policy Framework: A DNS record that lists the IP addresses allowed to send email on behalf of your domain.",
-   "example": "Preventing your marketing emails from being flagged as \"Unauthorized\".",
+   "example": "Adding Mailchimp's or Brevo's servers to your SPF record so they are allowed to send email on behalf of your domain.",
    "tags": [
     "#Tech_Email"
    ]
@@ -2712,7 +2712,7 @@
    "topic": "paid",
    "level": null,
    "term": "Broad Match",
-   "definition": "A keyword setting that allows your ad to show on queries that are related to your keyword.",
+   "definition": "The widest keyword match type: your ad can show on any search related to the topic of your keyword, even with no words in common. Written without punctuation: tennis shoes.",
    "example": "Targeting \"badminton\" might show your ad for \"shuttlecock reviews\" or \"sports shoes\".",
    "tags": [
     "#Paid_Ads"
@@ -2724,7 +2724,7 @@
    "topic": "paid",
    "level": null,
    "term": "Phrase Match",
-   "definition": "A keyword setting that allows your ad to show on searches that include the meaning of your keyword.",
+   "definition": "The middle keyword match type: your ad shows on searches that include the meaning of your keyword, with other words before or after. Written in quotes: \"tennis shoes\".",
    "example": "Targeting \"tennis shoes\" might show your ad for \"buy tennis shoes\" but not \"running shoes\".",
    "tags": [
     "#Paid_Ads"
@@ -2736,7 +2736,7 @@
    "topic": "paid",
    "level": null,
    "term": "Exact Match",
-   "definition": "A keyword setting that allows your ad to show on searches that have the same meaning as your keyword.",
+   "definition": "The narrowest keyword match type: your ad only shows on searches with the same meaning or intent as your keyword. Written in brackets: [tennis shoes].",
    "example": "Targeting [marketing coach] only shows your ad for \"marketing coach\" or very close variants.",
    "tags": [
     "#Paid_Ads"
@@ -2748,12 +2748,12 @@
    "topic": "paid",
    "level": null,
    "term": "Quality Score (Components)",
-   "definition": "The three factors are: Expected CTR, Ad Relevance, and Landing Page Experience.",
+   "definition": "The three components of the Google Ads Quality Score: Expected CTR, Ad Relevance, and Landing Page Experience. Each is rated below average, average, or above average.",
    "example": "Improving your page load speed to boost the \"Landing Page Experience\" part of your score.",
    "tags": [
     "#Paid_Ads"
    ],
-   "cloze": "The three factors are: {{c1::Expected CTR, Ad Relevance, and Landing Page Experience}}."
+   "cloze": "The three components of the Google Ads Quality Score: {{c1::Expected CTR, Ad Relevance, and Landing Page Experience}}. Each is rated below average, average, or above average."
   },
   {
    "id": "marketing-ad-extensions-assets",
@@ -2761,7 +2761,7 @@
    "topic": "paid",
    "level": null,
    "term": "Ad Extensions (Assets)",
-   "definition": "Additional information about your business that can be added to your Google Ads (links, phone number, location).",
+   "definition": "Additional information added to your Google Ads (sitelinks, phone number, location, prices). Google has called them \"assets\" instead of \"extensions\" since 2022.",
    "example": "Adding \"Sitelinks\" to show your \"Contact Us\" and \"Pricing\" pages directly in the ad.",
    "tags": [
     "#Paid_Ads"
@@ -2809,7 +2809,7 @@
    "topic": "paid",
    "level": null,
    "term": "CAPI",
-   "definition": "Conversions API: A Facebook tool that allows you to share web events directly from your server to Facebook.",
+   "definition": "Conversions API: Meta's tool that sends events (purchase, lead, sign-up) directly from your server to Meta's servers, alongside the browser pixel, to keep tracking reliable despite ad blockers and iOS.",
    "example": "Tracking sales even when a user has an AdBlocker or uses iOS 14+.",
    "tags": [
     "#Paid_Ads_Tech"
@@ -2845,8 +2845,8 @@
    "topic": "tech",
    "level": null,
    "term": "Third-Party Cookies (Deprecation)",
-   "definition": "Cookies set by a domain other than the one the user is visiting, currently being phased out by Chrome.",
-   "example": "The death of third-party cookies makes \"Remarketing\" much harder for advertisers.",
+   "definition": "Cookies set by a domain other than the one the user is visiting, used for cross-site ad tracking. Blocked by default in Safari and Firefox; Chrome finally dropped its plan to remove them in 2025.",
+   "example": "Safari and Firefox blocking third-party cookies makes remarketing far less precise, hence the rise of server-side tracking.",
    "tags": [
     "#Tech"
    ]
@@ -3014,7 +3014,7 @@
    "topic": "seo",
    "level": null,
    "term": "LSI Keywords",
-   "definition": "Latent Semantic Indexing: Words and phrases that are semantically related to a primary keyword.",
+   "definition": "Latent Semantic Indexing: SEO jargon for words and phrases semantically related to the primary keyword. The name is a misnomer, Google does not use LSI; the useful idea is covering the topic's semantic field.",
    "example": "If you write about \"Apple,\" LSI keywords like \"iPhone,\" \"Fruit,\" or \"Steve Jobs\" help Google understand the context.",
    "tags": [
     "#SEO"
@@ -3038,7 +3038,7 @@
    "topic": "seo",
    "level": null,
    "term": "Core Web Vitals",
-   "definition": "A set of specific factors that Google considers important in a webpage's overall user experience (LCP, FID, CLS).",
+   "definition": "A set of three metrics Google considers essential to a web page's user experience: LCP (loading), INP (responsiveness, which replaced FID in 2024) and CLS (visual stability).",
    "example": "Fixing a layout shift so buttons don't move while the page is loading.",
    "tags": [
     "#SEO_Technical"
@@ -3062,7 +3062,7 @@
    "topic": "seo",
    "level": null,
    "term": "FID",
-   "definition": "First Input Delay: Measures the time from when a user first interacts with your site to the time when the browser responds.",
+   "definition": "First Input Delay: Former Core Web Vitals metric that measured the delay between a user's first interaction (click, key press) and the moment the browser starts responding. Replaced by INP (Interaction to Next Paint) in March 2024.",
    "example": "Ensuring a user can click \"Sign Up\" immediately without the browser freezing.",
    "tags": [
     "#SEO_Technical"
@@ -3098,7 +3098,7 @@
    "topic": "seo",
    "level": null,
    "term": "External Linking",
-   "definition": "Linking from your website to a different website.",
+   "definition": "An outbound link: a link placed on one of your pages that points to a different website. The opposite of a backlink (a received link); citing reliable sources strengthens your content's credibility.",
    "example": "Linking to a study on Forbes.com to back up your marketing claims.",
    "tags": [
     "#SEO"
@@ -3110,8 +3110,8 @@
    "topic": "seo",
    "level": null,
    "term": "NoFollow Link",
-   "definition": "An HTML attribute that tells search engines not to pass authority (link juice) to the linked page.",
-   "example": "Using rel=\"nofollow\" for paid links so you don't get penalized by Google.",
+   "definition": "A link carrying the rel=\"nofollow\" attribute, asking search engines not to pass authority (link juice) to the linked page. Since 2019 Google treats it as a hint rather than a strict directive.",
+   "example": "Adding rel=\"nofollow\" to links in your blog comments (and rel=\"sponsored\" to paid links) so you don't vouch for those links to Google.",
    "tags": [
     "#SEO"
    ]
@@ -3122,8 +3122,8 @@
    "topic": "seo",
    "level": null,
    "term": "DoFollow Link",
-   "definition": "The default link state that allows search engines to follow the link and pass authority to the destination page.",
-   "example": "A link from a high-quality news site that helps your SEO.",
+   "definition": "The default state of a link (\"dofollow\" is not a real HTML attribute): without rel=\"nofollow\", search engines can follow it and pass authority to the destination page.",
+   "example": "A plain link with no rel=\"nofollow\", rel=\"sponsored\" or rel=\"ugc\": Google can follow it and give it weight.",
    "tags": [
     "#SEO"
    ]
@@ -3171,7 +3171,7 @@
    "level": null,
    "term": "Black Hat: Link Farm",
    "definition": "A group of websites that all link to each other or to a specific page to fake popularity.",
-   "example": "A dangerous tactic that can lead to a permanent ban from Google.",
+   "example": "A network of 200 empty sites created only to link to each other and to your store: a tactic that can earn a manual penalty from Google.",
    "tags": [
     "#SEO"
    ]
@@ -3243,7 +3243,7 @@
    "level": null,
    "term": "Pogo-sticking",
    "definition": "When a user clicks on a search result and then immediately clicks \"back\" to the SERP because the page wasn't helpful.",
-   "example": "Google seeing users pogo-sticking and lowering your ranking as a result.",
+   "example": "You search \"pancake recipe\", open the first result, find no recipe, hit back and click the second result instead.",
    "tags": [
     "#SEO"
    ]
@@ -3255,7 +3255,7 @@
    "level": null,
    "term": "Dwell Time",
    "definition": "The amount of time a user spends on a page after clicking a link in the SERP before returning to the results.",
-   "example": "A long dwell time is a signal to Google that your content is high quality.",
+   "example": "A three-minute dwell time on your article: the user read it before returning to the results. Google says it does not use it directly as a ranking factor.",
    "tags": [
     "#SEO"
    ]
@@ -3398,7 +3398,7 @@
    "topic": "strategy",
    "level": null,
    "term": "CSAT",
-   "definition": "Customer Satisfaction Score: A measure of how products and services supplied by a company meet or surpass customer expectation.",
+   "definition": "Customer Satisfaction Score: A metric measuring satisfaction with a specific product or interaction through a rating (often 1 to 5). The score is the percentage of satisfied answers.",
    "example": "Asking \"How satisfied were you with your support call today?\".",
    "tags": [
     "#Strategy"
@@ -3435,7 +3435,7 @@
    "topic": "growth",
    "level": null,
    "term": "Revenue Churn",
-   "definition": "The amount of revenue lost when customers cancel or downgrade their subscriptions.",
+   "definition": "The amount of recurring revenue lost when customers cancel or downgrade, without subtracting expansion (gross churn). Measured in money, not in number of customers.",
    "example": "Tracking if you are losing your \"Big Spenders\" or just \"Small Spenders\".",
    "tags": [
     "#Growth"
@@ -3447,7 +3447,7 @@
    "topic": "growth",
    "level": null,
    "term": "Logo Churn",
-   "definition": "The number of actual customers (companies or individuals) lost, regardless of their revenue.",
+   "definition": "The number of customer accounts (companies or individuals) lost over a period, regardless of how much revenue each one brought. Counts customers, where revenue churn counts money.",
    "example": "Losing 5 small clients while keeping your 1 big client.",
    "tags": [
     "#Growth"
@@ -3663,8 +3663,8 @@
    "topic": "tech",
    "level": null,
    "term": "AMP",
-   "definition": "Accelerated Mobile Pages: An open-source HTML framework to help web pages load faster on mobile devices.",
-   "example": "Google showing a \"Lightning Bolt\" icon next to news results that load instantly.",
+   "definition": "Accelerated Mobile Pages: an open-source HTML framework launched by Google in 2015 to build stripped-down pages that load almost instantly on mobile. Now in decline, superseded by Core Web Vitals.",
+   "example": "Google used to require AMP for the Top Stories carousel and showed a lightning-bolt icon; that ended in 2021 and many publishers have dropped it.",
    "tags": [
     "#Tech"
    ]
@@ -3675,7 +3675,7 @@
    "topic": "tech",
    "level": null,
    "term": "Progressive Web App (PWA)",
-   "definition": "A type of application software delivered through the web, built using common web technologies.",
+   "definition": "A website that, thanks to a service worker and a manifest, can be installed on the home screen, work offline and send push notifications like a native app, without going through an app store.",
    "example": "A website that acts like a mobile app and can work offline.",
    "tags": [
     "#Tech"
@@ -3699,7 +3699,7 @@
    "topic": "tech",
    "level": null,
    "term": "Webhook",
-   "definition": "A way for an app to provide other applications with real-time information.",
+   "definition": "An HTTP notification an application automatically sends to a URL you choose as soon as an event happens (order, form submission), so you don't have to keep polling its API.",
    "example": "Sending a notification to Slack the exact second a new sale happens in Shopify.",
    "tags": [
     "#Tech"
@@ -3724,7 +3724,7 @@
    "level": null,
    "term": "HTML",
    "definition": "HyperText Markup Language: The standard markup language for documents designed to be displayed in a web browser.",
-   "example": "Editing the `` tag to change a link's destination.",
+   "example": "Editing the href attribute of a link tag (a) to change where the link points.",
    "tags": [
     "#Tech"
    ]
@@ -3759,7 +3759,7 @@
    "topic": "tech",
    "level": null,
    "term": "DOM",
-   "definition": "Document Object Model: A programming interface for web documents.",
+   "definition": "Document Object Model: the tree representation of an HTML page loaded in the browser, which JavaScript (or a tool like GTM) can read and modify element by element.",
    "example": "GTM uses the DOM to find specific elements on a page to track.",
    "tags": [
     "#Tech"
@@ -3807,7 +3807,7 @@
    "topic": "seo",
    "level": null,
    "term": "Canonicalization",
-   "definition": "The process of picking the best URL when there are several choices (e.g., http vs https).",
+   "definition": "The process by which a site (or Google itself) chooses the reference URL among several versions of the same content: http or https, with or without www, with or without parameters. The canonical tag, 301 redirects and internal links all feed into it.",
    "example": "Ensuring all versions of your site point to the official `https://www.site.com`.",
    "tags": [
     "#SEO_Technical"
@@ -3819,7 +3819,7 @@
    "topic": "seo",
    "level": null,
    "term": "Indexability",
-   "definition": "The ability of a search engine to analyze and add a page to its database.",
+   "definition": "Whether a page, once crawled, can be added to the search engine's index. A noindex tag, a canonical pointing to another URL or an HTTP error block it.",
    "example": "A page with a \"noindex\" tag has zero indexability.",
    "tags": [
     "#SEO_Technical"
@@ -3831,7 +3831,7 @@
    "topic": "seo",
    "level": null,
    "term": "Crawlability",
-   "definition": "The ability of a search engine bot to access and crawl the content on a page.",
+   "definition": "Whether a search engine bot can reach a page and read its content: the step before indexing. A robots.txt block or a lack of links to the page prevents it.",
    "example": "A site with a broken navigation menu might have poor crawlability.",
    "tags": [
     "#SEO_Technical"
@@ -3843,8 +3843,8 @@
    "topic": "seo",
    "level": null,
    "term": "XML Sitemap",
-   "definition": "A list of a website's important pages, making sure Google can find and crawl them all.",
-   "example": "Updating your sitemap every time you publish a new blog post.",
+   "definition": "XML Sitemap: The XML-format file (often sitemap.xml) listing a site's important URLs with their last update date, submitted to Google Search Console to make crawling easier.",
+   "example": "Submitting https://site.com/sitemap.xml in Google Search Console and regenerating it every time you publish a new post.",
    "tags": [
     "#SEO_Technical"
    ]
@@ -3939,8 +3939,8 @@
    "topic": "analytics",
    "level": null,
    "term": "Attribution Bias",
-   "definition": "The systematic errors made when people evaluate or try to find reasons for their own and others' behaviors.",
-   "example": "Thinking a sale came from \"Magic\" instead of looking at the 5 ads the user saw.",
+   "definition": "The systematic distortion introduced by the chosen attribution model: for example, last click over-credits branded search and undervalues discovery channels (video, social).",
+   "example": "Cutting your YouTube ads because the \"last click\" report credits them with 0 sales, even though they are what makes people discover the brand.",
    "tags": [
     "#Analytics"
    ]
@@ -4144,7 +4144,7 @@
    "level": null,
    "term": "Market Penetration",
    "definition": "A measure of how much a product or service is being used by customers compared to the total estimated market.",
-   "example": "Calculating that only 1% of UK badminton players have heard of your brand.",
+   "example": "Calculating that only 1% of UK badminton players have bought your racket.",
    "tags": [
     "#Strategy"
    ]
@@ -4203,7 +4203,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Economies of Scale",
-   "definition": "The cost advantages that enterprises obtain due to their scale of operation, with cost per unit of output decreasing which scale.",
+   "definition": "The cost advantages that enterprises obtain due to their scale of operation, with cost per unit of output decreasing as scale increases.",
    "example": "A large company being able to buy ads 50% cheaper than a small startup.",
    "tags": [
     "#Strategy"
@@ -4227,7 +4227,7 @@
    "topic": "strategy",
    "level": null,
    "term": "SAM",
-   "definition": "Serviceable Addressable Market: The portion of TAM that is within your geographical reach.",
+   "definition": "Serviceable Addressable Market: The portion of TAM your offer can actually serve, given your geographic reach, your channels and regulatory constraints.",
    "example": "The total amount spent on \"Badminton gear\" in France specifically.",
    "tags": [
     "#Strategy"
@@ -4252,7 +4252,7 @@
    "level": null,
    "term": "CAC Payback (Formula)",
    "definition": "Formula: CAC / (ARPU * Gross Margin).",
-   "example": "The number of months it takes to \"break even\" on a new customer.",
+   "example": "CAC of $120, ARPU of $20/month, 75% gross margin: 120 / (20 × 0.75) = 8 months to pay back the customer.",
    "tags": [
     "#Growth_Finance"
    ],
@@ -4470,7 +4470,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Customer Feedback Loop",
-   "definition": "The process of using customer suggestions and complaints to improve your product or service.",
+   "definition": "The cycle of collecting customer feedback (suggestions, complaints), turning it into product improvements, then telling customers what changed so the cycle starts again.",
    "example": "Reading app store reviews and fixing the bugs that users mention.",
    "tags": [
     "#Strategy"
@@ -4506,7 +4506,7 @@
    "topic": "growth",
    "level": null,
    "term": "Anti-Churn Campaign",
-   "definition": "A marketing campaign specifically designed to win back customers who are at risk of leaving.",
+   "definition": "A marketing campaign specifically designed to keep customers who are at risk of leaving, or to win back those who have just canceled.",
    "example": "Sending a \"We miss you\" email with a 50% discount to users who haven't logged in for 30 days.",
    "tags": [
     "#Growth"
@@ -4544,7 +4544,7 @@
    "topic": "growth",
    "level": null,
    "term": "Lead Velocity",
-   "definition": "The speed at which leads are moving through your sales funnel.",
+   "definition": "How quickly leads move from one stage of the sales funnel to the next, up to purchase. Measures elapsed time, unlike LVR, which measures growth in the number of leads.",
    "example": "Measuring how many days it takes for a \"New Lead\" to become a \"Paying Customer\".",
    "tags": [
     "#Growth"
@@ -4580,7 +4580,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Win Rate",
-   "definition": "The percentage of leads in your pipeline that eventually become customers.",
+   "definition": "The percentage of opportunities (deals) in your pipeline that end in a won sale rather than a lost one. Calculated on deals, not on raw leads.",
    "example": "If you have 100 deals in your pipeline and close 20, your win rate is 20%.",
    "tags": [
     "#Strategy"
@@ -4628,12 +4628,12 @@
    "topic": "strategy",
    "level": null,
    "term": "Branding vs Direct Response",
-   "definition": "Branding is about long-term awareness;Direct Response is about immediate action.",
+   "definition": "Branding is about long-term awareness; Direct Response is about immediate action.",
    "example": "Using a TV ad for branding and a Google ad for direct response.",
    "tags": [
     "#Strategy"
    ],
-   "cloze": "{{c1::Branding}} is about long-term awareness;{{c1::Direct Response}} is about immediate action."
+   "cloze": "{{c1::Branding}} is about long-term awareness; Direct Response is about immediate action."
   },
   {
    "id": "marketing-contextual-advertising",
@@ -4641,7 +4641,7 @@
    "topic": "paid",
    "level": null,
    "term": "Contextual Advertising",
-   "definition": "Advertising on a website that is relevant to the page's content.",
+   "definition": "An advertising approach where the ad is chosen based on the topic of the page it appears on, not on the visitor's profile or browsing history. Works without cookies or personal data.",
    "example": "Showing an ad for \"Badminton rackets\" on a news article about the Olympic Badminton finals.",
    "tags": [
     "#Paid_Ads"
@@ -4678,7 +4678,7 @@
    "level": null,
    "term": "Header Bidding",
    "definition": "A technique that allows publishers to offer their ad space to multiple ad exchanges simultaneously before making a call to their ad server.",
-   "example": "Helping publishers get a higher price for their ad space through more competition.",
+   "example": "With Prebid.js, a news site has eight ad exchanges compete on every impression before Google Ad Manager assigns the slot.",
    "tags": [
     "#Paid_Ads_Tech"
    ]
@@ -4689,7 +4689,7 @@
    "topic": "paid",
    "level": null,
    "term": "Ad Exchange",
-   "definition": "A digital marketplace that enables advertisers and publishers to buy and sell advertising space.",
+   "definition": "An open digital marketplace where advertisers' DSPs and publishers' SSPs trade impressions through real-time auctions (e.g., Google AdX, OpenX, Xandr).",
    "example": "The \"Stock Exchange\" of digital ads (e.g., Google AdX, OpenX).",
    "tags": [
     "#Paid_Ads_Tech"
@@ -4749,7 +4749,7 @@
    "topic": "paid",
    "level": null,
    "term": "Native Ad Unit",
-   "definition": "An ad that mimics the content around it (e.g., a \"Promoted Tweet\" or a \"Sponsored Search Result\").",
+   "definition": "The concrete placement format a platform offers to insert an ad into its content stream: a sponsored post in a feed, a Promoted Tweet, a sponsored search result, a \"recommended for you\" widget.",
    "example": "An ad that looks just like a regular post in your Instagram feed.",
    "tags": [
     "#Paid_Ads"
@@ -4833,7 +4833,7 @@
    "topic": "paid",
    "level": null,
    "term": "Geofencing",
-   "definition": "Using GPS or RFID technology to create a virtual geographic boundary around a specific location.",
+   "definition": "A technique that draws a virtual boundary (GPS, Wi-Fi, RFID) around a specific location and triggers an action, an ad or a notification, when a mobile device enters or leaves the zone.",
    "example": "Sending a mobile notification to people when they walk within 100 meters of your store.",
    "tags": [
     "#Paid_Ads"
@@ -4846,7 +4846,7 @@
    "level": null,
    "term": "Hyperlocal Targeting",
    "definition": "Targeting an audience in a very small, specific geographic area (like a single neighborhood or street).",
-   "example": "Showing ads only to people who are currently inside a specific sports stadium.",
+   "example": "For your gym opening, targeting on Meta only the residents of the Croix-Rousse neighborhood in Lyon.",
    "tags": [
     "#Paid_Ads"
    ]
@@ -4857,7 +4857,7 @@
    "topic": "paid",
    "level": null,
    "term": "Contextual Keyword Targeting",
-   "definition": "Showing ads on pages that contain specific keywords.",
+   "definition": "A targeting setting (on the Google Display Network, for instance) where you supply a list of keywords and your ads only show on pages whose text contains those words.",
    "example": "Showing ads for \"Badminton coaching\" only on websites that mention the word \"Badminton\".",
    "tags": [
     "#Paid_Ads"
@@ -4929,7 +4929,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Cross-Device Tracking",
-   "definition": "The process of identifying that a user on a mobile phone is the same person as a user on a desktop computer.",
+   "definition": "The set of methods (deterministic or probabilistic) that link one person's visits across several devices, in order to rebuild a single journey from the ad to the purchase.",
    "example": "Knowing that a user clicked an ad on their phone but finally bought on their laptop.",
    "tags": [
     "#Analytics"
@@ -4941,8 +4941,8 @@
    "topic": "analytics",
    "level": null,
    "term": "Probabilistic Tracking",
-   "definition": "Estimating that two devices belong to the same person based on non-personal data (IP, browser version, location).",
-   "example": "A less accurate way of tracking users without a direct \"Login\" ID.",
+   "definition": "Linking two devices to the same person by statistical inference, from technical signals (IP address, browser, location, timing), with no certain identifier. Less accurate than deterministic tracking.",
+   "example": "Assuming that an iPhone and a MacBook on the same home Wi-Fi, with the same language and city, belong to the same person.",
    "tags": [
     "#Analytics"
    ]
@@ -4954,7 +4954,7 @@
    "level": null,
    "term": "Deterministic Tracking",
    "definition": "Identifying a user across devices because they have logged into the same account (e.g., Facebook or Google).",
-   "example": "The most accurate way to track a user's journey across phone, tablet, and PC.",
+   "example": "A user logged into their account on their phone and then on their PC: both visits are linked with certainty thanks to the login ID.",
    "tags": [
     "#Analytics"
    ]
@@ -5085,8 +5085,8 @@
    "topic": "analytics",
    "level": null,
    "term": "Engagement Rate (GA4)",
-   "definition": "The percentage of \"Engaged Sessions\" (sessions that lasted longer than 10s, had a conversion, or had 2+ page views).",
-   "example": "A better alternative to \"Bounce Rate\" for measuring user interest.",
+   "definition": "In GA4, the percentage of \"engaged sessions\": over 10 seconds, or a key event (conversion), or at least 2 page views. It is the complement of the GA4 bounce rate.",
+   "example": "A 45-second session on an article counts as engaged, even if the visitor only views one page.",
    "tags": [
     "#Analytics"
    ]
@@ -5121,7 +5121,7 @@
    "topic": "tech",
    "level": null,
    "term": "SQL (Structured Query Language)",
-   "definition": "A programming language used for managing and manipulating databases.",
+   "definition": "A query language used to retrieve, filter and manipulate the data stored in a relational database.",
    "example": "Writing a query to find \"All customers who spent more than $500 last month\".",
    "tags": [
     "#Tech"
@@ -5134,7 +5134,7 @@
    "level": null,
    "term": "Data Visualization",
    "definition": "The graphical representation of information and data (charts, graphs, maps).",
-   "example": "Creating a dashboard in Looker Studio to show your monthly marketing performance.",
+   "example": "Showing your traffic trend over 12 months as a line chart rather than a table of 12 numbers.",
    "tags": [
     "#Analytics"
    ]
@@ -5206,7 +5206,7 @@
    "level": null,
    "term": "Artificial Intelligence (AI)",
    "definition": "The simulation of human intelligence processes by machines, especially computer systems.",
-   "example": "Using a tool like ChatGPT to generate 500 marketing terms for Anki.",
+   "example": "Gmail's spam filter, your phone's voice recognition or ChatGPT are all applications of AI.",
    "tags": [
     "#Tech"
    ]
@@ -5217,8 +5217,8 @@
    "topic": "tech",
    "level": null,
    "term": "LLM",
-   "definition": "Large Language Model: A type of AI trained on vast amounts of text data to understand and generate human-like language.",
-   "example": "Gemini, GPT-4, and Claude are examples of LLMs.",
+   "definition": "Large Language Model: a transformer-based neural network trained on huge text corpora to predict and generate text, the engine behind assistants like ChatGPT, Gemini or Claude.",
+   "example": "GPT-5, Gemini and Claude are LLMs.",
    "tags": [
     "#Tech"
    ]
@@ -5241,7 +5241,7 @@
    "topic": "tech",
    "level": null,
    "term": "NLP",
-   "definition": "Natural Language Processing: A branch of AI that helps computers understand, interpret, and manipulate human language.",
+   "definition": "Natural Language Processing: the branch of AI that lets machines analyze and produce human language: sentiment analysis, translation, entity extraction. LLMs are its most recent tool.",
    "example": "Using NLP to automatically categorize 1,000 customer reviews into \"Positive\" or \"Negative\".",
    "tags": [
     "#Tech"
@@ -5266,7 +5266,7 @@
    "level": null,
    "term": "Zero-shot Prompting",
    "definition": "Asking an AI to perform a task without giving it any examples.",
-   "example": "\"Write a poem about badminton.\".",
+   "example": "\"Write a poem about badminton.\"",
    "tags": [
     "#Tech"
    ]
@@ -5290,7 +5290,7 @@
    "level": null,
    "term": "Chain of Thought",
    "definition": "A prompting technique where you ask the AI to \"think step-by-step\" to solve a complex problem.",
-   "example": "Asking an AI to \"First analyze the market, then define the persona, then write the ad\".",
+   "example": "Asking an AI: \"Before suggesting a budget, reason step by step: first compute the cost per lead, compare it with the average order value, then conclude.\"",
    "tags": [
     "#Tech"
    ]
@@ -5325,8 +5325,8 @@
    "topic": "tech",
    "level": null,
    "term": "Deepfake",
-   "definition": "An image or video of a person in which their face or body has been digitally altered so that they appear to be someone else.",
-   "example": "A dangerous marketing tactic where a celebrity's face is used without their permission.",
+   "definition": "An image, video or voice generated or altered by AI to make a real person appear to say or do something they never said or did.",
+   "example": "A fake video of a celebrity endorsing a crypto scam, run as an ad without their consent.",
    "tags": [
     "#Tech"
    ]
@@ -5337,7 +5337,7 @@
    "topic": "paid",
    "level": null,
    "term": "Programmatic Creative",
-   "definition": "The use of AI to automatically assemble and test different versions of an ad (images, headlines, CTA).",
+   "definition": "An umbrella term for the automated production of ad creatives: generating variants, adapting them to formats and testing them at scale, often before the campaign runs.",
    "example": "Testing 1,000 different ad variations automatically to see which one works best.",
    "tags": [
     "#Paid_Ads"
@@ -5349,7 +5349,7 @@
    "topic": "paid",
    "level": null,
    "term": "Dynamic Creative Optimization (DCO)",
-   "definition": "A form of programmatic advertising that uses real-time data to change the elements of an ad for each individual viewer.",
+   "definition": "A technology that assembles the ad at impression time, picking its elements (image, headline, offer) from the viewer's data: location, weather, time of day, product viewed.",
    "example": "Changing the background color of an ad based on the weather in the user's city.",
    "tags": [
     "#Paid_Ads"
@@ -5385,7 +5385,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Omnichannel Marketing",
-   "definition": "A lead-nurturing and user-engagement strategy in which a company gives its customers access to their products on all channels.",
+   "definition": "A strategy that connects every channel (website, app, email, social media, physical store) into one seamless, consistent experience, each channel aware of what happened on the others. Unlike multichannel, where channels run in silos.",
    "example": "Ensuring your brand looks and feels the same on Instagram, Email, and in your physical shop.",
    "tags": [
     "#Strategy"
@@ -5409,7 +5409,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Voice of the Customer (VoC)",
-   "definition": "A research technique used to capture the requirements, expectations, and aversions of customers.",
+   "definition": "A research approach that collects and analyzes what customers express (needs, expectations, pain points) through interviews, surveys or reviews, before decisions are made.",
    "example": "Conducting 1-on-1 interviews with your top 10% of customers to understand why they stay.",
    "tags": [
     "#Strategy"
@@ -5422,7 +5422,7 @@
    "level": null,
    "term": "Net Revenue Retention (NRR)",
    "definition": "The percentage of recurring revenue retained from existing customers over a given period. Formula: (Starting MRR + Expansion - Contraction - Churn) / Starting MRR.",
-   "example": "A NRR over 100% means your business is growing even without new customers.",
+   "example": "An NRR over 100% means your business is growing even without new customers.",
    "tags": [
     "#Growth_Finance"
    ],
@@ -5510,7 +5510,7 @@
    "level": null,
    "term": "Break-even Point",
    "definition": "The point at which total cost and total revenue are equal, meaning there is no net loss or gain.",
-   "example": "Calculated as: {{c1::Fixed Costs / (Price - Variable Costs)}}.",
+   "example": "With $10,000 in fixed costs and a $50 margin per racket (price minus variable cost), you break even at 200 rackets sold.",
    "tags": [
     "#Strategy_Finance"
    ]
@@ -5533,7 +5533,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Diminishing Returns",
-   "definition": "A point at which the level of profits or benefits gained is less than the amount of money or energy invested.",
+   "definition": "The phenomenon where each additional unit invested (budget, time, effort) yields less than the previous one: the marginal gain shrinks as investment grows.",
    "example": "Spending $10k on ads might be great, but spending $100k might not give you 10x the results.",
    "tags": [
     "#Strategy"
@@ -5606,7 +5606,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Saturation Point",
-   "definition": "The stage at which no more of a product can be sold because there are no new customers or the market is full.",
+   "definition": "The stage where nearly every potential customer is already equipped: sales can only grow through replacement purchases or by taking share from competitors.",
    "example": "When every badminton player in France already owns your racket.",
    "tags": [
     "#Strategy"
@@ -5618,7 +5618,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Market Maturity",
-   "definition": "The stage in a product's life cycle when it is well-established and has reached its peak growth.",
+   "definition": "The stage in a product's life cycle when it is well established, growth slows and sales plateau, with competition shifting mostly to price and customer retention.",
    "example": "Selling \"Standard shuttlecocks\" in a market where everyone already knows what they are.",
    "tags": [
     "#Strategy"
@@ -5691,7 +5691,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Co-creation",
-   "definition": "A business strategy focusing on customer experience and interactive relationships, allowing customers to help create the product.",
+   "definition": "An approach where a brand designs or improves its product together with its own customers (ideas, votes, tests) to strengthen the relationship and the customer experience.",
    "example": "Asking your LinkedIn followers to vote on the next flavor of your protein powder.",
    "tags": [
     "#Strategy"
@@ -5703,7 +5703,7 @@
    "topic": "strategy",
    "level": null,
    "term": "Crowdsourcing",
-   "definition": "The practice of obtaining information or input into a task or project by enlisting the services of a large number of people.",
+   "definition": "Handing a task or project to a large crowd of outside contributors through an open call (usually online) to obtain ideas, content or work at scale.",
    "example": "Using a platform like 99designs to get 100 different designers to submit logo ideas.",
    "tags": [
     "#Strategy"
@@ -5740,7 +5740,7 @@
    "level": null,
    "term": "Full-Stack Marketer",
    "definition": "A marketer who can handle every part of the marketing process, from strategy and copy to technical setup and data analysis.",
-   "example": "An alternant who can write a blog, set up the GTM tracking, and run the Facebook ads.",
+   "example": "An apprentice who can write a blog post, set up the GTM tracking, and run the Facebook ads.",
    "tags": [
     "#Strategy"
    ]
@@ -5835,12 +5835,12 @@
    "topic": "strategy",
    "level": null,
    "term": "OKR",
-   "definition": "Objectives and Key Results: A goal-setting framework used by companies like Google. Objective: Where do we want to go? Key Result: How do we know we got there?.",
+   "definition": "Objectives and Key Results: A goal-setting framework used by companies like Google. Objective: where do we want to go? Key Result: how do we know we got there?",
    "example": "Objective: \"Become the #1 Badminton brand\". Key Result: \"Reach $1M in sales by December\".",
    "tags": [
     "#Strategy"
    ],
-   "cloze": "Objectives and Key Results: A goal-setting framework used by companies like Google. Objective: {{c1::Where do we want to go?}} Key Result: {{c1::How do we know we got there?}}."
+   "cloze": "Objectives and Key Results: A goal-setting framework used by companies like Google. Objective: where do we want to go? Key Result: {{c1::how do we know we got there?}}"
   },
   {
    "id": "marketing-kpi-vs-okr",
@@ -5848,12 +5848,12 @@
    "topic": "strategy",
    "level": null,
    "term": "KPI vs OKR",
-   "definition": "KPIs track health and performance;OKRs track growth and ambitious goals.",
+   "definition": "KPIs track health and performance; OKRs track growth and ambitious goals.",
    "example": "KPI: \"Maintain 2% CTR\". OKR: \"Double our website traffic in 3 months\".",
    "tags": [
     "#Strategy"
    ],
-   "cloze": "{{c1::KPIs}} track health and performance;{{c1::OKRs}} track growth and ambitious goals."
+   "cloze": "{{c1::KPIs}} track health and performance; OKRs track growth and ambitious goals."
   },
   {
    "id": "marketing-s-m-a-r-t-goals",
@@ -6415,7 +6415,7 @@
    "level": "intermediaire",
    "term": "Small Language Model (SLM)",
    "definition": "A more compact version of an LLM that can run on a phone or laptop instead of a massive server.",
-   "example": "Google's Gemini Nano or Microsoft's Phi-3.",
+   "example": "Google's Gemini Nano or Microsoft's Phi-4.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6439,7 +6439,7 @@
    "level": "intermediaire",
    "term": "Compute",
    "definition": "The total amount of processing power (hardware + time) used to train or run an AI model.",
-   "example": "Training a model like GPT-4 requires millions of dollars in compute.",
+   "example": "Training a model like GPT-4 took more than $100 million in compute, according to OpenAI.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6498,7 +6498,7 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Prompt Chaining",
-   "definition": "A workflow where the output of one AI prompt is used as the input for the next prompt.",
+   "definition": "A sequence of prompts defined in advance by a human, where the output of one prompt is used as the input for the next. The AI runs the steps but does not choose them.",
    "example": "Prompt 1: \"Outline a blog.\" -> Prompt 2: \"Write the introduction based on that outline.\"",
    "tags": [
     "#AI_Medium"
@@ -6534,7 +6534,7 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Data Privacy (AI)",
-   "definition": "The challenge of ensuring that sensitive information used to train or prompt an AI is not leaked or misused.",
+   "definition": "The challenge of ensuring that sensitive information (customer data, company secrets) given to an AI, in training or in prompts, is neither exposed to third parties nor reused for other purposes.",
    "example": "Ensuring your company's secret marketing strategy isn't used to train public AI models.",
    "tags": [
     "#AI_Medium"
@@ -6559,7 +6559,7 @@
    "level": "intermediaire",
    "term": "Seed",
    "definition": "A number used to initialize the randomness in an AI generation, allowing you to recreate the exact same result later.",
-   "example": "Using \"Seed 123\" to get the same image style every time in Stable Diffusion.",
+   "example": "Setting \"seed = 123\" in Stable Diffusion to regenerate exactly the same image from the same prompt and settings.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6594,7 +6594,7 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "LoRA",
-   "definition": "Low-Rank Adaptation: A technique to fine-tune large models very quickly and with very little computer power.",
+   "definition": "Low-Rank Adaptation: The most widely used PEFT method. It freezes the model's weights and trains only small added matrices, making fine-tuning fast and cheap in computing power.",
    "example": "Using a LoRA to teach an AI a specific artistic style or a new character's face.",
    "tags": [
     "#AI_Medium"
@@ -6606,8 +6606,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Quantization",
-   "definition": "The process of reducing the precision of an AI model's numbers to make it smaller and faster without losing too much \"intelligence\".",
-   "example": "Turning a 70GB model into a 4GB model so it can run on a MacBook.",
+   "definition": "The process of reducing the precision of a model's weights (e.g. from 16-bit to 4-bit numbers) to make it smaller and faster while losing very little \"intelligence\".",
+   "example": "Shrinking an 8-billion-parameter model from 16GB to about 5GB so it can run on a MacBook.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6618,8 +6618,8 @@
    "topic": "ai",
    "level": "avance",
    "term": "MoE",
-   "definition": "Mixture of Experts: An AI architecture where only a small part of the model is \"active\" for any given prompt to save energy.",
-   "example": "Mistral and GPT-4 are rumored to use MoE to be more efficient.",
+   "definition": "Mixture of Experts: An architecture where a \"router\" activates, for each token, only a few \"expert\" sub-networks out of many. The model is huge, but each answer costs the compute of a much smaller model.",
+   "example": "Mistral's Mixtral, DeepSeek-V3 and Meta's Llama 4 are MoE models.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6630,8 +6630,8 @@
    "topic": "ai",
    "level": "avance",
    "term": "Parameter-Efficient Fine-Tuning (PEFT)",
-   "definition": "A set of techniques (like LoRA) that allow you to fine-tune a model by only changing a tiny percentage of its parameters.",
-   "example": "Training an AI on your company data in 1 hour instead of 1 month.",
+   "definition": "The family of fine-tuning techniques that train only a tiny fraction of a model's parameters (adapters, LoRA, prompt tuning) instead of all its weights. LoRA is its best-known method.",
+   "example": "Adapting a model to your company's data in a few hours on a single GPU instead of weeks on a cluster.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6642,7 +6642,7 @@
    "topic": "ai",
    "level": "avance",
    "term": "RLAIF",
-   "definition": "Reinforcement Learning from AI Feedback: Using one AI to train and \"grade\" another AI, reducing the need for human raters.",
+   "definition": "Reinforcement Learning from AI Feedback: A variant of RLHF where an AI model, rather than humans, rates the responses used to train the target model.",
    "example": "Anthropic's \"Constitutional AI\" approach uses RLAIF for alignment.",
    "tags": [
     "#AI_Hard"
@@ -6654,7 +6654,7 @@
    "topic": "ai",
    "level": "avance",
    "term": "Constitutional AI",
-   "definition": "A method of training AI where the model is given a set of \"principles\" or a \"constitution\" to follow when generating responses.",
+   "definition": "Anthropic's training method where the model critiques and revises its own responses against a written list of principles (the \"constitution\"), then learns from those revised versions, with very little human labeling.",
    "example": "Teaching an AI to be \"Helpful, Honest, and Harmless\" via a written document.",
    "tags": [
     "#AI_Hard"
@@ -6667,7 +6667,7 @@
    "level": "avance",
    "term": "Knowledge Distillation",
    "definition": "The process of transferring knowledge from a large, complex \"teacher\" model to a smaller \"student\" model.",
-   "example": "Making a small mobile-friendly AI as smart as a giant server-based AI.",
+   "example": "Getting a small mobile-friendly AI almost as capable as the giant model that served as its teacher.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6691,7 +6691,7 @@
    "level": "avance",
    "term": "Autoregressive Model",
    "definition": "A model that predicts the next element in a sequence based on all the previous elements.",
-   "example": "The core mechanism of GPT models: they predict one word at a time.",
+   "example": "The core mechanism of GPT models: they generate one token at a time, each conditioned on all the previous ones.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6715,7 +6715,7 @@
    "level": "avance",
    "term": "Backpropagation",
    "definition": "The fundamental algorithm used to train neural networks by calculating how much each neuron contributed to an error.",
-   "example": "The \"learning\" process where the model adjusts its weights to get a better result next time.",
+   "example": "After each error, backpropagation works backward through the network layer by layer to compute the gradient of every weight; gradient descent then uses it to adjust them.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6726,7 +6726,7 @@
    "topic": "ai",
    "level": "avance",
    "term": "Gradient Descent",
-   "definition": "An optimization algorithm used to find the best possible weights for a neural network.",
+   "definition": "An optimization algorithm that adjusts a network's weights step by step, in the direction that lowers the loss function, using the gradients computed by backpropagation.",
    "example": "Visualized as \"walking down a hill\" to find the lowest point of error.",
    "tags": [
     "#AI_Hard"
@@ -6750,7 +6750,7 @@
    "topic": "ai",
    "level": "avance",
    "term": "Sparsity",
-   "definition": "A characteristic of a model where many of its parameters are set to zero, making it much faster to run.",
+   "definition": "A property of a model where a large share of its weights are zero or stay inactive for a given computation, sharply reducing the compute and memory needed to run it.",
    "example": "MoE models use \"sparsity\" to only activate the relevant \"experts\" for a specific task.",
    "tags": [
     "#AI_Hard"
@@ -6775,7 +6775,7 @@
    "level": "avance",
    "term": "Catastrophic Forgetting",
    "definition": "When an AI model is trained on a new task and completely loses its ability to perform the tasks it learned previously.",
-   "example": "A common problem when trying to update an AI model with new information.",
+   "example": "A model heavily fine-tuned on French law that can then barely code in Python anymore.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6786,7 +6786,7 @@
    "topic": "ai",
    "level": "avance",
    "term": "Agentic Workflow",
-   "definition": "A multi-step process where an AI \"reasons\" about which tools to use and in what order to solve a complex problem.",
+   "definition": "A multi-step process where the AI itself decides, as it goes, which tools to call and in what order to solve a complex problem.",
    "example": "An AI deciding to \"Search Google\", then \"Analyze the data\", then \"Write a summary\".",
    "tags": [
     "#AI_Hard"
@@ -6822,8 +6822,8 @@
    "topic": "ai",
    "level": "avance",
    "term": "Model Decay",
-   "definition": "The gradual decrease in an AI's performance over time if it is not updated with new data.",
-   "example": "An AI that still thinks the year is 2021 because its training data is old.",
+   "definition": "The gradual decline of a model's performance over time because the real world changes (data drift) while the model is not retrained.",
+   "example": "A spam filter letting through more and more spam because spammers' techniques have changed since it was trained.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6859,7 +6859,7 @@
    "level": "avance",
    "term": "Turing Completeness",
    "definition": "The ability of a system (like a programming language) to solve any computational problem, given enough time and memory.",
-   "example": "Prompting an AI in a way that allows it to simulate a full computer system.",
+   "example": "Python or JavaScript are Turing complete; HTML on its own is not, since it can neither loop nor compute.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6930,7 +6930,7 @@
    "topic": "ai",
    "level": "avance",
    "term": "Model Collapse",
-   "definition": "A theoretical future where AI models are trained on so much \"AI-generated content\" that they become stupid and lose their original quality.",
+   "definition": "The degradation of a model trained on too much content generated by other AIs: the diversity of the data shrinks and quality drops with each generation. Demonstrated experimentally in 2024.",
    "example": "The risk of the internet being flooded with low-quality AI text that \"pollutes\" future training.",
    "tags": [
     "#AI_Hard"
@@ -7026,7 +7026,7 @@
    "topic": "code",
    "level": "intermediaire",
    "term": "Git",
-   "definition": "A version control system used to track changes in computer files and coordinate work on those files among multiple people.",
+   "definition": "Free, distributed version control software: every developer holds a full copy of the file history, which makes it possible to track changes and coordinate work among several people.",
    "example": "Using Git to \"roll back\" to a previous version of the site after a bad update.",
    "tags": [
     "#Code_Medium"
@@ -7038,7 +7038,7 @@
    "topic": "code",
    "level": "intermediaire",
    "term": "GitHub",
-   "definition": "A cloud-based hosting service that lets you manage Git repositories and collaborate on code.",
+   "definition": "A web service (owned by Microsoft) that hosts Git repositories in the cloud and adds collaboration tools on top: pull requests, issues, code review.",
    "example": "Checking your developer's GitHub to see the progress on the new landing page template.",
    "tags": [
     "#Code_Medium"
@@ -7098,8 +7098,8 @@
    "topic": "code",
    "level": "intermediaire",
    "term": "Framework",
-   "definition": "A platform of pre-written code that provides a foundation for developing software applications (e.g., React, Vue, Angular).",
-   "example": "Building a fast web app using the React framework.",
+   "definition": "A pre-written code skeleton that imposes a structure on your application and calls your code at the right moments (inversion of control). E.g. Angular, Vue, Next.js, Django.",
+   "example": "Building a web app with the Next.js framework, which dictates how pages, routing and rendering are organized.",
    "tags": [
     "#Code_Medium"
    ]
@@ -7110,7 +7110,7 @@
    "topic": "code",
    "level": "intermediaire",
    "term": "Library",
-   "definition": "A collection of pre-written code snippets that can be used to perform common tasks (e.g., jQuery).",
+   "definition": "A collection of pre-written functions that your code calls when it needs them, with no imposed structure, for common tasks. E.g. jQuery, Lodash, Chart.js.",
    "example": "Using a JavaScript library to create a smooth image slider on your homepage.",
    "tags": [
     "#Code_Medium"
@@ -7122,7 +7122,7 @@
    "topic": "code",
    "level": "intermediaire",
    "term": "SDK",
-   "definition": "Software Development Kit: A set of software tools and programs used by developers to create applications for specific platforms.",
+   "definition": "Software Development Kit: the package a platform's vendor (iOS, Android, Meta, Stripe…) provides, with libraries, documentation and tools to build applications for that platform.",
    "example": "Installing the Facebook SDK in your mobile app to track installs and in-app events.",
    "tags": [
     "#Code_Medium"
@@ -7170,8 +7170,8 @@
    "topic": "code",
    "level": "intermediaire",
    "term": "SSL Certificate",
-   "definition": "Secure Sockets Layer: A digital certificate that authenticates a website's identity and enables an encrypted connection (HTTPS).",
-   "example": "Ensuring your site has a green lock icon to build trust and improve SEO ranking.",
+   "definition": "Secure Sockets Layer: a digital certificate, issued by a certificate authority, that proves a website's identity and enables the encrypted HTTPS connection. The current protocol is TLS, but the \"SSL\" name stuck.",
+   "example": "Installing a free Let's Encrypt certificate so your site runs on HTTPS and Chrome stops showing \"Not secure\" next to the URL.",
    "tags": [
     "#Code_Medium"
    ]
@@ -7267,7 +7267,7 @@
    "level": "avance",
    "term": "Client-Side Rendering (CSR)",
    "definition": "A technique where the browser downloads a minimal HTML page and uses JavaScript to render the content.",
-   "example": "A faster experience for the user once the site is loaded, but sometimes harder for SEO.",
+   "example": "A single page application (SPA) built with React or Vue: Googlebot first receives an almost empty page and must run the JavaScript to see the content.",
    "tags": [
     "#Code_Hard"
    ]
@@ -7278,7 +7278,7 @@
    "topic": "code",
    "level": "avance",
    "term": "Headless Architecture",
-   "definition": "A system where the \"content storage\" (back-end) is separated from the \"presentation layer\" (front-end).",
+   "definition": "An architecture where the back-end that stores the content (e.g. a headless CMS) exposes it through an API without imposing a front-end: any website or app can consume it.",
    "example": "Managing content in Contentful and displaying it on a custom-built React website.",
    "tags": [
     "#Code_Hard"
@@ -7315,7 +7315,7 @@
    "level": "avance",
    "term": "Encryption",
    "definition": "The process of converting information or data into a code, especially to prevent unauthorized access.",
-   "example": "Ensuring all customer passwords are encrypted in your database.",
+   "example": "Your customers' card numbers encrypted in your database: without the key, an attacker who steals the file gets nothing but gibberish.",
    "tags": [
     "#Code_Hard"
    ]
@@ -7326,8 +7326,8 @@
    "topic": "code",
    "level": "avance",
    "term": "Query String",
-   "definition": "The part of a URL that contains data to be passed to web applications (e.g., ?id=123).",
-   "example": "Seeing `?gclid=...` in a URL, which is the query string Google uses to track ad clicks.",
+   "definition": "The part of a URL after the question mark, made of key=value pairs (e.g. ?id=123&lang=en), that passes parameters to the web application.",
+   "example": "Seeing `?gclid=…` in a URL: that is the query string Google Ads appends to track ad clicks.",
    "tags": [
     "#Code_Hard"
    ]
@@ -7350,7 +7350,7 @@
    "topic": "code",
    "level": "avance",
    "term": "Slug",
-   "definition": "The part of a URL that identifies a particular page in a human-readable format.",
+   "definition": "The last part of a URL path, in readable words separated by hyphens, that identifies a specific page (e.g. /local-seo-guide). No question mark, no parameters.",
    "example": "In `theopezet.com/ai-marketing-newsletter`, the slug is `ai-marketing-newsletter`.",
    "tags": [
     "#Code_Hard"
@@ -7374,12 +7374,12 @@
    "topic": "code",
    "level": "avance",
    "term": "404 vs 301",
-   "definition": "404 means \"Not Found\";301 is a \"Permanent Redirect\".",
+   "definition": "404: HTTP code \"Not Found\", the requested page does not exist. 301: \"Moved Permanently\", a permanent redirect to a new URL that passes the SEO value on to it.",
    "example": "Using a 301 redirect to send users from a deleted product page to a similar new one.",
    "tags": [
     "#Code_Hard"
    ],
-   "cloze": "{{c1::404}} means \"Not Found\";{{c1::301}} is a \"Permanent Redirect\"."
+   "cloze": "404: HTTP code \"Not Found\", the requested page does not exist. {{c1::301}}: \"Moved Permanently\", a permanent redirect to a new URL that passes the SEO value on to it."
   },
   {
    "id": "marketing-conversion",
@@ -7417,8 +7417,8 @@
    "topic": "general",
    "level": null,
    "term": "CPM",
-   "definition": "Cost Per Mille. The cost an advertiser pays for every 1,000 views or impressions of an advertisement.",
-   "example": "Paying $10 to have your video ad shown to 1,000 different people on YouTube.",
+   "definition": "Cost Per Mille. The price an advertiser pays for 1,000 impressions, i.e. 1,000 displays of an ad, whether it is clicked or not.",
+   "example": "Paying $10 to have your banner displayed 1,000 times on news sites, even if nobody clicks on it.",
    "tags": []
   },
   {
@@ -7467,7 +7467,7 @@
    "topic": "general",
    "level": null,
    "term": "Retargeting",
-   "definition": "A form of online advertising that can help you keep your brand in front of bounced traffic after they leave your website.",
+   "definition": "A form of online advertising that keeps your brand in front of visitors who left your website without converting, by showing them ads on other sites or social networks.",
    "example": "Seeing an ad on Facebook for a pair of shoes you just looked at on an e-commerce site.",
    "tags": []
   },
@@ -7487,8 +7487,8 @@
    "topic": "general",
    "level": null,
    "term": "Title Tag",
-   "definition": "An HTML element that specifies the title of a web page. It is the clickable headline in search results.",
-   "example": "Setting your page title to \"Best Protein Powders 2024\" to attract shoppers.",
+   "definition": "The HTML <title> tag, placed in the page's <head>: its text does not appear in the page body but in the browser tab and as the clickable headline in search results.",
+   "example": "Setting \"Best Protein Powders 2026 | YourStoreName\" as the <title> so it shows up in Google and attracts shoppers.",
    "tags": []
   },
   {
@@ -7517,7 +7517,7 @@
    "topic": "general",
    "level": null,
    "term": "Lead Generation",
-   "definition": "The process of attracting and converting strangers and prospects into someone who has shown interest in your product.",
+   "definition": "The process of attracting strangers and turning them into leads: identified contacts (name, email, etc.) who have shown interest in your product or service.",
    "example": "Using a LinkedIn ad to offer a free guide in exchange for professional email addresses.",
    "tags": []
   },
@@ -7527,7 +7527,7 @@
    "topic": "general",
    "level": null,
    "term": "Marketing Mix",
-   "definition": "The set of tactics (Product, Price, Place, Promotion) that a company uses to promote its brand in the market.",
+   "definition": "The set of levers a company combines to bring its offer to market, summarized as the 4Ps: Product, Price, Place (distribution) and Promotion (communication).",
    "example": "Deciding to sell a premium coaching service at $500 via social media with video ads.",
    "tags": []
   },
@@ -7557,7 +7557,7 @@
    "topic": "general",
    "level": null,
    "term": "Blogging",
-   "definition": "The act of writing and publishing short articles on a website to drive traffic and establish authority.",
+   "definition": "Regularly writing and publishing articles on a website to drive traffic (often via search engines) and establish authority.",
    "example": "Writing a weekly article on Google Ads updates to attract new clients to your marketing agency.",
    "tags": []
   },
@@ -7607,8 +7607,8 @@
    "topic": "general",
    "level": null,
    "term": "Micro-Influencer",
-   "definition": "An influencer with a smaller but highly engaged following, typically between 1,000 and 100,000 followers.",
-   "example": "A badminton coach with 5,000 followers who are all extremely active and interested in his racket reviews.",
+   "definition": "An influencer with a smaller but highly engaged following, typically between 10,000 and 100,000 followers (below that, they are called nano-influencers).",
+   "example": "A badminton coach with 25,000 followers who are all extremely active and interested in his racket reviews.",
    "tags": []
   },
   {
@@ -7628,7 +7628,7 @@
    "level": null,
    "term": "Sponsorship",
    "definition": "A form of advertising where a company pays to be associated with a specific event or person.",
-   "example": "A marketing tool paying to have its logo on all the shirts at a major football tournament.",
+   "example": "A marketing software company paying to have its logo on a team's shirts during a major football tournament.",
    "tags": []
   },
   {
@@ -7688,7 +7688,7 @@
    "level": null,
    "term": "Bio",
    "definition": "A short descriptive blurb about a person or business on a social media profile.",
-   "example": "Writing \"Digital Marketing Expert",
+   "example": "Writing \"Digital Marketing Expert. I help small businesses find customers online\" under your name on your LinkedIn profile.",
    "tags": []
   },
   {
@@ -7697,7 +7697,7 @@
    "topic": "general",
    "level": null,
    "term": "Tagging",
-   "definition": "Using a username in a post to link to a person's profile and notify them.",
+   "definition": "The action, by the author of a post, of identifying an account (with @ or the tagging tool on a photo or story) in order to link its profile and notify it.",
    "example": "Mentioning a colleague in your LinkedIn post by typing \"@Name\" so they see it.",
    "tags": []
   },
@@ -7707,7 +7707,7 @@
    "topic": "general",
    "level": null,
    "term": "Mention",
-   "definition": "When someone includes your username in a social media post or comment.",
+   "definition": "When another account cites your username (@you) in a post or comment; a brand monitors its mentions to gauge awareness and respond to them.",
    "example": "Receiving a notification because a client wrote a post saying they loved working with you.",
    "tags": []
   },
@@ -7737,8 +7737,8 @@
    "topic": "general",
    "level": null,
    "term": "Disruption Marketing",
-   "definition": "A strategy that uses unconventional methods to grab attention by surprising the audience.",
-   "example": "A brand placing a giant, weird statue in a city center to make people curious and talk about it.",
+   "definition": "A method (popularized by Jean-Marie Dru, TBWA) that identifies a market's conventions and deliberately breaks them to reposition the brand with a new vision, beyond a one-off stunt.",
+   "example": "An online bank that breaks the convention \"a bank has branches and fees\" and builds its whole communication around being 100% mobile and free.",
    "tags": []
   },
   {
@@ -7857,7 +7857,7 @@
    "topic": "general",
    "level": null,
    "term": "CPV",
-   "definition": "Cost Per View. A bidding method for video campaigns where you pay for a view (usually counted after 30 seconds).",
+   "definition": "Cost Per View. A bidding method for video campaigns where you pay per view; the threshold depends on the platform (30 seconds or an interaction on YouTube, a few seconds on Meta or TikTok).",
    "example": "Paying $0.10 every time someone watches your YouTube ad for at least 30 seconds.",
    "tags": []
   },
@@ -7867,7 +7867,7 @@
    "topic": "general",
    "level": null,
    "term": "Guerrilla Marketing",
-   "definition": "An unconventional and low-cost marketing strategy that focuses on high energy and imagination to grab attention.",
+   "definition": "An unconventional, low-cost strategy that relies on creativity rather than budget: surprise actions, often in public spaces (street marketing), to grab attention and get people talking.",
    "example": "Using chalk to draw giant advertisements on public sidewalks to surprise people walking by.",
    "tags": []
   },
@@ -7917,7 +7917,7 @@
    "topic": "general",
    "level": null,
    "term": "H1 Tag",
-   "definition": "The primary HTML heading on a page, used to tell users and search engines the main topic of the content.",
+   "definition": "The <h1> tag: the main heading visible in the page body (usually only one per page), which tells readers and search engines what the content is about.",
    "example": "The main title of your article: \"How to Grow Your LinkedIn Audience in 2026.\"",
    "tags": []
   },
@@ -7947,8 +7947,8 @@
    "topic": "general",
    "level": null,
    "term": "NoFollow",
-   "definition": "An attribute used in HTML to tell search engines that a link should not pass any SEO \"authority\" to the target page.",
-   "example": "Adding \"nofollow\" to links in your blog comments so spammers don't get SEO benefits from your site.",
+   "definition": "A value of a link's rel attribute (rel=\"nofollow\") asking search engines not to pass SEO authority to the target page; Google has treated it as a mere hint since 2019.",
+   "example": "Adding rel=\"nofollow\" (or rel=\"ugc\") to links left in your blog comments so spammers get no SEO benefit from your site.",
    "tags": []
   },
   {
@@ -7967,7 +7967,7 @@
    "topic": "general",
    "level": null,
    "term": "Ad Extension",
-   "definition": "A feature that shows additional business information with your ad, like a phone number or extra links.",
+   "definition": "An asset (formerly \"extension\") added to a Google Ads ad to show extra business information: phone number, sitelinks, address, callouts. Google renamed extensions \"assets\" in 2022.",
    "example": "Adding a clickable \"Call Now\" button or a link to your \"Reviews\" page directly on your Google ad.",
    "tags": []
   },
@@ -8007,7 +8007,7 @@
    "topic": "general",
    "level": null,
    "term": "Buyer Persona",
-   "definition": "A fictional character created to represent a specific type of customer that might use your service in a similar way.",
+   "definition": "A named, semi-fictional portrait of a typical customer (age, role, goals, objections), built from research and real data to guide your messaging and targeting.",
    "example": "Creating \"CEO Chris,\" a 45-year-old tech leader who needs to save time on marketing reports.",
    "tags": []
   },
@@ -8017,7 +8017,7 @@
    "topic": "general",
    "level": null,
    "term": "Customer Profiling",
-   "definition": "The process of using data to describe a group of customers based on their common traits and behaviors.",
+   "definition": "Analyzing real data to describe a group of existing customers by their shared traits and behaviors (age, location, buying habits), without creating a character.",
    "example": "Finding out that most of your coaching clients are men aged 25-35 who live in big cities.",
    "tags": []
   },
@@ -8077,7 +8077,7 @@
    "topic": "general",
    "level": null,
    "term": "Behaviors",
-   "definition": "Marketing data based on the specific actions users take online, such as pages visited or products purchased.",
+   "definition": "An ad targeting criterion based on users' actual actions (pages visited, purchases, devices used), as opposed to demographic criteria or interests.",
    "example": "Showing an ad for a tennis racket only to someone who just visited a sports equipment website.",
    "tags": []
   },
@@ -8157,7 +8157,7 @@
    "topic": "general",
    "level": null,
    "term": "SWOT Analysis",
-   "definition": "A strategic planning technique used to identify Strengths, Weaknesses, Opportunities, and Threats related to business competition.",
+   "definition": "A strategic planning technique that maps, for a business or project, its internal Strengths and Weaknesses and the external Opportunities and Threats it faces.",
    "example": "Realizing your \"Strength\" is your LinkedIn following, but your \"Weakness\" is a lack of technical SEO knowledge.",
    "tags": []
   },
@@ -8267,7 +8267,7 @@
    "topic": "general",
    "level": null,
    "term": "Net Profit",
-   "definition": "The actual profit after working expenses, taxes, and interest have been paid.",
+   "definition": "The actual profit left after operating expenses, taxes, and interest have been paid.",
    "example": "The money left in your bank account at the end of the year after paying for your ads, software, and taxes.",
    "tags": []
   },
@@ -8307,7 +8307,7 @@
    "topic": "general",
    "level": null,
    "term": "Market Saturation",
-   "definition": "A situation in which a product has become diffused within a market; the volume of a product in a market has reached its maximum.",
+   "definition": "A situation where demand for a product has hit its ceiling: almost every potential customer already has one, so growth can only come from replacements or from taking share from competitors.",
    "example": "Trying to sell a new smartphone in a country where every single person already owns two of them.",
    "tags": []
   },
@@ -8337,7 +8337,7 @@
    "topic": "general",
    "level": null,
    "term": "Style Guide",
-   "definition": "A document that provides guidelines for the way your brand should look and sound to ensure consistency.",
+   "definition": "A document that sets how your brand looks and sounds (logo, colors, typography, voice, spelling of names) so every piece of content stays consistent.",
    "example": "A PDF that says \"Always use this specific shade of green and never use emojis in our official emails.\"",
    "tags": []
   },
@@ -8347,7 +8347,7 @@
    "topic": "general",
    "level": null,
    "term": "Editorial Policy",
-   "definition": "A set of guidelines that governs the content produced by a brand to ensure quality and alignment with values.",
+   "definition": "A set of rules defining what a brand will and will not publish: topics, positions, sources, ethics, review process. It governs the substance of content, not its look.",
    "example": "A rule stating that your newsletter will never promote gambling or low-quality AI tools.",
    "tags": []
   },
@@ -8447,7 +8447,7 @@
    "topic": "general",
    "level": null,
    "term": "Featured Snippet",
-   "definition": "A short summary of an answer to a search query, displayed by Google at the very top of the results page.",
+   "definition": "An excerpt from a web page (paragraph, list, or table) that Google shows above the regular results, with a link to the page, to answer the query directly. Also called \"position zero.\"",
    "example": "Searching \"How to play badminton\" and seeing a boxed paragraph at the top that explains the rules instantly.",
    "tags": []
   },
@@ -8477,7 +8477,7 @@
    "topic": "general",
    "level": null,
    "term": "Session",
-   "definition": "A group of user interactions with your website that take place within a given time frame (usually 30 minutes).",
+   "definition": "A group of interactions by one user with your site (page views, clicks, events) grouped into a single visit. In GA4, a session ends after 30 minutes of inactivity.",
    "example": "A user visiting your site, reading three articles, and leaving; all of that counts as one session.",
    "tags": []
   },
@@ -8497,7 +8497,7 @@
    "topic": "general",
    "level": null,
    "term": "First-Click Attribution",
-   "definition": "A model that gives all the credit for a sale to the first marketing channel that brought the customer to your website.",
+   "definition": "A model that gives all the credit for a sale to the first marketing channel that brought the customer to your site. Google Ads and GA4 retired it in 2023 in favor of data-driven attribution.",
    "example": "Crediting a Facebook ad for a sale that happened two weeks later after the user received three follow-up emails.",
    "tags": []
   },
@@ -8537,8 +8537,8 @@
    "topic": "general",
    "level": null,
    "term": "Latent Semantic Indexing",
-   "definition": "A method used by search engines to identify the relationship between terms and concepts in a piece of content.",
-   "example": "If your article mentions \"racket,\" \"shuttlecock,\" and \"court,\" Google knows you are talking about badminton, not tennis.",
+   "definition": "A 1980s text analysis technique that finds related terms through co-occurrence. In SEO, \"LSI keywords\" loosely means a topic's related vocabulary, but Google has confirmed it does not use this method.",
+   "example": "A tool telling you to add \"racket,\" \"shuttlecock,\" and \"court\" to your badminton article as \"LSI keywords\": related vocabulary helps Google grasp the topic, but not through LSI.",
    "tags": []
   },
   {
@@ -8648,7 +8648,7 @@
    "level": null,
    "term": "Affiliate Network",
    "definition": "A platform that acts as an intermediary between publishers (affiliates) and merchant brands to track sales and pay commissions.",
-   "example": "Joining a network like Awin or Amazon Associates to find products to promote on your blog and get paid.",
+   "example": "Joining a network like Awin or CJ Affiliate to find products from many brands to promote on your blog and get paid.",
    "tags": []
   },
   {
@@ -8657,8 +8657,8 @@
    "topic": "general",
    "level": null,
    "term": "Cookie Deprecation",
-   "definition": "The phase-out of third-party cookies by major browsers, which makes it harder for marketers to track users across different websites.",
-   "example": "Google Chrome removing support for cookies, forcing advertisers to find new ways to target their ads accurately.",
+   "definition": "The phase-out of third-party cookies by browsers (Safari and Firefox block them by default), which makes cross-site tracking harder for marketers. Chrome ultimately dropped its plan to remove them in 2024-2025.",
+   "example": "Preparing your targeting without third-party cookies (first-party data, consent, server-side measurement) because Safari and Firefox already block them, even though Chrome kept them.",
    "tags": []
   },
   {
@@ -8987,8 +8987,8 @@
    "topic": "general",
    "level": null,
    "term": "GMV",
-   "definition": "Gross Merchandise Value. The total value of merchandise sold over a given period of time through a customer-to-customer exchange site.",
-   "example": "An e-commerce platform announcing they processed $1 million in total sales this year, even if their own commission is only 10%.",
+   "definition": "Gross Merchandise Value. The total value of merchandise sold over a given period through a marketplace or e-commerce site, before deducting commissions, fees and returns.",
+   "example": "A marketplace announcing $1 million in GMV this year, while its actual revenue (its 10% commission) is only $100,000.",
    "tags": []
   },
   {
@@ -9017,7 +9017,7 @@
    "topic": "general",
    "level": null,
    "term": "Order Gap Analysis",
-   "definition": "The study of the time delay between a customer's first purchase and their subsequent purchases.",
+   "definition": "The study of the average time between a customer's successive orders, used to predict when their next purchase is due and time your reminders accordingly.",
    "example": "Identifying that customers usually wait 45 days before re-ordering supplements, so you send a reminder on day 40.",
    "tags": []
   },
@@ -9157,7 +9157,7 @@
    "topic": "general",
    "level": null,
    "term": "IP Warming",
-   "definition": "The practice of gradually increasing the volume of emails sent from a new IP address to build a positive reputation with ISPs.",
+   "definition": "The practice of gradually increasing, over days or weeks, the volume of emails sent from a new IP address to build it a good reputation with mailbox providers (Gmail, Outlook…).",
    "example": "Sending only 50 emails on day 1, 100 on day 2, and 500 on day 3 when starting a new server.",
    "tags": []
   },
@@ -9177,7 +9177,7 @@
    "topic": "general",
    "level": null,
    "term": "Throttling",
-   "definition": "The process of limiting the number of emails sent to a single ISP (like Gmail) over a period of time to avoid being blocked.",
+   "definition": "Limiting the sending rate (emails per hour) to a single mailbox provider such as Gmail during a campaign, so you stay under its thresholds and avoid being blocked.",
    "example": "Your email tool sending your 50,000 emails slowly over 5 hours instead of all at once.",
    "tags": []
   },
@@ -9377,7 +9377,7 @@
    "topic": "general",
    "level": null,
    "term": "Decoy Effect",
-   "definition": "A phenomenon where consumers will tend to have a specific change in preference between two options when also presented with a third option that is \"asymmetrically dominated.\"",
+   "definition": "A bias where adding a third, deliberately less attractive option (the decoy) shifts consumers' preference toward one of the two original options, usually the pricier one.",
    "example": "Offering a Small coffee for $3, a Large for $7, and a Medium for $6.50 so people feel the Large is the best deal.",
    "tags": []
   },
@@ -9607,8 +9607,8 @@
    "topic": "general",
    "level": null,
    "term": "Psychological Pricing",
-   "definition": "A pricing/marketing strategy based on the theory that certain prices have a psychological impact.",
-   "example": "Pricing a product at $99 instead of $100 because it \"feels\" significantly cheaper to the human brain.",
+   "definition": "The family of pricing techniques that play on how customers perceive a price rather than on its actual value, such as charm pricing, prestige pricing or a crossed-out former price.",
+   "example": "Showing $49.99 (charm pricing), setting a very high round price (prestige pricing) or displaying a crossed-out former price: three psychological pricing techniques.",
    "tags": []
   },
   {
@@ -9667,7 +9667,7 @@
    "topic": "general",
    "level": null,
    "term": "Contextual Targeting",
-   "definition": "A method of displaying ads based on the specific content of the webpage the user is currently viewing.",
+   "definition": "An ad targeting method that picks the ad based on the content of the page being viewed (keywords, topic), with no data about the person. The classic keyword-and-category approach.",
    "example": "Showing an ad for your AI newsletter on an article about \"The Best AI Trends of 2026.\"",
    "tags": []
   },
@@ -9716,7 +9716,7 @@
    "subject": "marketing",
    "topic": "general",
    "level": null,
-   "term": "Reach Frequency",
+   "term": "Reach & Frequency",
    "definition": "The strategy of balancing how many people see an ad (Reach) with how many times they see it (Frequency).",
    "example": "Deciding it's better to show an ad to 10,000 people twice each rather than 20,000 people only once.",
    "tags": []
@@ -9747,7 +9747,7 @@
    "topic": "general",
    "level": null,
    "term": "Viral Growth",
-   "definition": "A measure of how many new users are acquired through the referrals or actions of existing users.",
+   "definition": "Growth in which existing users bring in new ones (referrals, sharing, invitations). It is measured by the viral coefficient (K): above 1, each user recruits more than one new user on average.",
    "example": "Launching a \"Refer 3 friends and get a month free\" campaign that doubles your subscriber count in a week.",
    "tags": []
   },
@@ -9757,7 +9757,7 @@
    "topic": "general",
    "level": null,
    "term": "Server-Side GTM",
-   "definition": "A version of Google Tag Manager where the tracking code runs on a private server you own, rather than in the user's browser.",
+   "definition": "A variant of Google Tag Manager where tags run in a server container you control (on your own subdomain) instead of in the browser: the site sends its events to that server, which forwards them to GA4, Meta and other tools.",
    "example": "Sending data from your website to your own server first to bypass ad-blockers before sending it to Facebook.",
    "tags": []
   },
@@ -9767,7 +9767,7 @@
    "topic": "general",
    "level": null,
    "term": "Data Warehouse",
-   "definition": "A central system that stores and manages data from many different sources for the purpose of analysis and reporting.",
+   "definition": "A central repository that consolidates structured data (tables) from many sources so it can be analyzed and queried with SQL for reporting. Examples: BigQuery, Snowflake.",
    "example": "Using Google BigQuery to store all your LinkedIn, Google Ads, and CRM data in one single place for deep analysis.",
    "tags": []
   },
@@ -9807,8 +9807,8 @@
    "topic": "general",
    "level": null,
    "term": "Conversions API (CAPI)",
-   "definition": "A tool that connects your marketing data directly from your server to the platform (like Meta) instead of using browser cookies.",
-   "example": "Telling Meta exactly when a purchase happened on your server to ensure your ad tracking is 100% accurate.",
+   "definition": "Meta's interface that receives your conversion events (purchase, lead) directly from your server or CRM, alongside the browser pixel, so tracking no longer depends on cookies or ad blockers. Server-side GTM can feed it these events.",
+   "example": "Sending Meta each confirmed purchase and its amount from your server, so the conversion is counted even when the browser blocked the pixel.",
    "tags": []
   },
   {
@@ -9827,7 +9827,7 @@
    "topic": "general",
    "level": null,
    "term": "SQL Joins",
-   "definition": "A command in SQL used to combine rows from two or more tables based on a related column between them.",
+   "definition": "The SQL JOIN clause, which combines rows from two or more tables based on a shared column (key). Its variants (INNER, LEFT, RIGHT, FULL) decide which unmatched rows are kept.",
    "example": "Joining your \"Customers\" table with your \"Orders\" table to see exactly what each specific person bought.",
    "tags": []
   },
@@ -9837,7 +9837,7 @@
    "topic": "general",
    "level": null,
    "term": "Machine Learning Attribution",
-   "definition": "An advanced way of using AI to look at millions of customer journeys and determine exactly which marketing channel deserves credit.",
+   "definition": "Data-driven attribution: a statistical or machine learning model learns, from thousands of customer journeys, the real weight of each channel instead of a fixed rule like last click. Markov chains and the Shapley value are two such methods.",
    "example": "Using an algorithm to discover that a \"small\" YouTube mention actually caused 40% of your final sales.",
    "tags": []
   },
@@ -9847,8 +9847,8 @@
    "topic": "general",
    "level": null,
    "term": "Bayesian Media Mix Modeling",
-   "definition": "A statistical method that uses historical data and \"prior knowledge\" to estimate the effectiveness of different marketing channels.",
-   "example": "Using math to prove that increasing your LinkedIn spend by 20% will result in a 5% increase in total revenue.",
+   "definition": "Media mix modeling (a regression on aggregated data: spend per channel and sales over time, with no individual tracking) that adds Bayesian \"priors\", prior knowledge that stabilizes the estimates. Example: Google's Meridian.",
+   "example": "Estimating from two years of history that increasing your LinkedIn spend by 20% would lift total revenue by about 5%.",
    "tags": []
   },
   {
@@ -9917,7 +9917,7 @@
    "topic": "general",
    "level": null,
    "term": "Bearer Token",
-   "definition": "A type of security key used in APIs to prove that the person or app making a request has permission to access the data.",
+   "definition": "An access token sent in the Authorization header of an API request (\"Bearer <token>\") to prove the app is authorized. Anyone holding it can use it, which is why it must be kept secret.",
    "example": "A secret code your tracking tool uses to \"talk\" to the LinkedIn API and download your latest lead data.",
    "tags": []
   },
@@ -9947,7 +9947,7 @@
    "topic": "general",
    "level": null,
    "term": "Markov Chain Attribution",
-   "definition": "A math model that calculates the probability of a user moving from one marketing channel to the next to determine channel value.",
+   "definition": "An attribution model that represents the customer journey as a sequence of states (channels) with transition probabilities between them. A channel's value is its \"removal effect\": the share of conversions lost if that channel is removed.",
    "example": "Discovering that if people see your LinkedIn post first, they are 3x more likely to eventually buy via email.",
    "tags": []
   },
@@ -9997,8 +9997,8 @@
    "topic": "general",
    "level": null,
    "term": "Privacy Sandbox",
-   "definition": "A series of proposals by Google to create web standards that allow for advertising without using individual tracking (third-party cookies).",
-   "example": "Google Chrome grouping you into a \"segment\" of users interested in \"badminton\" instead of tracking your specific name.",
+   "definition": "Google's set of proposed Chrome APIs (2019-2025) for targeting and measuring ads without third-party cookies. Google dropped its plan to remove those cookies in 2024, then retired most of the APIs (including Topics) in late 2025.",
+   "example": "The Topics API grouped Chrome users into interests like \"badminton\" instead of tracking their identity; it was dropped in 2025.",
    "tags": []
   },
   {
@@ -10017,7 +10017,7 @@
    "topic": "general",
    "level": null,
    "term": "Contextual Intelligence",
-   "definition": "Advanced AI that analyzes the \"mood\" and specific meaning of a webpage to place relevant ads without using personal data.",
+   "definition": "The AI-powered evolution of contextual targeting: language models analyze a page's meaning, tone and emotion (not just keywords) to place a relevant ad, still without any personal data.",
    "example": "An AI realizing an article is about \"healthy recipes\" and placing an ad for organic olive oil.",
    "tags": []
   },
@@ -10198,7 +10198,7 @@
    "level": null,
    "term": "Unit Economics",
    "definition": "The direct revenues and costs of a business model expressed on a per-unit basis (per customer).",
-   "example": "Calculating that for every 1 euro spent on ads, you generate 4 euros in immediate revenue.",
+   "example": "Working out that a subscriber costs you 40 euros to acquire (CAC) and brings 120 euros of margin over their lifetime (LTV): an LTV/CAC ratio of 3, so the model is profitable per customer.",
    "tags": []
   },
   {
@@ -10227,7 +10227,7 @@
    "topic": "general",
    "level": null,
    "term": "Difference-in-Differences",
-   "definition": "A statistical technique that calculates the effect of a campaign by comparing changes over time between a test group and a control group.",
+   "definition": "A quasi-experimental method that measures a campaign's effect by comparing how an exposed group changes over time versus an unexposed control group, without random assignment of individuals (often geographic areas).",
    "example": "Launching ads in Paris but not in Lyon, then comparing the growth difference between the two cities.",
    "tags": []
   },
@@ -10237,7 +10237,7 @@
    "topic": "general",
    "level": null,
    "term": "Uplift Modeling",
-   "definition": "A predictive modeling technique that identifies which specific customers will only buy if they receive a marketing message.",
+   "definition": "Predictive modeling that estimates, for each customer, the incremental effect of a marketing action: their probability of buying with versus without the message. It isolates the \"persuadables\" you should target first.",
    "example": "Targeting only persuadable users with a discount, instead of wasting money on people who were going to buy anyway.",
    "tags": []
   },
@@ -10277,7 +10277,7 @@
    "topic": "general",
    "level": null,
    "term": "Protected Audience API",
-   "definition": "A privacy proposal that allows browsers to show relevant ads without letting advertisers track individual users.",
+   "definition": "Google's Privacy Sandbox API (formerly FLEDGE) for remarketing: interest groups are stored in the browser and the ad auction runs on the device, with no identifier shared with advertisers. Google announced its retirement in late 2025.",
    "example": "Your browser remembering you liked sports gear and letting an ad auction happen locally on your device for privacy.",
    "tags": []
   },
@@ -10317,8 +10317,8 @@
    "topic": "general",
    "level": null,
    "term": "Share of Search",
-   "definition": "A metric that measures the percentage of all Google searches for a specific category that go to your brand.",
-   "example": "If there are 10,000 searches for marketing coach and 2,000 are for your name, your Share of Search is 20%.",
+   "definition": "The share of Google searches for your brand among all brand searches in your category (you plus your competitors). An awareness indicator that often leads market share.",
+   "example": "If the marketing coaches in your category get 10,000 brand searches a month in total and your name accounts for 2,000 of them, your Share of Search is 20%.",
    "tags": []
   },
   {
@@ -10326,7 +10326,7 @@
    "subject": "marketing",
    "topic": "general",
    "level": null,
-   "term": "Hicks Law",
+   "term": "Hick's Law",
    "definition": "A principle stating that the more choices a user has, the longer it will take them to make a decision.",
    "example": "Limiting your website navigation to 4 items instead of 12 to help visitors find what they need faster.",
    "tags": []
@@ -10336,7 +10336,7 @@
    "subject": "marketing",
    "topic": "general",
    "level": null,
-   "term": "Fitts Law",
+   "term": "Fitts's Law",
    "definition": "A model predicting that the time to move to a target depends on the distance to and the size of the target.",
    "example": "Making your Buy Now button huge and placing it where the user's thumb naturally rests on a screen.",
    "tags": []
@@ -10388,7 +10388,7 @@
    "level": null,
    "term": "dbt (data build tool)",
    "definition": "A framework that allows data analysts to transform, test, and document data in a data warehouse using SQL.",
-   "example": "Using dbt to automatically clean your raw ad data and turn it into a perfect report every morning.",
+   "example": "Writing dbt models that clean your raw ad data every morning and turn it into clean, tested tables ready for your dashboard.",
    "tags": []
   },
   {
@@ -10397,7 +10397,7 @@
    "topic": "general",
    "level": null,
    "term": "Data Lineage",
-   "definition": "A visual map that shows the entire lifecycle of a piece of data, from its source to its final location in a dashboard.",
+   "definition": "The traceability of a piece of data: where it comes from, which transformations it went through and which reports it ends up in. Often shown as a map, it lets you audit every number on a dashboard.",
    "example": "Being able to prove exactly where a Sale number came from before it reached the CEO's final report.",
    "tags": []
   },
@@ -10407,7 +10407,7 @@
    "topic": "general",
    "level": null,
    "term": "Vector Search",
-   "definition": "A search method that uses AI to find results based on meaning and intent rather than just matching exact keywords.",
+   "definition": "A search method that turns the query and documents into embeddings (numeric vectors of meaning) and returns the closest content, even with no keyword in common. It is the retrieval building block of RAG pipelines.",
    "example": "A user searches for marketing help for people who hate selling and your site finds Empathy-based growth using AI.",
    "tags": []
   },
@@ -10457,7 +10457,7 @@
    "topic": "general",
    "level": null,
    "term": "Propensity to Churn",
-   "definition": "A score assigned to each customer that predicts how likely they are to stop using your service in the near future.",
+   "definition": "The probability, computed by a predictive model from past behavior, that a given customer will cancel or stop using your service in the near future. A statistical score, not a hand-built composite indicator.",
    "example": "Your CRM flagging a user who hasn't opened your last 3 emails as High Churn Risk to trigger a reminder.",
    "tags": []
   },
@@ -10467,8 +10467,8 @@
    "topic": "general",
    "level": null,
    "term": "MROA",
-   "definition": "Marketing Return on Assets. A metric that measures marketing efficiency relative to total assets like brand equity.",
-   "example": "Measuring how much the value of your brand name has grown after a year of high-quality LinkedIn posting.",
+   "definition": "Marketing Return on Assets. A ratio comparing the profit generated by marketing to the assets it relies on, including intangible ones (brand equity, customer base), rather than to spend alone as ROI does.",
+   "example": "Comparing the profit your brand generated this year to the value of your brand equity and customer base, rather than only to the ad budget you spent.",
    "tags": []
   },
   {
@@ -10477,7 +10477,7 @@
    "topic": "general",
    "level": null,
    "term": "Closed-Loop Attribution",
-   "definition": "A system that tracks a lead from the first click through the entire sales process to the final dollar spent.",
+   "definition": "A system that links marketing data (source, campaign, first click) to CRM sales data and feeds the revenue actually closed back to each channel, so campaigns are judged on customers won, not just leads.",
    "example": "Your CRM telling Google Ads: That person who clicked your ad 3 months ago just signed a 10,000 euro contract today.",
    "tags": []
   },
@@ -10497,7 +10497,7 @@
    "topic": "general",
    "level": null,
    "term": "Schema Graph",
-   "definition": "A set of structured data that helps search engines understand the relationships between different entities on your site.",
+   "definition": "Structured data markup (JSON-LD) in which your site's entities (Organization, Person, Article) are linked to each other through @id identifiers, so search engines understand how they relate.",
    "example": "Adding code that tells Google: This person is the Author of this Article and the Founder of this Company.",
    "tags": []
   },
@@ -10528,7 +10528,7 @@
    "level": null,
    "term": "First Contentful Paint",
    "definition": "A performance metric measuring the time from when the page starts loading to when any content is rendered on screen.",
-   "example": "Ensuring the background and logo of your site appear in less than 1 second to make it feel fast.",
+   "example": "Making sure your page's logo and headline show up in under one second, well below the 1.8 s threshold Google rates as good, so the site feels fast.",
    "tags": []
   },
   {
@@ -10537,7 +10537,7 @@
    "topic": "general",
    "level": null,
    "term": "Total Blocking Time",
-   "definition": "The total amount of time a web page is blocked from responding to user input, like clicks.",
+   "definition": "A lab metric (Lighthouse) that adds up, between First Contentful Paint and interactivity, the portion of each main-thread long task beyond 50 ms: the time during which the page cannot respond to clicks.",
    "example": "A user tries to click Sign up but nothing happens for 2 seconds because the site is still processing code.",
    "tags": []
   },
@@ -10557,7 +10557,7 @@
    "topic": "general",
    "level": null,
    "term": "Synthetic Control",
-   "definition": "A statistical method used to evaluate a marketing change by creating a fake version of the test group using other data.",
+   "definition": "A geo-testing statistical method that combines several unexposed areas (cities, regions) with weights to rebuild what the test area would have done without the campaign, then measures the gap.",
    "example": "Using data from five cities to create a Synthetic Lyon to see how your ads changed the real Lyon.",
    "tags": []
   },
@@ -10567,7 +10567,7 @@
    "topic": "general",
    "level": null,
    "term": "Causal Impact Model",
-   "definition": "A modern approach that uses time-series data to predict what would have happened if a campaign never launched.",
+   "definition": "A method popularized by Google's CausalImpact package: a Bayesian time-series model, trained on the pre-campaign period and control series, predicts the curve your metric would have followed without the campaign.",
    "example": "Proving that your Summer Sale caused 5,000 euros in extra sales that would not have happened naturally.",
    "tags": []
   },
@@ -10587,8 +10587,8 @@
    "topic": "general",
    "level": null,
    "term": "Composable CDP",
-   "definition": "A data platform that does not store data itself but instead sits on top of your existing data warehouse.",
-   "example": "Using your main database to power your marketing emails directly, ensuring data is always 100% accurate.",
+   "definition": "A CDP that does not copy data into its own store: it runs on your existing data warehouse (BigQuery, Snowflake) to build segments and pushes them to activation tools, often through reverse ETL.",
+   "example": "Plugging a tool like Hightouch into your data warehouse to send the \"inactive customers\" segment to your email tool every morning, without duplicating the data anywhere else.",
    "tags": []
   },
   {
@@ -10627,8 +10627,8 @@
    "topic": "general",
    "level": null,
    "term": "Incremental ROAS",
-   "definition": "The return on ad spend calculated only on the additional sales generated by increasing your budget, rather than total sales.",
-   "example": "Spending 1,000 euros more to see if it actually brings in new customers or just the ones who would have bought anyway.",
+   "definition": "iROAS: return on ad spend computed only on the sales that would not have happened without the ads, measured through a holdout or geo test, rather than on all attributed sales.",
+   "example": "A holdout test shows that 1,000 euros of ads generated 3,000 euros of sales that would not have existed without them: an iROAS of 3, while the classic ROAS shows 8.",
    "tags": []
   },
   {
@@ -10677,8 +10677,8 @@
    "topic": "general",
    "level": null,
    "term": "Magic Number",
-   "definition": "A SaaS efficiency metric that measures how much new revenue is generated for every dollar spent on sales and marketing.",
-   "example": "If your Magic Number is 1.0, it means every euro spent on ads creates exactly one euro of new recurring revenue.",
+   "definition": "A SaaS efficiency metric: the new ARR added in a quarter, annualized, divided by the previous quarter's sales and marketing spend. Above 0.75 it is usually considered safe to invest more.",
+   "example": "If you spend 100,000 euros on sales and marketing in Q1 and add 25,000 euros of quarterly ARR in Q2 (100,000 euros annualized), your Magic Number is 1.0.",
    "tags": []
   },
   {
@@ -10687,7 +10687,7 @@
    "topic": "general",
    "level": null,
    "term": "Burn Multiple",
-   "definition": "A measure of efficiency that shows how much venture capital a startup is \"burning\" to generate each dollar of new ARR.",
+   "definition": "A startup efficiency metric: net cash burned over a period divided by the net new ARR added over the same period. Below 1 is excellent; above 2 means growth is costing too much.",
    "example": "Spending 2M euros to get 1M euros in new revenue means your Burn Multiple is 2.0.",
    "tags": []
   },
@@ -10697,7 +10697,7 @@
    "topic": "general",
    "level": null,
    "term": "Customer Health Score",
-   "definition": "A single metric used to predict the likelihood of a customer renewing or churning based on their product usage and engagement.",
+   "definition": "A composite indicator, often green / amber / red, that Customer Success builds by weighting product usage, engagement, support tickets and NPS to prioritize accounts at risk or ready to expand.",
    "example": "Assigning a Green score to a student who watches every video and a Red score to one who hasn't logged in for 3 weeks.",
    "tags": []
   },
@@ -10706,7 +10706,7 @@
    "subject": "marketing",
    "topic": "general",
    "level": null,
-   "term": "Logistical Regression",
+   "term": "Logistic Regression",
    "definition": "A statistical model used in marketing to predict the probability of a binary outcome, like \"Will they buy or not?\"",
    "example": "Analyzing 50 different user traits to calculate that a 25-year-old male from Bordeaux has a 75% chance of purchasing.",
    "tags": []
@@ -10737,7 +10737,7 @@
    "topic": "general",
    "level": null,
    "term": "Knowledge Graph Optimization",
-   "definition": "The practice of building a network of entities and relationships on your site to help Google understand you as a brand authority.",
+   "definition": "The practice of getting your brand or yourself recognized as an entity in Google's Knowledge Graph: structured data on your site, but also consistency across Wikidata, LinkedIn, directories and press coverage.",
    "example": "Linking your name, your company, and your specific coaching topics using structured data to get a Google Knowledge Panel.",
    "tags": []
   },
@@ -10747,7 +10747,7 @@
    "topic": "general",
    "level": null,
    "term": "RAG Pipeline",
-   "definition": "Retrieval-Augmented Generation. A system that connects an AI like ChatGPT to your private company data to give accurate answers.",
+   "definition": "Retrieval-Augmented Generation. Before letting an LLM answer, the system retrieves the relevant passages from your own documents (often through vector search) and injects them into the prompt, so the answer is grounded in your sources.",
    "example": "Creating a bot for your site that only answers questions using your past 200 LinkedIn posts.",
    "tags": []
   },
@@ -10777,7 +10777,7 @@
    "topic": "general",
    "level": null,
    "term": "Privacy Sandbox (Topics)",
-   "definition": "A Google proposal to replace cookies by grouping users into broad \"interests\" (Topics) stored locally in the browser.",
+   "definition": "A Google Privacy Sandbox API that placed the user in a few broad interest categories (Topics) computed locally by Chrome from their browsing history, as a replacement for third-party cookies. Google announced its retirement in late 2025 due to low adoption.",
    "example": "Google Chrome telling an advertiser you are into \"Sports\" and \"Marketing\" without sharing your specific browsing history.",
    "tags": []
   },
@@ -10827,7 +10827,7 @@
    "topic": "general",
    "level": null,
    "term": "Incrementality Lift",
-   "definition": "The measure of how many sales were truly caused by an ad, compared to how many would have happened anyway.",
+   "definition": "The extra sales truly caused by a campaign, measured by comparing an exposed group with a holdout group that did not see it. Sales that would have happened anyway are not counted.",
    "example": "Discovering that 20% of the people who clicked your ad would have bought your course anyway via a direct search.",
    "tags": []
   },
@@ -10837,7 +10837,7 @@
    "topic": "general",
    "level": null,
    "term": "Causal Impact Analysis",
-   "definition": "A modern approach that uses time-series data to predict what would have happened to your sales if you hadn't run a campaign.",
+   "definition": "A statistical method (popularized by Google's CausalImpact tool) that models your sales before a campaign to predict what they would have been without it, then measures the gap with actual results.",
    "example": "Using a tool to prove that your Black Friday ads created 10,000 euros in \"extra\" profit that wouldn't have existed otherwise.",
    "tags": []
   },
@@ -10867,7 +10867,7 @@
    "topic": "general",
    "level": null,
    "term": "API-First Architecture",
-   "definition": "A strategy where a software is designed to \"talk\" to other tools via APIs before it even has a user interface.",
+   "definition": "A strategy where software is designed to \"talk\" to other tools via APIs before it even has a user interface.",
    "example": "Choosing a new CRM specifically because it has a powerful API that can connect to your custom dashboard.",
    "tags": []
   },
@@ -10887,7 +10887,7 @@
    "topic": "general",
    "level": null,
    "term": "Zero-Party Data Strategy",
-   "definition": "A plan to get users to voluntarily share their personal preferences and interests with a brand in exchange for value.",
+   "definition": "A plan to get users to voluntarily declare their own preferences and intentions (quiz, survey, preference center) in exchange for value, rather than inferring them from their behavior.",
    "example": "A 1-minute quiz that helps a student find their \"Marketing Type\" while telling you exactly what they want to learn.",
    "tags": []
   },
@@ -10917,7 +10917,7 @@
    "topic": "general",
    "level": null,
    "term": "Search Generative Experience (SGE)",
-   "definition": "The new way Google uses AI to provide full answers directly in the search results, changing how SEO works.",
+   "definition": "Search Generative Experience: the name of the Google Search Labs experiment (2023-2024) that placed an AI-generated answer at the top of the results. Renamed \"AI Overviews\" in 2024, it reshaped SEO.",
    "example": "Searching for \"How to grow on LinkedIn\" and seeing a 3-paragraph AI answer at the top instead of a list of links.",
    "tags": []
   },
@@ -10967,8 +10967,8 @@
    "topic": "general",
    "level": null,
    "term": "K-factor",
-   "definition": "A metric used to measure the growth rate of a website or app, representing how many new users each existing user brings in.",
-   "example": "If every 10 users invite 12 new people, your K-factor is 1.2, meaning your growth is exponential.",
+   "definition": "A product's viral coefficient: the average number of new users each existing user brings in (invitations sent × acceptance rate). Above 1, growth becomes self-sustaining.",
+   "example": "If every 10 users bring in 12 new signups on average, your K-factor is 1.2: above 1, your growth is viral.",
    "tags": []
   },
   {
@@ -11027,7 +11027,7 @@
    "topic": "general",
    "level": null,
    "term": "Distinctive Brand Assets",
-   "definition": "The non-copy elements like colors, logos, and sounds that help customers instantly identify your brand.",
+   "definition": "The elements other than the name itself, such as colors, the logo, a sound, a mascot or a slogan, that make customers recognize your brand instantly even when the name is not shown.",
    "example": "A specific whistle sound at the start of your videos that people associate with your coaching.",
    "tags": []
   },
@@ -11088,7 +11088,7 @@
    "level": null,
    "term": "Demand Capture",
    "definition": "The process of reaching people who are already looking to buy and converting them into customers.",
-   "example": "Running a Google Search ad for the keyword buy badminton coach to find people ready to pay.",
+   "example": "Running a Google Search ad on the keyword \"book badminton coach\" to find people ready to pay.",
    "tags": []
   },
   {
@@ -11167,7 +11167,7 @@
    "topic": "general",
    "level": null,
    "term": "First-Party Data Strategy",
-   "definition": "A company-wide plan to collect, manage, and use data gathered directly from your own customers.",
+   "definition": "A company-wide plan to collect, manage and use the data your own channels observe about your customers (website, app, CRM, purchases), without depending on third-party cookies.",
    "example": "Focusing on building your email list and CRM data because third-party cookies are disappearing.",
    "tags": []
   },
@@ -11177,7 +11177,7 @@
    "topic": "general",
    "level": null,
    "term": "Zero-Party Data Enrichment",
-   "definition": "Adding more detail to your database by asking users to share their specific preferences and intent.",
+   "definition": "Adding detail to the contact records already in your database by directly asking those contacts about their preferences or intentions, instead of buying data or guessing.",
    "example": "Adding a question to your signup form: \"What is your #1 marketing challenge right now?\"",
    "tags": []
   },
@@ -11267,7 +11267,7 @@
    "topic": "general",
    "level": null,
    "term": "SGE",
-   "definition": "Search Generative Experience. Google's AI-powered search interface that provides direct answers to user queries, reducing the need to click on traditional links.",
+   "definition": "Search Generative Experience. The former name (Labs, 2023-2024) of Google's AI-assisted search interface, now AI Overviews and AI Mode, which answers the query directly and reduces clicks on traditional links.",
    "example": "Searching for \"how to start a newsletter\" and seeing a 3-step AI summary at the top of Google before any website links.",
    "tags": []
   },
@@ -11287,8 +11287,8 @@
    "topic": "general",
    "level": null,
    "term": "Consent Mode V2",
-   "definition": "A Google framework that adjusts how tags behave based on the user's cookie consent status to ensure GDPR compliance while maintaining data tracking.",
-   "example": "Your website automatically stopping the Meta Pixel from firing if a visitor clicks \"Refuse\" on your cookie banner.",
+   "definition": "Google's framework, required in the EEA since March 2024, that passes the visitor's consent choice to GA4 and Google Ads tags: without consent they send only cookieless pings and Google models the missing conversions.",
+   "example": "A visitor clicks \"Refuse\" on your banner: your Google Ads tag stops setting cookies, but Google still estimates the lost conversions through modeling.",
    "tags": []
   },
   {

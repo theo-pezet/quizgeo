@@ -9,9 +9,11 @@ interface Props {
   exercise: QcmExercise;
   onAnswer: (correct: boolean) => void;
   locked: boolean;
+  /** Libellé du bouton (par défaut « Vérifier »). Le test de niveau met « Suivant ». */
+  checkLabel?: string;
 }
 
-export function QcmView({ exercise, onAnswer, locked }: Props) {
+export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
   const colors = useColors();
   const t = useT();
   // Mélangé à chaque affichage, y compris entre deux apparitions.
@@ -51,7 +53,7 @@ export function QcmView({ exercise, onAnswer, locked }: Props) {
         })}
       </View>
       {!locked && (
-        <Button label={t('common.check')} disabled={selected === null} onPress={() => onAnswer(selected === presented.answer)} />
+        <Button label={checkLabel ?? t('common.check')} disabled={selected === null} onPress={() => onAnswer(selected === presented.answer)} />
       )}
     </View>
   );
