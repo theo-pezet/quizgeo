@@ -39,6 +39,10 @@ jobs:
           distribution: temurin
           java-version: 17
       - uses: android-actions/setup-android@v3
+        with:
+          # Le paquet « tools » n'existe plus dans les cmdline-tools récents
+          # (l'action échouait en septembre 2026) ; platform-tools suffit.
+          packages: platform-tools
       - run: npm ci
       - name: Générer le projet natif
         run: npx expo prebuild --platform android --no-install
