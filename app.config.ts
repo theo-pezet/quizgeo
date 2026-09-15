@@ -12,7 +12,7 @@ const basePath = process.env.EXPO_PUBLIC_BASE_PATH ?? '';
 const config: ExpoConfig = {
   name: 'Skilltrail',
   slug: 'quizgeo',
-  version: '1.0.0',
+  version: '1.0.1',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'quizgeo',
@@ -21,7 +21,7 @@ const config: ExpoConfig = {
     // Ne jamais changer : la fiche Play Store et l'app AdMob y seront liées.
     package: 'fr.citeparlia.quizgeo',
     // Incrémenté automatiquement par EAS en production (eas.json).
-    versionCode: 13,
+    versionCode: 14,
     adaptiveIcon: {
       backgroundColor: '#5B4BFF',
       foregroundImage: './assets/images/android-icon-foreground.png',

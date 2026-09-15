@@ -19,7 +19,7 @@
    "topic": "sem",
    "level": null,
    "term": "SEM",
-   "definition": "Search Engine Marketing: The practice of marketing a business using paid advertisements that appear on search engine results pages.",
+   "definition": "SEM: Search Engine Marketing. Marketing a business on search engines. In everyday usage it means paid ads on search results pages (Google Ads); in the broad sense, SEM = SEO + SEA (paid search).",
    "example": "Running a Google Ads campaign to appear at the very top of the page for \"digital marketing agency\".",
    "tags": [
     "#SEM_Paid"
@@ -203,7 +203,7 @@
    "level": null,
    "term": "Impressions",
    "definition": "The total number of times your content or ad is displayed, regardless of whether it was clicked or not.",
-   "example": "Your Instagram post being seen 500 times by various users throughout the day.",
+   "example": "Your Instagram post displayed 500 times during the day, including several times to the same user: 500 impressions.",
    "tags": [
     "#Social_Media"
    ]
@@ -226,7 +226,7 @@
    "topic": "social",
    "level": null,
    "term": "Engagement Rate",
-   "definition": "A metric that measures the level of interaction that social media content receives from its audience.",
+   "definition": "Metric that divides the interactions a piece of content receives (likes, comments, shares, saves) by a reference base: followers, reach or impressions depending on the platform and tool. The per-follower version is used to compare accounts.",
    "example": "Calculating the ratio of Likes, Comments, and Shares relative to your total followers.",
    "tags": [
     "#Social_Media"
@@ -346,7 +346,7 @@
    "topic": "email",
    "level": null,
    "term": "Open Rate",
-   "definition": "The percentage of people who opened your email out of the total number of people who received it.",
+   "definition": "The percentage of delivered emails that were opened. An unreliable metric since 2021: Apple Mail Privacy Protection preloads images and registers opens that never happened.",
    "example": "Having an open rate of 25% on your latest promotional email blast.",
    "tags": [
     "#Email"
@@ -358,7 +358,7 @@
    "topic": "email",
    "level": null,
    "term": "Click Rate",
-   "definition": "The percentage of people who clicked a link within your email out of the total emails sent.",
+   "definition": "The percentage of recipients who clicked at least one link in your email, out of the number of emails delivered (bounces excluded). Not to be confused with click-to-open rate (CTOR).",
    "example": "Tracking how many people clicked the \"Buy Now\" link inside your newsletter.",
    "tags": [
     "#Email"
@@ -514,7 +514,7 @@
    "topic": "branding",
    "level": null,
    "term": "Brand Awareness",
-   "definition": "The extent to which consumers are familiar with the qualities or image of a particular brand.",
+   "definition": "The share of consumers who can recognize or name a brand, measured by survey. It tells whether the brand is known, not whether it comes to mind at the moment of purchase (that is salience).",
    "example": "Recognizing the Apple logo or the Nike \"Swoosh\" immediately without seeing the name.",
    "tags": [
     "#Branding"
@@ -646,7 +646,7 @@
    "topic": "social",
    "level": null,
    "term": "Viral Marketing",
-   "definition": "A style of promotion that relies on an audience to generate the message of a product or service.",
+   "definition": "A style of promotion that relies on the audience itself to spread the message of a product or service, mainly through sharing.",
    "example": "The \"Ice Bucket Challenge\" which spread rapidly across social media through user sharing.",
    "tags": [
     "#Social_Media"
@@ -682,7 +682,7 @@
    "topic": "email",
    "level": null,
    "term": "Hard Bounce",
-   "definition": "An email that was returned to the sender because the recipient's address is invalid or non-existent.",
+   "definition": "A permanent delivery failure: the email is rejected because the recipient's address is invalid, non-existent or its domain no longer exists. The address must be removed from the list immediately.",
    "example": "Sending an email to a misspelled address like \"test@gmailll.com\".",
    "tags": [
     "#Email"
@@ -694,7 +694,7 @@
    "topic": "email",
    "level": null,
    "term": "Soft Bounce",
-   "definition": "An email that reached the recipient's mail server but bounced back undelivered, often because the inbox was full.",
+   "definition": "A temporary delivery failure: the email reached the recipient's mail server but was refused for now, often because the inbox is full or the server is down. The send can be retried.",
    "example": "A temporary delivery failure because the user's mailbox has no space left.",
    "tags": [
     "#Email"
@@ -791,7 +791,7 @@
    "level": null,
    "term": "Favicon",
    "definition": "The small icon that appears next to the website title in a browser tab.",
-   "example": "The small blue \"G\" icon you see in your tab when you are on Google.",
+   "example": "The small multicoloured \"G\" icon you see in your tab when you are on Google.",
    "tags": [
     "#Design"
    ]
@@ -1114,7 +1114,7 @@
    "topic": "content",
    "level": null,
    "term": "Podcast",
-   "definition": "A digital audio file made available on the internet for downloading to a computer or mobile device.",
+   "definition": "An audio show (sometimes also video) released in regular episodes, distributed via RSS feed on platforms such as Spotify or Apple Podcasts, and listened to on demand, by streaming or download.",
    "example": "Creating a weekly 20-minute audio show about US Rap for fans.",
    "tags": [
     "#Content"
@@ -1138,7 +1138,7 @@
    "topic": "content",
    "level": null,
    "term": "Vlog",
-   "definition": "A blog in video form.",
+   "definition": "A blog kept in video form: the creator regularly films and publishes episodes about their daily life or a specific topic, most often on YouTube, speaking directly to the camera.",
    "example": "A \"Day in the life of a digital marketing intern\" video on YouTube.",
    "tags": [
     "#Content"
@@ -1150,7 +1150,7 @@
    "topic": "content",
    "level": null,
    "term": "E-book",
-   "definition": "An electronic version of a printed book that can be read on a computer or a handheld device.",
+   "definition": "A digital book, in marketing usually a PDF of a few dozen pages that covers a topic in depth. It mostly serves as a lead magnet: offered as a download in exchange for an email address.",
    "example": "Offering a \"Guide to Investing in S&P 500\" as a free PDF download.",
    "tags": [
     "#Content"
@@ -1162,7 +1162,7 @@
    "topic": "content",
    "level": null,
    "term": "Webinar",
-   "definition": "A seminar conducted over the internet.",
+   "definition": "A seminar or training session broadcast live over the internet (Zoom, Livestorm), with prior registration and real-time interaction (questions, polls). Often used to generate B2B leads.",
    "example": "Hosting a live 1-hour training session on how to use AI for marketing.",
    "tags": [
     "#Content"
@@ -1538,7 +1538,7 @@
    "topic": "data",
    "level": null,
    "term": "Zero-Party Data",
-   "definition": "Data that a customer intentionally and proactively shares with a brand (preferences, interests).",
+   "definition": "Data a customer deliberately and explicitly declares to a brand (preferences, interests, intentions), rather than being inferred from their behavior.",
    "example": "A user answering a quiz on your site saying they prefer \"Indoor Badminton\" over \"Outdoor\".",
    "tags": [
     "#Data"
@@ -1550,7 +1550,7 @@
    "topic": "data",
    "level": null,
    "term": "First-Party Data",
-   "definition": "Information a company collects directly from its own sources, like its website or app.",
+   "definition": "Data a company collects itself by observing its customers on its own channels (website, app, CRM, store): browsing, purchases, subscriptions.",
    "example": "Your list of email subscribers and their purchase history in your Shopify store.",
    "tags": [
     "#Data"
@@ -1562,7 +1562,7 @@
    "topic": "data",
    "level": null,
    "term": "Third-Party Data",
-   "definition": "Data collected by an entity that does not have a direct relationship with the user.",
+   "definition": "Data collected, aggregated and resold by a third party (data broker, ad network) that has no direct relationship with the user.",
    "example": "Buying a list of \"High-income earners in France\" from an external data provider (becoming harder with GDPR).",
    "tags": [
     "#Data"
@@ -1574,7 +1574,7 @@
    "topic": "cro",
    "level": null,
    "term": "Social Proof (Advanced)",
-   "definition": "The use of external validation (reviews, logos, testimonials) to build trust and increase conversion.",
+   "definition": "The principle that people trust what others have already chosen: showing ratings, reviews, client logos or user counts to reassure a hesitant visitor and get them to convert.",
    "example": "Displaying a \"Trustpilot 4.8/5\" badge on your checkout page.",
    "tags": [
     "#CRO"
@@ -1586,7 +1586,7 @@
    "topic": "psychology",
    "level": null,
    "term": "FOMO",
-   "definition": "Fear Of Missing Out: A marketing tactic that creates a sense of urgency to encourage a purchase.",
+   "definition": "FOMO: Fear Of Missing Out. The anxiety of missing an offer, an event or an experience that others are enjoying. Marketing triggers it with countdown timers, flash sales or social signals (\"120 people are viewing this item\").",
    "example": "Adding a countdown timer that says \"Sale ends in 2 hours!\".",
    "tags": [
     "#Psychology"
@@ -1610,7 +1610,7 @@
    "topic": "psychology",
    "level": null,
    "term": "Cognitive Dissonance",
-   "definition": "The mental discomfort experienced by a person who holds two or more contradictory beliefs;often occurs after a purchase.",
+   "definition": "The mental discomfort experienced by a person who holds two or more contradictory beliefs; it often occurs after a purchase.",
    "example": "A customer regretting an expensive purchase and looking for positive reviews to justify it.",
    "tags": [
     "#Psychology"
@@ -1635,12 +1635,12 @@
    "topic": "copywriting",
    "level": null,
    "term": "PAS Framework",
-   "definition": "A copywriting framework: Problem, Agitate, Solution.",
+   "definition": "A three-step copywriting framework: Problem, Agitate, Solution. You name the reader's pain, make it feel unbearable, then present the offer as the way out.",
    "example": "Identifying a pain point (Back pain), agitating it (It ruins your sleep), and offering the solution (Our chair).",
    "tags": [
     "#Copywriting"
    ],
-   "cloze": "A copywriting framework: {{c1::Problem, Agitate, Solution}}."
+   "cloze": "A three-step copywriting framework: {{c1::Problem, Agitate, Solution}}. You name the reader's pain, make it feel unbearable, then present the offer as the way out."
   },
   {
    "id": "marketing-social-currency",
@@ -1648,7 +1648,7 @@
    "topic": "social",
    "level": null,
    "term": "Social Currency",
-   "definition": "The actual or potential resources which a person can get through their social media presence or reputation.",
+   "definition": "Jonah Berger's concept (Contagious): what sharing a piece of content or a brand earns a person in image and status. People share what makes them look interesting, smart or in the know, so brands create content worth showing off.",
    "example": "Users sharing a \"Year in Review\" graphic from Spotify because it makes them look cool to their friends.",
    "tags": [
     "#Social_Media"
@@ -1734,7 +1734,7 @@
    "topic": "social",
    "level": null,
    "term": "Influencer Tiers",
-   "definition": "The classification of influencers by follower count: Nano (<10k), Micro (10k-50k), Mid (50k-500k), Macro (500k-1M), Mega (1M+).",
+   "definition": "Classification of influencers by follower count. Common convention: Nano (1k-10k), Micro (10k-100k), Mid (100k-500k), Macro (500k-1M), Mega (1M+); thresholds vary from one agency to another.",
    "example": "Choosing a Micro-influencer for higher engagement instead of a Mega-influencer for broad reach.",
    "tags": [
     "#Social_Media"
@@ -1926,8 +1926,8 @@
    "topic": "branding",
    "level": null,
    "term": "Brand Voice",
-   "definition": "The distinct personality a brand takes on in its communications (e.g., professional, witty, or aggressive).",
-   "example": "Using a \"Touch of wit\" and \"Adaptive tone\" in AI communications.",
+   "definition": "The constant personality a brand expresses across all its communications (e.g., expert, playful or blunt). It does not change from one channel or message to the next; only the tone adapts to context.",
+   "example": "Innocent Drinks talks like a funny friend on its bottles, its website and its social posts: the same playful personality is recognizable everywhere.",
    "tags": [
     "#Branding"
    ]
@@ -2239,7 +2239,7 @@
    "topic": "cro",
    "level": null,
    "term": "Social Proof (Testimonials)",
-   "definition": "Specific quotes from happy customers used to reduce friction and build credibility.",
+   "definition": "One specific form of social proof: named quotes from happy customers, with a first name, photo or job title, placed near a CTA to counter an objection and back up the promise.",
    "example": "\"This marketing course helped me land my first internship!\" - Théo P.",
    "tags": [
     "#CRO"
@@ -2592,7 +2592,7 @@
    "level": null,
    "term": "Double Opt-in",
    "definition": "A process where a user must confirm their email subscription by clicking a link in a confirmation email.",
-   "example": "Ensuring higher list quality and GDPR compliance by verifying every new subscriber.",
+   "example": "Getting a higher-quality list and keeping proof of each subscriber's consent, useful under GDPR, even though the regulation does not require this mechanism.",
    "tags": [
     "#Email"
    ]
@@ -2603,7 +2603,7 @@
    "topic": "email",
    "level": null,
    "term": "Sender Reputation",
-   "definition": "A score assigned by an Internet Service Provider (ISP) to an organization that sends email.",
+   "definition": "A score mailbox providers (Gmail, Outlook, Yahoo…) assign to your sending domain and IP based on your spam complaints, bounces and recipient engagement. It determines whether you land in the inbox.",
    "example": "If your reputation is low, your emails will go straight to the Spam folder.",
    "tags": [
     "#Email"
@@ -2651,12 +2651,12 @@
    "topic": "email",
    "level": null,
    "term": "Hard Bounce vs Soft Bounce",
-   "definition": "Hard is a permanent failure (invalid email);Soft is a temporary failure (full inbox).",
+   "definition": "Hard bounce: a permanent failure (invalid address), the address must be removed from the list. Soft bounce: a temporary failure (full inbox, server down), the send can be retried.",
    "example": "Cleaning your list immediately after a hard bounce to protect your sender score.",
    "tags": [
     "#Email"
    ],
-   "cloze": "{{c1::Hard}} is a permanent failure (invalid email);{{c1::Soft}} is a temporary failure (full inbox)."
+   "cloze": "Hard bounce: a {{c1::permanent}} failure (invalid address), the address must be removed from the list. Soft bounce: a temporary failure (full inbox, server down), the send can be retried."
   },
   {
    "id": "marketing-list-segmentation-behavioral",
@@ -2677,7 +2677,7 @@
    "level": null,
    "term": "Email Deliverability",
    "definition": "The ability of an email to reach a recipient's primary inbox rather than being blocked or sent to spam.",
-   "example": "Optimizing subject lines and avoiding \"spammy\" words to increase deliverability.",
+   "example": "Setting up SPF, DKIM and DMARC (required by Gmail and Yahoo for bulk senders since 2024) and removing inactive addresses to improve your deliverability.",
    "tags": [
     "#Email"
    ]
@@ -2941,12 +2941,12 @@
    "topic": "social",
    "level": null,
    "term": "Engagement Rate (Formula)",
-   "definition": "Formula: (Total Engagements / Total Impressions) * 100.",
+   "definition": "Formula (impressions-based variant): (Total Engagements / Total Impressions) * 100. Other calculations divide by follower count or by reach.",
    "example": "A post with 50 likes/comments and 1,000 impressions has a 5% engagement rate.",
    "tags": [
     "#Social_Media"
    ],
-   "cloze": "Formula: {{c1::(Total Engagements / Total Impressions) * 100}}."
+   "cloze": "Formula (impressions-based variant): {{c1::(Total Engagements / Total Impressions) * 100}}. Other calculations divide by follower count or by reach."
   },
   {
    "id": "marketing-share-of-voice-sov",
@@ -2954,7 +2954,7 @@
    "topic": "branding",
    "level": null,
    "term": "Share of Voice (SOV)",
-   "definition": "A measure of the market your brand owns compared to your competitors.",
+   "definition": "SOV: Share of Voice. The share your brand holds of a category's total visibility: mentions, impressions or ad spend, compared with all competitors combined. Not to be confused with market share, which measures sales.",
    "example": "If there are 1,000 mentions of \"Badminton\" and 300 mention your brand, your SOV is 30%.",
    "tags": [
     "#Branding"
@@ -2990,7 +2990,7 @@
    "topic": "content",
    "level": null,
    "term": "Evergreen Content Strategy",
-   "definition": "Focusing on content that stays relevant over time to generate consistent organic traffic.",
+   "definition": "An editorial approach that favors timeless topics (guides, tutorials, definitions) over news, in order to build steady organic traffic that compounds year after year with minimal updating.",
    "example": "Writing a \"Complete Guide to SEO for Beginners\" that will be useful for years.",
    "tags": [
     "#Content"
@@ -3291,7 +3291,7 @@
    "level": null,
    "term": "Content Decay",
    "definition": "The decline in organic traffic to a piece of content over time as it becomes outdated.",
-   "example": "Updating an old blog post from 2022 to make it relevant for 2026.",
+   "example": "Your 2022 \"Best AI tools\" article dropped from 5,000 to 800 organic visits a month by 2026: that is content decay, and you refresh it to climb back.",
    "tags": [
     "#Content"
    ]
@@ -3314,7 +3314,7 @@
    "topic": "cro",
    "level": null,
    "term": "Lead Magnet (Conversion Rate)",
-   "definition": "The ratio of people who saw the lead magnet vs people who downloaded it.",
+   "definition": "The percentage of people who downloaded or requested the lead magnet among those who saw it (popup, page or banner). Formula: (downloads / views) * 100.",
    "example": "If 100 people saw the popup and 10 signed up, the lead magnet conversion rate is 10%.",
    "tags": [
     "#CRO"
@@ -3339,7 +3339,7 @@
    "level": null,
    "term": "Brand Advocacy",
    "definition": "When customers are so happy with a brand that they actively promote it to others without being paid.",
-   "example": "A fan of a specific badminton racket posting a review on a forum.",
+   "example": "A fan of a specific badminton racket who spontaneously posts a glowing review on a forum and recommends it to their club, without getting anything in return.",
    "tags": [
     "#Branding"
    ]
@@ -3350,8 +3350,8 @@
    "topic": "social",
    "level": null,
    "term": "Sentiment Analysis",
-   "definition": "The use of natural language processing to determine whether data is positive, negative, or neutral.",
-   "example": "Analyzing Twitter mentions to see if people are happy or angry about a new product launch.",
+   "definition": "The use of natural language processing to automatically classify texts (reviews, comments, mentions) by the opinion they express: positive, negative or neutral.",
+   "example": "Analyzing mentions on X (formerly Twitter) to see if people are happy or angry about a new product launch.",
    "tags": [
     "#Social_Media"
    ]
@@ -3471,8 +3471,8 @@
    "topic": "data",
    "level": null,
    "term": "K-Means Clustering",
-   "definition": "A machine learning algorithm used to group customers into segments based on similarities.",
-   "example": "Using AI to automatically find 3 groups of users: \"Gamers,\" \"Professionals,\" and \"Students\".",
+   "definition": "Unsupervised clustering algorithm that splits data into K groups, chosen in advance, by assigning each point to the nearest center (centroid). Used to segment customers by similarity.",
+   "example": "With K = 3, automatically finding three groups of users: \"Gamers\", \"Professionals\" and \"Students\".",
    "tags": [
     "#Data_Science"
    ]
@@ -3507,7 +3507,7 @@
    "topic": "cro",
    "level": null,
    "term": "Statistical Significance",
-   "definition": "The likelihood that a result or relationship is caused by something other than mere random chance.",
+   "definition": "The property of a test result too unlikely under the null hypothesis to be put down to chance: its p-value falls below the chosen threshold (often 0.05). A significant result is not necessarily a large one.",
    "example": "In an A/B test, ensuring the \"Winning\" version really is better and wasn't just lucky.",
    "tags": [
     "#CRO"
@@ -3519,8 +3519,8 @@
    "topic": "cro",
    "level": null,
    "term": "Confidence Level",
-   "definition": "The probability that the value of a parameter falls within a specified range of values.",
-   "example": "A 95% confidence level means you are 95% sure the results of your test are accurate.",
+   "definition": "The certainty threshold set before a test, usually 95%: it is 1 minus the accepted risk of declaring a variant the winner when it is not (5%). The higher it is, the more traffic you need.",
+   "example": "Your A/B testing tool shows 'B wins, 95% confidence': there would be less than a 5% chance of seeing such a gap if A and B were actually equivalent.",
    "tags": [
     "#CRO"
    ]
@@ -3555,7 +3555,7 @@
    "topic": "cro",
    "level": null,
    "term": "Multivariate Testing (MVT)",
-   "definition": "A technique for testing a hypothesis in which multiple variables are modified.",
+   "definition": "A test that changes several page elements at once (headline, image, button…) and compares all their combinations to measure each one's effect and their interactions. It needs far more traffic than an A/B test.",
    "example": "Testing 3 headlines AND 2 button colors at the same time (requires a lot of traffic).",
    "tags": [
     "#CRO"
@@ -3567,8 +3567,8 @@
    "topic": "cro",
    "level": null,
    "term": "Heuristic Evaluation",
-   "definition": "An inspection method for finding usability problems in a user interface design.",
-   "example": "A marketing expert looking at a landing page and identifying 5 obvious \"friction points\".",
+   "definition": "An inspection method in which one or more experts check an interface against a list of recognised usability principles (Nielsen's 10 heuristics, for instance), without testing on real users.",
+   "example": "A UX expert reviewing a landing page against Nielsen's heuristics and flagging 5 obvious \"friction points\", such as an error message that doesn't say what to fix.",
    "tags": [
     "#CRO"
    ]
@@ -3603,7 +3603,7 @@
    "topic": "design",
    "level": null,
    "term": "Eye Tracking",
-   "definition": "The process of measuring either the point of gaze or the motion of an eye relative to the head.",
+   "definition": "A technique that records, with a specialised camera, where a user's gaze lands on a screen and in what order, to learn what they see, read or ignore on a page.",
    "example": "Seeing that users never look at the right sidebar of your blog.",
    "tags": [
     "#Design"
@@ -3987,7 +3987,7 @@
    "topic": "psychology",
    "level": null,
    "term": "Halo Effect",
-   "definition": "A type of cognitive bias where our overall impression of a person or brand influences how we feel and think about their character.",
+   "definition": "Cognitive bias where one perceived positive trait (fame, a nice design, one successful product) colours the judgement of every other quality of a person or brand, without evidence.",
    "example": "Thinking a product is high quality just because the company's CEO is famous.",
    "tags": [
     "#Psychology"
@@ -4023,7 +4023,7 @@
    "topic": "psychology",
    "level": null,
    "term": "Scarcity",
-   "definition": "The psychological principle that things are more attractive when they are limited.",
+   "definition": "Persuasion principle (Cialdini) whereby something looks more desirable when its quantity or access is limited: remaining stock, limited edition, invite-only access. Perceived value rises with scarcity.",
    "example": "\"Only 3 items left in stock!\".",
    "tags": [
     "#Psychology"
@@ -4107,7 +4107,7 @@
    "topic": "branding",
    "level": null,
    "term": "Brand Dilution",
-   "definition": "The weakening of a brand though its overuse or through being associated with poor-quality products.",
+   "definition": "The weakening of a brand through its overuse or through being associated with poor-quality products.",
    "example": "A luxury brand starting to sell cheap products in supermarkets.",
    "tags": [
     "#Branding"
@@ -5666,12 +5666,12 @@
    "topic": "branding",
    "level": null,
    "term": "Brand Equity (Components)",
-   "definition": "The four components are: Brand Awareness, Brand Associations, Perceived Quality, and Brand Loyalty.",
+   "definition": "In David Aaker's model, the four components are: Brand Awareness, Brand Associations, Perceived Quality, and Brand Loyalty.",
    "example": "Improving your packaging to increase the \"Perceived Quality\" of your brand.",
    "tags": [
     "#Branding"
    ],
-   "cloze": "The four components are: {{c1::Brand Awareness, Brand Associations, Perceived Quality, and Brand Loyalty}}."
+   "cloze": "In David Aaker's model, the four components are: {{c1::Brand Awareness, Brand Associations, Perceived Quality, and Brand Loyalty}}."
   },
   {
    "id": "marketing-emotional-branding",
@@ -11377,7 +11377,7 @@
    "topic": "terminal",
    "level": null,
    "term": "touch",
-   "definition": "Creates a new empty file.",
+   "definition": "Creates an empty file if it does not exist yet; if it already exists, it only updates its modification time without touching the content.",
    "example": "Quickly creating a \"secrets.py\" file to store your LinkedIn API keys.",
    "tags": []
   },
@@ -11387,7 +11387,7 @@
    "topic": "terminal",
    "level": null,
    "term": "cp",
-   "definition": "Copy. Copies a file or folder to a new location.",
+   "definition": "Copy. Copies a file to a new location, leaving the original in place; to copy a whole folder you must add the -r (recursive) option.",
    "example": "Making a backup of a customer database file before performing a risky data cleaning script.",
    "tags": []
   },
@@ -11407,7 +11407,7 @@
    "topic": "terminal",
    "level": null,
    "term": "rm",
-   "definition": "Remove. Permanently deletes a file or folder.",
+   "definition": "Remove. Permanently deletes a file, bypassing the trash; for a folder and everything inside it you need the -r option. There is no way to recover it.",
    "example": "Deleting temporary log files to save space after a massive data scraping session.",
    "tags": []
   },
@@ -11517,7 +11517,7 @@
    "topic": "bases",
    "level": null,
    "term": "if / else",
-   "definition": "A conditional structure that runs code only if a specific condition is met.",
+   "definition": "A conditional structure: the if block runs only when the condition is true, otherwise the else block runs instead.",
    "example": "If the CTR is below 2%, send an alert; otherwise, log the campaign as successful.",
    "tags": []
   },
@@ -11548,7 +11548,7 @@
    "level": null,
    "term": "list []",
    "definition": "A data structure that stores an ordered collection of items.",
-   "example": "Storing your top 5 competitors in a list: [\"BrandX\", \"BrandY\", \"BrandZ\"].",
+   "example": "Storing your main competitors in a list: [\"BrandX\", \"BrandY\", \"BrandZ\"].",
    "tags": []
   },
   {
@@ -11648,7 +11648,7 @@
    "level": null,
    "term": "range()",
    "definition": "Generates a sequence of numbers, often used to repeat a task a specific number of times.",
-   "example": "Running a script that sends exactly 10 test emails to your inbox.",
+   "example": "for i in range(10): send_test_email() sends exactly 10 test emails to your inbox.",
    "tags": []
   },
   {
@@ -11767,7 +11767,7 @@
    "topic": "pandas",
    "level": null,
    "term": "df.rename()",
-   "definition": "Changes the names of your columns.",
+   "definition": "Renames columns (or rows) from a {old: new} dictionary passed to columns=. Returns a new DataFrame; the original is left untouched unless inplace=True.",
    "example": "Changing a column name from \"utm_source_original_value\" to simply \"Source\" to make your reports easier to read.",
    "tags": []
   },
@@ -11817,7 +11817,7 @@
    "topic": "pandas",
    "level": null,
    "term": "df.sum()",
-   "definition": "Calculates the total of all values in a column.",
+   "definition": "Adds up values: on one column (df['cost'].sum()) it gives a single total, on the whole DataFrame it gives the total of each numeric column. Missing values are skipped by default.",
    "example": "Getting the exact total amount spent on marketing across all platforms for the entire year.",
    "tags": []
   },
@@ -11827,7 +11827,7 @@
    "topic": "pandas",
    "level": null,
    "term": "df.mean()",
-   "definition": "Calculates the average value of a column.",
+   "definition": "Computes the average of the values: on one column (df['cpc'].mean()) it gives a single number, on the whole DataFrame it gives the mean of each numeric column. Missing values are skipped.",
    "example": "Finding your average \"Conversion Rate\" over the last 6 months to set a new performance benchmark.",
    "tags": []
   },
@@ -11867,7 +11867,7 @@
    "topic": "pandas",
    "level": null,
    "term": "df.apply()",
-   "definition": "Runs a custom function on every single row in a specific column.",
+   "definition": "Applies a custom function to each column of the DataFrame or, with axis=1, to each row. On a single column (df['email'].apply(f)), the function runs on every value.",
    "example": "Automatically changing all emails to lowercase to ensure there are no duplicates in your CRM.",
    "tags": []
   },
@@ -11886,8 +11886,8 @@
    "subject": "python",
    "topic": "pandas",
    "level": null,
-   "term": "df.unique()",
-   "definition": "Lists all the distinct values in a column without any repetitions.",
+   "term": "df['col'].unique()",
+   "definition": "Returns an array of the distinct values of one column, without repetition and in order of appearance. It is a Series method: on a whole DataFrame you use drop_duplicates() instead.",
    "example": "Getting a list of all the unique \"Job Titles\" that have clicked on your B2B ads this month.",
    "tags": []
   },
@@ -11897,7 +11897,7 @@
    "topic": "pandas",
    "level": null,
    "term": "df.value_counts()",
-   "definition": "Counts how many times each unique value appears in a column.",
+   "definition": "Counts how many times each value appears in a column (df['source'].value_counts()), sorted from most to least frequent. On a whole DataFrame, it counts identical row combinations.",
    "example": "Seeing exactly how many leads came from \"LinkedIn\" vs \"Google\" vs \"Instagram.\"",
    "tags": []
   },
@@ -11957,7 +11957,7 @@
    "topic": "requests",
    "level": null,
    "term": "response.json()",
-   "definition": "Converts the data received from an API into a Python dictionary that you can easily read.",
+   "definition": "Decodes the JSON body of an API response into Python objects (dict, list, str, numbers) you can work with directly, without going through the json module.",
    "example": "Turning a long string of technical API data into a readable list of \"Likes\" and \"Comments.\"",
    "tags": []
   },
@@ -12027,7 +12027,7 @@
    "topic": "fichiers",
    "level": null,
    "term": "os.listdir()",
-   "definition": "Returns a list of all the files inside a specific folder on your computer.",
+   "definition": "Returns the list of names of everything inside a folder (files and subfolders), in no guaranteed order. For richer traversal you can also use pathlib.Path.iterdir() or glob.",
    "example": "Automatically finding every CSV file in your \"Downloads\" folder to combine them into one master report.",
    "tags": []
   },
@@ -12087,7 +12087,7 @@
    "topic": "operateurs",
    "level": null,
    "term": "x // y",
-   "definition": "Divides two numbers but removes the decimal part, keeping only the whole number result.",
+   "definition": "Floor division: returns the quotient rounded down to a whole number, with no remainder. 7 // 2 is 3, and -7 // 2 is -4 (rounded down, not simply truncated).",
    "example": "Determining how many full boxes you can fill with a certain number of items.",
    "tags": []
   },
@@ -12107,7 +12107,7 @@
    "topic": "operateurs",
    "level": null,
    "term": "bool",
-   "definition": "Represents a logic value that can only be either True or False. You can use the bool() function to check if any piece of data is considered \"True\" or \"Empty\" in Python.",
+   "definition": "The type of the logical values True and False. The bool() function converts any data: 0, an empty string, an empty list or None give False, everything else gives True.",
    "example": "Checking if a user is logged in or if a search bar is empty before processing a request.",
    "tags": []
   },
@@ -12137,7 +12137,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".strip()",
-   "definition": "Removes extra spaces at the beginning and at the end of the text.",
+   "definition": "Removes extra spaces, tabs and line breaks at the beginning and at the end of the text, leaving the inside untouched.",
    "example": "\" data \".strip() returns \"data\"",
    "tags": []
   },
@@ -12157,7 +12157,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".split()",
-   "definition": "Cuts the text into a list of words.",
+   "definition": "Cuts the text into a list of pieces at every occurrence of the separator you pass (whitespace by default).",
    "example": "\"apple,banana\".split(\",\") returns [\"apple\", \"banana\"]",
    "tags": []
   },
@@ -12167,7 +12167,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".join()",
-   "definition": "Puts a list of words together into one sentence.",
+   "definition": "Puts a list of strings together into one, inserting the string you call the method on between them (the separator).",
    "example": "\"-\".join([\"hot\", \"dog\"]) returns \"hot-dog\"",
    "tags": []
   },
@@ -12177,7 +12177,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".capitalize()",
-   "definition": "Makes only the very first letter big.",
+   "definition": "Makes only the very first letter of the text uppercase and every other letter lowercase.",
    "example": "\"paris\".capitalize() returns \"Paris\"",
    "tags": []
   },
@@ -12187,7 +12187,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".title()",
-   "definition": "Makes the first letter of every word big.",
+   "definition": "Makes the first letter of every word uppercase and the rest of each word lowercase.",
    "example": "\"marketing news\".title() returns \"Marketing News\"",
    "tags": []
   },
@@ -12217,7 +12217,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".find()",
-   "definition": "Looks for a word and tells you its position (number).",
+   "definition": "Looks for a piece of text and returns the position (index) of its first occurrence, or -1 if it is not found.",
    "example": "\"mail@test.com\".find(\"@\") returns 4",
    "tags": []
   },
@@ -12257,7 +12257,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".isspace()",
-   "definition": "Checks if the text is empty (only contains spaces).",
+   "definition": "Checks if the text contains only whitespace (spaces, tabs, line breaks) and at least one character. An empty string returns False.",
    "example": "\" \".isspace() returns True",
    "tags": []
   },
@@ -12267,7 +12267,7 @@
    "topic": "chaines",
    "level": null,
    "term": ".format()",
-   "definition": "Puts a value inside a text where there are brackets {}.",
+   "definition": "String method that inserts values in place of the curly braces {} in a text. The older way of formatting, still common; f-strings have largely replaced it.",
    "example": "\"Hello {}!\".format(\"Theo\") returns \"Hello Theo!\"",
    "tags": []
   },
@@ -12418,7 +12418,7 @@
    "level": null,
    "term": "KeyError",
    "definition": "You are looking for a key in a dictionary that is not there.",
-   "example": "Looking for \"email_address\" in a data list where it is called \"email\".",
+   "example": "Looking for \"email_address\" in a dictionary where the key is called \"email\".",
    "tags": []
   },
   {

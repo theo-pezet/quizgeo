@@ -35,7 +35,7 @@ scripts d'outils (icônes, sons, deck).
 
     npm ci                 # dépendances
     npx tsc --noEmit       # vérification de types (doit être vide)
-    npm test               # jest : 380 tests, couverture 100 % exigée sur src/game
+    npm test               # jest : 382 tests, couverture 100 % exigée sur src/game
     npx expo start --web   # lance le site en local (http://localhost:8081)
     npx expo start         # + Expo Go / émulateur pour Android
 
@@ -180,7 +180,7 @@ un test dans src/game/__tests__, et on ne touche pas aux écrans.
   matière), soit une liste d'identifiants, soit rien (unité composée
   uniquement d'exercices écrits à la main). Titres EN/ES dans units.i18n.ts.
 - Chiffres en v1.0.0 (identiques dans les 3 langues) : 103 unités, 27 mondes,
-  1518 cartes, 1395 exercices. Répartition : marketing 36 unités (9 mondes),
+  1518 cartes, 1396 exercices. Répartition : marketing 36 unités (9 mondes),
   IA 22 (5), Python 24 (5), HTML 6 (2), CSS 5 (3), JavaScript 10 (3). Les
   21 unités de src/data/units.extra.json sont celles ajoutées en v1.0 pour
   couvrir les trous du programme (CRM, e-commerce, marque, vidéo, SEO local,

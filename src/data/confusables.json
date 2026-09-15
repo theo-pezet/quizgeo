@@ -43,6 +43,7 @@
 "html-x-balise-picture": [
 "html-x-button-submit",
 "html-x-label-for",
+"html-x-srcset-sizes-formats",
 "html-x-table-structure",
 "web-x-balise-semantique",
 "web-x-balise-title"
@@ -61,7 +62,8 @@
 "html-x-label-for",
 "html-x-link-target-rel",
 "web-x-attribut-alt",
-"web-x-attributs-data"
+"web-x-attributs-data",
+"web-x-formulaire"
 ],
 "html-x-global-attributes-id-class": [
 "html-x-attributs-lang-dir",
@@ -100,6 +102,10 @@
 ],
 "html-x-native-validation": [
 "web-x-formulaire"
+],
+"html-x-srcset-sizes-formats": [
+"html-x-balise-picture",
+"web-x-lazy-loading"
 ],
 "html-x-table-structure": [
 "html-x-balise-picture"
@@ -464,6 +470,7 @@
 "ia-x-agent-ia": [
 "ia-agent",
 "ia-x-automatisation-marketing-par-agents",
+"ia-x-boucle-agentique",
 "ia-x-evaluation-d-agent",
 "ia-x-memoire-d-agent",
 "ia-x-multi-agents"
@@ -481,6 +488,7 @@
 ],
 "ia-x-assistant-ia-generaliste": [
 "ia-x-assistant-de-code-vibe-coding",
+"ia-x-ia-suite-bureautique",
 "ia-x-modele-a-usage-general-gpai"
 ],
 "ia-x-attention-is-all-you-need": [
@@ -535,6 +543,7 @@
 ],
 "ia-x-boucle-agentique": [
 "ia-agentic-workflow",
+"ia-x-agent-ia",
 "ia-x-humain-dans-la-boucle"
 ],
 "ia-x-cache-de-prompt": [
@@ -551,6 +560,7 @@
 "ia-x-template-de-prompt-equipe"
 ],
 "ia-x-chain-of-thought": [
+"ia-x-modele-de-raisonnement",
 "ia-zero-shot-chain-of-thought"
 ],
 "ia-x-charte-usage-ia-donnees-confidentielles": [
@@ -588,6 +598,9 @@
 "ia-x-computer-use": [
 "ia-x-appel-d-outil-tool-use",
 "ia-x-vision-par-ordinateur"
+],
+"ia-x-content-credentials": [
+"ia-x-watermarking"
 ],
 "ia-x-contenu-genere-par-ia-et-seo": [
 "ia-x-droits-d-auteur-des-images-generees",
@@ -686,7 +699,8 @@
 "ia-x-boucle-agentique"
 ],
 "ia-x-ia-suite-bureautique": [
-"ia-creative-suite-ai"
+"ia-creative-suite-ai",
+"ia-x-assistant-ia-generaliste"
 ],
 "ia-x-image-de-reference-et-coherence": [
 "ia-text-to-image",
@@ -697,6 +711,9 @@
 "ia-x-instructions-personnalisees-memoire-projets": [
 "ia-personalized-generative-ai",
 "ia-x-memoire-d-agent"
+],
+"ia-x-jailbreak": [
+"ia-x-prompt-injection"
 ],
 "ia-x-jeu-d-evaluation": [
 "ia-x-evaluation-d-agent",
@@ -728,6 +745,9 @@
 "ia-x-assistant-ia-generaliste",
 "ia-x-charte-usage-ia-donnees-confidentielles",
 "ia-x-verification-des-sources-usage-pro"
+],
+"ia-x-modele-de-raisonnement": [
+"ia-x-chain-of-thought"
 ],
 "ia-x-modele-ferme-vs-poids-ouverts": [
 "ia-closed-source-ai",
@@ -762,6 +782,7 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-jailbreak",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -865,6 +886,9 @@
 "ia-vision-language-model",
 "ia-x-computer-use"
 ],
+"ia-x-watermarking": [
+"ia-x-content-credentials"
+],
 "ia-zero-party-data": [
 "ia-first-party-data",
 "ia-third-party-data"
@@ -884,17 +908,33 @@
 "web-x-objet-et-json"
 ],
 "js-x-async-await-gestion-erreur": [
+"js-x-promise-then-catch-all",
+"js-x-try-catch-finally-throw",
 "web-x-asynchrone-async-await",
 "web-x-script-async-defer"
 ],
 "js-x-chainage-methodes": [
-"js-x-optional-chaining-et-nullish"
+"js-x-find-some-every",
+"js-x-map",
+"js-x-optional-chaining-et-nullish",
+"js-x-reduce",
+"web-x-methodes-de-tableau"
+],
+"js-x-closure": [
+"js-x-fonction-ordre-superieur"
 ],
 "js-x-customevent-delegation": [
 "web-x-evenement"
 ],
+"js-x-debugger-points-arret-network": [
+"web-x-console-du-navigateur"
+],
 "js-x-deploy-vercel-env": [
 "web-variable"
+],
+"js-x-destructuring-et-spread": [
+"js-x-fonction-pure-immutabilite",
+"js-x-reference-vs-valeur"
 ],
 "js-x-document-cookie-httponly": [
 "web-cookie-technical"
@@ -904,11 +944,26 @@
 "web-x-fetch",
 "web-x-objet-et-json"
 ],
+"js-x-find-some-every": [
+"js-x-chainage-methodes",
+"js-x-map",
+"js-x-reduce",
+"web-x-methodes-de-tableau"
+],
 "js-x-fonction-ordre-superieur": [
+"js-x-closure",
 "js-x-sort"
 ],
+"js-x-fonction-pure-immutabilite": [
+"js-x-destructuring-et-spread",
+"js-x-reference-vs-valeur"
+],
 "js-x-map": [
-"js-x-set-et-map"
+"js-x-chainage-methodes",
+"js-x-find-some-every",
+"js-x-reduce",
+"js-x-set-et-map",
+"web-x-methodes-de-tableau"
 ],
 "js-x-npm-package-json-semver": [
 "js-x-fetch-avance-post-abort",
@@ -923,7 +978,19 @@
 "js-x-chainage-methodes"
 ],
 "js-x-promise-then-catch-all": [
-"js-x-try-catch-finally-throw"
+"js-x-async-await-gestion-erreur",
+"js-x-try-catch-finally-throw",
+"web-x-asynchrone-async-await"
+],
+"js-x-reduce": [
+"js-x-chainage-methodes",
+"js-x-find-some-every",
+"js-x-map",
+"web-x-methodes-de-tableau"
+],
+"js-x-reference-vs-valeur": [
+"js-x-destructuring-et-spread",
+"js-x-fonction-pure-immutabilite"
 ],
 "js-x-sessionstorage-vs-localstorage": [
 "web-x-localstorage"
@@ -942,7 +1009,11 @@
 "js-x-template-literals": [
 "js-x-acces-aux-proprietes"
 ],
+"js-x-this-et-contexte": [
+"web-x-fonction-flechee"
+],
 "js-x-try-catch-finally-throw": [
+"js-x-async-await-gestion-erreur",
 "js-x-promise-then-catch-all"
 ],
 "marketing-301-redirect": [
@@ -1773,6 +1844,7 @@
 "marketing-white-labeling",
 "marketing-x-charte-graphique",
 "marketing-x-coherence-omnicanale-marque",
+"marketing-x-notoriete-assistee-spontanee",
 "marketing-x-plateforme-de-marque",
 "marketing-x-promesse-de-marque",
 "marketing-x-pyramide-de-keller-cbbe"
@@ -2373,7 +2445,8 @@
 ],
 "marketing-confidence-level": [
 "marketing-quality-score",
-"marketing-quality-score-components"
+"marketing-quality-score-components",
+"marketing-statistical-significance"
 ],
 "marketing-confirmation-bias": [
 "marketing-anchoring-bias",
@@ -3653,6 +3726,9 @@
 "marketing-flywheel-model": [
 "marketing-flywheel-effect"
 ],
+"marketing-fomo": [
+"marketing-scarcity"
+],
 "marketing-framing-effect": [
 "marketing-bandwagon-effect",
 "marketing-decoy-effect",
@@ -4582,7 +4658,8 @@
 ],
 "marketing-long-form-content": [
 "marketing-long-tail-keyword",
-"marketing-native-ad-unit"
+"marketing-native-ad-unit",
+"marketing-pillar-content"
 ],
 "marketing-long-tail-keyword": [
 "marketing-contextual-keyword-targeting",
@@ -5569,6 +5646,9 @@
 "marketing-physical-availability": [
 "marketing-mental-availability"
 ],
+"marketing-pillar-content": [
+"marketing-long-form-content"
+],
 "marketing-pipeline": [
 "marketing-rag-pipeline"
 ],
@@ -6223,6 +6303,7 @@
 "marketing-touchpoint"
 ],
 "marketing-scarcity": [
+"marketing-fomo",
 "marketing-scarcity-principle"
 ],
 "marketing-scarcity-principle": [
@@ -6633,6 +6714,9 @@
 "marketing-community-management",
 "marketing-p-l-management",
 "marketing-stakeholder"
+],
+"marketing-statistical-significance": [
+"marketing-confidence-level"
 ],
 "marketing-style-guide": [
 "marketing-editorial-policy",
@@ -7306,7 +7390,8 @@
 "marketing-x-notoriete-assistee-spontanee": [
 "marketing-assisted-conversion",
 "marketing-assisted-conversions",
-"marketing-brand-awareness"
+"marketing-brand-awareness",
+"marketing-brand-salience"
 ],
 "marketing-x-pages-locales": [
 "marketing-contextual-keyword-targeting",
@@ -7613,11 +7698,15 @@
 "python-df-sort-values"
 ],
 "python-df-iloc": [
-"python-df-drop"
+"python-df-drop",
+"python-df-loc"
 ],
 "python-df-info": [
 "python-df-astype",
 "python-type"
+],
+"python-df-loc": [
+"python-df-iloc"
 ],
 "python-df-mean": [
 "python-df-sum"
@@ -7645,6 +7734,9 @@
 ],
 "python-for-loop": [
 "python-while-loop"
+],
+"python-headers": [
+"python-x-cle-d-api"
 ],
 "python-import": [
 "python-import-pandas-as-pd"
@@ -7738,7 +7830,9 @@
 "python-x-pip-et-pypi"
 ],
 "python-requests-get": [
-"python-requests-post"
+"python-requests-post",
+"python-x-api-rest",
+"python-x-endpoint"
 ],
 "python-requests-post": [
 "python-requests-get"
@@ -7749,7 +7843,8 @@
 "python-x-json-loads-dumps"
 ],
 "python-response-status-code": [
-"python-response-json"
+"python-response-json",
+"python-x-timeout-et-erreurs-http"
 ],
 "python-round": [
 "python-int"
@@ -7783,6 +7878,10 @@
 "python-sum": [
 "python-df-sum"
 ],
+"python-time-sleep": [
+"python-x-rate-limiting",
+"python-x-scraping-responsable"
+],
 "python-title": [
 "python-capitalize",
 "python-upper"
@@ -7808,6 +7907,10 @@
 "python-write": [
 "python-x-quand-creer-une-classe"
 ],
+"python-x-api-rest": [
+"python-requests-get",
+"python-x-endpoint"
+],
 "python-x-argument-par-defaut": [
 "python-x-mutable-default-trap"
 ],
@@ -7820,6 +7923,7 @@
 "python-x-quand-creer-une-classe"
 ],
 "python-x-cle-d-api": [
+"python-headers",
 "python-x-cle-primaire-etrangere"
 ],
 "python-x-cle-primaire-etrangere": [
@@ -7841,8 +7945,15 @@
 "python-x-datetime-now-strftime": [
 "python-x-datetime"
 ],
+"python-x-endpoint": [
+"python-requests-get",
+"python-x-api-rest"
+],
 "python-x-environnement-virtuel": [
 "python-x-variables-d-environnement-et-env"
+],
+"python-x-generator-yield": [
+"python-x-iterator-itertools"
 ],
 "python-x-gestion-d-erreurs": [
 "python-x-timeout-et-erreurs-http"
@@ -7865,6 +7976,9 @@
 "python-x-index-sql": [
 "python-x-index"
 ],
+"python-x-iterator-itertools": [
+"python-x-generator-yield"
+],
 "python-x-join-inner-left": [
 "python-join",
 "python-join-2",
@@ -7885,6 +7999,7 @@
 "python-x-json"
 ],
 "python-x-module": [
+"python-x-package",
 "python-x-re-search-findall-sub"
 ],
 "python-x-mutable-default-trap": [
@@ -7897,24 +8012,37 @@
 "python-x-notebook-jupyter": [
 "python-x-script-vs-notebook"
 ],
+"python-x-package": [
+"python-x-module",
+"python-x-pip-et-pypi"
+],
 "python-x-pandas-read-sql": [
 "python-pd-read-csv",
 "python-pd-read-excel",
 "python-x-requete-parametree-injection"
 ],
 "python-x-pip-et-pypi": [
-"python-pip-install"
+"python-pip-install",
+"python-x-package"
 ],
 "python-x-quand-creer-une-classe": [
 "python-write",
 "python-x-classe-et-instance",
 "python-x-classes-quantificateurs"
 ],
+"python-x-rate-limiting": [
+"python-time-sleep",
+"python-x-scraping-responsable"
+],
 "python-x-re-search-findall-sub": [
 "python-x-module"
 ],
 "python-x-requete-parametree-injection": [
 "python-x-pandas-read-sql"
+],
+"python-x-scraping-responsable": [
+"python-time-sleep",
+"python-x-rate-limiting"
 ],
 "python-x-script-vs-notebook": [
 "python-x-notebook-jupyter"
@@ -7926,6 +8054,7 @@
 "python-str"
 ],
 "python-x-timeout-et-erreurs-http": [
+"python-response-status-code",
 "python-x-gestion-d-erreurs"
 ],
 "python-x-variable": [
@@ -7986,6 +8115,7 @@
 ],
 "web-x-asynchrone-async-await": [
 "js-x-async-await-gestion-erreur",
+"js-x-promise-then-catch-all",
 "web-x-script-async-defer"
 ],
 "web-x-attribut-alt": [
@@ -8027,13 +8157,20 @@
 "web-x-cls-et-css": [
 "css-x-aspect-ratio"
 ],
+"web-x-console-du-navigateur": [
+"js-x-debugger-points-arret-network"
+],
 "web-x-evenement": [
 "js-x-customevent-delegation"
 ],
 "web-x-fetch": [
 "js-x-fetch-avance-post-abort"
 ],
+"web-x-fonction-flechee": [
+"js-x-this-et-contexte"
+],
 "web-x-formulaire": [
+"html-x-form-action-method",
 "html-x-native-validation"
 ],
 "web-x-google-tag-manager": [
@@ -8042,6 +8179,9 @@
 "web-x-balise-semantique",
 "web-x-balise-title",
 "web-x-tag-declencheur-variable"
+],
+"web-x-lazy-loading": [
+"html-x-srcset-sizes-formats"
 ],
 "web-x-lien-canonique": [
 "html-x-link-target-rel"
@@ -8065,6 +8205,10 @@
 "web-x-meta-robots"
 ],
 "web-x-methodes-de-tableau": [
+"js-x-chainage-methodes",
+"js-x-find-some-every",
+"js-x-map",
+"js-x-reduce",
 "js-x-tableau-d-objets"
 ],
 "web-x-mode-sombre-prefers-color-scheme": [

@@ -91,6 +91,61 @@ class TsSource:
         failures.append(f'{where}: littéral introuvable dans {self.path.name} : {old[:60]}…')
         return False
 
+    def window(self, key: str) -> tuple[int, int] | None:
+        """Bornes du bloc d'un exercice extras.ts (clé `unit:x:n`)."""
+        unit, _, n = key.partition(':x:')
+        anchors = [f"('{unit}', {n}, ", f"key: '{key}'"]
+        start = -1
+        for a in anchors:
+            i = self.text.find(a)
+            if i >= 0:
+                start = self.text.rfind('\n', 0, i) + 1
+                break
+        if start < 0:
+            return None
+        ends = [self.text.find(m, start + 1) for m in ('\n  qcm(', '\n  vf(', '\n  {\n', '\n];')]
+        ends = [e for e in ends if e > 0]
+        return (start, min(ends) if ends else len(self.text))
+
+    def replace_many(self, key: str, pairs: list[tuple[str, str]], where: str) -> bool:
+        """Remplace plusieurs littéraux d'un même exercice, simultanément (les
+        anciennes et nouvelles valeurs peuvent se chevaucher) et seulement dans
+        le bloc de cet exercice."""
+        w = self.window(key)
+        if w is None:
+            failures.append(f'{where}: exercice introuvable dans {self.path.name}')
+            return False
+        start, end = w
+        block = self.text[start:end]
+        tokens: list[tuple[str, str]] = []
+        for i, (old, new) in enumerate(pairs):
+            if old == new:
+                continue
+            found = None
+            for lit in self.literals(old):
+                if block.count(lit) == 1:
+                    found = lit
+                    break
+            if found is None:
+                failures.append(f'{where}: littéral introuvable ou multiple dans le bloc : {old[:60]}…')
+                return False
+            quote = found[0]
+            if quote == "'":
+                new_lit = "'" + new.replace('\\', '\\\\').replace("'", "\\'") + "'"
+            elif quote == '"':
+                new_lit = '"' + new.replace('\\', '\\\\').replace('"', '\\"') + '"'
+            else:
+                new_lit = '`' + new + '`'
+            token = f'\x00{i}\x00'
+            block = block.replace(found, token)
+            tokens.append((token, new_lit))
+        for token, new_lit in tokens:
+            block = block.replace(token, new_lit)
+        if block != self.text[start:end]:
+            self.text = self.text[:start] + block + self.text[end:]
+            self.changed = True
+        return True
+
     def save(self) -> None:
         if self.changed:
             self.path.write_text(self.text, encoding='utf-8')
@@ -221,19 +276,19 @@ def main() -> None:
                                     for j, v in enumerate(st['choices']):
                                         je['steps'][i]['choices'][j][lang] = v
                     elif lang == 'fr':
+                        pairs: list[tuple[str, str]] = []
                         if field in ('prompt', 'explain', 'title', 'scenario'):
-                            ok = extras_ts.replace(old_e[field], value, where)
+                            pairs.append((old_e[field], value))
                         elif field in ('choices',) or (field == 'steps' and kind == 'order'):
-                            for o, v in zip(old_e[field], value):
-                                ok = extras_ts.replace(o, v, where) and ok
+                            pairs.extend(zip(old_e[field], value))
                         elif field == 'steps' and kind == 'case':
                             for o, st in zip(old_e['steps'], value):
                                 for sub in ('prompt', 'feedback'):
                                     if sub in st:
-                                        ok = extras_ts.replace(o[sub], st[sub], where) and ok
+                                        pairs.append((o[sub], st[sub]))
                                 if 'choices' in st:
-                                    for oc, nc in zip(o['choices'], st['choices']):
-                                        ok = extras_ts.replace(oc, nc, where) and ok
+                                    pairs.extend(zip(o['choices'], st['choices']))
+                        ok = extras_ts.replace_many(key, pairs, where)
                     else:
                         entry = extras_i18n[lang].setdefault(key, {})
                         if field == 'steps' and kind == 'case':
