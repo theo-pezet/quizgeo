@@ -19,10 +19,27 @@ export function FeedbackPanel({ feedback, combo, onNext }: { feedback: Feedback;
               {feedback.correct ? (combo >= 3 ? t('session.correctCombo', { combo }) : t('session.correct')) : t('session.wrong')}
             </Text>
           </View>
+          {!feedback.correct && feedback.whyWrong && (
+            <View style={[styles.why, { borderLeftColor: tone }]}>
+              <Text variant="small" style={[styles.label, { color: tone }]}>
+                {t('session.whyWrong')}
+              </Text>
+              <Text variant="small" style={styles.explain}>
+                {feedback.whyWrong}
+              </Text>
+            </View>
+          )}
           {feedback.explain && (
-            <Text variant="small" style={styles.explain}>
-              {feedback.explain}
-            </Text>
+            <View style={styles.remember}>
+              {!feedback.correct && feedback.whyWrong && (
+                <Text variant="small" secondary style={styles.label}>
+                  {t('session.remember')}
+                </Text>
+              )}
+              <Text variant="small" style={styles.explain}>
+                {feedback.explain}
+              </Text>
+            </View>
           )}
           <Button label={t('common.continue')} tone={feedback.correct ? 'success' : 'danger'} onPress={onNext} />
         </View>
@@ -35,4 +52,7 @@ const styles = StyleSheet.create({
   panel: { borderRadius: radius.lg, borderWidth: 2, padding: space.lg, gap: space.md },
   head: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   explain: { lineHeight: 19 },
+  label: { fontWeight: '800', textTransform: 'uppercase', fontSize: 11, letterSpacing: 0.6 },
+  why: { borderLeftWidth: 3, paddingLeft: space.sm, gap: 2 },
+  remember: { gap: 2 },
 });

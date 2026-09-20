@@ -50,6 +50,8 @@ export interface Step {
 export interface Feedback {
   correct: boolean;
   explain?: string;
+  /** Pourquoi la réponse choisie est fausse (propre à ce choix). */
+  whyWrong?: string;
 }
 
 export interface SessionState {
@@ -133,7 +135,7 @@ export function useSession(spec: SessionSpec) {
 
   /** L'exercice courant vient d'être répondu. */
   const answer = useCallback(
-    (correct: boolean) => {
+    (correct: boolean, whyWrong?: string) => {
       if (!current || state.phase !== 'question') return;
       const now = new Date();
       const store = useProgress.getState();
@@ -161,7 +163,7 @@ export function useSession(spec: SessionSpec) {
       setState((s) => ({
         ...s,
         phase: 'feedback',
-        feedback: { correct, explain: current.exercise.explain },
+        feedback: { correct, explain: current.exercise.explain, whyWrong: correct ? undefined : whyWrong },
         correctCount: s.correctCount + (correct && !current.retry ? 1 : 0),
         combo: correct ? s.combo + 1 : 0,
         bestCombo: correct ? Math.max(s.bestCombo, s.combo + 1) : s.bestCombo,

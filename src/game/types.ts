@@ -100,6 +100,11 @@ export interface ExerciseBase {
   source?: { title: string; url: string };
   /** Carte du deck dont l'exercice est tiré : une erreur la replanifie. */
   cardId?: string;
+  /**
+   * Exercice « cœur de leçon » (lecture de code, prédiction de sortie) : servi
+   * en priorité dans les leçons de l'unité, avant les exercices de vocabulaire.
+   */
+  priority?: boolean;
 }
 
 export interface CodeBlock {
@@ -115,6 +120,10 @@ export interface QcmExercise extends ExerciseBase {
   choices: string[];
   /** Index de la bonne réponse. */
   answer: number;
+  /** Pourquoi chaque mauvais choix est faux, aligné sur `choices` (null pour la bonne réponse). */
+  whyWrong?: (string | null)[];
+  /** Sortie réelle du code, révélée après la réponse. */
+  output?: string;
   /**
    * Variante « taper la réponse », posée à la place des choix quand l'unité
    * a déjà 3 couronnes : la maîtrise se prouve sans béquille. Même clé, même
@@ -161,12 +170,35 @@ export interface CaseExercise extends ExerciseBase {
   steps: CaseStep[];
 }
 
+/** Repérer la ligne fautive d'un extrait de code. `answer` est l'index de la ligne. */
+export interface BugLineExercise extends ExerciseBase {
+  kind: 'bugline';
+  prompt: string;
+  lang: CodeBlock['lang'];
+  lines: string[];
+  answer: number;
+}
+
+/**
+ * Assembler une ligne de code à partir de morceaux mélangés. `tokens` est la
+ * solution dans l'ordre ; `extra` sont les intrus ajoutés à la banque.
+ */
+export interface ComposeExercise extends ExerciseBase {
+  kind: 'compose';
+  prompt: string;
+  lang: CodeBlock['lang'];
+  tokens: string[];
+  extra: string[];
+}
+
 export type Exercise =
   | QcmExercise
   | ClozeExercise
   | MatchExercise
   | OrderExercise
-  | CaseExercise;
+  | CaseExercise
+  | BugLineExercise
+  | ComposeExercise;
 
 export type ExerciseKind = Exercise['kind'];
 

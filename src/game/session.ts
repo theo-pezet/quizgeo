@@ -11,6 +11,8 @@ import { FULL_SESSION_LENGTH } from './xp';
 import type { Exercise, QcmExercise, QuestionProgress, Rng, SessionMode } from './types';
 
 export const SESSION_LENGTH = FULL_SESSION_LENGTH;
+/** Part d'une leçon réservée aux exercices prioritaires (lecture de code) quand l'unité en a. */
+export const PRIORITY_SHARE = 0.7;
 
 /** Fisher-Yates. Ne mute pas l'entrée. */
 export function shuffle<T>(items: readonly T[], rng: Rng): T[] {
@@ -36,9 +38,21 @@ export function composeUnitSession(
 ): Exercise[] {
   if (questions.length === 0) return [];
 
+  // Les exercices prioritaires (lecture de code) forment 70 % de la leçon quand
+  // l'unité en a ; le reste vient du vocabulaire, pour que toutes les questions
+  // de l'unité continuent d'être vues (les couronnes en dépendent).
+  const priority = questions.filter((q) => q.priority === true);
+  const rest = questions.filter((q) => q.priority !== true);
+  let pool: readonly Exercise[] = questions;
+  if (priority.length > 0 && rest.length > 0) {
+    const k = Math.min(priority.length, Math.ceil(length * PRIORITY_SHARE));
+    const fill = Math.min(rest.length, Math.max(0, length - k));
+    pool = [...shuffle(priority, rng).slice(0, k), ...shuffle(rest, rng).slice(0, fill)];
+  }
+
   const out: Exercise[] = [];
   while (out.length < length) {
-    const cycle = shuffle(questions, rng);
+    const cycle = shuffle(pool, rng);
     const previous = out[out.length - 1];
     // Raccord : si le cycle recommence par la question qui vient d'être posée,
     // on l'échange avec la suivante. Impossible avec une seule question, auquel

@@ -7,7 +7,7 @@ import { Button, CodeBlock, Text, radius, space, useColors } from '@/ui';
 
 interface Props {
   exercise: QcmExercise;
-  onAnswer: (correct: boolean) => void;
+  onAnswer: (correct: boolean, whyWrong?: string) => void;
   locked: boolean;
   /** Libellé du bouton (par défaut « Vérifier »). Le test de niveau met « Suivant ». */
   checkLabel?: string;
@@ -25,7 +25,7 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
   return (
     <View style={styles.wrap}>
       <Text variant="h2">{exercise.prompt}</Text>
-      {exercise.code && <CodeBlock code={exercise.code} />}
+      {exercise.code && <CodeBlock code={exercise.code} output={locked ? exercise.output : undefined} />}
       <View style={[styles.choices, isTrueFalse && styles.row]}>
         {presented.choices.map((choice, i) => {
           const isSelected = selected === i;
@@ -53,7 +53,11 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
         })}
       </View>
       {!locked && (
-        <Button label={checkLabel ?? t('common.check')} disabled={selected === null} onPress={() => onAnswer(selected === presented.answer)} />
+        <Button label={checkLabel ?? t('common.check')} disabled={selected === null} onPress={() => {
+            const ok = selected === presented.answer;
+            const original = selected === null ? -1 : presented.order[selected];
+            onAnswer(ok, ok ? undefined : exercise.whyWrong?.[original] ?? undefined);
+          }} />
       )}
     </View>
   );

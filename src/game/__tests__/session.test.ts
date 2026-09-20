@@ -53,6 +53,26 @@ describe('composeUnitSession', () => {
     expect(hasNoImmediateRepeat(out)).toBe(true);
   });
 
+  it('sert 70 % d’exercices prioritaires quand l’unité en a, et le reste en vocabulaire', () => {
+    const code = makeUnit('py-2', 12).map((q, i) => ({ ...q, key: `py-2:c:${i}`, priority: true }));
+    const vocab = makeUnit('py-2', 8);
+    for (let seed = 0; seed < 50; seed += 1) {
+      const out = composeUnitSession([...code, ...vocab], mulberry32(seed));
+      expect(out).toHaveLength(SESSION_LENGTH);
+      expect(out.filter((q) => q.priority).length).toBe(7);
+      expect(hasNoImmediateRepeat(out)).toBe(true);
+    }
+    // Peu d'exercices prioritaires : tous servis, le reste complète.
+    const few = composeUnitSession([...code.slice(0, 2), ...vocab], mulberry32(1));
+    expect(few.filter((q) => q.priority).length).toBe(2);
+    // Peu de vocabulaire : on cycle sur la petite réserve sans jamais dépasser 10.
+    const little = composeUnitSession([...code, ...vocab.slice(0, 1)], mulberry32(2));
+    expect(little).toHaveLength(SESSION_LENGTH);
+    expect(little.filter((q) => !q.priority).length).toBeGreaterThanOrEqual(1);
+    // Que des prioritaires : comportement inchangé.
+    expect(composeUnitSession(code, mulberry32(3))).toHaveLength(SESSION_LENGTH);
+  });
+
   it('distribue les questions équitablement sur un cycle complet', () => {
     const out = composeUnitSession(unit5, mulberry32(3));
     const counts = new Map<string, number>();

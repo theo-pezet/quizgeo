@@ -53,6 +53,12 @@ describe.each(LANGS)('le contenu en %s', (lang) => {
       }
       if (e.kind === 'match' && ref?.kind === 'match') expect(e.pairs.length).toBe(ref.pairs.length);
       if (e.kind === 'order' && ref?.kind === 'order') expect(e.steps.length).toBe(ref.steps.length);
+      if (e.kind === 'bugline' && ref?.kind === 'bugline') expect(e.lines).toEqual(ref.lines);
+      if (e.kind === 'compose' && ref?.kind === 'compose') expect([e.tokens, e.extra]).toEqual([ref.tokens, ref.extra]);
+      if (e.kind === 'qcm' && ref?.kind === 'qcm') {
+        expect(e.output).toBe(ref.output);
+        expect(e.whyWrong?.length).toBe(ref.whyWrong?.length);
+      }
       if (e.kind === 'case' && ref?.kind === 'case') {
         expect(e.steps.length).toBe(ref.steps.length);
         e.steps.forEach((s, i) => expect(s.choices.length).toBe(ref.steps[i].choices.length));
@@ -182,6 +188,37 @@ describe('les exercices', () => {
         }
       }
       expect(byId.size).toBe(c.CARDS.length);
+    }
+  });
+
+  it('ligne fautive : 2 à 8 lignes, réponse dans les bornes', () => {
+    for (const ex of FR.EXERCISES) {
+      if (ex.kind !== 'bugline') continue;
+      expect(ex.lines.length).toBeGreaterThanOrEqual(2);
+      expect(ex.lines.length).toBeLessThanOrEqual(8);
+      expect(ex.answer).toBeGreaterThanOrEqual(0);
+      expect(ex.answer).toBeLessThan(ex.lines.length);
+      expect(ex.prompt.trim().length).toBeGreaterThan(0);
+    }
+  });
+
+  it('assemblage : au moins 3 morceaux, 0 à 4 intrus, aucun intrus égal à un morceau de la solution', () => {
+    for (const ex of FR.EXERCISES) {
+      if (ex.kind !== 'compose') continue;
+      expect(ex.tokens.length).toBeGreaterThanOrEqual(3);
+      expect(ex.extra.length).toBeLessThanOrEqual(4);
+      for (const x of ex.extra) expect(ex.tokens).not.toContain(x);
+    }
+  });
+
+  it('QCM avec explication par choix : une entrée par choix, aucune pour la bonne réponse', () => {
+    for (const ex of FR.EXERCISES) {
+      if (ex.kind !== 'qcm' || !ex.whyWrong) continue;
+      expect(ex.whyWrong.length).toBe(ex.choices.length);
+      expect(ex.whyWrong[ex.answer] ?? null).toBeNull();
+      ex.whyWrong.forEach((w, i) => {
+        if (i !== ex.answer) expect((w ?? '').trim().length).toBeGreaterThan(0);
+      });
     }
   });
 

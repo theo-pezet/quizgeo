@@ -83,10 +83,10 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
         exercise={current.exercise}
         hard={hard}
         locked={state.phase === 'feedback'}
-        onAnswer={(correct) => {
+        onAnswer={(correct, whyWrong) => {
           void (correct ? haptics.correct() : haptics.wrong());
           sounds.play(correct ? 'correct' : 'wrong');
-          answer(correct);
+          answer(correct, whyWrong);
         }}
       />
       {state.phase === 'feedback' && state.feedback && (
