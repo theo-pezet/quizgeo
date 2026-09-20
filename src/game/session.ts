@@ -27,6 +27,21 @@ export function shuffle<T>(items: readonly T[], rng: Rng): T[] {
 }
 
 /**
+ * Le vivier d'une session : les exercices prioritaires (lecture de code)
+ * forment 70 % de la session quand il y en a ; le reste vient du vocabulaire,
+ * pour que toutes les questions continuent d'être vues (les couronnes en
+ * dépendent). Sans prioritaires, ou sans le reste, le vivier est inchangé.
+ */
+function mixPriority(questions: readonly Exercise[], rng: Rng, length: number): readonly Exercise[] {
+  const priority = questions.filter((q) => q.priority === true);
+  const rest = questions.filter((q) => q.priority !== true);
+  if (priority.length === 0 || rest.length === 0) return questions;
+  const k = Math.min(priority.length, Math.ceil(length * PRIORITY_SHARE));
+  const fill = Math.min(rest.length, Math.max(0, length - k));
+  return [...shuffle(priority, rng).slice(0, k), ...shuffle(rest, rng).slice(0, fill)];
+}
+
+/**
  * Session d'unité : les 4 ou 5 questions de l'unité, cyclées jusqu'à 10, dans
  * un ordre aléatoire à chaque cycle, sans jamais poser deux fois la même
  * question d'affilée — y compris au raccord entre deux cycles.
@@ -37,18 +52,7 @@ export function composeUnitSession(
   length: number = SESSION_LENGTH,
 ): Exercise[] {
   if (questions.length === 0) return [];
-
-  // Les exercices prioritaires (lecture de code) forment 70 % de la leçon quand
-  // l'unité en a ; le reste vient du vocabulaire, pour que toutes les questions
-  // de l'unité continuent d'être vues (les couronnes en dépendent).
-  const priority = questions.filter((q) => q.priority === true);
-  const rest = questions.filter((q) => q.priority !== true);
-  let pool: readonly Exercise[] = questions;
-  if (priority.length > 0 && rest.length > 0) {
-    const k = Math.min(priority.length, Math.ceil(length * PRIORITY_SHARE));
-    const fill = Math.min(rest.length, Math.max(0, length - k));
-    pool = [...shuffle(priority, rng).slice(0, k), ...shuffle(rest, rng).slice(0, fill)];
-  }
+  const pool = mixPriority(questions, rng, length);
 
   const out: Exercise[] = [];
   while (out.length < length) {
@@ -97,7 +101,7 @@ export function composeFreeSession(
   length: number = SESSION_LENGTH,
 ): Exercise[] {
   if (pool.length === 0) return [];
-  if (pool.length >= length) return shuffle(pool, rng).slice(0, length);
+  if (pool.length >= length) return shuffle(mixPriority(pool, rng, length), rng).slice(0, length);
 
   // Vivier trop petit : on cycle, avec la même règle de non-répétition immédiate.
   return composeUnitSession(pool, rng, length);

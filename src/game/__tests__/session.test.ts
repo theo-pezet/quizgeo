@@ -73,6 +73,17 @@ describe('composeUnitSession', () => {
     expect(composeUnitSession(code, mulberry32(3))).toHaveLength(SESSION_LENGTH);
   });
 
+  it('session libre : même part de 70 % pour les exercices prioritaires', () => {
+    const code = makeUnit('py-2', 30).map((q, i) => ({ ...q, key: `py-2:c:${i}`, priority: true }));
+    const vocab = makeUnit('py-3', 40);
+    for (let seed = 0; seed < 20; seed += 1) {
+      const out = composeFreeSession([...code, ...vocab], mulberry32(seed));
+      expect(out).toHaveLength(SESSION_LENGTH);
+      expect(out.filter((q) => q.priority).length).toBe(7);
+      expect(new Set(out.map((q) => q.key)).size).toBe(SESSION_LENGTH);
+    }
+  });
+
   it('distribue les questions équitablement sur un cycle complet', () => {
     const out = composeUnitSession(unit5, mulberry32(3));
     const counts = new Map<string, number>();

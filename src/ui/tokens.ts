@@ -7,7 +7,7 @@
  * mondes, pour que le parcours change de visage à mesure qu'on avance.
  */
 
-import { useColorScheme } from 'react-native';
+import { Platform, useColorScheme } from 'react-native';
 
 export interface Colors {
   background: string;
@@ -120,5 +120,5 @@ export const font = {
   body: { fontSize: 16, fontFamily: fonts.regular, lineHeight: 23 },
   bodyBold: { fontSize: 16, fontFamily: fonts.extraBold, lineHeight: 22 },
   small: { fontSize: 13, fontFamily: fonts.bold, lineHeight: 18 },
-  mono: { fontSize: 14, fontFamily: 'Menlo', lineHeight: 20 },
+  mono: { fontSize: 14, fontFamily: Platform.select({ ios: 'Menlo', android: 'monospace', default: 'Menlo, Consolas, monospace' }), lineHeight: 20 },
 };

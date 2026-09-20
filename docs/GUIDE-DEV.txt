@@ -35,7 +35,7 @@ scripts d'outils (icônes, sons, deck).
 
     npm ci                 # dépendances
     npx tsc --noEmit       # vérification de types (doit être vide)
-    npm test               # jest : 382 tests, couverture 100 % exigée sur src/game
+    npm test               # jest : 389 tests, couverture 100 % exigée sur src/game
     npx expo start --web   # lance le site en local (http://localhost:8081)
     npx expo start         # + Expo Go / émulateur pour Android
 
@@ -179,9 +179,10 @@ un test dans src/game/__tests__, et on ne touche pas aux écrans.
   sous-thème du deck (`slice('seo', 0, 8)` = les 8 premières cartes SEO de la
   matière), soit une liste d'identifiants, soit rien (unité composée
   uniquement d'exercices écrits à la main). Titres EN/ES dans units.i18n.ts.
-- Chiffres en v1.0.0 (identiques dans les 3 langues) : 103 unités, 27 mondes,
-  1518 cartes, 1396 exercices. Répartition : marketing 36 unités (9 mondes),
-  IA 22 (5), Python 24 (5), HTML 6 (2), CSS 5 (3), JavaScript 10 (3). Les
+- Chiffres en v1.1.0 (identiques dans les 3 langues) : 105 unités, 27 mondes,
+  1518 cartes, 1925 exercices dont 529 « lis le code » (voir 4.7).
+  Répartition : marketing 36 unités (9 mondes), IA 22 (5), Python 26 (5),
+  HTML 6 (2), CSS 5 (3), JavaScript 10 (3). Les
   21 unités de src/data/units.extra.json sont celles ajoutées en v1.0 pour
   couvrir les trous du programme (CRM, e-commerce, marque, vidéo, SEO local,
   machine learning, vision, outils IA, images, POO, regex, fonctions
@@ -277,7 +278,46 @@ IMPORTANT : depuis cette relecture, src/data/deck.json et les fichiers
 deck.fr/es.json sont la source de vérité. Ne pas relancer tools/build_deck.py
 depuis le classeur Excel sans y reporter d'abord les corrections.
 
-4.7 AJOUTER UNE UNITÉ (la méthode recommandée)
+4.7 LES EXERCICES « LIS LE CODE » (v1.1)
+
+Pour les matières code (Python, HTML, CSS, JavaScript), le cœur des leçons
+n'est plus « qu'est-ce qu'une liste ? » mais « qu'affiche ce code ? ». Idée
+reprise de PyQuest (application HTML d'un proche de l'auteur, dont les 193
+questions et 12 scripts ont été importés avec son accord par
+tools/pyquest_import.py, puis traduits).
+
+- src/data/code.extra.json : les exercices code, rattachés aux unités
+  EXISTANTES par unitId, en trois langues (le code lui-même est identique
+  dans les trois). Chargés par src/content/extra.ts (CODE_EXERCISES) avec
+  les exercices JSON des unités. Clés `<unitId>:c:<n>` (import PyQuest) et
+  `<unitId>:w:<n>` (rédaction par agents).
+- Ils portent `priority: true` : composeUnitSession (src/game/session.ts)
+  réserve 70 % de chaque leçon aux exercices prioritaires quand l'unité en
+  a (PRIORITY_SHARE), le reste au vocabulaire des cartes, pour que toutes
+  les questions restent vues (les couronnes en dépendent).
+- Nouveaux champs d'un QCM : `whyWrong` (une explication PAR mauvais choix,
+  affichée sous « Pourquoi c'est faux » quand on choisit ce distracteur ;
+  l'explication générale devient « À retenir ») et `output` (la sortie
+  réelle du code, révélée sous le bloc de code après la réponse).
+- Nouveaux types d'exercice (src/game/types.ts, vues dans
+  src/features/session/) : `bugline` (toucher la ligne fautive parmi 2 à
+  8 lignes, BugLineView) et `compose` (assembler une ligne de code à partir
+  de morceaux mélangés avec des intrus, ComposeView, manipulés par index).
+  Les QCM « trou » sont des QCM dont le code contient `___`.
+- Deux unités sans cartes, faites uniquement de ces exercices :
+  py-audit-1 « L'IA t'a écrit ça » (douze scripts générés par IA à auditer,
+  monde Du bon code) et py-ia-1 « Python pour l'IA » (numpy, gradient,
+  PyTorch, transformers, monde Données).
+
+Ajouter des exercices code à une unité : écrire un JSON {"exercises": [...]}
+au format de tools/review/CODE-GUIDE.md (le guide donné aux rédacteurs,
+humains ou IA : formats, règles, exemple complet), exécuter le code pour
+vérifier chaque sortie, puis
+    python3 tools/integrate_code.py chemin/fichier.json
+qui valide (clé, unité, choix, whyWrong aligné, bornes, doublons, tirets)
+et fusionne dans code.extra.json ; puis `npm test`.
+
+4.8 AJOUTER UNE UNITÉ (la méthode recommandée)
 
 1. Écrire un fichier JSON au format décrit dans tools/integrate_units.py
    (une unité, 10 cartes, 8 exercices, chaque texte en fr/en/es ; le

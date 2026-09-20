@@ -77,7 +77,7 @@ ordre, cas pratique.
 ```
 npm install
 npm run typecheck
-npm test              # 382 tests ; src/game/ doit rester à 100 % de couverture
+npm test              # 389 tests ; src/game/ doit rester à 100 % de couverture
 npx expo start        # puis w (web), a (Android)
 npx expo export --platform web   # build statique dans dist/
 ```

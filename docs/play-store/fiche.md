@@ -36,7 +36,8 @@ CE QUE TU APPRENDS
 • HTML, CSS et JavaScript : le web côté navigateur, le SEO technique, GTM et le dataLayer, les Core Web Vitals.
 
 COMMENT TU APPRENDS
-• 103 unités et près de 1 400 exercices : QCM, vrai/faux, textes à trous, associations, remises en ordre, lecture de code, et des cas pratiques à plusieurs décisions tirés de situations réelles.
+• 105 unités et plus de 1 900 exercices : QCM, vrai/faux, textes à trous, associations, remises en ordre, et des cas pratiques à plusieurs décisions tirés de situations réelles.
+• Pour le code, tu lis et tu prédis : « qu'affiche ce code ? », trouve la ligne qui plante, assemble la ligne, avec la sortie réelle révélée et une explication propre à chaque mauvaise réponse. Et douze scripts écrits par une IA à auditer.
 • Une explication à chaque réponse, juste ou fausse, avec un exemple concret.
 • Un deck de 1 500 cartes en répétition espacée (Encore / Difficile / Bien / Facile) : ce que tu rates en leçon revient dans le deck.
 • Le mode maîtrise : à partir de 3 couronnes, plus de choix, tu tapes la réponse.
