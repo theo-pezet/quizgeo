@@ -80,6 +80,19 @@ export function useColors(): Colors {
   return useColorScheme() === 'dark' ? palette.dark : palette.light;
 }
 
+export function useIsDark(): boolean {
+  return useColorScheme() === 'dark';
+}
+
+/**
+ * Une couleur vive (matière, monde) employée comme couleur de TEXTE sur la
+ * surface de la carte : foncée en thème clair, éclaircie en thème sombre,
+ * pour rester lisible (≥ 4,5:1) sur les couleurs les plus claires.
+ */
+export function ink(hex: string, dark: boolean): string {
+  return dark ? tint(hex, 0.35) : shade(hex, 0.2);
+}
+
 /** Une teinte plus sombre de la même couleur, pour le relief des boutons. */
 export function shade(hex: string, amount = 0.22): string {
   const m = /^#?([0-9a-f]{6})$/i.exec(hex);

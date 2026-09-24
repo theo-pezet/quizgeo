@@ -70,9 +70,13 @@ export function reviewQueue(progress: Progress): QuestionProgress[] {
     .sort(compareByLastSeen);
 }
 
-export function reviewQueueSize(progress: Progress): number {
+/**
+ * Taille de la file. `known` écarte les questions retirées du contenu depuis
+ * (elles restent dans la sauvegarde mais ne peuvent plus être rejouées).
+ */
+export function reviewQueueSize(progress: Progress, known?: { has(key: string): boolean }): number {
   let size = 0;
-  for (const q of Object.values(progress.questions)) if (q.inReview) size += 1;
+  for (const q of Object.values(progress.questions)) if (q.inReview && (!known || known.has(q.key))) size += 1;
   return size;
 }
 

@@ -36,15 +36,25 @@ export const MAX_TRAITS: Traits = 5;
 export const DECAY_DAYS = 14;
 
 /**
+ * Streak en dessous duquel l'usure ne descend jamais : 2, soit 3 couronnes
+ * (PATH_TRAITS). Seule la maîtrise (4 et 5 couronnes) se fissure ; le chemin
+ * acquis ne recule pas, « Continuer » ne revient pas en arrière et aucune
+ * unité ne se referme.
+ */
+export const DECAY_FLOOR_STREAK = PATH_TRAITS - 1;
+
+/**
  * Streak effectif d'un exercice à la date `today` : le streak enregistré,
- * moins un cran par période de 14 jours sans le revoir. Rien n'est écrit ;
- * revenir sur l'unité restaure les couronnes en re-répondant juste.
+ * moins un cran par période de 14 jours sans le revoir, sans jamais passer
+ * sous min(streak, 2). Rien n'est écrit ; revenir sur l'unité restaure les
+ * couronnes de maîtrise en re-répondant juste.
  */
 export function effectiveStreak(q: QuestionProgress, today: DayKey | undefined): number {
   if (today === undefined || q.lastSeenAt === null) return q.streak;
   const elapsed = daysBetween(toDayKey(new Date(q.lastSeenAt)), today);
   const lost = Math.floor(Math.max(0, elapsed) / DECAY_DAYS);
-  return Math.max(0, q.streak - lost);
+  const floor = Math.min(q.streak, DECAY_FLOOR_STREAK);
+  return Math.max(floor, q.streak - lost);
 }
 
 export function unitExercises(exercises: readonly Exercise[], unitId: UnitId): Exercise[] {

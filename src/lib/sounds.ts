@@ -22,7 +22,36 @@ const SOURCES: Record<SoundName, number> = {
 };
 
 const players = new Map<SoundName, AudioPlayer>();
+
+/**
+ * Mode audio : jouer même en mode silencieux « médias autorisés », et SE
+ * MÉLANGER aux autres applis. Sans `mixWithOthers`, Android demande le focus
+ * audio à chaque son : la musique ou le podcast de l'utilisateur se met en
+ * pause à chaque bonne réponse. Réglé une fois, au premier son ; les sons
+ * attendent que ce soit fait.
+ */
+let mode: Promise<void> | null = null;
 let modeReady = false;
+
+function ensureMode(): Promise<void> {
+  if (mode === null) {
+    mode = setAudioModeAsync({ playsInSilentMode: true, interruptionMode: 'mixWithOthers' })
+      .catch(() => undefined)
+      .then(() => {
+        modeReady = true;
+      });
+  }
+  return mode;
+}
+
+function start(p: AudioPlayer): void {
+  try {
+    p.seekTo(0);
+    p.play();
+  } catch {
+    // Lecture impossible (autoplay bloqué sur le web avant un geste) : on ignore.
+  }
+}
 
 function playerFor(name: SoundName): AudioPlayer | null {
   try {
@@ -40,18 +69,9 @@ function playerFor(name: SoundName): AudioPlayer | null {
 export const sounds = {
   play(name: SoundName): void {
     if (!useSettings.getState().sound) return;
-    if (!modeReady) {
-      modeReady = true;
-      // Jouer même si le téléphone est en mode silencieux « médias autorisés » ; sans bloquer.
-      void setAudioModeAsync({ playsInSilentMode: true }).catch(() => undefined);
-    }
     const p = playerFor(name);
     if (!p) return;
-    try {
-      p.seekTo(0);
-      p.play();
-    } catch {
-      // Lecture impossible (autoplay bloqué sur le web avant un geste) : on ignore.
-    }
+    if (modeReady) start(p);
+    else void ensureMode().then(() => start(p));
   },
 };

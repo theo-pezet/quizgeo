@@ -86,18 +86,45 @@ describe('unitTraits', () => {
       expect(unitTraits(p, UNIT, bank, '2026-09-22')).toBe(5);
     });
 
-    it('retire une couronne par période de 14 jours sans révision', () => {
+    it('retire une couronne de maîtrise par période de 14 jours, jamais sous 3 couronnes', () => {
       const p = withQuestionState(progressWith(), questions, { seen: 5, streak: 4 });
       expect(unitTraits(p, UNIT, bank, '2026-09-23')).toBe(4);
       expect(unitTraits(p, UNIT, bank, '2026-10-07')).toBe(3);
-      expect(unitTraits(p, UNIT, bank, '2026-10-21')).toBe(2);
-      expect(unitTraits(p, UNIT, bank, '2027-01-01')).toBe(0);
+      expect(unitTraits(p, UNIT, bank, '2026-10-21')).toBe(3);
+      expect(unitTraits(p, UNIT, bank, '2027-01-01')).toBe(3);
+    });
+
+    it('ne touche jamais aux couronnes 1 à 3, celles du chemin', () => {
+      const p2 = withQuestionState(progressWith(), questions, { seen: 2, streak: 1 });
+      expect(unitTraits(p2, UNIT, bank, '2030-01-01')).toBe(2);
+      const p3 = withQuestionState(progressWith(), questions, { seen: 3, streak: 2 });
+      expect(unitTraits(p3, UNIT, bank, '2030-01-01')).toBe(3);
+      const seen = { ...emptyQuestionProgress('k'), streak: 5, lastSeenAt: '2026-09-09T10:00:00.000Z' };
+      expect(effectiveStreak(seen, '2030-01-01')).toBe(2);
+      expect(effectiveStreak({ ...seen, streak: 1 }, '2030-01-01')).toBe(1);
+      expect(effectiveStreak({ ...seen, streak: 0 }, '2030-01-01')).toBe(0);
     });
 
     it('ne descend jamais sous la première couronne latchée', () => {
-      let p = withQuestionState(progressWith(), questions, { seen: 5, streak: 4 });
+      let p = withQuestionState(progressWith(), questions, { seen: 5, streak: 0 });
       p = withFirstTrait(p, UNIT);
       expect(unitTraits(p, UNIT, bank, '2030-01-01')).toBe(1);
+    });
+
+    it('régression : l’usure ne renvoie pas « Continuer » en arrière et ne referme aucune unité', () => {
+      // seo-1 à 3 couronnes le 09/09, seo-2 ouverte à 2 couronnes (unité quittée sans fin de session).
+      const bankAll = makeFullBank();
+      const seo1 = bankAll.filter((q) => q.unitId === 'seo-1');
+      const seo2 = bankAll.filter((q) => q.unitId === 'seo-2');
+      let p = withQuestionState(progressWith(), seo1, { seen: 3, streak: 2 });
+      p = withQuestionState(p, seo2, { seen: 1, streak: 1 });
+      for (const day of ['2026-09-10', '2026-09-23', '2026-12-31', '2028-01-01']) {
+        const traits = allUnitTraits(p, bankAll, CATALOG, day);
+        expect(traits['seo-1']).toBe(3);
+        expect(currentUnit('seo', traits, CATALOG)).toBe('seo-2');
+        expect(isUnitUnlocked('seo-2', traits, CATALOG)).toBe(true);
+        expect(isUnitUnlocked('seo-3', traits, CATALOG)).toBe(true);
+      }
     });
 
     it('effectiveStreak ignore une question jamais vue ou une date dans le passé', () => {

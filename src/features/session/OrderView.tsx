@@ -3,7 +3,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { shuffle, type OrderExercise } from '@/game';
 import { useT } from '@/i18n';
-import { Button, Text, radius, space, useColors } from '@/ui';
+import { Text, radius, space, useColors } from '@/ui';
+
+import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: OrderExercise;
@@ -19,6 +21,10 @@ export function OrderView({ exercise, onAnswer, locked }: Props) {
   const [chosen, setChosen] = useState<string[]>([]);
   const remaining = pool.filter((s) => !chosen.includes(s));
   const isCorrect = chosen.length === exercise.steps.length && chosen.every((s, i) => s === exercise.steps[i]);
+  const complete = chosen.length === exercise.steps.length;
+  const inlineAction = useSessionAction(
+    locked ? null : { label: t('common.check'), disabled: !complete, onPress: () => complete && onAnswer(isCorrect) },
+  );
 
   return (
     <View style={styles.wrap}>
@@ -29,6 +35,9 @@ export function OrderView({ exercise, onAnswer, locked }: Props) {
             key={step}
             disabled={locked}
             onPress={() => setChosen(chosen.filter((s) => s !== step))}
+            accessibilityRole="button"
+            accessibilityLabel={`${i + 1}. ${step}`}
+            accessibilityState={{ selected: true, disabled: locked }}
             style={[
               styles.step,
               {
@@ -68,14 +77,14 @@ export function OrderView({ exercise, onAnswer, locked }: Props) {
             key={step}
             disabled={locked}
             onPress={() => setChosen([...chosen, step])}
+            accessibilityRole="button"
+            accessibilityState={{ selected: false, disabled: locked }}
             style={[styles.chip, { borderColor: colors.border, backgroundColor: colors.surfaceAlt }]}>
             <Text variant="small">{step}</Text>
           </Pressable>
         ))}
       </View>
-      {!locked && (
-        <Button label={t('common.check')} disabled={chosen.length !== exercise.steps.length} onPress={() => onAnswer(isCorrect)} />
-      )}
+      {inlineAction}
     </View>
   );
 }

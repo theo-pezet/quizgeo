@@ -6,9 +6,13 @@
 import { GEMS, addGems } from './economy';
 import type { DailyState, DayKey, Progress } from './types';
 
-/** Remet le compteur à zéro si le jour a changé. Idempotent. */
+/**
+ * Remet le compteur à zéro si le jour a changé. Idempotent. Un jour ANTÉRIEUR
+ * (fuseau, horloge reculée) ne change rien : l'objectif n'est pas rejoué.
+ */
 export function ensureDaily(state: DailyState, today: DayKey): DailyState {
   if (state.day === today) return state;
+  if (state.day !== null && today < state.day) return state;
   return { ...state, day: today, xp: 0 };
 }
 
@@ -23,10 +27,13 @@ export function creditDailyXp(progress: Progress, amount: number, today: DayKey)
   if (amount <= 0) return { progress, goalReached: false };
   const daily = ensureDaily(progress.daily, today);
   const xp = daily.xp + amount;
-  const goalReached = xp >= daily.goal && daily.metOn !== today;
+  // Le jour du compteur, pas `today` : si l'horloge a reculé, le compteur
+  // reste sur le jour le plus récent et l'objectif ne tombe qu'une fois.
+  const day = daily.day as DayKey;
+  const goalReached = xp >= daily.goal && daily.metOn !== day;
   const next: Progress = {
     ...progress,
-    daily: { ...daily, xp, metOn: goalReached ? today : daily.metOn },
+    daily: { ...daily, xp, metOn: goalReached ? day : daily.metOn },
   };
   if (!goalReached) return { progress: next, goalReached };
   return {
@@ -45,5 +52,6 @@ export function dailyRatio(state: DailyState, today: DayKey): number {
 }
 
 export function isGoalMet(state: DailyState, today: DayKey): boolean {
-  return state.metOn === today;
+  const d = ensureDaily(state, today);
+  return d.metOn === d.day;
 }

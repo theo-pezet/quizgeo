@@ -3,7 +3,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import type { BugLineExercise } from '@/game';
 import { useT } from '@/i18n';
-import { Button, Text, font, radius, space, useColors } from '@/ui';
+import { Text, font, radius, space, useColors } from '@/ui';
+
+import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: BugLineExercise;
@@ -16,6 +18,19 @@ export function BugLineView({ exercise, onAnswer, locked }: Props) {
   const colors = useColors();
   const t = useT();
   const [selected, setSelected] = useState<number | null>(null);
+  const inlineAction = useSessionAction(
+    locked
+      ? null
+      : {
+          label: t('common.check'),
+          disabled: selected === null,
+          onPress: () => {
+            if (selected === null) return;
+            const ok = selected === exercise.answer;
+            onAnswer(ok, ok ? undefined : t('session.bugline.wrong'));
+          },
+        },
+  );
 
   return (
     <View style={styles.wrap}>
@@ -42,6 +57,7 @@ export function BugLineView({ exercise, onAnswer, locked }: Props) {
               disabled={locked}
               onPress={() => setSelected(i)}
               accessibilityRole="button"
+              accessibilityState={{ selected: isSelected, disabled: locked }}
               style={[styles.line, { backgroundColor: bg, borderColor: border }]}>
               <Text style={[styles.num, { color: colors.textSecondary }]}>{i + 1}</Text>
               <Text style={[font.mono, styles.code, { color: colors.text }]}>{line}</Text>
@@ -49,16 +65,7 @@ export function BugLineView({ exercise, onAnswer, locked }: Props) {
           );
         })}
       </View>
-      {!locked && (
-        <Button
-          label={t('common.check')}
-          disabled={selected === null}
-          onPress={() => {
-            const ok = selected === exercise.answer;
-            onAnswer(ok, ok ? undefined : t('session.bugline.wrong'));
-          }}
-        />
-      )}
+      {inlineAction}
     </View>
   );
 }

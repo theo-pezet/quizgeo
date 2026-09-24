@@ -1,6 +1,6 @@
 import { catalogFrom, emptyProgress, type Exercise, type QcmExercise } from '../types';
 import { unitTraits } from '../mastery';
-import { PLACEMENT_QUESTIONS, applyPlacement, pickPlacementQuestions, placementSkip } from '../placement';
+import { PLACEMENT_MIN_QUESTIONS, PLACEMENT_QUESTIONS, applyPlacement, pickPlacementQuestions, placementSkip } from '../placement';
 
 const qcm = (unitId: string, n: number, choices = 4): QcmExercise => ({
   kind: 'qcm',
@@ -41,6 +41,16 @@ describe('pickPlacementQuestions', () => {
 describe('placementSkip', () => {
   it('ne saute rien sur un score faible, même avec une auto-évaluation haute', () => {
     expect(placementSkip(3, 10, 10, 30)).toBe(0);
+    // 4 ou 5 sur 10 est à portée du hasard sur des QCM à 3 ou 4 choix.
+    expect(placementSkip(4, 10, 10, 30)).toBe(0);
+    expect(placementSkip(5, 10, 10, 30)).toBe(0);
+  });
+
+  it('ne saute rien quand le test compte trop peu de questions', () => {
+    expect(PLACEMENT_MIN_QUESTIONS).toBe(5);
+    expect(placementSkip(3, 3, 10, 30)).toBe(0);
+    expect(placementSkip(4, 4, 10, 30)).toBe(0);
+    expect(placementSkip(5, 5, 10, 30)).toBe(21);
   });
 
   it('ne saute rien sans questions ni sur un chemin trop court', () => {
@@ -51,10 +61,10 @@ describe('placementSkip', () => {
   it('combine test et auto-évaluation, sans dépasser 70 % du chemin ni laisser moins de deux unités', () => {
     // 0.6 * 1 + 0.4 * 1 = 1 → 0.7 * 30 = 21
     expect(placementSkip(10, 10, 10, 30)).toBe(21);
-    // 0.6 * 0.5 + 0.4 * 0.5 = 0.5 → (0.5 - 0.3) / 0.7 = 0.2857 → × 0.7 × 30 = 6
-    expect(placementSkip(5, 10, 5, 30)).toBe(6);
-    // 4/10 en se disant 7/10 : 0.52 → 0.314 → 6, pas 11.
-    expect(placementSkip(4, 10, 7, 31)).toBe(6);
+    // 0.6 * 0.6 + 0.4 * 0.5 = 0.56 → (0.56 - 0.3) / 0.7 = 0.3714 → × 0.7 × 30 = 7
+    expect(placementSkip(6, 10, 5, 30)).toBe(7);
+    // 6/10 en se disant 7/10 : 0.64 → 0.4857 → 10, pas 21.
+    expect(placementSkip(6, 10, 7, 31)).toBe(10);
     // Chemin de 3 unités : au plus 1.
     expect(placementSkip(10, 10, 10, 3)).toBe(1);
     // Auto-évaluation hors bornes : ramenée dans 1..10.

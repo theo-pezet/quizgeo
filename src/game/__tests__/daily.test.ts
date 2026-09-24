@@ -10,9 +10,9 @@ const questions = makeUnit('seo-1', 4);
 
 describe('ensureDaily / dailyRatio / isGoalMet', () => {
   it('remet à zéro quand le jour change, garde le même jour intact', () => {
-    const d = { day: TODAY, xp: 30, goal: 50, metOn: null };
+    const d = { day: TODAY, xp: 30, goal: 50, metOn: null, deckRewardedOn: null };
     expect(ensureDaily(d, TODAY)).toBe(d);
-    expect(ensureDaily(d, '2026-09-10')).toEqual({ day: '2026-09-10', xp: 0, goal: 50, metOn: null });
+    expect(ensureDaily(d, '2026-09-10')).toEqual({ day: '2026-09-10', xp: 0, goal: 50, metOn: null, deckRewardedOn: null });
     expect(dailyRatio(d, TODAY)).toBe(0.6);
     expect(dailyRatio({ ...d, xp: 80 }, TODAY)).toBe(1);
     expect(dailyRatio({ ...d, goal: 0 }, TODAY)).toBe(1);
@@ -25,7 +25,7 @@ describe('creditDailyXp', () => {
   it('cumule, atteint l’objectif une seule fois par jour et verse les gemmes', () => {
     let r = creditDailyXp(progressWith(), 30, TODAY);
     expect(r.goalReached).toBe(false);
-    expect(r.progress.daily).toEqual({ day: TODAY, xp: 30, goal: DEFAULT_DAILY_GOAL, metOn: null });
+    expect(r.progress.daily).toEqual({ day: TODAY, xp: 30, goal: DEFAULT_DAILY_GOAL, metOn: null, deckRewardedOn: null });
     r = creditDailyXp(r.progress, 30, TODAY);
     expect(r.goalReached).toBe(true);
     expect(r.progress.gems).toBe(GEMS.dailyGoal);

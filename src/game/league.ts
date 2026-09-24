@@ -170,10 +170,15 @@ export function resultForRank(rank: number, tier: number): LeagueResult {
  * Garantit que la ligue est celle de la semaine de `today`. Si une semaine
  * s'est terminée, elle est jugée sur son classement final (7 jours) et le
  * bilan est mis en attente d'affichage. Idempotent dans la même semaine.
+ *
+ * Une semaine ANTÉRIEURE (voyage vers l'ouest, horloge reculée) ne change
+ * rien : sans cela, la semaine en cours serait jugée finie à 0 XP, puis
+ * jugée encore une fois au retour de l'horloge.
  */
 export function ensureLeague(state: LeagueState, today: DayKey): LeagueState {
   const week = weekKeyOf(today);
   if (state.weekKey === week) return state;
+  if (state.weekKey !== null && week < state.weekKey) return state;
 
   const rivalSeed = state.rivalSeed || hashString(`rivals:${week}`);
 

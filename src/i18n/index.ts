@@ -9,6 +9,7 @@ import { useSettings } from '@/store/progress';
 import { detectLang, translate, type Key, type Lang, type Params, type T } from './translate';
 
 export { DICTS, LANGS, detectLang, format, monthLabel, translate } from './translate';
+export { formatDay, ordinal } from './format';
 export type { Key, Lang, Params, T } from './translate';
 
 export function currentLang(): Lang {

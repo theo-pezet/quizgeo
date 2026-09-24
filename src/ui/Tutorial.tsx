@@ -19,6 +19,9 @@ const STEPS: { icon: IconName; color: (c: ReturnType<typeof useColors>) => strin
 /**
  * Le mini-tuto du parcours : quatre cartes en surimpression, une idée par
  * carte (parcours, énergie, objectif et quêtes, couronnes). Se joue une fois.
+ * Un voile couvre l'écran : on ne peut pas toucher le parcours derrière (ce
+ * qui démontait le tuto et le faisait repartir à l'étape 1). « Passer » le
+ * termine d'un coup.
  */
 export function Tutorial({ onDone }: { onDone: () => void }) {
   const colors = useColors();
@@ -28,7 +31,7 @@ export function Tutorial({ onDone }: { onDone: () => void }) {
   const current = STEPS[step];
   const color = current.color(colors);
   return (
-    <View style={styles.backdrop} pointerEvents="box-none">
+    <View style={[StyleSheet.absoluteFill, styles.backdrop]} pointerEvents="auto" accessibilityViewIsModal>
       <FadeUp key={step} style={styles.wrap}>
         <View style={[styles.card, { backgroundColor: colors.surface, borderColor: color }]}>
           <View style={styles.head}>
@@ -48,7 +51,10 @@ export function Tutorial({ onDone }: { onDone: () => void }) {
               <View key={i} style={[styles.dot, { backgroundColor: i === step ? color : colors.border }]} />
             ))}
           </View>
-          <Button label={last ? t('tutorial.done') : t('tutorial.next')} color={color} onPress={() => (last ? onDone() : setStep(step + 1))} />
+          <View style={styles.actions}>
+            {!last && <Button label={t('tutorial.skip')} tone="ghost" onPress={onDone} />}
+            <Button label={last ? t('tutorial.done') : t('tutorial.next')} color={color} style={styles.grow} onPress={() => (last ? onDone() : setStep(step + 1))} />
+          </View>
         </View>
       </FadeUp>
     </View>
@@ -56,8 +62,9 @@ export function Tutorial({ onDone }: { onDone: () => void }) {
 }
 
 const styles = StyleSheet.create({
-  backdrop: { flex: 1 },
-  wrap: { width: '100%' },
+  backdrop: { backgroundColor: 'rgba(10, 8, 20, 0.45)', justifyContent: 'flex-end', alignItems: 'center', padding: space.lg, zIndex: 10 },
+  wrap: { width: '100%', maxWidth: 528 },
+  actions: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   card: { borderWidth: 2, borderRadius: radius.lg, padding: space.lg, gap: space.md, elevation: 10, shadowColor: '#000', shadowOpacity: 0.2, shadowRadius: 16, shadowOffset: { width: 0, height: 6 } },
   head: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   halo: { width: 52, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center' },

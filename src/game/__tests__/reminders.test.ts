@@ -85,4 +85,42 @@ describe('planReminders — relances', () => {
     off.streak = { ...off.streak, current: 1, lastActiveDay: '2026-09-10' };
     expect(planReminders(off, at('2026-09-15', 10), { ...DEFAULT_REMINDER_PREFS, streak: false }).some((r) => r.id.startsWith('lapse'))).toBe(false);
   });
+
+  it('n’annonce pas « en jeu » une série déjà perdue', () => {
+    const p = progressWith();
+    p.streak = { current: 12, best: 12, lastActiveDay: '2026-09-01', freezes: 0, freezeUsedOn: [] };
+    const streak = planReminders(p, at('2026-09-09', 10), DEFAULT_REMINDER_PREFS).find((r) => r.id === 'streak');
+    expect(streak?.title).toContain('Une leçon');
+    expect(streak?.title).not.toContain('12');
+  });
+
+  it('garde « en jeu » une série qu’un gel peut encore sauver', () => {
+    const p = progressWith();
+    p.streak = { current: 12, best: 12, lastActiveDay: '2026-09-07', freezes: 1, freezeUsedOn: [] };
+    const streak = planReminders(p, at('2026-09-09', 10), DEFAULT_REMINDER_PREFS).find((r) => r.id === 'streak');
+    expect(streak?.title).toContain('12 jours');
+  });
+
+  it('juge la série au jour du rappel, pas au jour de la programmation', () => {
+    // Dernière session hier, programmé ce soir après 19 h : le rappel de demain
+    // tombe à J+2, la série sera perdue sans gel.
+    const p = progressWith();
+    p.streak = { current: 5, best: 5, lastActiveDay: '2026-09-08', freezes: 0, freezeUsedOn: [] };
+    const streak = planReminders(p, at('2026-09-09', 21), DEFAULT_REMINDER_PREFS).find((r) => r.id === 'streak');
+    expect(streak?.at).toEqual(at('2026-09-10', 19));
+    expect(streak?.title).toContain('Une leçon');
+  });
+
+  it('n’envoie jamais deux notifications à la même minute (série et relance)', () => {
+    const p = progressWith();
+    p.streak = { current: 12, best: 12, lastActiveDay: '2026-09-06', freezes: 0, freezeUsedOn: [] };
+    // Trois jours après, le matin : la relance « 3 jours » tombe ce soir.
+    const morning = planReminders(p, at('2026-09-09', 10), DEFAULT_REMINDER_PREFS);
+    expect(morning.some((r) => r.id === 'streak')).toBe(false);
+    expect(morning.find((r) => r.id === 'lapse-3')?.at).toEqual(at('2026-09-09', 19));
+    // J+2 après 19 h : série et relance tomberaient toutes deux demain à 19 h.
+    const late = planReminders(p, at('2026-09-08', 21), DEFAULT_REMINDER_PREFS);
+    expect(late.some((r) => r.id === 'streak')).toBe(false);
+    expect(late.filter((r) => r.at.getTime() === at('2026-09-09', 19).getTime())).toHaveLength(1);
+  });
 });

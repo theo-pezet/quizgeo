@@ -10,8 +10,14 @@ import { emptyQuestionProgress, emptyUnitProgress, type Catalog, type Exercise, 
 export const PLACEMENT_QUESTIONS = 10;
 /** Part maximale du chemin qu'un test peut faire sauter. */
 export const PLACEMENT_MAX_SHARE = 0.7;
-/** En dessous de ce score, le test ne fait rien sauter, quoi qu'on déclare. */
-export const PLACEMENT_MIN_RATIO = 0.4;
+/**
+ * En dessous de ce score, le test ne fait rien sauter, quoi qu'on déclare.
+ * 60 % : répondre au hasard à des QCM à 4 choix y arrive 2 fois sur 100
+ * (8 sur 100 à 3 choix), contre 22 sur 100 avec l'ancien seuil de 40 %.
+ */
+export const PLACEMENT_MIN_RATIO = 0.6;
+/** Moins de questions que cela (matière pauvre en QCM) : le test ne prouve rien. */
+export const PLACEMENT_MIN_QUESTIONS = Math.ceil(PLACEMENT_QUESTIONS / 2);
 /** Poids du test face à l'auto-évaluation. */
 const TEST_WEIGHT = 0.6;
 /** Niveau combiné (0..1) en dessous duquel on ne saute rien. */
@@ -59,7 +65,7 @@ export function pickPlacementQuestions(
  * chemin, et il reste toujours au moins deux unités à jouer.
  */
 export function placementSkip(score: number, total: number, self: number, unitCount: number): number {
-  if (total <= 0 || unitCount <= 2) return 0;
+  if (total < PLACEMENT_MIN_QUESTIONS || unitCount <= 2) return 0;
   const ratio = score / total;
   if (ratio < PLACEMENT_MIN_RATIO) return 0;
   const selfRatio = Math.min(10, Math.max(1, self)) / 10;

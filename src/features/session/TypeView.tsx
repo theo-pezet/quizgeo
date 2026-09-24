@@ -1,10 +1,12 @@
 import { useState } from 'react';
-import { StyleSheet, TextInput, View } from 'react-native';
+import { Keyboard, StyleSheet, TextInput, View } from 'react-native';
 
 import type { QcmExercise } from '@/game';
 import { answerMatches } from '@/lib/text';
 import { useT } from '@/i18n';
-import { Button, CodeBlock, Text, radius, space, useColors } from '@/ui';
+import { CodeBlock, Text, radius, space, useColors } from '@/ui';
+
+import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: QcmExercise & { typed: NonNullable<QcmExercise['typed']> };
@@ -18,6 +20,16 @@ export function TypeView({ exercise, onAnswer, locked }: Props) {
   const t = useT();
   const [value, setValue] = useState('');
   const correct = answerMatches(value, exercise.typed.answer, exercise.typed.accept);
+  const empty = value.trim() === '';
+
+  // Le clavier se ferme avant le verdict : sinon il recouvre « Continuer ».
+  const submit = () => {
+    if (empty || locked) return;
+    Keyboard.dismiss();
+    onAnswer(correct);
+  };
+
+  const inlineAction = useSessionAction(locked ? null : { label: t('common.check'), disabled: empty, onPress: submit });
 
   return (
     <View style={styles.wrap}>
@@ -30,11 +42,17 @@ export function TypeView({ exercise, onAnswer, locked }: Props) {
         value={value}
         onChangeText={setValue}
         editable={!locked}
+        autoFocus
         autoCapitalize="none"
         autoCorrect={false}
+        autoComplete="off"
+        spellCheck={false}
+        returnKeyType="done"
+        submitBehavior="blurAndSubmit"
+        accessibilityLabel={t('session.typed.placeholder')}
         placeholder={t('session.typed.placeholder')}
         placeholderTextColor={colors.textSecondary}
-        onSubmitEditing={() => value.trim() !== '' && onAnswer(correct)}
+        onSubmitEditing={submit}
         style={[
           styles.input,
           {
@@ -49,7 +67,7 @@ export function TypeView({ exercise, onAnswer, locked }: Props) {
           {t('session.typed.expected', { answer: exercise.typed.answer })}
         </Text>
       )}
-      {!locked && <Button label={t('common.check')} disabled={value.trim() === ''} onPress={() => onAnswer(correct)} />}
+      {inlineAction}
     </View>
   );
 }

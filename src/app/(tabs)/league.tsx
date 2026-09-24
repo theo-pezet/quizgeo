@@ -13,7 +13,7 @@ import {
   leagueStandings,
   toDayKey,
 } from '@/game';
-import { useT, type Key } from '@/i18n';
+import { formatDay, ordinal, useLang, useT, type Key } from '@/i18n';
 import { useProgress } from '@/store/progress';
 import { Button, Card, Icon, Screen, Text, radius, space, useColors } from '@/ui';
 
@@ -22,6 +22,7 @@ const TIER_EMOJI = ['🥉', '🥈', '🥇', '💠', '❤️‍🔥', '💚', '�
 export default function LeagueScreen() {
   const colors = useColors();
   const t = useT();
+  const lang = useLang();
   const progress = useProgress((s) => s.progress);
   const setProgress = useProgress((s) => s.setProgress);
   const tick = useProgress((s) => s.tick);
@@ -35,7 +36,13 @@ export default function LeagueScreen() {
   const daysLeft = daysLeftInWeek(progress.league, today);
   const tier = progress.league.tier;
   const outcome = progress.league.pendingOutcome;
-  const zone = rank <= PROMOTION_ZONE ? 'promotion' : rank > LEAGUE_SIZE - DEMOTION_ZONE ? 'demotion' : 'stay';
+  // Pas de descente depuis Bronze, pas de montée depuis Diamant : ces zones n'existent pas.
+  const canUp = tier < LEAGUE_TIERS.length - 1;
+  const canDown = tier > 0;
+  const isPromo = (pos: number) => canUp && pos <= PROMOTION_ZONE;
+  const isDemo = (pos: number) => canDown && pos > LEAGUE_SIZE - DEMOTION_ZONE;
+  const zone = isPromo(rank) ? 'promotion' : isDemo(rank) ? 'demotion' : 'stay';
+  const rules = canUp && canDown ? t('league.rules', { up: PROMOTION_ZONE, down: DEMOTION_ZONE }) : canUp ? t('league.rules.up', { up: PROMOTION_ZONE }) : t('league.rules.down', { down: DEMOTION_ZONE });
   const tierName = (i: number) => t(`league.tier.${i}` as Key);
   const zoneColor = zone === 'promotion' ? colors.success : zone === 'demotion' ? colors.danger : colors.textSecondary;
 
@@ -45,7 +52,7 @@ export default function LeagueScreen() {
         {TIER_EMOJI[tier]} {t('league.title', { tier: tierName(tier) })}
       </Text>
       <Text variant="small" secondary>
-        {daysLeft > 0 ? t('league.daysLeft', { count: daysLeft }) : t('league.final')} · {t('league.rules', { up: PROMOTION_ZONE, down: DEMOTION_ZONE })}
+        {daysLeft > 0 ? t('league.daysLeft', { count: daysLeft }) : t('league.final')} · {rules}
       </Text>
 
       {outcome && (
@@ -54,7 +61,7 @@ export default function LeagueScreen() {
             {outcome.result === 'promoted' ? t('league.promoted') : outcome.result === 'demoted' ? t('league.demoted') : t('league.stayed')}
           </Text>
           <Text variant="small" secondary>
-            {t('league.outcome', { week: outcome.weekKey, rank: outcome.rank, tier: tierName(outcome.tier) })}
+            {t('league.outcome', { week: formatDay(outcome.weekKey, lang, { day: 'numeric', month: 'long' }), rank: ordinal(outcome.rank, lang), tier: tierName(outcome.tier) })}
             {outcome.result !== 'stayed' ? t('league.outcomeTo', { tier: tierName(outcome.newTier) }) : ''}.
           </Text>
           <Button label={t('common.ok')} tone="secondary" onPress={() => setProgress(applyLeagueOutcomeSeen(progress))} />
@@ -63,14 +70,14 @@ export default function LeagueScreen() {
 
       <Card>
         <View style={styles.me}>
-          <Text variant="h2">{t('league.rank', { rank, size: LEAGUE_SIZE })}</Text>
+          <Text variant="h2">{t('league.rank', { rank: ordinal(rank, lang), size: LEAGUE_SIZE })}</Text>
           <Text variant="bodyBold">{t('league.weekXp', { xp: progress.league.xpThisWeek })}</Text>
         </View>
         <View style={styles.zone}>
           <Icon name={zone === 'promotion' ? 'arrow-up-circle' : zone === 'demotion' ? 'arrow-down-circle' : 'remove-circle'} size={18} color={zoneColor} />
           <Text variant="small" style={{ color: zoneColor }}>
             {t(`league.zone.${zone}`)}
-            {tier === LEAGUE_TIERS.length - 1 && zone === 'promotion' ? ` ${t('league.maxTier')}` : ''}
+            {!canUp && rank <= PROMOTION_ZONE ? ` ${t('league.maxTier')}` : ''}
           </Text>
         </View>
       </Card>
@@ -78,8 +85,8 @@ export default function LeagueScreen() {
       <View style={styles.list}>
         {standings.map((c, i) => {
           const pos = i + 1;
-          const promo = pos <= PROMOTION_ZONE;
-          const demo = pos > LEAGUE_SIZE - DEMOTION_ZONE;
+          const promo = isPromo(pos);
+          const demo = isDemo(pos);
           return (
             <View
               key={c.name}

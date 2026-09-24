@@ -4,7 +4,7 @@
  */
 
 import { CATALOG, WORLDS, WORLD_BY_UNIT, contentFor, type Content } from '..';
-import { isConfusable, resolveUnitCards, shortDefinition } from '../generate';
+import { isConfusable, resolveUnitCards, shortDefinition, shownDefinition } from '../generate';
 import type { Lang } from '@/i18n/translate';
 
 const MIN_EXERCISES_PER_UNIT = 5;
@@ -173,7 +173,7 @@ describe('les exercices', () => {
       const c = contentFor(lang);
       const byId = new Map(c.CARDS.map((card) => [card.id, card]));
       const defToId = new Map<string, string>();
-      for (const card of c.CARDS) defToId.set(card.definition, card.id);
+      for (const card of c.CARDS) defToId.set(shownDefinition(card, lang, 'choice').text, card.id);
       const termToId = new Map<string, string>();
       for (const card of c.CARDS) termToId.set(card.term.toLowerCase(), card.id);
       for (const ex of c.EXERCISES) {
@@ -236,8 +236,9 @@ describe('les exercices', () => {
 describe('shortDefinition', () => {
   it('retire le développement d’acronyme et tronque proprement', () => {
     expect(shortDefinition('Click-Through Rate: The percentage of people who clicked.')).toBe('The percentage of people who clicked.');
+    expect(shortDefinition('Click-Through Rate: The percentage of people who clicked.', 90, 'CTR')).toBe('The percentage of people who clicked.');
     const long = shortDefinition('A'.repeat(10) + ' ' + 'B'.repeat(100));
-    expect(long.length).toBeLessThanOrEqual(73);
+    expect(long.length).toBeLessThanOrEqual(91);
     expect(long.endsWith('…')).toBe(true);
   });
 });

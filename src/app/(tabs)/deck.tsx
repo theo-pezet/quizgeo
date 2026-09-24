@@ -1,19 +1,20 @@
-import { router } from 'expo-router';
-import { useMemo, useState } from 'react';
+import { router, useFocusEffect } from 'expo-router';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { FlatList, Pressable, StyleSheet, TextInput, View } from 'react-native';
 
 import type { Card as DeckCard } from '@/content';
+import { resolveUnitCards } from '@/content/generate';
 import { useContent } from '@/content/useContent';
 import { useActiveSubjects } from '@/content/useSubjects';
 import { deckStats, toDayKey } from '@/game';
-import { useT } from '@/i18n';
+import { formatDay, useLang, useT } from '@/i18n';
 import { useProgress } from '@/store/progress';
 import { Button, Card, Screen, Text, fonts, radius, shade, space, useColors } from '@/ui';
 
 export default function DeckScreen() {
   const colors = useColors();
   const t = useT();
-  const { CARDS: ALL_CARDS, cardIdsOf } = useContent();
+  const { CARDS: ALL_CARDS, UNITS, cardIdsOf } = useContent();
   const SUBJECTS = useActiveSubjects();
   // Le deck ne montre que les matières choisies.
   const CARDS = useMemo(() => {
@@ -21,7 +22,19 @@ export default function DeckScreen() {
     return ALL_CARDS.filter((c) => ids.has(c.subject));
   }, [ALL_CARDS, SUBJECTS]);
   const progress = useProgress((s) => s.progress);
+  const tick = useProgress((s) => s.tick);
+  useFocusEffect(useCallback(() => tick(), [tick]));
   const [subjectId, setSubjectId] = useState<string | null>(null);
+  // Une matière décochée dans le Profil ne doit pas rester comme filtre fantôme.
+  useEffect(() => {
+    if (subjectId && !SUBJECTS.some((s) => s.id === subjectId)) setSubjectId(null);
+  }, [SUBJECTS, subjectId]);
+  // Chaque carte affiche l'unité qui l'enseigne (sinon sa matière), jamais un identifiant technique.
+  const unitTitleOf = useMemo(() => {
+    const map = new Map<string, string>();
+    for (const unit of UNITS) for (const card of resolveUnitCards(unit, ALL_CARDS)) if (!map.has(card.id)) map.set(card.id, unit.title);
+    return map;
+  }, [UNITS, ALL_CARDS]);
   const [query, setQuery] = useState('');
   const [open, setOpen] = useState<string | null>(null);
   const today = toDayKey(new Date());
@@ -69,32 +82,39 @@ export default function DeckScreen() {
 
   return (
     <Screen scroll={false} style={styles.noPad}>
+      {/* En position absolue : sur le web, la colonne ne prend alors pas la hauteur de la liste et la liste défile bien d'elle-même. */}
       <FlatList
+        style={StyleSheet.absoluteFill}
         data={filtered}
         keyExtractor={(c) => c.id}
         ListHeaderComponent={header}
         contentContainerStyle={styles.list}
         initialNumToRender={20}
-        renderItem={({ item }) => <Row card={item} open={open === item.id} onPress={() => setOpen(open === item.id ? null : item.id)} />}
+        keyboardShouldPersistTaps="handled"
+        ListEmptyComponent={
+          <Text variant="body" secondary style={styles.empty}>
+            {t('deck.noResult')}
+          </Text>
+        }
+        renderItem={({ item }) => <Row card={item} unitTitle={unitTitleOf.get(item.id)} open={open === item.id} onPress={() => setOpen(open === item.id ? null : item.id)} />}
       />
     </Screen>
   );
 }
 
-function Row({ card, open, onPress }: { card: DeckCard; open: boolean; onPress: () => void }) {
+function Row({ card, unitTitle, open, onPress }: { card: DeckCard; unitTitle?: string; open: boolean; onPress: () => void }) {
   const colors = useColors();
   const t = useT();
+  const lang = useLang();
   const { SUBJECTS } = useContent();
   const progress = useProgress((s) => s.progress.cards[card.id]);
   const subject = SUBJECTS.find((s) => s.id === card.subject);
   return (
     <Pressable onPress={onPress} style={[styles.row, { backgroundColor: colors.surface, borderColor: colors.border }]}>
       <View style={styles.rowHead}>
-        <Text variant="bodyBold" style={styles.term}>
-          {card.term}
-        </Text>
-        <Text variant="small" style={{ color: subject?.color }}>
-          {subject?.emoji} {card.topic}
+        <Text variant="bodyBold">{card.term}</Text>
+        <Text variant="small" secondary>
+          {subject?.emoji} {unitTitle ?? subject?.title}
         </Text>
       </View>
       {open && (
@@ -108,7 +128,7 @@ function Row({ card, open, onPress }: { card: DeckCard; open: boolean; onPress: 
           <Text variant="small" secondary>
             {progress === undefined || progress.phase === 'new'
               ? t('deck.never')
-              : t('deck.state.detail', { state: progress.phase === 'learning' ? t('deck.state.learning') : t('deck.state.known'), due: progress.due ?? '', count: progress.reps })}
+              : t('deck.state.detail', { state: progress.phase === 'learning' ? t('deck.state.learning') : t('deck.state.known'), due: progress.due ? formatDay(progress.due, lang, { day: 'numeric', month: 'long' }) : '', count: progress.reps })}
           </Text>
         </View>
       )}
@@ -120,7 +140,7 @@ function Chip({ label, active, color, onPress }: { label: string; active: boolea
   const colors = useColors();
   const tintColor = color ?? colors.primary;
   return (
-    <Pressable onPress={onPress} style={[styles.chip, { backgroundColor: active ? tintColor : colors.surface, borderColor: active ? shade(tintColor) : colors.border, borderBottomWidth: active ? 4 : 2 }]}>
+    <Pressable onPress={onPress} accessibilityRole="button" accessibilityState={{ selected: active }} hitSlop={4} style={[styles.chip, { backgroundColor: active ? tintColor : colors.surface, borderColor: active ? shade(tintColor) : colors.border, borderBottomWidth: active ? 4 : 2 }]}>
       <Text variant="small" style={{ color: active ? '#fff' : colors.text }}>
         {label}
       </Text>
@@ -146,12 +166,12 @@ const styles = StyleSheet.create({
   list: { padding: space.lg, gap: space.sm, paddingBottom: space.xxl },
   header: { gap: space.md, marginBottom: space.sm },
   chips: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
-  chip: { borderWidth: 2, borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: space.md },
+  chip: { borderWidth: 2, borderRadius: radius.pill, paddingVertical: 6, paddingHorizontal: space.md, minHeight: 44, justifyContent: 'center' },
   statsRow: { flexDirection: 'row', justifyContent: 'space-around' },
   stat: { alignItems: 'center' },
   input: { borderWidth: 2, borderRadius: radius.md, padding: space.md, fontSize: 16, fontFamily: fonts.regular },
   row: { borderWidth: 2, borderRadius: radius.md, padding: space.md, gap: space.sm },
-  rowHead: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: space.sm },
-  term: { flex: 1 },
+  rowHead: { gap: 2 },
+  empty: { textAlign: 'center', paddingVertical: space.xl },
   rowBody: { gap: space.xs },
 });

@@ -41,19 +41,23 @@ export function Button({ label, onPress, tone = 'primary', disabled, style, colo
     outline: colors.text,
   }[tone];
   const edge = tone === 'ghost' ? 'transparent' : tone === 'secondary' ? colors.borderStrong : tone === 'outline' ? colors.borderStrong : shade(bg);
+  // Le bouton « fantôme » garde une bordure basse transparente : même hauteur
+  // et même ligne de texte que ses voisins à relief (pied d'écran « Retour · Continuer »).
   const flat = tone === 'ghost';
   return (
     <Pressable
       accessibilityRole="button"
+      accessibilityState={{ disabled: !!disabled }}
       disabled={disabled}
       onPress={onPress}
+      hitSlop={size === 'sm' ? 4 : undefined}
       style={({ pressed }) => [
         styles.base,
         size === 'sm' && styles.sm,
         {
           backgroundColor: bg,
           borderBottomColor: edge,
-          borderBottomWidth: flat ? 0 : pressed ? 0 : LIFT,
+          borderBottomWidth: flat ? LIFT : pressed ? 0 : LIFT,
           marginTop: flat ? 0 : pressed ? LIFT : 0,
           opacity: disabled ? 0.45 : 1,
         },
@@ -62,7 +66,7 @@ export function Button({ label, onPress, tone = 'primary', disabled, style, colo
       ]}>
       <View style={styles.inner}>
         {icon}
-        <Text numberOfLines={1} style={[styles.label, size === 'sm' && styles.labelSm, { color: fg }]}>
+        <Text numberOfLines={2} style={[styles.label, size === 'sm' && styles.labelSm, { color: fg }]}>
           {label}
         </Text>
       </View>
@@ -78,8 +82,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-  sm: { paddingVertical: 8, paddingHorizontal: space.md, borderRadius: radius.sm },
-  inner: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  label: { fontSize: 16, fontFamily: fonts.extraBold, letterSpacing: 0.3 },
-  labelSm: { fontSize: 14 },
+  // 44 px visibles + hitSlop : au moins 48 dp de zone tactile.
+  sm: { paddingVertical: 8, paddingHorizontal: space.md, borderRadius: radius.sm, minHeight: 44 },
+  inner: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: space.sm, maxWidth: '100%' },
+  // Deux lignes au plus : un prix ou un score ne disparaît plus derrière « … ».
+  label: { fontSize: 16, lineHeight: 21, fontFamily: fonts.extraBold, letterSpacing: 0.3, textAlign: 'center', flexShrink: 1 },
+  labelSm: { fontSize: 14, lineHeight: 19 },
 });

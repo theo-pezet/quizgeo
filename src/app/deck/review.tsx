@@ -1,6 +1,6 @@
-import { router, useLocalSearchParams } from 'expo-router';
-import { useMemo, useRef, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
+import { useCallback, useMemo, useRef, useState } from 'react';
+import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
 
 import { CATALOG } from '@/content';
 import { useContent } from '@/content/useContent';
@@ -87,6 +87,21 @@ export default function DeckReviewRoute() {
     confirm(t('deck.stop.title'), t('deck.stop.body', { count: done }), () => finish(done, done - counts.again));
   };
 
+  // Retour Android en cours de révision : comme la croix (confirmer puis
+  // enregistrer la session, pour le bonus et la série).
+  const reviewing = !ended && index > 0;
+  useFocusEffect(
+    useCallback(() => {
+      if (!reviewing) return undefined;
+      const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+        quit();
+        return true;
+      });
+      return () => sub.remove();
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [reviewing, index, counts]),
+  );
+
   if (ended) {
     const total = queue.length;
     const reviewed = counts.again + counts.hard + counts.good + counts.easy;
@@ -98,7 +113,7 @@ export default function DeckReviewRoute() {
             {t('deck.done.title')}
           </Text>
           <Text variant="body" secondary style={styles.term}>
-            {t('deck.done.body', { reviewed, total, xp: xp + ended.bonus })}
+            {t('deck.done.body', { count: reviewed, total, xp: xp + ended.bonus })}
           </Text>
         </View>
         <Card>
@@ -159,7 +174,7 @@ export default function DeckReviewRoute() {
   return (
     <Screen footer={footer}>
       <View style={styles.top}>
-        <Pressable onPress={quit} hitSlop={12} accessibilityRole="button">
+        <Pressable onPress={quit} hitSlop={12} accessibilityRole="button" accessibilityLabel={t('common.close')}>
           <Icon name="close" size={26} color={colors.textSecondary} />
         </Pressable>
         <View style={styles.bar}>

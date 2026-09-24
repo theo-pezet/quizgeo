@@ -199,3 +199,36 @@ describe('gradeIsCorrect', () => {
     expect(gradeIsCorrect('easy')).toBe(true);
   });
 });
+
+describe('intervalles de révision : boutons distincts et retard', () => {
+  it('ne propose jamais le même délai pour Difficile, Bien et Facile', () => {
+    // Facilité au plancher, intervalle 3 : autrefois {hard: 4, good: 4, easy: 5}.
+    const p = previewIntervals(reviewing(3, EASE_MIN), 'c', TODAY);
+    expect(p.hard).toBeLessThan(p.good);
+    expect(p.good).toBeLessThan(p.easy);
+    for (const iv of [1, 2, 3, 5, 8, 20]) {
+      const q = previewIntervals(reviewing(iv, EASE_MIN), 'c', TODAY);
+      expect(q.hard < q.good && q.good < q.easy).toBe(true);
+    }
+  });
+
+  it('tient compte du retard : 30 jours de retard retenus valent plus que 8 jours', () => {
+    const late = reviewing(3, EASE_START, '2026-08-10');
+    const good = reviewCard(late, 'c', 'good', TODAY, NOW);
+    // (3 + 30/2) × 2,5 = 45 jours.
+    expect(good.intervalDays).toBe(45);
+    expect(reviewCard(late, 'c', 'hard', TODAY, NOW).intervalDays).toBe(Math.round((3 + 30 / 4) * 1.2));
+    expect(reviewCard(late, 'c', 'easy', TODAY, NOW).intervalDays).toBe(Math.round(((3 + 30) * EASE_START * 1.3) / 1000));
+    // En avance (due dans le futur) : pas de retard négatif.
+    expect(reviewCard(reviewing(10, EASE_START, '2026-09-20'), 'c', 'good', TODAY, NOW).intervalDays).toBe(25);
+  });
+
+  it('reste plafonné et gère une carte en révision sans échéance', () => {
+    const p = previewIntervals(reviewing(MAX_INTERVAL), 'c', TODAY);
+    expect(p.hard).toBe(MAX_INTERVAL);
+    expect(p.good).toBe(MAX_INTERVAL);
+    expect(p.easy).toBe(MAX_INTERVAL);
+    const noDue = { ...reviewing(4), due: null };
+    expect(reviewCard(noDue, 'c', 'good', TODAY, NOW).intervalDays).toBe(10);
+  });
+});

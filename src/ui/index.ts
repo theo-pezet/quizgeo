@@ -1,4 +1,4 @@
-export { Confetti, FadeUp, Pop, Pulse, Ring, Shake, useCountUp } from './anim';
+export { Confetti, FadeUp, Pop, Pulse, Ring, Shake, useCountUp, useReduceMotion } from './anim';
 export { Button } from './Button';
 export { Card } from './Card';
 export { CodeBlock } from './CodeBlock';
@@ -11,6 +11,6 @@ export { ProgressBar } from './ProgressBar';
 export { Screen } from './Screen';
 export { Stat } from './Stat';
 export { Text } from './Text';
-export { font, fonts, palette, radius, shade, space, tint, useColors } from './tokens';
+export { font, fonts, ink, palette, radius, shade, space, tint, useColors, useIsDark } from './tokens';
 export { Tutorial } from './Tutorial';
 export { MonthlyCard } from './MonthlyCard';

@@ -1,5 +1,5 @@
-import type { PropsWithChildren, ReactNode } from 'react';
-import { ScrollView, StyleSheet, View, type ViewStyle } from 'react-native';
+import { useEffect, useRef, type PropsWithChildren, type ReactNode } from 'react';
+import { KeyboardAvoidingView, Platform, ScrollView, StyleSheet, View, type ViewStyle } from 'react-native';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { space, useColors } from './tokens';
@@ -10,6 +10,9 @@ import { space, useColors } from './tokens';
  * que vont les feuilles ancrées en bas de l'écran. `footer` est une barre
  * fixe en bas (bouton « Continuer »), au-dessus de la barre Android.
  * `footerBackground` / `footerBorder` la colorent (panneau juste / faux).
+ * `scrollKey` : quand il change (question suivante), le contenu revient en
+ * haut. Le clavier pousse le contenu et la barre du bas au lieu de les
+ * recouvrir (Android est en edge-to-edge : la fenêtre ne se redimensionne pas).
  */
 export function Screen({
   children,
@@ -20,6 +23,7 @@ export function Screen({
   background,
   footerBackground,
   footerBorder,
+  scrollKey,
 }: PropsWithChildren<{
   scroll?: boolean;
   style?: ViewStyle;
@@ -28,33 +32,50 @@ export function Screen({
   background?: string;
   footerBackground?: string;
   footerBorder?: string;
+  scrollKey?: string | number;
 }>) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
+  const scrollRef = useRef<ScrollView>(null);
+  const firstKey = useRef(true);
+
+  useEffect(() => {
+    if (firstKey.current) {
+      firstKey.current = false;
+      return;
+    }
+    scrollRef.current?.scrollTo({ y: 0, animated: false });
+  }, [scrollKey]);
+
   const inner = <View style={[styles.inner, style]}>{children}</View>;
   return (
     <SafeAreaView style={[styles.safe, { backgroundColor: background ?? colors.background }]} edges={['top', 'left', 'right']}>
-      {scroll ? (
-        <ScrollView contentContainerStyle={[styles.scroll, footer ? styles.withFooter : { paddingBottom: insets.bottom + space.md }]} keyboardShouldPersistTaps="handled">
-          {inner}
-        </ScrollView>
-      ) : (
-        <View style={[styles.scroll, footer ? null : { paddingBottom: insets.bottom }]}>{inner}</View>
-      )}
-      {footer ? (
-        <View
-          style={[
-            styles.footer,
-            {
-              paddingBottom: Math.max(insets.bottom, space.md),
-              backgroundColor: footerBackground ?? background ?? colors.background,
-              borderTopColor: footerBorder ?? colors.border,
-              borderTopWidth: footerBorder ? 2 : 1,
-            },
-          ]}>
-          <View style={styles.footerInner}>{footer}</View>
-        </View>
-      ) : null}
+      <KeyboardAvoidingView style={styles.safe} behavior="padding" enabled={Platform.OS !== 'web'}>
+        {scroll ? (
+          <ScrollView
+            ref={scrollRef}
+            contentContainerStyle={[styles.scroll, footer ? styles.withFooter : { paddingBottom: insets.bottom + space.md }]}
+            keyboardShouldPersistTaps="handled">
+            {inner}
+          </ScrollView>
+        ) : (
+          <View style={[styles.scroll, footer ? null : { paddingBottom: insets.bottom }]}>{inner}</View>
+        )}
+        {footer ? (
+          <View
+            style={[
+              styles.footer,
+              {
+                paddingBottom: Math.max(insets.bottom, space.md),
+                backgroundColor: footerBackground ?? background ?? colors.background,
+                borderTopColor: footerBorder ?? colors.border,
+                borderTopWidth: footerBorder ? 2 : 1,
+              },
+            ]}>
+            <View style={styles.footerInner}>{footer}</View>
+          </View>
+        ) : null}
+      </KeyboardAvoidingView>
       {overlay ? (
         <View pointerEvents="box-none" style={[styles.overlay, { paddingBottom: insets.bottom }]}>
           <View pointerEvents="box-none" style={styles.overlayInner}>{overlay}</View>

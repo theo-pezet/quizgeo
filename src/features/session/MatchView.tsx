@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { shuffle, type MatchExercise } from '@/game';
@@ -23,20 +23,35 @@ export function MatchView({ exercise, onAnswer, locked }: Props) {
   const [done, setDone] = useState<Set<number>>(new Set());
   const [mistakes, setMistakes] = useState(0);
   const [flash, setFlash] = useState<string | null>(null);
+  // Une même mauvaise paire ne compte qu'une fois (double appui, vérification).
+  const tried = useRef(new Set<string>());
+  const flashTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(
+    () => () => {
+      if (flashTimer.current) clearTimeout(flashTimer.current);
+    },
+    [],
+  );
 
   useEffect(() => {
     if (!locked && done.size === exercise.pairs.length) onAnswer(mistakes <= TOLERATED_MISTAKES);
   }, [done, exercise.pairs.length, locked, mistakes, onAnswer]);
 
   const pickRight = (right: string) => {
-    if (left === null) return;
+    if (left === null || flash !== null || locked) return;
     if (exercise.pairs[left].right === right) {
       setDone(new Set(done).add(left));
       setLeft(null);
     } else {
-      setMistakes((m) => m + 1);
+      const pair = `${left}|${right}`;
+      if (!tried.current.has(pair)) {
+        tried.current.add(pair);
+        setMistakes((m) => m + 1);
+      }
       setFlash(right);
-      setTimeout(() => setFlash(null), 350);
+      if (flashTimer.current) clearTimeout(flashTimer.current);
+      flashTimer.current = setTimeout(() => setFlash(null), 350);
     }
   };
 
@@ -52,6 +67,8 @@ export function MatchView({ exercise, onAnswer, locked }: Props) {
                 key={p.left}
                 disabled={locked || isDone}
                 onPress={() => setLeft(i)}
+                accessibilityRole="button"
+                accessibilityState={{ selected: left === i, disabled: locked || isDone }}
                 style={[
                   styles.tile,
                   {
@@ -71,8 +88,10 @@ export function MatchView({ exercise, onAnswer, locked }: Props) {
             return (
               <Pressable
                 key={right}
-                disabled={locked || isDone || left === null}
+                disabled={locked || isDone || left === null || flash !== null}
                 onPress={() => pickRight(right)}
+                accessibilityRole="button"
+                accessibilityState={{ disabled: locked || isDone || left === null || flash !== null }}
                 style={[
                   styles.tile,
                   {

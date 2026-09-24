@@ -8,7 +8,7 @@
 
 import { addDays, toDayKey } from './dates';
 import { MAX_ENERGY, currentEnergy, minutesToNextEnergy, ENERGY_REGEN_MINUTES } from './energy';
-import { isActiveToday } from './streak';
+import { displayedStreak, isActiveToday } from './streak';
 import type { Progress } from './types';
 
 export interface Reminder {
@@ -65,27 +65,35 @@ export function planReminders(progress: Progress, now: Date, prefs: ReminderPref
   const out: Reminder[] = [];
   const today = toDayKey(now);
 
-  if (prefs.streak) {
-    const active = isActiveToday(progress.streak, today);
-    const todayAt = atHour(now, prefs.streakHour, 0);
-    const at = !active && todayAt.getTime() > now.getTime() ? todayAt : atHour(now, prefs.streakHour, 1);
-    const current = progress.streak.current;
-    out.push({
-      id: 'streak',
-      at,
-      title: texts.streakTitle(current),
-      body: texts.streakBody(current),
-    });
-  }
-
   // Relances : 3, 7 et 14 jours après la dernière session, seulement celles à venir.
+  const lapses: Reminder[] = [];
   if (prefs.streak && progress.streak.lastActiveDay && !isActiveToday(progress.streak, today)) {
     for (const days of LAPSE_DAYS) {
       const at = dayAt(addDays(progress.streak.lastActiveDay, days), prefs.streakHour);
       if (at.getTime() <= now.getTime()) continue;
-      out.push({ id: `lapse-${days}` as Reminder['id'], at, title: texts.lapseTitle(days), body: texts.lapseBody(days) });
+      lapses.push({ id: `lapse-${days}` as Reminder['id'], at, title: texts.lapseTitle(days), body: texts.lapseBody(days) });
     }
   }
+
+  if (prefs.streak) {
+    const active = isActiveToday(progress.streak, today);
+    const todayAt = atHour(now, prefs.streakHour, 0);
+    const at = !active && todayAt.getTime() > now.getTime() ? todayAt : atHour(now, prefs.streakHour, 1);
+    const day = toDayKey(at);
+    // Une relance tombe le même jour à la même heure : elle suffit, pas deux notifications.
+    if (!lapses.some((l) => toDayKey(l.at) === day)) {
+      // La série telle qu'elle sera ce jour-là : 0 si elle est déjà perdue,
+      // pour ne jamais annoncer « en jeu » une série que la session remettra à 1.
+      const current = displayedStreak(progress.streak, day);
+      out.push({
+        id: 'streak',
+        at,
+        title: texts.streakTitle(current),
+        body: texts.streakBody(current),
+      });
+    }
+  }
+  out.push(...lapses);
 
   if (prefs.energy) {
     const value = currentEnergy(progress.energy, now);

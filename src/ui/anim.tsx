@@ -4,7 +4,7 @@
  */
 
 import { useEffect, useRef, useState, type PropsWithChildren } from 'react';
-import { Animated, Easing, StyleSheet, View, type ViewStyle } from 'react-native';
+import { AccessibilityInfo, Animated, Easing, StyleSheet, View, type ViewStyle } from 'react-native';
 
 import { useColors } from './tokens';
 
@@ -34,11 +34,33 @@ export function Pop({ children, delay = 0, trigger = 0, style }: PropsWithChildr
   return <Animated.View style={[style, { transform: [{ scale: v }] }]}>{children}</Animated.View>;
 }
 
-/** Pulsation continue, pour le nœud « à jouer » du chemin. */
+/** Le réglage système « Réduire les animations » (suivi en direct). */
+export function useReduceMotion(): boolean {
+  const [reduce, setReduce] = useState(false);
+  useEffect(() => {
+    let alive = true;
+    AccessibilityInfo.isReduceMotionEnabled?.()
+      .then((on) => alive && setReduce(on))
+      .catch(() => undefined);
+    const sub = AccessibilityInfo.addEventListener?.('reduceMotionChanged', setReduce);
+    return () => {
+      alive = false;
+      sub?.remove();
+    };
+  }, []);
+  return reduce;
+}
+
+/**
+ * Pulsation continue, pour le nœud « à jouer » du parcours. Le parent la
+ * coupe (`active`) quand l'écran n'est pas visible ; elle s'arrête aussi si
+ * l'utilisateur a demandé moins d'animations.
+ */
 export function Pulse({ children, active = true, style }: PropsWithChildren<{ active?: boolean; style?: ViewStyle }>) {
   const v = useRef(new Animated.Value(1)).current;
+  const reduce = useReduceMotion();
   useEffect(() => {
-    if (!active) {
+    if (!active || reduce) {
       v.setValue(1);
       return;
     }
@@ -50,7 +72,7 @@ export function Pulse({ children, active = true, style }: PropsWithChildren<{ ac
     );
     loop.start();
     return () => loop.stop();
-  }, [v, active]);
+  }, [v, active, reduce]);
   return <Animated.View style={[style, { transform: [{ scale: v }] }]}>{children}</Animated.View>;
 }
 

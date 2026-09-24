@@ -355,7 +355,15 @@ nouvelle carte n'aura pas de traduction tant qu'on ne l'ajoute pas.
 - La langue : settings.lang (null tant que l'utilisateur n'a pas choisi ;
   detectLang() propose celle du téléphone). Changer la langue re-rend toute
   l'app et recharge le contenu, la progression ne bouge pas.
-- monthLabel(lang, « AAAA-MM ») donne « septembre 2026 » via Intl.
+- monthLabel(lang, « AAAA-MM ») donne « septembre 2026 » via Intl (minuscule
+  dans une phrase ; `standalone` met la majuscule pour un libellé isolé).
+- Pluriel : en français 0 et 1 sont au singulier (« 0 carte »).
+- src/i18n/format.ts : formatDay(dayKey, lang, options) pour afficher une
+  date (jamais de « 2026-09-23 » à l'écran) et ordinal(n, lang).
+- Typographie française : espace fine insécable (U+202F) devant ; ? ! et
+  dans les guillemets, insécable (U+00A0) devant : et %.
+- src/i18n/__tests__ vérifie mêmes clés, mêmes paramètres, pluriels bien
+  formés et absence de tiret cadratin dans les trois dictionnaires.
 
 
 6. LA PERSISTANCE (src/store/progress.ts)
@@ -363,9 +371,16 @@ nouvelle carte n'aura pas de traduction tant qu'on ne l'ajoute pas.
 
 Deux stores zustand persistés dans AsyncStorage :
 
-- useProgress (clé « progress.v1 ») : { progress: Progress }. Chaque écriture
-  est persistée aussitôt. À la relecture : migrateProgress() puis applyTick().
-  `reset()` remet un état vide.
+- useProgress (clé « progress.v1 », version 3) : { progress: Progress }.
+  Chaque écriture est persistée aussitôt. À chaque relecture, `merge`
+  complète les champs manquants (migratePersistedProgress) puis applyTick() ;
+  `hydrated` passe à true même si le stockage est illisible. La migration v3
+  (grandfatherNewExercises + src/game/data/code-keys-v1.1.json, liste figée)
+  donne aux 529 exercices « lis le code » ajoutés en 1.1 la série des anciens
+  exercices de l'unité, pour que la mise à jour ne fasse perdre aucune
+  couronne. `reset()` remet un état vide mais garde l'objectif du jour.
+- Le splash reste affiché tant que polices et stores ne sont pas prêts
+  (_layout.tsx) ; un listener AppState rejoue applyTick() au retour de l'app.
 - useSettings (clé « settings.v1 », version 2) : langue, onboardingDone,
   matières choisies (subjects, null = toutes), tutorialDone, placements
   (résultats des tests de niveau), sons, vibrations, rappels et heure,

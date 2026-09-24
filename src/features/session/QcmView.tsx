@@ -3,7 +3,10 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { presentQcm, type QcmExercise } from '@/game';
 import { useT } from '@/i18n';
-import { Button, CodeBlock, Text, radius, space, useColors } from '@/ui';
+import { CodeBlock, Text, radius, space, useColors } from '@/ui';
+
+import { isCodeChoice } from './present';
+import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: QcmExercise;
@@ -21,6 +24,21 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
   const presented = useMemo(() => presentQcm(exercise, Math.random), [exercise.key]);
   const [selected, setSelected] = useState<number | null>(null);
   const isTrueFalse = presented.choices.length === 2;
+
+  const inlineAction = useSessionAction(
+    locked
+      ? null
+      : {
+          label: checkLabel ?? t('common.check'),
+          disabled: selected === null,
+          onPress: () => {
+            if (selected === null) return;
+            const ok = selected === presented.answer;
+            const original = presented.order[selected];
+            onAnswer(ok, ok ? undefined : exercise.whyWrong?.[original] ?? undefined);
+          },
+        },
+  );
 
   return (
     <View style={styles.wrap}>
@@ -41,24 +59,23 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
             border = colors.primary;
             bg = colors.surfaceAlt;
           }
+          const mono = isCodeChoice(exercise.key, choice, presented.choices.length);
           return (
             <Pressable
               key={i}
               disabled={locked}
               onPress={() => setSelected(i)}
+              accessibilityRole="button"
+              accessibilityState={{ selected: isSelected, disabled: locked }}
               style={[styles.choice, { borderColor: border, backgroundColor: bg }, isTrueFalse && styles.half]}>
-              <Text style={styles.choiceText}>{choice}</Text>
+              <Text variant={mono ? 'mono' : 'body'} style={mono ? undefined : styles.choiceText}>
+                {choice}
+              </Text>
             </Pressable>
           );
         })}
       </View>
-      {!locked && (
-        <Button label={checkLabel ?? t('common.check')} disabled={selected === null} onPress={() => {
-            const ok = selected === presented.answer;
-            const original = selected === null ? -1 : presented.order[selected];
-            onAnswer(ok, ok ? undefined : exercise.whyWrong?.[original] ?? undefined);
-          }} />
-      )}
+      {inlineAction}
     </View>
   );
 }

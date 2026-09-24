@@ -330,6 +330,8 @@ export interface DailyState {
   goal: number;
   /** Jour où l'objectif a été atteint pour la dernière fois (récompense une fois par jour). */
   metOn: DayKey | null;
+  /** Dernier jour où une session de deck a rapporté ses gemmes (une fois par jour). */
+  deckRewardedOn: DayKey | null;
 }
 
 export interface AdsState {
@@ -448,7 +450,7 @@ export function emptyProgress(): Progress {
     league: { tier: 0, weekKey: null, seed: 0, xpThisWeek: 0, pendingOutcome: null, history: [], rivalSeed: 0 },
     boost: { activeUntil: null },
     blitz: {},
-    daily: { day: null, xp: 0, goal: DEFAULT_DAILY_GOAL, metOn: null },
+    daily: { day: null, xp: 0, goal: DEFAULT_DAILY_GOAL, metOn: null, deckRewardedOn: null },
     monthly: { month: null, lessons: 0, claimed: false, medals: [] },
   };
 }

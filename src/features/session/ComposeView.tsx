@@ -3,7 +3,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { shuffle, type ComposeExercise } from '@/game';
 import { useT } from '@/i18n';
-import { Button, Text, font, radius, space, useColors } from '@/ui';
+import { Text, font, radius, space, useColors } from '@/ui';
+
+import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: ComposeExercise;
@@ -29,6 +31,16 @@ export function ComposeView({ exercise, onAnswer, locked }: Props) {
   const built = line.map((i) => bank[i]);
   const isCorrect = built.length === exercise.tokens.length && built.every((tok, i) => tok === exercise.tokens[i]);
   const joined = (tokens: string[]) => tokens.join(' ');
+  const complete = line.length === exercise.tokens.length;
+  const inlineAction = useSessionAction(
+    locked
+      ? null
+      : {
+          label: t('common.check'),
+          disabled: !complete,
+          onPress: () => complete && onAnswer(isCorrect, isCorrect ? undefined : t('session.compose.yours', { line: joined(built) })),
+        },
+  );
 
   return (
     <View style={styles.wrap}>
@@ -50,6 +62,8 @@ export function ComposeView({ exercise, onAnswer, locked }: Props) {
               key={`${bankIndex}-${pos}`}
               disabled={locked}
               onPress={() => setLine(line.filter((_, p) => p !== pos))}
+              accessibilityRole="button"
+              accessibilityState={{ selected: true, disabled: locked }}
               style={[styles.tok, { backgroundColor: colors.surface, borderColor: colors.primary }]}>
               <Text style={[font.mono, { color: colors.text }]}>{bank[bankIndex]}</Text>
             </Pressable>
@@ -71,19 +85,15 @@ export function ComposeView({ exercise, onAnswer, locked }: Props) {
               key={i}
               disabled={locked}
               onPress={() => setLine([...line, i])}
+              accessibilityRole="button"
+              accessibilityState={{ selected: false, disabled: locked }}
               style={[styles.tok, { backgroundColor: colors.surface, borderColor: colors.border }]}>
               <Text style={[font.mono, { color: colors.text }]}>{tok}</Text>
             </Pressable>
           ),
         )}
       </View>
-      {!locked && (
-        <Button
-          label={t('common.check')}
-          disabled={line.length !== exercise.tokens.length}
-          onPress={() => onAnswer(isCorrect, isCorrect ? undefined : t('session.compose.yours', { line: joined(built) }))}
-        />
-      )}
+      {inlineAction}
     </View>
   );
 }

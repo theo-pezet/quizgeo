@@ -27,11 +27,16 @@ export const DICTS: Record<Lang, Record<Key, string>> = { fr, en, es };
 const PLURAL = /\(one:([^|)]*)\|other:([^)]*)\)/g;
 const PARAM = /\{(\w+)\}/g;
 
-export function format(template: string, params?: Params): string {
+/** Singulier ou pluriel : en français, 0 et 1 sont au singulier (« 0 point »). */
+function isOne(count: number, lang: Lang): boolean {
+  return lang === 'fr' ? Math.abs(count) < 2 : Math.abs(count) === 1;
+}
+
+export function format(template: string, params?: Params, lang: Lang = 'en'): string {
   let out = template;
   if (params) {
     const count = params.count;
-    if (typeof count === 'number') out = out.replace(PLURAL, (_m, one: string, other: string) => (Math.abs(count) === 1 ? one : other));
+    if (typeof count === 'number') out = out.replace(PLURAL, (_m, one: string, other: string) => (isOne(count, lang) ? one : other));
     out = out.replace(PARAM, (m, name: string) => (name in params ? String(params[name]) : m));
   }
   return out;
@@ -39,7 +44,7 @@ export function format(template: string, params?: Params): string {
 
 export function translate(lang: Lang, key: Key, params?: Params): string {
   const template = DICTS[lang][key] ?? DICTS.fr[key] ?? key;
-  return format(template, params);
+  return format(template, params, lang);
 }
 
 /** La langue du téléphone, si on la gère ; sinon l'anglais. */
@@ -54,12 +59,16 @@ export function detectLang(): Lang {
   return 'en';
 }
 
-/** « septembre 2026 » depuis « 2026-09 », dans la langue demandée. */
-export function monthLabel(lang: Lang, month: string): string {
+/**
+ * « septembre 2026 » depuis « 2026-09 », dans la langue demandée. En français
+ * et en espagnol le mois garde sa minuscule dans une phrase ; `standalone`
+ * met la majuscule pour un libellé isolé (pastille de médaille).
+ */
+export function monthLabel(lang: Lang, month: string, standalone = false): string {
   const [y, m] = month.split('-').map(Number);
   try {
     const label = new Intl.DateTimeFormat(lang, { month: 'long', year: 'numeric' }).format(new Date(y, (m || 1) - 1, 1));
-    return label.charAt(0).toUpperCase() + label.slice(1);
+    return standalone ? label.charAt(0).toUpperCase() + label.slice(1) : label;
   } catch {
     return month;
   }

@@ -15,11 +15,14 @@ import { FEATURES } from '@/config/features';
 import {
   applyAdShown,
   applyAnswerAction,
-  applyCardReview,
+  applyCardLapse,
   applySessionEnd,
   applySkipTestPassed,
   applyStartLesson,
+  applyTick,
+  GEMS,
   PATH_TRAITS,
+  questsReward,
   SKIP_TEST_MIN_SCORE,
   toDayKey,
   unitTraits,
@@ -30,6 +33,7 @@ import {
   shouldShowAd,
   type Exercise,
   type Progress,
+  type Quest,
   type SessionEndResult,
   type SessionMode,
 } from '@/game';
@@ -57,7 +61,8 @@ export interface Feedback {
 export interface SessionState {
   steps: Step[];
   index: number;
-  phase: 'question' | 'feedback' | 'done' | 'noEnergy';
+  /** `empty` : rien à poser (file de révision vide, unité inconnue). Rien n'est prélevé. */
+  phase: 'question' | 'feedback' | 'done' | 'noEnergy' | 'empty';
   feedback: Feedback | null;
   /** Bonnes réponses sur les exercices du parcours principal (hors rattrapage). */
   correctCount: number;
@@ -87,20 +92,24 @@ function compose(spec: SessionSpec, progress: Progress): Exercise[] {
 }
 
 /**
- * Prélève l'énergie de la leçon et compose la file. Une seule fois par
- * session : le résultat est mémorisé dans un ref par l'appelant.
+ * Compose la file, puis prélève l'énergie de la leçon. Une seule fois par
+ * session : le résultat est mémorisé par l'appelant. Une file vide ne coûte
+ * rien : on le sait AVANT de prélever.
  */
-function start(spec: SessionSpec): { steps: Step[]; started: boolean; startProgress: Progress; hard: boolean } {
+function start(spec: SessionSpec): { steps: Step[]; started: boolean; empty: boolean; startProgress: Progress; hard: boolean } {
   const store = useProgress.getState();
   const now = new Date();
+  const exercises = compose(spec, applyTick(store.progress, now));
+  if (exercises.length === 0) return { steps: [], started: true, empty: true, startProgress: store.progress, hard: false };
   const started = applyStartLesson(store.progress, spec.mode, now);
-  if (started === null) return { steps: [], started: false, startProgress: store.progress, hard: false };
+  if (started === null) return { steps: [], started: false, empty: false, startProgress: store.progress, hard: false };
   store.setProgress(started);
   // Mode maîtrise : dès 3 couronnes, les QCM typables se tapent.
   const hard = spec.mode === 'unit' && unitTraits(started, spec.unitId, content().EXERCISES, toDayKey(now)) >= PATH_TRAITS;
   return {
-    steps: compose(spec, started).map((exercise) => ({ exercise, retry: false })),
+    steps: exercises.map((exercise) => ({ exercise, retry: false })),
     started: true,
+    empty: false,
     startProgress: started,
     hard,
   };
@@ -110,14 +119,19 @@ export function useSession(spec: SessionSpec) {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const init = useMemo(() => start(spec), []);
   const startProgress = useRef<Progress>(init.startProgress);
+  // Lancement : une leçon finie après minuit compte pour la veille.
+  const startedAt = useRef(new Date());
   const credited = useRef(new Set<string>());
   const retryQueue = useRef<Exercise[]>([]);
+  // Quêtes et objectif du jour bouclés PAR une réponse : annoncés à la fin.
+  const answerQuests = useRef<Quest[]>([]);
+  const answerGoal = useRef(false);
   const initialSteps = init.steps;
 
   const [state, setState] = useState<SessionState>({
     steps: initialSteps,
     index: 0,
-    phase: !init.started ? 'noEnergy' : initialSteps.length === 0 ? 'done' : 'question',
+    phase: !init.started ? 'noEnergy' : init.empty ? 'empty' : 'question',
     feedback: null,
     correctCount: 0,
     mainCount: initialSteps.length,
@@ -141,24 +155,35 @@ export function useSession(spec: SessionSpec) {
       const store = useProgress.getState();
       const key = current.exercise.key;
 
-      let { progress } = applyAnswerAction(store.progress, {
+      const r = applyAnswerAction(store.progress, {
         question: current.exercise,
         correct,
         mode,
         chrono: false,
         now,
         creditedThisSession: credited.current.has(key),
+        skipTest: spec.mode === 'unit' && spec.skipTest === true,
       });
+      let progress = r.progress;
+      answerQuests.current = answerQuests.current.concat(r.questsCompleted);
+      if (r.goalReached) answerGoal.current = true;
       if (correct) credited.current.add(key);
 
       // Pont leçon → deck : une erreur replanifie la carte pour aujourd'hui.
+      // Seule la planification bouge : ce n'est pas une carte « révisée »
+      // (ni compteur, ni quête du deck, ni XP).
       const cardId = current.exercise.cardId;
       if (!correct && cardId !== undefined) {
-        progress = applyCardReview(progress, { cardId, grade: 'again', now }).progress;
+        progress = applyCardLapse(progress, cardId, now);
       }
       store.setProgress(progress);
 
-      if (!correct && !current.retry) retryQueue.current.push(current.exercise);
+      // Rattrapage : une fois par exercice, et plus du tout s'il a été réussi
+      // entre-temps dans le parcours principal.
+      if (!current.retry) {
+        if (!correct && !retryQueue.current.some((e) => e.key === key)) retryQueue.current.push(current.exercise);
+        if (correct) retryQueue.current = retryQueue.current.filter((e) => e.key !== key);
+      }
 
       setState((s) => ({
         ...s,
@@ -169,7 +194,7 @@ export function useSession(spec: SessionSpec) {
         bestCombo: correct ? Math.max(s.bestCombo, s.combo + 1) : s.bestCombo,
       }));
     },
-    [current, mode, state.phase],
+    [current, mode, spec, state.phase],
   );
 
   const finish = useCallback(
@@ -177,7 +202,7 @@ export function useSession(spec: SessionSpec) {
       const store = useProgress.getState();
       const now = new Date();
       const { EXERCISES } = content();
-      const result = applySessionEnd(store.progress, {
+      const ended = applySessionEnd(store.progress, {
         mode,
         unitId,
         questionCount: s.mainCount,
@@ -188,7 +213,19 @@ export function useSession(spec: SessionSpec) {
         catalog: CATALOG,
         bestCombo: s.bestCombo,
         progressAtSessionStart: startProgress.current,
+        startedAt: startedAt.current,
+        skipTest: spec.mode === 'unit' && spec.skipTest === true,
       });
+      // Les quêtes et l'objectif atteints pendant les réponses (gemmes déjà
+      // créditées) rejoignent ceux de la fin, pour être annoncés.
+      const extraQuests = answerQuests.current.filter((q) => !ended.questsCompleted.some((e) => e.id === q.id));
+      const goalDuringAnswers = answerGoal.current && !ended.goalReached;
+      const result: SessionEndResult = {
+        ...ended,
+        questsCompleted: [...extraQuests, ...ended.questsCompleted],
+        goalReached: ended.goalReached || answerGoal.current,
+        gemsGained: ended.gemsGained + questsReward(extraQuests) + (goalDuringAnswers ? GEMS.dailyGoal : 0),
+      };
       let progress = result.progress;
       let skipTest: SessionState['skipTest'] = null;
       if (spec.mode === 'unit' && spec.skipTest) {
@@ -230,7 +267,14 @@ export function useSession(spec: SessionSpec) {
     });
   }, [finish]);
 
-  const ratio = state.steps.length === 0 ? 1 : Math.min(1, state.index / state.steps.length);
+  // La barre suit le parcours principal (réponse comprise dès le verdict) et
+  // ne recule jamais : le rattrapage la laisse pleine, avec son propre compteur.
+  const answered = state.index + (state.phase === 'feedback' ? 1 : 0);
+  const ratio = state.mainCount === 0 ? 1 : Math.min(1, answered / state.mainCount);
+  const inRetry = state.index >= state.mainCount;
+  const counter = inRetry
+    ? { index: state.index - state.mainCount + 1, total: state.steps.length - state.mainCount }
+    : { index: Math.min(state.index + 1, state.mainCount), total: state.mainCount };
 
-  return { state, current, answer, next, ratio, unitId, hard: init.hard };
+  return { state, current, answer, next, ratio, counter, inRetry, unitId, hard: init.hard };
 }

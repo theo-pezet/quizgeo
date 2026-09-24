@@ -1,13 +1,13 @@
-import { router } from 'expo-router';
-import { useState } from 'react';
-import { Pressable, StyleSheet, Switch, View } from 'react-native';
+import { router, useLocalSearchParams } from 'expo-router';
+import { useEffect, useState } from 'react';
+import { BackHandler, Pressable, StyleSheet, Switch, View } from 'react-native';
 
 import { useContent } from '@/content/useContent';
 import { DAILY_GOALS, applySetDailyGoal } from '@/game';
 import { LANGS, detectLang, useT, type Lang } from '@/i18n';
 import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, FadeUp, Icon, Pop, ProgressBar, Screen, Text, radius, space, tint, useColors } from '@/ui';
+import { Button, FadeUp, Icon, Pop, ProgressBar, Screen, Text, radius, shade, space, tint, useColors, useIsDark } from '@/ui';
 
 const GOAL_MINUTES: Record<number, number> = { 20: 5, 50: 10, 100: 20, 200: 40 };
 const HOURS = [8, 12, 19, 21];
@@ -18,10 +18,20 @@ const STEPS = 5;
  * le niveau (partir de zéro ou passer un test), l'objectif, les rappels.
  * Tout se change ensuite dans le Profil. Le choix de langue s'applique
  * immédiatement : l'écran suivant est déjà traduit.
+ *
+ * `replay=1` (depuis le Profil) : les choix partent des réglages actuels, et
+ * la fin ramène au Profil au lieu d'empiler un second jeu d'onglets. Quitter
+ * en cours de route ne change rien.
  */
 export default function OnboardingScreen() {
   const colors = useColors();
+  const dark = useIsDark();
+  // Fond d'une carte choisie : teinte claire en thème clair, teinte sombre en
+  // thème sombre (sinon texte clair sur fond clair, illisible).
+  const selected = (c: string) => (dark ? shade(c, 0.65) : tint(c, 0.88));
   const t = useT();
+  const { replay } = useLocalSearchParams<{ replay?: string }>();
+  const isReplay = replay === '1';
   const { SUBJECTS } = useContent();
   const lang = useSettings((s) => s.lang);
   const setLang = useSettings((s) => s.setLang);
@@ -29,9 +39,20 @@ export default function OnboardingScreen() {
   const previous = useSettings((s) => s.subjects);
   const [subjects, setSubjects] = useState<string[]>(previous && previous.length > 0 ? previous : [SUBJECTS[0].id]);
   const [tests, setTests] = useState<string[]>([]);
-  const [goal, setGoal] = useState<number>(50);
-  const [reminders, setReminders] = useState(true);
-  const [hour, setHour] = useState(19);
+  // Premier lancement : valeurs conseillées. Relecture : les réglages actuels.
+  const [goal, setGoal] = useState<number>(() => (isReplay ? useProgress.getState().progress.daily.goal : 50));
+  const [reminders, setReminders] = useState(() => (isReplay ? useSettings.getState().reminders : true));
+  const [hour, setHour] = useState(() => (isReplay ? useSettings.getState().reminderHour : 19));
+
+  // Retour Android : étape précédente plutôt que quitter l'intro.
+  useEffect(() => {
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      if (step === 0) return false;
+      setStep(step - 1);
+      return true;
+    });
+    return () => sub.remove();
+  }, [step]);
   const chosenLang: Lang = lang ?? detectLang();
 
   const finish = async () => {
@@ -40,7 +61,8 @@ export default function OnboardingScreen() {
     if (!settings.lang) settings.setLang(chosenLang);
     const chosen = SUBJECTS.filter((x) => subjects.includes(x.id)).map((x) => x.id);
     settings.setSubjects(chosen.length === SUBJECTS.length ? null : chosen);
-    settings.setFavoriteSubject(chosen[0] ?? SUBJECTS[0].id);
+    const keep = isReplay && settings.favoriteSubject && chosen.includes(settings.favoriteSubject) ? settings.favoriteSubject : null;
+    settings.setFavoriteSubject(keep ?? chosen[0] ?? SUBJECTS[0].id);
     progress.setProgress(applySetDailyGoal(progress.progress, goal));
     settings.setReminderHour(hour);
     settings.setReminders(reminders ? await requestReminderPermission() : false);
@@ -48,6 +70,8 @@ export default function OnboardingScreen() {
     const queue = chosen.filter((id) => tests.includes(id));
     if (queue.length > 0) {
       router.replace({ pathname: '/placement/[subjectId]', params: { subjectId: queue[0], queue: queue.slice(1).join(',') } });
+    } else if (isReplay && router.canGoBack()) {
+      router.back();
     } else {
       router.replace('/');
     }
@@ -93,7 +117,7 @@ export default function OnboardingScreen() {
                 <Pressable
                   key={l.id}
                   onPress={() => setLang(l.id)}
-                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? tint(colors.primary, 0.9) : colors.surface }]}>
+                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? selected(colors.primary) : colors.surface }]}>
                   <Text style={styles.emoji}>{l.flag}</Text>
                   <Text variant="bodyBold" style={styles.grow}>
                     {l.label}
@@ -122,7 +146,7 @@ export default function OnboardingScreen() {
                 <Pressable
                   key={s.id}
                   onPress={() => toggleSubject(s.id)}
-                  style={[styles.card, { borderColor: active ? s.color : colors.border, backgroundColor: active ? tint(s.color, 0.88) : colors.surface }]}>
+                  style={[styles.card, { borderColor: active ? s.color : colors.border, backgroundColor: active ? selected(s.color) : colors.surface }]}>
                   <Text style={styles.emoji}>{s.emoji}</Text>
                   <View style={styles.cardText}>
                     <Text variant="bodyBold">{s.title}</Text>
@@ -180,7 +204,7 @@ export default function OnboardingScreen() {
                 <Pressable
                   key={g}
                   onPress={() => setGoal(g)}
-                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? tint(colors.primary, 0.9) : colors.surface }]}>
+                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? selected(colors.primary) : colors.surface }]}>
                   <Text variant="h2" style={styles.goalNumber}>
                     {g}
                   </Text>
@@ -213,7 +237,7 @@ export default function OnboardingScreen() {
           {reminders && (
             <View style={styles.hours}>
               {HOURS.map((h) => (
-                <Button key={h} label={t('common.hours', { count: h })} size="sm" tone={h === hour ? 'primary' : 'secondary'} style={styles.grow} onPress={() => setHour(h)} />
+                <Button key={h} label={t('common.clock', { hour: h })} size="sm" tone={h === hour ? 'primary' : 'secondary'} style={styles.grow} onPress={() => setHour(h)} />
               ))}
             </View>
           )}

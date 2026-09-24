@@ -2,7 +2,8 @@ import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { FEATURES } from '@/config/features';
-import { SHOP, applyBuyRefill, currentEnergy, minutesToLesson } from '@/game';
+import { SHOP, applyBuyRefill, currentEnergy, minutesToLesson, reviewQueueSize } from '@/game';
+import { useContent } from '@/content/useContent';
 import { useT } from '@/i18n';
 import { useProgress } from '@/store/progress';
 
@@ -25,10 +26,17 @@ export function NoEnergySheet({ onClose }: { onClose: () => void }) {
   const value = currentEnergy(progress.energy, now);
   const wait = minutesToLesson(progress.energy, now);
   const canPay = progress.gems >= SHOP.refill.cost;
-  const waitText = wait >= 60 ? `${t('common.hours', { count: Math.floor(wait / 60) })} ${t('common.min', { count: wait % 60 })}` : t('common.min', { count: wait });
+  const hasErrors = reviewQueueSize(progress, useContent().EXERCISE_BY_KEY) > 0;
+  // « 1 h » plutôt que « 1 h 0 min ».
+  const waitText =
+    wait >= 60
+      ? wait % 60 === 0
+        ? t('common.hours', { count: wait / 60 })
+        : `${t('common.hours', { count: Math.floor(wait / 60) })} ${t('common.min', { count: wait % 60 })}`
+      : t('common.min', { count: wait });
 
   return (
-    <Card color={colors.danger}>
+    <Card color={colors.danger} style={styles.sheet}>
       <View style={styles.head}>
         <Icon name="flash" size={24} color={colors.energy} />
         <Text variant="h2">{t('energy.empty.title')}</Text>
@@ -49,7 +57,7 @@ export function NoEnergySheet({ onClose }: { onClose: () => void }) {
           }}
         />
         {FEATURES.ads && <Button label={t('energy.watchAd')} tone="secondary" onPress={onClose} />}
-        <Button label={t('energy.reviewErrors')} tone="secondary" onPress={() => { onClose(); router.push('/session/review'); }} />
+        {hasErrors && <Button label={t('energy.reviewErrors')} tone="secondary" onPress={() => { onClose(); router.push('/session/review'); }} />}
         <Button label={t('energy.reviewDeck')} tone="secondary" onPress={() => { onClose(); router.push('/deck/review'); }} />
         <Button label={t('common.close')} tone="ghost" onPress={onClose} />
       </View>
@@ -57,4 +65,9 @@ export function NoEnergySheet({ onClose }: { onClose: () => void }) {
   );
 }
 
-const styles = StyleSheet.create({ actions: { gap: space.sm }, head: { flexDirection: 'row', alignItems: 'center', gap: space.sm } });
+const styles = StyleSheet.create({
+  actions: { gap: space.sm },
+  head: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
+  // Affiché en surimpression, ancré en bas de l'écran : une ombre le détache du parcours.
+  sheet: { elevation: 8, shadowColor: '#000', shadowOpacity: 0.15, shadowRadius: 12, shadowOffset: { width: 0, height: 4 } },
+});

@@ -9,7 +9,7 @@
  * aussi. Le store ne fait que persister ce qui sort d'ici.
  */
 
-import { addDays } from './dates';
+import { addDays, daysBetween } from './dates';
 import type { CardState, DayKey, IsoDate, Rng } from './types';
 
 export type Grade = 'again' | 'hard' | 'good' | 'easy';
@@ -61,11 +61,13 @@ function clampInterval(days: number): number {
  *   - Encore / Difficile : on la repose aujourd'hui (intervalle 0).
  *   - Bien : premier « bien » → demain ; deuxième → sortie à 3 jours.
  *   - Facile : sortie immédiate à 4 jours, facilité +15 %.
- * Révision :
+ * Révision (comme SM-2 dans Anki, le retard compte : une carte retenue
+ * malgré 30 jours de retard a prouvé plus que son intervalle) :
  *   - Encore : rechute. Retour en apprentissage, aujourd'hui, facilité −20 %.
- *   - Difficile : intervalle ×1,2, facilité −15 %.
- *   - Bien : intervalle × facilité.
- *   - Facile : intervalle × facilité × 1,3, facilité +15 %.
+ *   - Difficile : (intervalle + retard/4) × 1,2, facilité −15 %.
+ *   - Bien : (intervalle + retard/2) × facilité, au moins Difficile + 1 jour.
+ *   - Facile : (intervalle + retard) × facilité × 1,3, facilité +15 %, au
+ *     moins Bien + 1 jour. Les trois boutons ne proposent jamais le même délai.
  */
 export function reviewCard(
   before: CardState | undefined,
@@ -103,39 +105,34 @@ export function reviewCard(
     }
   }
 
-  switch (grade) {
-    case 'again':
-      return {
-        ...base,
-        phase: 'learning',
-        intervalDays: 0,
-        due: today,
-        ease: clampEase(prev.ease - EASE_PENALTY_LAPSE),
-        lapses: prev.lapses + 1,
-      };
-    case 'hard': {
-      const intervalDays = clampInterval(prev.intervalDays * 1.2);
-      return {
-        ...base,
-        intervalDays,
-        due: addDays(today, intervalDays),
-        ease: clampEase(prev.ease - EASE_PENALTY_HARD),
-      };
-    }
-    case 'good': {
-      const intervalDays = clampInterval((prev.intervalDays * prev.ease) / 1000);
-      return { ...base, intervalDays, due: addDays(today, intervalDays) };
-    }
-    case 'easy': {
-      const intervalDays = clampInterval((prev.intervalDays * prev.ease * 1.3) / 1000);
-      return {
-        ...base,
-        intervalDays,
-        due: addDays(today, intervalDays),
-        ease: prev.ease + EASE_BONUS_EASY,
-      };
-    }
+  if (grade === 'again') {
+    return {
+      ...base,
+      phase: 'learning',
+      intervalDays: 0,
+      due: today,
+      ease: clampEase(prev.ease - EASE_PENALTY_LAPSE),
+      lapses: prev.lapses + 1,
+    };
   }
+  const intervals = reviewIntervals(prev, today);
+  const intervalDays = intervals[grade];
+  const ease =
+    grade === 'hard' ? clampEase(prev.ease - EASE_PENALTY_HARD) : grade === 'easy' ? prev.ease + EASE_BONUS_EASY : prev.ease;
+  return { ...base, intervalDays, due: addDays(today, intervalDays), ease };
+}
+
+/**
+ * Les trois intervalles d'une carte en révision, retard compris, strictement
+ * croissants (dans la limite de MAX_INTERVAL).
+ */
+function reviewIntervals(prev: CardState, today: DayKey): Record<'hard' | 'good' | 'easy', number> {
+  const delay = prev.due === null ? 0 : Math.max(0, daysBetween(prev.due, today));
+  const iv = prev.intervalDays;
+  const hard = clampInterval((iv + delay / 4) * 1.2);
+  const good = Math.min(MAX_INTERVAL, Math.max(hard + 1, clampInterval(((iv + delay / 2) * prev.ease) / 1000)));
+  const easy = Math.min(MAX_INTERVAL, Math.max(good + 1, clampInterval(((iv + delay) * prev.ease * 1.3) / 1000)));
+  return { hard, good, easy };
 }
 
 /** Intervalle qu'obtiendrait la carte pour chaque réponse — pour l'étiquette des boutons. */

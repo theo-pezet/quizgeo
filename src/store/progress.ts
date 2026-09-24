@@ -10,7 +10,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 
-import { applyTick, emptyProgress, migrateProgress, type Progress } from '@/game';
+import { applySetDailyGoal, applyTick, emptyProgress, migratePersistedProgress, migrateProgress, type Progress } from '@/game';
 
 interface ProgressStore {
   progress: Progress;
@@ -18,6 +18,10 @@ interface ProgressStore {
   setProgress: (progress: Progress) => void;
   /** Remet l'état au présent (quêtes du jour, ligue, énergie régénérée). */
   tick: () => void;
+  /**
+   * « Réinitialiser ma progression » : repart de zéro en gardant l'objectif
+   * quotidien choisi (un réglage), et efface les résultats des tests de niveau.
+   */
   reset: () => void;
   markHydrated: () => void;
 }
@@ -29,22 +33,45 @@ export const useProgress = create<ProgressStore>()(
       hydrated: false,
       setProgress: (progress) => set({ progress }),
       tick: () => set((state) => ({ progress: applyTick(state.progress, new Date()) })),
-      reset: () => set({ progress: applyTick(emptyProgress(), new Date()) }),
+      reset: () => {
+        set((state) => ({
+          progress: applyTick(applySetDailyGoal(emptyProgress(), state.progress.daily.goal), new Date()),
+        }));
+        useSettings.getState().clearPlacements();
+      },
       markHydrated: () => set({ hydrated: true }),
     }),
     {
       name: 'progress.v1',
-      version: 2,
+      // v3 (1.1) : les exercices « lis le code » ajoutés aux unités existantes
+      // héritent du niveau de leur unité (voir grandfatherNewExercises).
+      version: 3,
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({ progress: state.progress }),
-      // Quelle que soit la version stockée, on complète les champs manquants.
-      migrate: (persisted) => {
+      // Appelé par zustand seulement quand la version stockée diffère : les
+      // transformations datées, une seule fois.
+      migrate: (persisted, version) => {
         const raw = (persisted as { progress?: unknown } | undefined)?.progress;
-        return { progress: migrateProgress(raw) } as unknown as ProgressStore;
+        return { progress: migratePersistedProgress(raw, version) } as unknown as ProgressStore;
       },
-      onRehydrateStorage: () => (state) => {
-        state?.tick();
-        state?.markHydrated();
+      // Appelé à CHAQUE hydratation : on complète toujours les champs
+      // manquants (un champ ajouté sans changer de version ne doit jamais
+      // faire planter l'app). Rien de stocké : l'état initial reste.
+      merge: (persisted, current) => {
+        const raw = (persisted as { progress?: unknown } | undefined)?.progress;
+        if (raw === undefined) return current;
+        return { ...current, progress: migrateProgress(raw) };
+      },
+      // Quoi qu'il arrive (lecture impossible, état illisible), l'app doit
+      // démarrer : `hydrated` passe toujours à true.
+      onRehydrateStorage: () => (_state, error) => {
+        try {
+          if (error === undefined) useProgress.getState().tick();
+        } catch {
+          // Un état qu'on ne sait pas remettre au présent reste tel quel.
+        } finally {
+          useProgress.setState({ hydrated: true });
+        }
       },
     },
   ),
@@ -89,6 +116,7 @@ interface SettingsStore {
   setSubjects: (ids: string[] | null) => void;
   setTutorialDone: (done: boolean) => void;
   setPlacement: (subjectId: string, record: PlacementRecord) => void;
+  clearPlacements: () => void;
   markHydrated: () => void;
 }
 
@@ -117,6 +145,7 @@ export const useSettings = create<SettingsStore>()(
       setSubjects: (subjects) => set({ subjects }),
       setTutorialDone: (tutorialDone) => set({ tutorialDone }),
       setPlacement: (subjectId, record) => set((state) => ({ placements: { ...state.placements, [subjectId]: record } })),
+      clearPlacements: () => set({ placements: {} }),
       markHydrated: () => set({ hydrated: true }),
     }),
     {
@@ -142,7 +171,10 @@ export const useSettings = create<SettingsStore>()(
         tutorialDone: state.tutorialDone,
         placements: state.placements,
       }),
-      onRehydrateStorage: () => (state) => state?.markHydrated(),
+      // Même en cas d'erreur de lecture : sinon l'onboarding ne s'ouvre jamais.
+      onRehydrateStorage: () => () => {
+        useSettings.setState({ hydrated: true });
+      },
     },
   ),
 );

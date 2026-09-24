@@ -35,26 +35,22 @@ export function sessionCountsForStreak(questionCount: number): boolean {
  *
  * Sécurité horloge : si `lastActiveDay` est postérieur à `today`, l'utilisateur
  * a reculé son horloge ou changé de fuseau vers l'ouest. On traite ce cas comme
- * « déjà actif aujourd'hui » plutôt que de casser la série.
+ * « déjà actif aujourd'hui » plutôt que de casser la série, et on ne recule
+ * JAMAIS `lastActiveDay` : sinon un aller-retour d'horloge entre deux jours
+ * ferait monter la série (et les gels, et les gemmes de palier) sans limite.
  */
 export function recordActiveDay(state: StreakState, today: DayKey): StreakUpdate {
-  const unchanged = (extra?: Partial<StreakUpdate>): StreakUpdate => ({
-    streak: { ...state, freezeUsedOn: [...state.freezeUsedOn] },
-    incremented: false,
-    reset: false,
-    freezeConsumedFor: null,
-    freezeGained: false,
-    ...extra,
-  });
-
   const last = state.lastActiveDay;
 
   if (last !== null && last >= today) {
-    // Déjà actif aujourd'hui, ou horloge dans le futur : on ne touche à rien,
-    // sauf à recaler lastActiveDay sur aujourd'hui si l'horloge a reculé.
-    const result = unchanged();
-    result.streak.lastActiveDay = today;
-    return result;
+    // Déjà actif aujourd'hui, ou horloge dans le passé : on ne touche à rien.
+    return {
+      streak: { ...state, freezeUsedOn: [...state.freezeUsedOn] },
+      incremented: false,
+      reset: false,
+      freezeConsumedFor: null,
+      freezeGained: false,
+    };
   }
 
   const gap = last === null ? Infinity : daysBetween(last, today);
@@ -108,10 +104,32 @@ export function isActiveToday(state: StreakState, today: DayKey): boolean {
 }
 
 /**
- * La série est-elle encore tenable aujourd'hui, ou est-elle déjà perdue ?
- * Sert au libellé du Profil, pas au calcul : rien n'est écrit avant une session.
+ * La série est-elle encore sauvable par une session le jour `day` ? Oui si le
+ * dernier jour actif est `day` ou la veille, ou l'avant-veille avec un gel en
+ * réserve (il couvrira la veille). Au-delà, la prochaine session repartira de 1.
+ */
+function isSavableOn(state: StreakState, day: DayKey): boolean {
+  if (state.lastActiveDay === null || state.current === 0) return false;
+  const gap = daysBetween(state.lastActiveDay, day);
+  return gap <= 1 || (gap === 2 && state.freezes > 0);
+}
+
+/**
+ * La série à AFFICHER le jour `today` (Accueil, Profil, rappels).
+ *
+ * `current` n'est remis à 1 qu'à la prochaine session : sans cette fonction,
+ * une série déjà perdue resterait affichée « en jeu ». Rend 0 quand la série
+ * ne peut plus être sauvée. Rien n'est écrit.
+ */
+export function displayedStreak(state: StreakState, today: DayKey): number {
+  return isSavableOn(state, today) ? state.current : 0;
+}
+
+/**
+ * La série est-elle en danger aujourd'hui : pas encore nourrie, mais encore
+ * sauvable ? Une série déjà perdue n'est pas « en danger ». Sert au libellé du
+ * Profil, pas au calcul : rien n'est écrit avant une session.
  */
 export function streakIsAtRisk(state: StreakState, today: DayKey): boolean {
-  if (state.lastActiveDay === null || state.current === 0) return false;
-  return !isActiveToday(state, today);
+  return !isActiveToday(state, today) && isSavableOn(state, today);
 }

@@ -88,6 +88,7 @@ describe('applyAnswerAction', () => {
     expect(r.progress.xp).toBe(0);
     expect(r.enteredQueue).toBe(true);
     expect(reviewQueueSize(r.progress)).toBe(1);
+    expect(reviewQueueSize(r.progress, new Set<string>())).toBe(0);
   });
 
   it('double les XP en chrono', () => {

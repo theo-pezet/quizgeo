@@ -68,6 +68,22 @@ def split_v2(cell: str) -> tuple[str, str]:
     return definition, example
 
 
+def split_sheet1(middle: list[str]) -> tuple[str, str]:
+    """Colonnes entre le terme et le tag → (définition, exemple).
+
+    Un ';' en trop vient d'une définition ou d'un exemple qui en contient un.
+    Quand une colonne finit une phrase (« …développe.;GPT-4 est closed
+    source;tu ne peux… »), la définition s'arrête là et la suite rejoint
+    l'exemple : sinon « .;GPT-4… » s'affichait dans la définition.
+    """
+    if len(middle) <= 2:
+        return middle[0], middle[-1] if len(middle) > 1 else ""
+    for i, part in enumerate(middle[:-1]):
+        if re.search(r"[.!?»\"]$", part.strip()):
+            return ";".join(middle[: i + 1]), "; ".join(p for p in middle[i + 1 :] if p)
+    return ";".join(middle[:-1]), middle[-1]  # une définition peut contenir des ';'
+
+
 def level_from_tag(tag: str) -> str | None:
     m = re.search(r"_(Easy|Medium|Hard)$", tag)
     if not m:
@@ -139,8 +155,7 @@ def main(src: str, dst: str) -> int:
             warnings.append(f"Sheet1: ligne inexploitable : {cell[:60]}…")
             continue
         term, tag = parts[0], parts[-1]
-        example = parts[-2]
-        definition = ";".join(parts[1:-2])  # une définition peut contenir des ';'
+        definition, example = split_sheet1(parts[1:-1])
         add(term, clean(definition), clean(example), subject_from_tag(tag),
             topic_from_tag(tag), level_from_tag(tag), [tag], "Sheet1")
 

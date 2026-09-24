@@ -55,9 +55,14 @@ export function questsForDay(day: DayKey): Quest[] {
   return out;
 }
 
-/** Régénère les quêtes si le jour a changé. Idempotent le même jour. */
+/**
+ * Régénère les quêtes si le jour a changé. Idempotent le même jour. Un jour
+ * ANTÉRIEUR (fuseau, horloge reculée) ne change rien : sinon les quêtes
+ * seraient rejouées, et payées une seconde fois.
+ */
 export function ensureQuests(state: QuestState, today: DayKey): QuestState {
   if (state.day === today) return state;
+  if (state.day !== null && today < state.day) return state;
   return { day: today, items: questsForDay(today) };
 }
 

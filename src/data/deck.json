@@ -3422,12 +3422,12 @@
    "topic": "growth",
    "level": null,
    "term": "Churn Rate (Formula)",
-   "definition": "Formula: (Lost Customers / Total Customers at Start of Period) * 100.",
+   "definition": "Share of customers lost over a period, compared with the customers you had at the start. Formula: (Lost Customers / Total Customers at Start of Period) * 100.",
    "example": "Losing 10 out of 100 customers in a month equals a 10% churn rate.",
    "tags": [
     "#Growth"
    ],
-   "cloze": "Formula: {{c1::(Lost Customers / Total Customers at Start of Period) * 100}}."
+   "cloze": "Share of customers lost over a period, compared with the customers you had at the start. Formula: {{c1::(Lost Customers / Total Customers at Start of Period) * 100}}."
   },
   {
    "id": "marketing-revenue-churn",
@@ -3736,7 +3736,7 @@
    "level": null,
    "term": "CSS",
    "definition": "Cascading Style Sheets: A style sheet language used for describing the presentation of a document written in HTML.",
-   "example": "Changing the `.button` class to make all your buttons blue.",
+   "example": "Changing the “.button” class to make all your buttons blue.",
    "tags": [
     "#Tech"
    ]
@@ -3808,7 +3808,7 @@
    "level": null,
    "term": "Canonicalization",
    "definition": "The process by which a site (or Google itself) chooses the reference URL among several versions of the same content: http or https, with or without www, with or without parameters. The canonical tag, 301 redirects and internal links all feed into it.",
-   "example": "Ensuring all versions of your site point to the official `https://www.site.com`.",
+   "example": "Ensuring all versions of your site point to the official “https://www.site.com”.",
    "tags": [
     "#SEO_Technical"
    ]
@@ -4251,12 +4251,12 @@
    "topic": "growth",
    "level": null,
    "term": "CAC Payback (Formula)",
-   "definition": "Formula: CAC / (ARPU * Gross Margin).",
+   "definition": "Number of months of gross margin needed to earn back the cost of acquiring a customer. Formula: CAC / (ARPU * Gross Margin).",
    "example": "CAC of $120, ARPU of $20/month, 75% gross margin: 120 / (20 × 0.75) = 8 months to pay back the customer.",
    "tags": [
     "#Growth_Finance"
    ],
-   "cloze": "Formula: {{c1::CAC / (ARPU * Gross Margin)}}."
+   "cloze": "Number of months of gross margin needed to earn back the cost of acquiring a customer. Formula: {{c1::CAC / (ARPU * Gross Margin)}}."
   },
   {
    "id": "marketing-burn-rate",
@@ -4990,7 +4990,7 @@
    "level": null,
    "term": "UTM Source",
    "definition": "The specific platform where the traffic originated (e.g., \"google\", \"linkedin\", \"newsletter\").",
-   "example": "Using `utm_source=linkedin` to see how many clicks your post generated.",
+   "example": "Using “utm_source=linkedin” to see how many clicks your post generated.",
    "tags": [
     "#Analytics"
    ]
@@ -5002,7 +5002,7 @@
    "level": null,
    "term": "UTM Medium",
    "definition": "The type of marketing channel (e.g., \"cpc\", \"social\", \"email\", \"organic\").",
-   "example": "Using `utm_medium=email` to distinguish your newsletter from your social posts.",
+   "example": "Using “utm_medium=email” to distinguish your newsletter from your social posts.",
    "tags": [
     "#Analytics"
    ]
@@ -5014,7 +5014,7 @@
    "level": null,
    "term": "UTM Campaign",
    "definition": "The specific name of the marketing effort (e.g., \"summer_sale_2026\").",
-   "example": "Using `utm_campaign=black_friday` to track all traffic related to that specific event.",
+   "example": "Using “utm_campaign=black_friday” to track all traffic related to that specific event.",
    "tags": [
     "#Analytics"
    ]
@@ -5471,12 +5471,12 @@
    "topic": "growth",
    "level": null,
    "term": "LTV (Formula - Simple)",
-   "definition": "Formula: ARPU / Churn Rate.",
+   "definition": "Quick estimate of the revenue a customer brings in over their whole relationship with you. Formula: ARPU / Churn Rate.",
    "example": "If a customer pays $10/month and stays for an average of 10 months (10% churn), their LTV is $100.",
    "tags": [
     "#Growth_Finance"
    ],
-   "cloze": "Formula: {{c1::ARPU / Churn Rate}}."
+   "cloze": "Quick estimate of the revenue a customer brings in over their whole relationship with you. Formula: {{c1::ARPU / Churn Rate}}."
   },
   {
    "id": "marketing-payback-period-formula",
@@ -5484,12 +5484,12 @@
    "topic": "growth",
    "level": null,
    "term": "Payback Period (Formula)",
-   "definition": "Formula: CAC / (ARPU * Gross Margin).",
+   "definition": "Time it takes for the profit from a new customer to cover what it cost to acquire them. Formula: CAC / (ARPU * Gross Margin).",
    "example": "If you spend $50 to get a user who gives you $5 profit/month, your payback period is 10 months.",
    "tags": [
     "#Growth_Finance"
    ],
-   "cloze": "Formula: {{c1::CAC / (ARPU * Gross Margin)}}."
+   "cloze": "Time it takes for the profit from a new customer to cover what it cost to acquire them. Formula: {{c1::CAC / (ARPU * Gross Margin)}}."
   },
   {
    "id": "marketing-contribution-margin",
@@ -5593,12 +5593,12 @@
    "topic": "growth",
    "level": null,
    "term": "AARRR: Referral (Viral Coefficient)",
-   "definition": "Formula: Number of invitations sent * Conversion rate of those invitations.",
+   "definition": "Measures how many new users each existing user brings in through invitations; above 1, growth feeds itself. Formula: Number of invitations sent * Conversion rate of those invitations.",
    "example": "If each user sends 2 invites and 50% sign up, your viral coefficient is 1.0 (perfectly stable growth).",
    "tags": [
     "#Growth"
    ],
-   "cloze": "Formula: {{c1::Number of invitations sent * Conversion rate of those invitations}}."
+   "cloze": "Measures how many new users each existing user brings in through invitations; above 1, growth feeds itself. Formula: {{c1::Number of invitations sent * Conversion rate of those invitations}}."
   },
   {
    "id": "marketing-saturation-point",
@@ -5946,8 +5946,8 @@
    "topic": "ai",
    "level": "debutant",
    "term": "Closed Source AI",
-   "definition": "AI models where the code and internal workings are kept secret by the developing company.;OpenAI's GPT-4 is closed source",
-   "example": "you can only use it via their API or website.",
+   "definition": "AI models where the code and internal workings are kept secret by the developing company.",
+   "example": "OpenAI's GPT-4 is closed source; you can only use it via their API or website.",
    "tags": [
     "#AI_Easy"
    ]
@@ -6318,8 +6318,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Transformer Architecture",
-   "definition": "The specific neural network structure that allows AI to process data \"in parallel\" and understand long-range relationships in text.;The \"T\" in GPT",
-   "example": "the invention that made modern AI possible in 2017.",
+   "definition": "The specific neural network structure that allows AI to process data \"in parallel\" and understand long-range relationships in text.",
+   "example": "The \"T\" in GPT: the invention that made modern AI possible in 2017.",
    "tags": [
     "#AI_Medium"
    ]
@@ -7063,7 +7063,7 @@
    "level": "intermediaire",
    "term": "Variable",
    "definition": "A symbolic name for (or a container for) a value that can change.",
-   "example": "Defining a variable `user_name` to personalize a greeting on your website.",
+   "example": "Defining a variable “user_name” to personalize a greeting on your website.",
    "tags": [
     "#Code_Medium"
    ]
@@ -7327,7 +7327,7 @@
    "level": "avance",
    "term": "Query String",
    "definition": "The part of a URL after the question mark, made of key=value pairs (e.g. ?id=123&lang=en), that passes parameters to the web application.",
-   "example": "Seeing `?gclid=…` in a URL: that is the query string Google Ads appends to track ad clicks.",
+   "example": "Seeing “?gclid=…” in a URL: that is the query string Google Ads appends to track ad clicks.",
    "tags": [
     "#Code_Hard"
    ]
@@ -7351,7 +7351,7 @@
    "level": "avance",
    "term": "Slug",
    "definition": "The last part of a URL path, in readable words separated by hyphens, that identifies a specific page (e.g. /local-seo-guide). No question mark, no parameters.",
-   "example": "In `theopezet.com/ai-marketing-newsletter`, the slug is `ai-marketing-newsletter`.",
+   "example": "In “theopezet.com/ai-marketing-newsletter”, the slug is “ai-marketing-newsletter”.",
    "tags": [
     "#Code_Hard"
    ]

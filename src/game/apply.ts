@@ -10,13 +10,15 @@
 import { recordAdShown, recordSessionForAds } from './ads';
 import { evaluateBadges, awardBadges, isEarlyHour, isNightHour, type BadgeId } from './badges';
 import { creditDailyXp, dailyRatio, ensureDaily } from './daily';
-import { localHour, toDayKey } from './dates';
+import { daysBetween, localHour, toDayKey } from './dates';
 import { GEMS, SHOP, addGems, spendGems, streakMilestoneGems, xpMultiplier } from './economy';
 import {
   LESSON_ENERGY_COST,
+  MAX_ENERGY,
   MISTAKE_ENERGY_COST,
   PERFECT_ENERGY_REFUND,
   canStartLesson,
+  currentEnergy,
   modeCostsEnergy,
   refillEnergy,
   refundEnergy,
@@ -25,7 +27,7 @@ import {
 } from './energy';
 import { addLeagueXp, clearLeagueOutcome, ensureLeague } from './league';
 import { applyQuestEvent, ensureQuests, questsReward, type QuestEvent } from './quests';
-import { allUnitTraits, applyUnitSessionResult, newlyUnlocked, unitTraits } from './mastery';
+import { PATH_TRAITS, allUnitTraits, applyUnitSessionResult, newlyUnlocked, unitTraits } from './mastery';
 import { MONTHLY_REWARD, ensureMonthly, recordMonthlyLesson } from './monthly';
 import { applyAnswer } from './review';
 import { gradeIsCorrect, reviewCard, type Grade } from './srs';
@@ -34,7 +36,9 @@ import { MIN_SESSION_LENGTH, XP_CORRECT_REVIEW, addXp, isPerfectSession, levelUp
 import {
   emptyQuestionProgress,
   emptyUnitProgress,
+  type CardState,
   type Catalog,
+  type DayKey,
   type Exercise,
   type Progress,
   type Quest,
@@ -106,6 +110,13 @@ export interface AnswerAction {
    * L'écran de session tient un Set des clés déjà créditées.
    */
   creditedThisSession: boolean;
+  /**
+   * Réponse d'un test de sortie (« Tester pour sauter ici ») : un examen sur
+   * une unité encore fermée. Les XP et l'énergie comptent, mais la
+   * progression des exercices n'est pas touchée : un test raté ou abandonné
+   * ne doit pas donner de couronne à l'unité, ni ouvrir la suivante.
+   */
+  skipTest?: boolean;
 }
 
 export interface AnswerResult {
@@ -130,25 +141,27 @@ export interface AnswerResult {
 export function applyAnswerAction(progress: Progress, action: AnswerAction): AnswerResult {
   const nowIso = action.now.toISOString();
   const ticked = applyTick(progress, action.now);
-  const outcome = applyAnswer(
-    ticked.questions[action.question.key],
-    action.question.key,
-    action.correct,
-    nowIso,
-    action.creditedThisSession,
-  );
+  const before = ticked.questions[action.question.key];
+  const outcome = action.skipTest
+    ? { progress: before, enteredQueue: false, leftQueue: false }
+    : applyAnswer(before, action.question.key, action.correct, nowIso, action.creditedThisSession);
 
   // Le boost double les XP de réponse, jamais les bonus de session.
   const xpGained =
     xpForAnswer({ mode: action.mode, correct: action.correct, chrono: action.chrono }) *
     xpMultiplier(ticked.boost, action.now);
 
-  const energySpent = !action.correct && modeCostsEnergy(action.mode) ? MISTAKE_ENERGY_COST : 0;
+  // Le Blitz (chrono) coûte ses 5 points au lancement, et rien de plus : en
+  // 60 s de réponses rapides, les erreurs videraient toute la jauge.
+  const energySpent = !action.correct && !action.chrono && modeCostsEnergy(action.mode) ? MISTAKE_ENERGY_COST : 0;
 
   let next: Progress = {
     ...ticked,
     xp: addXp(ticked.xp, xpGained),
-    questions: { ...ticked.questions, [action.question.key]: outcome.progress },
+    questions:
+      outcome.progress === undefined
+        ? ticked.questions
+        : { ...ticked.questions, [action.question.key]: outcome.progress },
     counters: {
       ...ticked.counters,
       reviewRecovered: ticked.counters.reviewRecovered + (outcome.leftQueue ? 1 : 0),
@@ -208,6 +221,18 @@ export interface SessionEndAction {
    * Le store garde simplement une référence à l'état au lancement.
    */
   progressAtSessionStart: Progress;
+  /**
+   * Instant du lancement de la session. Une leçon commencée avant minuit et
+   * finie après compte pour la série du jour où elle a commencé : c'est ce
+   * que promet le rappel « avant minuit ». Absent : `now`.
+   */
+  startedAt?: Date;
+  /**
+   * Session de test de sortie : l'unité visée n'est pas mise à jour (ni
+   * couronne, ni verrou). En cas de réussite, l'appelant applique
+   * `applySkipTestPassed`.
+   */
+  skipTest?: boolean;
 }
 
 export interface SessionEndResult {
@@ -251,8 +276,14 @@ export function applySessionEnd(
     catalog,
     bestCombo,
     progressAtSessionStart,
+    startedAt,
+    skipTest,
   } = action;
   const today = toDayKey(now);
+  // Le jour que la session nourrit dans la série : celui du lancement quand
+  // elle a commencé la veille (leçon à cheval sur minuit), sinon aujourd'hui.
+  const startDay = startedAt === undefined ? today : toDayKey(startedAt);
+  const activeDay = daysBetween(startDay, today) === 1 ? startDay : today;
 
   // « Avant » = au lancement de la session, pas maintenant : les réponses ont
   // déjà été appliquées une à une.
@@ -267,8 +298,16 @@ export function applySessionEnd(
 
   // 1. Les XP. Les réponses ont déjà été créditées une à une : on n'ajoute ici
   //    que les bonus de session, jamais doublés par le chrono ni le boost.
+  //    Les révisions (deck, file « à revoir ») sont gratuites et rejouables à
+  //    volonté : leur bonus exige au moins 5 bonnes réponses, et pour le deck
+  //    5 cartes révisées pour la première fois du jour. Sinon, relancer la même
+  //    session en boucle rapporterait XP, ligue et gemmes sans limite.
   const breakdown = xpForSession({ mode, questionCount, correctCount, chrono });
-  const bonusXp = breakdown.completion + breakdown.perfect;
+  const bonusAllowed =
+    lesson ||
+    (correctCount >= MIN_SESSION_LENGTH &&
+      (mode !== 'deck' || freshCardReviews(progressAtSessionStart, progress, today) >= MIN_SESSION_LENGTH));
+  const bonusXp = bonusAllowed ? breakdown.completion + breakdown.perfect : 0;
   const xpBefore = progressAtSessionStart.xp;
   const ticked = applyTick(progress, now);
   let next: Progress = { ...ticked, xp: addXp(ticked.xp, bonusXp), league: addLeagueXp(ticked.league, bonusXp) };
@@ -279,25 +318,31 @@ export function applySessionEnd(
   let gemsGained = 0;
   if (counted) {
     if (lesson) gemsGained += GEMS.lesson + (perfect ? GEMS.perfect : 0);
-    else if (mode === 'deck') gemsGained += GEMS.deckSession;
+    else if (mode === 'deck' && bonusAllowed && deckRewardDue(next.daily.deckRewardedOn, today)) {
+      // Les gemmes du deck : une fois par jour.
+      gemsGained += GEMS.deckSession;
+      next = { ...next, daily: { ...next.daily, deckRewardedOn: today } };
+    }
   }
 
-  // 2. Les compteurs.
-  next = {
-    ...next,
-    counters: {
-      ...next.counters,
-      sessionsCompleted: next.counters.sessionsCompleted + 1,
-      perfectSessions: next.counters.perfectSessions + (perfect ? 1 : 0),
-      chronoPerfects: next.counters.chronoPerfects + (perfect && chrono ? 1 : 0),
-      earlySessions: next.counters.earlySessions + (isEarlyHour(hour) ? 1 : 0),
-      nightSessions: next.counters.nightSessions + (isNightHour(hour) ? 1 : 0),
-    },
-    ads: recordSessionForAds(next.ads),
-  };
+  // 2. Les compteurs. Une session vide (rien à poser) ne compte pas.
+  if (questionCount > 0) {
+    next = {
+      ...next,
+      counters: {
+        ...next.counters,
+        sessionsCompleted: next.counters.sessionsCompleted + 1,
+        perfectSessions: next.counters.perfectSessions + (perfect ? 1 : 0),
+        chronoPerfects: next.counters.chronoPerfects + (perfect && chrono ? 1 : 0),
+        earlySessions: next.counters.earlySessions + (isEarlyHour(hour) ? 1 : 0),
+        nightSessions: next.counters.nightSessions + (isNightHour(hour) ? 1 : 0),
+      },
+      ads: recordSessionForAds(next.ads),
+    };
+  }
 
-  // 3. L'unité, si c'était une session d'unité.
-  if (unitId) {
+  // 3. L'unité, si c'était une session d'unité (pas un test de sortie).
+  if (unitId && !skipTest) {
     const unitKeys = questions.filter((q) => q.unitId === unitId).map((q) => q.key);
     const allSeen =
       unitKeys.length > 0 &&
@@ -322,7 +367,7 @@ export function applySessionEnd(
   let streakIncremented = false;
   let freezeConsumedFor: string | null = null;
   if (sessionCountsForStreak(questionCount)) {
-    const update = recordActiveDay(next.streak, today);
+    const update = recordActiveDay(next.streak, activeDay);
     next = { ...next, streak: update.streak };
     streakIncremented = update.incremented;
     freezeConsumedFor = update.freezeConsumedFor;
@@ -420,22 +465,49 @@ export interface CardReviewResult {
   goalReached: boolean;
 }
 
+/** Jour local de la dernière révision d'une carte au deck ; null si jamais. */
+function reviewedOn(card: CardState | undefined): DayKey | null {
+  return card === undefined || card.lastReviewedAt === null ? null : toDayKey(new Date(card.lastReviewedAt));
+}
+
+/**
+ * Première révision de la carte au deck le jour `today` ? Une carte « Encore »
+ * ou « Difficile » en apprentissage reste due le jour même : sans cette règle,
+ * relancer le deck en boucle rapporterait XP et quêtes à l'infini. Une date
+ * dans le futur (horloge reculée) ne compte pas comme un autre jour.
+ */
+function isFirstReviewOfDay(card: CardState | undefined, today: DayKey): boolean {
+  const day = reviewedOn(card);
+  return day === null || day < today;
+}
+
+/** Cartes révisées pendant la session pour la première fois du jour. */
+function freshCardReviews(before: Progress, after: Progress, today: DayKey): number {
+  let count = 0;
+  for (const [id, card] of Object.entries(after.cards)) {
+    if (reviewedOn(card) === today && isFirstReviewOfDay(before.cards[id], today)) count += 1;
+  }
+  return count;
+}
+
+function deckRewardDue(rewardedOn: DayKey | null, today: DayKey): boolean {
+  return rewardedOn === null || rewardedOn < today;
+}
+
 /**
  * Une carte du deck révisée. Persistée immédiatement, comme une réponse.
  * « Encore » ne rapporte rien ; les trois autres réponses valent une bonne
- * réponse de révision (5 XP).
+ * réponse de révision (5 XP), à la première révision de la carte dans la
+ * journée seulement (de même pour la quête « Réviser N cartes »).
  */
 export function applyCardReview(progress: Progress, action: CardReviewAction): CardReviewResult {
   const ticked = applyTick(progress, action.now);
+  const today = toDayKey(action.now);
   const correct = gradeIsCorrect(action.grade);
-  const xpGained = (correct ? XP_CORRECT_REVIEW : 0) * xpMultiplier(ticked.boost, action.now);
-  const card = reviewCard(
-    ticked.cards[action.cardId],
-    action.cardId,
-    action.grade,
-    toDayKey(action.now),
-    action.now.toISOString(),
-  );
+  const before = ticked.cards[action.cardId];
+  const first = isFirstReviewOfDay(before, today);
+  const xpGained = (correct && first ? XP_CORRECT_REVIEW : 0) * xpMultiplier(ticked.boost, action.now);
+  const card = reviewCard(before, action.cardId, action.grade, today, action.now.toISOString());
   let next: Progress = {
     ...ticked,
     xp: addXp(ticked.xp, xpGained),
@@ -444,9 +516,11 @@ export function applyCardReview(progress: Progress, action: CardReviewAction): C
     league: addLeagueXp(ticked.league, xpGained),
   };
   let questsCompleted: Quest[] = [];
-  const cards = grantQuests(next, { kind: 'cards', count: 1 });
-  next = cards.progress;
-  questsCompleted = questsCompleted.concat(cards.completed);
+  if (first) {
+    const cards = grantQuests(next, { kind: 'cards', count: 1 });
+    next = cards.progress;
+    questsCompleted = questsCompleted.concat(cards.completed);
+  }
   let goalReached = false;
   if (xpGained > 0) {
     const xp = grantQuests(next, { kind: 'xp', amount: xpGained });
@@ -457,6 +531,21 @@ export function applyCardReview(progress: Progress, action: CardReviewAction): C
     goalReached = d.goalReached;
   }
   return { progress: next, xpGained, correct, questsCompleted, goalReached };
+}
+
+/**
+ * Pont leçon → deck : une erreur en leçon sur un exercice tiré d'une carte
+ * replanifie cette carte pour aujourd'hui, comme un « Encore ». Ce n'est PAS
+ * une révision du deck : ni XP, ni compteur, ni quête « Réviser N cartes ».
+ * La date de dernière révision au deck est conservée.
+ */
+export function applyCardLapse(progress: Progress, cardId: string, now: Date): Progress {
+  const before = progress.cards[cardId];
+  const card = reviewCard(before, cardId, 'again', toDayKey(now), now.toISOString());
+  return {
+    ...progress,
+    cards: { ...progress.cards, [cardId]: { ...card, lastReviewedAt: before?.lastReviewedAt ?? null } },
+  };
 }
 
 /** Changer l'objectif quotidien (onboarding, Profil). */
@@ -470,8 +559,9 @@ export function applyUnlockAnimationPlayed(progress: Progress, unitId: UnitId): 
   return { ...progress, units: { ...progress.units, [unitId]: { ...unit, unlockAnimationPlayed: true } } };
 }
 
-/** Recharge complète de l'énergie contre des gemmes. Null si trop pauvre. */
+/** Recharge complète de l'énergie contre des gemmes. Null si trop pauvre, ou déjà plein. */
 export function applyBuyRefill(progress: Progress, now: Date): Progress | null {
+  if (currentEnergy(progress.energy, now) >= MAX_ENERGY) return null;
   const gems = spendGems(progress.gems, SHOP.refill.cost);
   if (gems === null) return null;
   return { ...progress, gems, energy: refillEnergy(now) };
@@ -498,8 +588,9 @@ export const SKIP_TEST_MIN_SCORE = 8;
 
 /**
  * Test de sortie réussi sur `unitId` : toutes les unités qui la précèdent
- * dans son chemin et n'ont pas encore de couronne sont validées (2 couronnes :
- * tous leurs exercices vus et réussis une fois). Le chemin s'ouvre jusqu'ici.
+ * dans son chemin et n'ont pas encore 3 couronnes sont validées à 3 couronnes
+ * (streak 2, comme le test de niveau). Le chemin s'ouvre jusqu'ici et
+ * « Continuer » pointe sur l'unité visée. Ne retire jamais rien.
  */
 export function applySkipTestPassed(
   progress: Progress,
@@ -517,7 +608,7 @@ export function applySkipTestPassed(
 
   for (const unit of catalog.units) {
     if (unit.subjectId !== target.subjectId || unit.index >= target.index) continue;
-    if (unitTraits(progress, unit.id, exercises) >= 1) continue;
+    if (unitTraits(progress, unit.id, exercises) >= PATH_TRAITS) continue;
     validatedUnits.push(unit.id);
     units[unit.id] = { ...(units[unit.id] ?? emptyUnitProgress(unit.id)), firstTraitEarned: true };
     for (const e of exercises) {
@@ -527,7 +618,7 @@ export function applySkipTestPassed(
         ...q,
         seen: Math.max(1, q.seen),
         correct: Math.max(1, q.correct),
-        streak: Math.max(1, q.streak),
+        streak: Math.max(PATH_TRAITS - 1, q.streak),
         lastAnswerCorrect: true,
         lastSeenAt: nowIso,
       };

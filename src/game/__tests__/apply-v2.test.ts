@@ -128,9 +128,10 @@ describe('applySessionEnd — gemmes, énergie, quêtes, ligue', () => {
     expect(ordinary.energyRefunded).toBe(0);
   });
 
-  it('ne paie rien pour une session trop courte, et 5 gemmes pour le deck', () => {
+  it('ne paie rien pour une session trop courte, ni pour un deck sans carte révisée ce jour', () => {
     expect(end(progressWith(), { mode: 'review', unitId: null, questionCount: 3, correctCount: 3 }).gemsGained).toBe(0);
-    expect(end(progressWith(), { mode: 'deck', unitId: null, questionCount: 8, correctCount: 6 }).gemsGained).toBe(GEMS.deckSession);
+    // Les gemmes du deck exigent des cartes réellement révisées (voir farming.test.ts).
+    expect(end(progressWith(), { mode: 'deck', unitId: null, questionCount: 8, correctCount: 6 }).gemsGained).toBe(0);
     expect(end(progressWith(), { mode: 'review', unitId: null, questionCount: 8, correctCount: 6 }).gemsGained).toBe(0);
   });
 

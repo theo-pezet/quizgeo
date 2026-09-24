@@ -1,15 +1,15 @@
-import { router } from 'expo-router';
 import { useEffect, useMemo, useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 
 import { CATALOG, WORLD_BY_UNIT, isWorldComplete } from '@/content';
 import { useContent } from '@/content/useContent';
 import { MONTHLY_TARGET, PATH_TRAITS, allUnitTraits, levelProgress, toDayKey, type Quest } from '@/game';
-import { monthLabel, useLang, useT, type Key } from '@/i18n';
+import { formatDay, monthLabel, useLang, useT, type Key } from '@/i18n';
 import { sounds, type SoundName } from '@/lib/sounds';
 import { useProgress } from '@/store/progress';
 import { Button, Confetti, Crowns, FadeUp, Icon, Pop, ProgressBar, Ring, Screen, Text, radius, space, tint, useColors, useCountUp, type IconName } from '@/ui';
 
+import { exitSession } from './exit';
 import type { SessionSpec, SessionState } from './useSession';
 
 type Page =
@@ -87,7 +87,7 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
   }, [page, perfect, r]);
 
   const last = index === pages.length - 1;
-  const footer = <Button label={t('common.continue')} color={color} onPress={() => (last ? router.back() : setIndex(index + 1))} />;
+  const footer = <Button label={t('common.continue')} color={color} onPress={() => (last ? exitSession() : setIndex(index + 1))} />;
 
   return (
     <Screen footer={footer}>
@@ -118,7 +118,13 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
           key="crown"
           emoji="👑"
           color={colors.gold}
-          title={crownGained ? t('end.crown.title') : t('end.unlocked.title')}
+          title={
+            crownGained
+              ? t('end.crown.title')
+              : r.newlyUnlockedUnits.length > 1
+                ? t('end.unlocked.list', { count: r.newlyUnlockedUnits.length })
+                : t('end.unlocked.title')
+          }
           body={crownGained ? (r.traitsAfter >= 5 ? t('end.crown.body5') : r.traitsAfter >= PATH_TRAITS ? t('end.crown.body3') : t('end.crown.body1')) : ''}>
           {crownGained && (
             <Pop delay={300}>
@@ -127,9 +133,11 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
           )}
           {r.newlyUnlockedUnits.length > 0 && (
             <View style={[styles.list, { backgroundColor: colors.surfaceAlt }]}>
-              <Text variant="small" secondary>
-                {t('end.unlocked.title')}
-              </Text>
+              {crownGained && (
+                <Text variant="small" secondary>
+                  {t('end.unlocked.list', { count: r.newlyUnlockedUnits.length })}
+                </Text>
+              )}
               {r.newlyUnlockedUnits.map((id) => (
                 <View key={id} style={styles.listRow}>
                   <Icon name="lock-open" size={16} color={color} />
@@ -181,7 +189,7 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
           icon="flame"
           color={colors.streak}
           title={t('end.streak.title', { count: progress.streak.current })}
-          body={r.freezeConsumedFor ? t('end.streak.freeze', { day: r.freezeConsumedFor }) : t('end.streak.body')}
+          body={r.freezeConsumedFor ? t('end.streak.freeze', { day: formatDay(r.freezeConsumedFor, lang) }) : t('end.streak.body')}
         />
       )}
       {state.adShown && page.kind === 'recap' && (
@@ -214,7 +222,7 @@ function Recap({ state, color, perfect, good }: { state: SessionState; color: st
       </FadeUp>
       <FadeUp delay={220} style={styles.tiles}>
         <Tile color={color} icon="sparkles" label={t('end.tile.xp')} value={`+${shownXp}`} />
-        <Tile color={accuracy === 100 ? colors.success : colors.gem} icon="locate" label={t('end.tile.accuracy')} value={`${accuracy}%`} />
+        <Tile color={accuracy === 100 ? colors.success : colors.gem} icon="locate" label={t('end.tile.accuracy')} value={t('common.percent', { value: accuracy })} />
         {r && r.gemsGained > 0 ? (
           <Tile color={colors.gem} icon="diamond" label={t('end.tile.gems')} value={`+${r.gemsGained}`} />
         ) : (
@@ -225,7 +233,7 @@ function Recap({ state, color, perfect, good }: { state: SessionState; color: st
         <FadeUp delay={360} style={styles.fullWidth}>
           <View style={[styles.goalRow, { backgroundColor: colors.surface, borderColor: r.goalReached ? colors.success : colors.border }]}>
             <Ring ratio={r.dailyRatio} size={56} color={r.dailyRatio >= 1 ? colors.success : color}>
-              {r.dailyRatio >= 1 ? <Icon name="checkmark" size={22} color={colors.success} /> : <Text variant="small">{Math.round(r.dailyRatio * 100)}%</Text>}
+              {r.dailyRatio >= 1 ? <Icon name="checkmark" size={22} color={colors.success} /> : <Text variant="small">{t('common.percent', { value: Math.round(r.dailyRatio * 100) })}</Text>}
             </Ring>
             <View style={styles.grow}>
               <Text variant="bodyBold">{r.dailyRatio >= 1 ? t('end.goal.reached') : t('end.goal.progress')}</Text>

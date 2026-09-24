@@ -3,7 +3,9 @@ import { Pressable, StyleSheet, View } from 'react-native';
 
 import { shuffle, type ClozeExercise } from '@/game';
 import { useT } from '@/i18n';
-import { Button, Text, radius, space, useColors } from '@/ui';
+import { Text, radius, space, useColors } from '@/ui';
+
+import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: ClozeExercise;
@@ -18,6 +20,9 @@ export function ClozeView({ exercise, onAnswer, locked }: Props) {
   const bank = useMemo(() => shuffle([exercise.answer, ...exercise.bank], Math.random), [exercise.key]);
   const [picked, setPicked] = useState<string | null>(null);
   const [before, after] = exercise.text.split('___');
+  const inlineAction = useSessionAction(
+    locked ? null : { label: t('common.check'), disabled: picked === null, onPress: () => picked !== null && onAnswer(picked === exercise.answer) },
+  );
 
   return (
     <View style={styles.wrap}>
@@ -45,6 +50,8 @@ export function ClozeView({ exercise, onAnswer, locked }: Props) {
             key={word}
             disabled={locked}
             onPress={() => setPicked(word)}
+            accessibilityRole="button"
+            accessibilityState={{ selected: picked === word, disabled: locked }}
             style={[
               styles.chip,
               {
@@ -56,7 +63,7 @@ export function ClozeView({ exercise, onAnswer, locked }: Props) {
           </Pressable>
         ))}
       </View>
-      {!locked && <Button label={t('common.check')} disabled={picked === null} onPress={() => onAnswer(picked === exercise.answer)} />}
+      {inlineAction}
     </View>
   );
 }

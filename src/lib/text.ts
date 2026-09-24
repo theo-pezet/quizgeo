@@ -2,13 +2,33 @@
  * Comparaison tolérante d'une réponse tapée : casse, accents, ponctuation,
  * parenthèses et espaces ne comptent pas ; une faute de frappe est tolérée
  * sur les mots assez longs.
+ *
+ * Exception : quand la réponse attendue est une expression avec des
+ * opérateurs (« x + y », « a != b », « x // y »), les opérateurs comptent,
+ * sinon « x - y » vaudrait « x + y ».
  */
 
-export function normalizeAnswer(text: string): string {
-  return text
+const OPERATOR_CHARS = '+\\-*/%<>=!';
+const OPERATOR_RUN = new RegExp(`[${OPERATOR_CHARS}]+`, 'g');
+
+/** La réponse attendue contient-elle des opérateurs qui comptent ? (« A/B testing » ou « E-E-A-T » : non.) */
+export function hasOperators(answer: string): boolean {
+  const s = answer.replace(/\([^)]*\)/g, ' ');
+  return /\s[+\-*/%<>=!]{1,3}\s/.test(s) || /[+*%<>=!]|\/\//.test(s);
+}
+
+export function normalizeAnswer(text: string, keepOperators = false): string {
+  const s = text
     .toLowerCase()
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '');
+  if (keepOperators) {
+    return s
+      .replace(OPERATOR_RUN, (op) => ` ${op} `)
+      .replace(new RegExp(`[^a-z0-9${OPERATOR_CHARS}]+`, 'g'), ' ')
+      .trim();
+  }
+  return s
     .replace(/\([^)]*\)/g, ' ')
     .replace(/[^a-z0-9]+/g, ' ')
     .trim();
@@ -42,6 +62,11 @@ export function answerMatches(input: string, answer: string, accept: readonly st
   const given = normalizeAnswer(input);
   if (given === '') return false;
   for (const candidate of [answer, ...accept]) {
+    if (hasOperators(candidate)) {
+      // Les opérateurs doivent être exactement ceux attendus ; la tolérance ne porte que sur le reste.
+      const ops = (t: string) => (normalizeAnswer(t, true).match(OPERATOR_RUN) ?? []).join(' ');
+      if (ops(input) !== ops(candidate)) continue;
+    }
     const expected = normalizeAnswer(candidate);
     if (given === expected) return true;
     if (editDistance(given, expected) <= toleranceFor(expected)) return true;

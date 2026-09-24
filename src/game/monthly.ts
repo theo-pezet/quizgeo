@@ -19,11 +19,16 @@ export function emptyMonthly(): MonthlyState {
   return { month: null, lessons: 0, claimed: false, medals: [] };
 }
 
-/** Remet le compteur à zéro si le mois a changé. Idempotent le même mois. */
+/**
+ * Remet le compteur à zéro si le mois a changé. Idempotent le même mois.
+ * Un mois ANTÉRIEUR (fuseau, horloge reculée) ne change rien, et un mois
+ * déjà médaillé reste réclamé : la récompense ne se gagne qu'une fois.
+ */
 export function ensureMonthly(state: MonthlyState, today: DayKey): MonthlyState {
   const month = monthOf(today);
   if (state.month === month) return state;
-  return { ...state, month, lessons: 0, claimed: false };
+  if (state.month !== null && month < state.month) return state;
+  return { ...state, month, lessons: 0, claimed: state.medals.includes(month) };
 }
 
 /** Une leçon de plus ce mois ; `completed` quand la vingtième tombe. */
@@ -31,7 +36,8 @@ export function recordMonthlyLesson(state: MonthlyState, today: DayKey): { state
   const cur = ensureMonthly(state, today);
   const lessons = cur.lessons + 1;
   if (!cur.claimed && lessons >= MONTHLY_TARGET) {
-    const month = monthOf(today);
+    // Le mois du compteur, pas celui de `today` (qui peut être antérieur).
+    const month = cur.month as string;
     return {
       state: { ...cur, lessons, claimed: true, medals: cur.medals.includes(month) ? cur.medals : [...cur.medals, month] },
       completed: true,

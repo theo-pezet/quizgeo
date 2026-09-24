@@ -1,5 +1,6 @@
 import {
   MAX_FREEZES,
+  displayedStreak,
   isActiveToday,
   recordActiveDay,
   sessionCountsForStreak,
@@ -129,8 +130,20 @@ describe('recordActiveDay', () => {
     const before = streak({ current: 12, best: 12, lastActiveDay: '2026-12-31' });
     const r = recordActiveDay(before, '2026-09-09');
     expect(r.streak.current).toBe(12);
-    expect(r.streak.lastActiveDay).toBe('2026-09-09');
+    // lastActiveDay n'est jamais reculé.
+    expect(r.streak.lastActiveDay).toBe('2026-12-31');
     expect(r.reset).toBe(false);
+  });
+
+  it('régression : des allers-retours d’horloge entre deux jours ne font pas monter la série', () => {
+    let s = streak({ current: 1, best: 1, lastActiveDay: '2026-09-10' });
+    for (let i = 0; i < 29; i += 1) {
+      s = recordActiveDay(s, '2026-09-09').streak;
+      s = recordActiveDay(s, '2026-09-10').streak;
+    }
+    expect(s.current).toBe(1);
+    expect(s.freezes).toBe(0);
+    expect(s.lastActiveDay).toBe('2026-09-10');
   });
 
   it('survit à un changement de fuseau qui rejoue le même jour', () => {
@@ -183,5 +196,32 @@ describe('affichage', () => {
     expect(streakIsAtRisk(streak({ current: 0, lastActiveDay: '2026-09-01' }), '2026-09-09')).toBe(
       false,
     );
+  });
+
+  it('ne dit pas « en danger » une série déjà perdue, sauf si un gel peut la sauver', () => {
+    // Série de 12, dernier jour actif le 01/09 : perdue le 09/09.
+    expect(streakIsAtRisk(streak({ current: 12, lastActiveDay: '2026-09-01' }), '2026-09-09')).toBe(false);
+    // Avant-veille, sans gel : perdue ; avec un gel : encore sauvable.
+    expect(streakIsAtRisk(streak({ current: 12, lastActiveDay: '2026-09-07' }), '2026-09-09')).toBe(false);
+    expect(streakIsAtRisk(streak({ current: 12, lastActiveDay: '2026-09-07', freezes: 1 }), '2026-09-09')).toBe(true);
+  });
+});
+
+describe('displayedStreak', () => {
+  it('montre la série tant qu’elle est sauvable, 0 sinon', () => {
+    expect(displayedStreak(streak(), '2026-09-09')).toBe(0);
+    expect(displayedStreak(streak({ current: 12, lastActiveDay: '2026-09-09' }), '2026-09-09')).toBe(12);
+    expect(displayedStreak(streak({ current: 12, lastActiveDay: '2026-09-08' }), '2026-09-09')).toBe(12);
+    expect(displayedStreak(streak({ current: 12, lastActiveDay: '2026-09-07' }), '2026-09-09')).toBe(0);
+    expect(displayedStreak(streak({ current: 12, lastActiveDay: '2026-09-07', freezes: 1 }), '2026-09-09')).toBe(12);
+    expect(displayedStreak(streak({ current: 12, lastActiveDay: '2026-09-01', freezes: 2 }), '2026-09-09')).toBe(0);
+    // Horloge reculée : la série reste affichée.
+    expect(displayedStreak(streak({ current: 12, lastActiveDay: '2026-09-12' }), '2026-09-09')).toBe(12);
+  });
+
+  it('colle à ce que donnera la prochaine session', () => {
+    const lost = streak({ current: 12, best: 12, lastActiveDay: '2026-09-01' });
+    expect(displayedStreak(lost, '2026-09-09')).toBe(0);
+    expect(recordActiveDay(lost, '2026-09-09').streak.current).toBe(1);
   });
 });
