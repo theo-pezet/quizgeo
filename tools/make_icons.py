@@ -10,7 +10,9 @@ parcours de l'app, reconnaissable en 48 px comme en 512 px.
 Fichiers : icon.png (1024, coins carrés), android-icon-foreground.png (1024,
 transparent, zone sûre 66 %), android-icon-background.png (1024, dégradé),
 android-icon-monochrome.png (1024, silhouette blanche), splash-icon.png (512,
-transparent), favicon.png (64), notification-icon.png (96, silhouette blanche).
+l'icône arrondie sur fond transparent, posée sur le fond crème de l'app par
+expo-splash-screen), favicon.png (64), notification-icon.png (96, silhouette
+blanche).
 """
 
 import math
@@ -36,6 +38,16 @@ def gradient(size: int) -> Image.Image:
             t = (x * 0.4 + y * 0.6) / size
             px[x, y] = tuple(int(ORANGE[i] * (1 - t) + CORAL[i] * t) for i in range(3))
     return img
+
+
+def rounded_icon(size: int) -> Image.Image:
+    """L'icône complète (dégradé + sentier) aux coins arrondis, fond transparent."""
+    logo = gradient(size).convert("RGBA")
+    logo.alpha_composite(trail(size, 0.78))
+    mask = Image.new("L", (size * SS, size * SS), 0)
+    ImageDraw.Draw(mask).rounded_rectangle([0, 0, size * SS - 1, size * SS - 1], radius=int(size * SS * 0.22), fill=255)
+    logo.putalpha(mask.resize((size, size), Image.LANCZOS))
+    return logo
 
 
 def star(draw: ImageDraw.ImageDraw, cx: float, cy: float, r: float, color):
@@ -90,7 +102,7 @@ def main(out_dir: str) -> None:
     gradient(1024).save(out / "android-icon-background.png")
     trail(1024, 0.56).save(out / "android-icon-foreground.png")
     trail(1024, 0.56, mono=True, shadow=False).save(out / "android-icon-monochrome.png")
-    trail(512, 0.9).save(out / "splash-icon.png")
+    rounded_icon(512).save(out / "splash-icon.png")
     trail(96, 0.95, mono=True, shadow=False).save(out / "notification-icon.png")
     fav = gradient(64).convert("RGBA")
     fav.alpha_composite(trail(64, 0.85, shadow=False))

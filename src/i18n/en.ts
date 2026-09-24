@@ -200,6 +200,7 @@ export const en: Record<keyof typeof fr, string> = {
   'deck.review.new': 'new',
   'deck.review.tap': 'Tap to see the answer',
   'deck.review.show': 'Show the answer',
+  'deck.review.example': 'Example',
   'deck.grade.again': 'Again',
   'deck.grade.hard': 'Hard',
   'deck.grade.good': 'Good',

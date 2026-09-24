@@ -9,6 +9,7 @@ import { space, useColors } from './tokens';
  * `overlay` est rendu PAR-DESSUS le contenu, hors du défilement : c'est là
  * que vont les feuilles ancrées en bas de l'écran. `footer` est une barre
  * fixe en bas (bouton « Continuer »), au-dessus de la barre Android.
+ * `footerBackground` / `footerBorder` la colorent (panneau juste / faux).
  */
 export function Screen({
   children,
@@ -17,7 +18,17 @@ export function Screen({
   overlay,
   footer,
   background,
-}: PropsWithChildren<{ scroll?: boolean; style?: ViewStyle; overlay?: ReactNode; footer?: ReactNode; background?: string }>) {
+  footerBackground,
+  footerBorder,
+}: PropsWithChildren<{
+  scroll?: boolean;
+  style?: ViewStyle;
+  overlay?: ReactNode;
+  footer?: ReactNode;
+  background?: string;
+  footerBackground?: string;
+  footerBorder?: string;
+}>) {
   const colors = useColors();
   const insets = useSafeAreaInsets();
   const inner = <View style={[styles.inner, style]}>{children}</View>;
@@ -31,7 +42,16 @@ export function Screen({
         <View style={[styles.scroll, footer ? null : { paddingBottom: insets.bottom }]}>{inner}</View>
       )}
       {footer ? (
-        <View style={[styles.footer, { paddingBottom: Math.max(insets.bottom, space.md), backgroundColor: background ?? colors.background, borderTopColor: colors.border }]}>
+        <View
+          style={[
+            styles.footer,
+            {
+              paddingBottom: Math.max(insets.bottom, space.md),
+              backgroundColor: footerBackground ?? background ?? colors.background,
+              borderTopColor: footerBorder ?? colors.border,
+              borderTopWidth: footerBorder ? 2 : 1,
+            },
+          ]}>
           <View style={styles.footerInner}>{footer}</View>
         </View>
       ) : null}

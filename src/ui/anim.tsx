@@ -92,7 +92,7 @@ export function useCountUp(value: number, duration = 800, delay = 0): number {
   return shown;
 }
 
-const CONFETTI_COLORS = ['#FF6B35', '#5B4BFF', '#F5B301', '#1FA463', '#E2445C', '#7C3AED'];
+const CONFETTI_COLORS = ['#FF6B35', '#F97316', '#F5B301', '#1FA463', '#E2445C', '#7C3AED'];
 
 /** Pluie de confettis, une fois, sur toute la largeur du parent (absolu). */
 export function Confetti({ count = 28, duration = 1800 }: { count?: number; duration?: number }) {

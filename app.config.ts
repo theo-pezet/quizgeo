@@ -12,7 +12,7 @@ const basePath = process.env.EXPO_PUBLIC_BASE_PATH ?? '';
 const config: ExpoConfig = {
   name: 'Skilltrail',
   slug: 'quizgeo',
-  version: '1.1.0',
+  version: '1.1.1',
   orientation: 'portrait',
   icon: './assets/images/icon.png',
   scheme: 'quizgeo',
@@ -21,9 +21,9 @@ const config: ExpoConfig = {
     // Ne jamais changer : la fiche Play Store et l'app AdMob y seront liées.
     package: 'fr.citeparlia.quizgeo',
     // Incrémenté automatiquement par EAS en production (eas.json).
-    versionCode: 15,
+    versionCode: 16,
     adaptiveIcon: {
-      backgroundColor: '#5B4BFF',
+      backgroundColor: '#E8562B',
       foregroundImage: './assets/images/android-icon-foreground.png',
       backgroundImage: './assets/images/android-icon-background.png',
       monochromeImage: './assets/images/android-icon-monochrome.png',
@@ -63,7 +63,13 @@ const config: ExpoConfig = {
     ],
     [
       'expo-splash-screen',
-      { backgroundColor: '#5B4BFF', image: './assets/images/splash-icon.png', imageWidth: 96 },
+      {
+        // Même fond que l'app (crème, ou nuit en mode sombre) : le passage splash → app est invisible.
+        backgroundColor: '#FBF8F2',
+        image: './assets/images/splash-icon.png',
+        imageWidth: 112,
+        dark: { backgroundColor: '#14131C', image: './assets/images/splash-icon.png' },
+      },
     ],
   ],
   experiments: {

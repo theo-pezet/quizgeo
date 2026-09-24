@@ -12,7 +12,7 @@ import { useProgress } from '@/store/progress';
 import { Button, Icon, NoEnergySheet, ProgressBar, Screen, Text, space, useColors } from '@/ui';
 
 import { ExerciseView } from './ExerciseView';
-import { FeedbackPanel } from './FeedbackPanel';
+import { FeedbackPanel, feedbackTone } from './FeedbackPanel';
 import { SessionEnd } from './SessionEnd';
 import { useSession, type SessionSpec } from './useSession';
 
@@ -55,8 +55,13 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
     state.combo >= 3 ? t('session.combo', { combo: state.combo }) : null,
   ].filter((x): x is string => x !== null);
 
+  const verdict = state.phase === 'feedback' ? state.feedback : null;
+  const verdictTone = verdict ? feedbackTone(colors, verdict.correct) : null;
   return (
-    <Screen>
+    <Screen
+      footer={verdict ? <FeedbackPanel feedback={verdict} combo={state.combo} onNext={next} /> : undefined}
+      footerBackground={verdictTone?.background}
+      footerBorder={verdictTone?.border}>
       <View style={styles.top}>
         <Pressable onPress={quit} hitSlop={12} accessibilityRole="button">
           <Icon name="close" size={26} color={colors.textSecondary} />
@@ -89,9 +94,6 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
           answer(correct, whyWrong);
         }}
       />
-      {state.phase === 'feedback' && state.feedback && (
-        <FeedbackPanel feedback={state.feedback} combo={state.combo} onNext={next} />
-      )}
     </Screen>
   );
 }

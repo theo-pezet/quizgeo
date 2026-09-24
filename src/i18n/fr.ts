@@ -209,6 +209,7 @@ export const fr = {
   'deck.review.new': 'nouvelle',
   'deck.review.tap': 'Touche pour voir la réponse',
   'deck.review.show': 'Voir la réponse',
+  'deck.review.example': 'Exemple',
   'deck.grade.again': 'Encore',
   'deck.grade.hard': 'Difficile',
   'deck.grade.good': 'Bien',
