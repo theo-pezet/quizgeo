@@ -1,0 +1,1317 @@
+--------- beginning of kernel
+09-25 07:43:41.703 I/logd    (    0): start watching /data/system/packages.list ...
+09-25 07:43:41.705 I/logd    (    0): ReadPackageList, total packages: 202
+--------- beginning of system
+09-25 07:43:41.748 W/FileUtils(  520): Failed to chmod(AtomicFile[/data/system_de/0/system/game-manager-service.xml]): android.system.ErrnoException: chmod failed: ENOENT (No such file or directory)
+09-25 07:43:42.048 D/ActivityManager(  520): freezing 2669 com.android.chrome
+09-25 07:43:42.048 D/ActivityManager(  520): freezing 3127 com.google.android.documentsui
+--------- beginning of main
+09-25 07:43:42.100 I/wpa_supplicant(  824): wlan0: CTRL-EVENT-BEACON-LOSS 
+09-25 07:43:42.271 D/StatusBarIconController(  837): ignoring old pipeline callback because the new wifi icon is enabled
+09-25 07:43:42.276 D/ActivityManager(  520): freezing 2112 android.process.media
+09-25 07:43:42.414 D/OomAdjuster(  520): Not killing cached processes
+09-25 07:43:42.431 I/ChimeraConfigurator( 5969): Starting update, reason: 4 urgentFeatures: vision.ocr:-1
+09-25 07:43:42.448 I/ChimeraConfigurator( 5969): Detected pending changes for urgent request: [vision.ocr]. Pending module sets: container:2318189190800+mlkit.ocr.common,tflite_dynamite:2627305025100800+tflite_dynamite,vision_ocr:2316024025100000+vision.ocr
+09-25 07:43:42.455 I/GmsDebugLogger( 5969): [73] 1801
+09-25 07:43:42.457 W/ZappDownloader( 5969): No successful module downloads for requested features [vision.ocr].
+09-25 07:43:42.457 I/GmsDebugLogger( 5969): [30] [VisionOcrDynamite.integ:231602402100000],[TfliteDynamiteDynamite.integ:262730502100800],[MlkitOcrCommon.optional:231818100800]
+09-25 07:43:42.462 W/ChimeraConfigService( 5969): Retry attempt was throttled. [CONTEXT service_id=264 ]
+09-25 07:43:42.462 I/GmsDebugLogger( 5969): [83] 1 [vision.ocr]
+09-25 07:43:42.464 W/Vision  ( 5969): Request for optional module download of ocr failed. Request again.
+09-25 07:43:42.464 W/Vision  ( 5969): Would have logged:
+09-25 07:43:42.464 W/Vision  ( 5969): # dsae@37884fe7
+09-25 07:43:42.464 I/Vision  ( 5969): Schedule retrying download ocr at 214361 with backoff 40 seconds
+09-25 07:43:42.614 I/ActivityManager(  520): Force stopping fr.citeparlia.quizgeo appid=10195 user=0: from pid 7378
+09-25 07:43:42.615 D/DisplayManagerService(  520): Drop pending events for gone uid 10195
+09-25 07:43:42.616 I/ActivityManager(  520): Killing 6724:fr.citeparlia.quizgeo/u0a195 (adj 0): stop fr.citeparlia.quizgeo due to from pid 7378
+09-25 07:43:42.617 W/ActivityTaskManager(  520): Force removing ActivityRecord{d11c62 u0 fr.citeparlia.quizgeo/.MainActivity t11 f}}: app died, no saved state
+09-25 07:43:42.622 V/WindowManagerShell(  837): Transition requested: android.os.BinderProxy@ff5ec92 TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=11 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 pkg=fr.citeparlia.quizgeo cmp=fr.citeparlia.quizgeo/.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{fr.citeparlia.quizgeo/fr.citeparlia.quizgeo.MainActivity} numActivities=0 lastActiveTime=171075 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{android.window.IWindowContainerToken$Stub$Proxy@4b66663} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+09-25 07:43:42.635 D/CarrierSvcBindHelper( 1051): onHandleForceStop: [fr.citeparlia.quizgeo]
+09-25 07:43:42.635 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:42.635 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode 1
+09-25 07:43:42.635 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:42.636 D/CarrierSvcBindHelper( 1051): No carrier app for: 0
+09-25 07:43:42.641 W/AppSearchIcing(  520): icing-search-engine.cc:283: Error: 5, Message: Document (com.google.android.googlequicksearchbox$OneSearchZeroStateGoogleSuggestions/default, zp) not found.
+09-25 07:43:42.643 D/OneSearchSuggestProvider( 1095): Created the binder channel successfully for end point service =com.google.android.apps.search.googleapp.search.suggest.plugins.onesearch.server.OneSearchSuggestService , mChannel=z1{delegate=s1{logId=21, target=directaddress:///AndroidComponentAddress%5BIntent%20%7B%20act=grpc.io.action.BIND%20cmp=com.google.android.googlequicksearchbox/com.google.android.apps.search.googleapp.search.suggest.plugins.onesearch.server.OneSearchSuggestService%20%7D%5D}} , mOneSearchConnection=X1.T@dd53b71
+09-25 07:43:42.644 I/BpBinder(  397): onLastStrongRef automatically unlinking death recipients: 
+09-25 07:43:42.665 I/WindowManager(  520): WIN DEATH: Window{729fd1 u0 fr.citeparlia.quizgeo/fr.citeparlia.quizgeo.MainActivity}
+09-25 07:43:42.666 I/Zygote  (  334): Process 6724 exited due to signal 9 (Killed)
+09-25 07:43:42.666 W/InputManager-JNI(  520): Input channel object '729fd1 fr.citeparlia.quizgeo/fr.citeparlia.quizgeo.MainActivity (client)' was disposed without first being removed with the input manager!
+09-25 07:43:42.685 I/AiAiEcho( 1648): Predicting[0]: 
+09-25 07:43:42.685 I/AiAiEcho( 1648): EchoTargets: 
+09-25 07:43:42.685 I/AiAiEcho( 1648): Filtered by AiAi flag check: 
+09-25 07:43:42.686 I/AiAiEcho( 1648): Ranked targets strategy: SORT, count: 0, ranking metadata: 
+09-25 07:43:42.686 I/AiAiEcho( 1648): #postPredictionTargets: Sending updates to UISurface home with targets# 0 (types=[])
+09-25 07:43:42.728 V/ActivityManager(  520): Got obituary of 6724:fr.citeparlia.quizgeo
+09-25 07:43:42.826 W/BcSmartspaceCard( 1095): No title view to update
+09-25 07:43:42.827 I/BcSmartspaceCard( 1095): setFormattedContentDescription: text=null, iconDescription=null, contentDescription=null
+09-25 07:43:42.877 D/CompatibilityChangeReporter(  520): Compat change id reported: 244637991; UID 10198; state: ENABLED
+09-25 07:43:42.879 D/CompatibilityChangeReporter(  520): Compat change id reported: 265464455; UID 10195; state: DISABLED
+09-25 07:43:42.880 D/CompatibilityChangeReporter(  520): Compat change id reported: 265452344; UID 10195; state: DISABLED
+09-25 07:43:42.880 D/CompatibilityChangeReporter(  520): Compat change id reported: 266124927; UID 10195; state: DISABLED
+09-25 07:43:42.880 D/CompatibilityChangeReporter(  520): Compat change id reported: 265451093; UID 10195; state: DISABLED
+09-25 07:43:42.880 D/CompatibilityChangeReporter(  520): Compat change id reported: 265456536; UID 10195; state: DISABLED
+09-25 07:43:42.880 D/CompatibilityChangeReporter(  520): Compat change id reported: 255940284; UID 10195; state: DISABLED
+09-25 07:43:42.881 D/CompatibilityChangeReporter(  520): Compat change id reported: 236283604; UID 10195; state: DISABLED
+09-25 07:43:42.883 D/CompatibilityChangeReporter(  520): Compat change id reported: 263959004; UID 10195; state: DISABLED
+09-25 07:43:42.883 D/CompatibilityChangeReporter(  520): Compat change id reported: 264304459; UID 10195; state: DISABLED
+09-25 07:43:42.884 D/CompatibilityChangeReporter(  520): Compat change id reported: 264301586; UID 10195; state: DISABLED
+09-25 07:43:42.884 D/CompatibilityChangeReporter(  520): Compat change id reported: 254631730; UID 10195; state: DISABLED
+09-25 07:43:42.884 D/CompatibilityChangeReporter(  520): Compat change id reported: 273509367; UID 10195; state: DISABLED
+09-25 07:43:42.884 D/CompatibilityChangeReporter(  520): Compat change id reported: 263259275; UID 10195; state: DISABLED
+09-25 07:43:42.884 D/CompatibilityChangeReporter(  520): Compat change id reported: 174042980; UID 10195; state: DISABLED
+09-25 07:43:42.885 D/CompatibilityChangeReporter(  520): Compat change id reported: 174042936; UID 10195; state: DISABLED
+09-25 07:43:42.885 D/CompatibilityChangeReporter(  520): Compat change id reported: 181136395; UID 10195; state: DISABLED
+09-25 07:43:42.885 D/CompatibilityChangeReporter(  520): Compat change id reported: 194480991; UID 10195; state: ENABLED
+09-25 07:43:42.938 D/CompatibilityChangeReporter(  520): Compat change id reported: 184838306; UID 10195; state: DISABLED
+09-25 07:43:42.939 D/CompatibilityChangeReporter(  520): Compat change id reported: 185004937; UID 10195; state: DISABLED
+09-25 07:43:42.940 D/CompatibilityChangeReporter( 1095): Compat change id reported: 163400105; UID 10169; state: ENABLED
+09-25 07:43:42.940 W/TextView( 1095): onProvideContentCaptureStructure(): calling assumeLayout()
+09-25 07:43:42.944 D/CompatibilityChangeReporter(  520): Compat change id reported: 205907456; UID 10195; state: ENABLED
+09-25 07:43:42.945 I/ActivityTaskManager(  520): Add Task{57b21f3 #11 type=standard A=10195:fr.citeparlia.quizgeo} to hidden list because adding Task{7f55f3b #12 type=standard A=10195:fr.citeparlia.quizgeo}
+09-25 07:43:42.946 D/CompatibilityChangeReporter(  520): Compat change id reported: 194833441; UID 10195; state: ENABLED
+09-25 07:43:42.946 I/ActivityTaskManager(  520): START u0 {act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 pkg=fr.citeparlia.quizgeo cmp=fr.citeparlia.quizgeo/.MainActivity} with LAUNCH_SINGLE_TASK from uid 10198 (BAL_ALLOW_PERMISSION) result code=0
+09-25 07:43:42.947 D/CompatibilityChangeReporter(  520): Compat change id reported: 135634846; UID 10195; state: DISABLED
+09-25 07:43:42.948 D/CompatibilityChangeReporter(  520): Compat change id reported: 143937733; UID 10195; state: ENABLED
+09-25 07:43:42.954 D/Zygote  (  334): Forked child process 7389
+09-25 07:43:42.958 I/ActivityManager(  520): Start proc 7389:fr.citeparlia.quizgeo/u0a195 for next-top-activity {fr.citeparlia.quizgeo/fr.citeparlia.quizgeo.MainActivity}
+09-25 07:43:42.996 D/CompatibilityChangeReporter(  520): Compat change id reported: 168419799; UID 10195; state: DISABLED
+09-25 07:43:42.996 D/CompatibilityChangeReporter(  520): Compat change id reported: 273564678; UID 10195; state: DISABLED
+09-25 07:43:43.003 D/SplashScreenView(  837): Build android.window.SplashScreenView{64bad78 V.E...... ......ID 0,0-0,0}
+09-25 07:43:43.003 D/SplashScreenView(  837): Icon: view: android.widget.ImageView{fe39c51 V.ED..... ......I. 0,0-0,0 #10204f0 android:id/splashscreen_icon_view} drawable: com.android.wm.shell.startingsurface.SplashscreenIconDrawableFactory$ImmobileIconDrawable@5306cb6 size: 504
+09-25 07:43:43.003 D/SplashScreenView(  837): Branding: view: android.view.View{181edb7 G.ED..... ......I. 0,0-0,0 #10204ef android:id/splashscreen_branding_view} drawable: null size w: 0 h: 0
+09-25 07:43:43.020 I/eparlia.quizgeo( 7389): Using CollectorTypeCC GC.
+09-25 07:43:43.024 W/eparlia.quizgeo( 7389): Unexpected CPU variant for x86: x86_64.
+09-25 07:43:43.024 W/eparlia.quizgeo( 7389): Known variants: atom, sandybridge, silvermont, goldmont, goldmont-plus, tremont, kabylake, default
+09-25 07:43:43.037 E/eparlia.quizgeo( 7389): Not starting debugger since process cannot load the jdwp agent.
+09-25 07:43:43.176 W/AccessibilityManagerService(  520):  wait for adding window timeout: 37
+09-25 07:43:43.193 D/CoreBackPreview(  520): Window{ad9c9ed u0 Splash Screen fr.citeparlia.quizgeo}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@1675c6e, mPriority=0, mIsAnimationCallback=false}
+09-25 07:43:43.238 D/CompatibilityChangeReporter(  520): Compat change id reported: 265195908; UID 10195; state: ENABLED
+09-25 07:43:43.280 D/CompatibilityChangeReporter( 7389): Compat change id reported: 171979766; UID 10195; state: ENABLED
+09-25 07:43:43.280 D/CompatibilityChangeReporter( 7389): Compat change id reported: 242716250; UID 10195; state: ENABLED
+09-25 07:43:43.292 D/CompatibilityChangeReporter(  520): Compat change id reported: 170503758; UID 10195; state: ENABLED
+09-25 07:43:43.293 D/ApplicationLoaders( 7389): Returning zygote-cached class loader: /system_ext/framework/androidx.window.extensions.jar
+09-25 07:43:43.293 D/ApplicationLoaders( 7389): Returning zygote-cached class loader: /system_ext/framework/androidx.window.sidecar.jar
+09-25 07:43:43.320 D/nativeloader( 7389): Configuring clns-6 for other apk /data/app/~~IPKt9FncHxGpBwhtOvtmZg==/fr.citeparlia.quizgeo-6WnhJ67t4AfKHR02ydY5Jw==/base.apk. target_sdk_version=36, uses_libraries=, library_path=/data/app/~~IPKt9FncHxGpBwhtOvtmZg==/fr.citeparlia.quizgeo-6WnhJ67t4AfKHR02ydY5Jw==/lib/x86_64:/data/app/~~IPKt9FncHxGpBwhtOvtmZg==/fr.citeparlia.quizgeo-6WnhJ67t4AfKHR02ydY5Jw==/base.apk!/lib/x86_64, permitted_path=/data:/mnt/expand:/data/user/0/fr.citeparlia.quizgeo
+09-25 07:43:43.357 D/WindowManager(  520): captureDisplay
+09-25 07:43:43.393 D/BufferPoolAccessor2.0(  467): bufferpool2 0x708cecdd5348 : 1(3888000 size) total buffers - 1(3888000 size) used buffers - 60/66 (recycle/alloc) - 6/66 (fetch/transfer)
+09-25 07:43:43.417 W/AccessibilityManagerService(  520):  wait for adding window timeout: 33
+09-25 07:43:43.528 W/Looper  (  837): Slow delivery took 48ms wmshell.main h=android.os.Handler c=com.android.wm.shell.pip.phone.PipController$$ExternalSyntheticLambda1@4fadd55 m=0
+09-25 07:43:43.532 V/GraphicsEnvironment( 7389): Currently set values for:
+09-25 07:43:43.532 V/GraphicsEnvironment( 7389):   angle_gl_driver_selection_pkgs=[]
+09-25 07:43:43.532 V/GraphicsEnvironment( 7389):   angle_gl_driver_selection_values=[]
+09-25 07:43:43.532 V/GraphicsEnvironment( 7389): ANGLE GameManagerService for fr.citeparlia.quizgeo: false
+09-25 07:43:43.532 V/GraphicsEnvironment( 7389): fr.citeparlia.quizgeo is not listed in per-application setting
+09-25 07:43:43.532 V/GraphicsEnvironment( 7389): Neither updatable production driver nor prerelease driver is supported.
+09-25 07:43:43.534 W/Looper  (  837): Drained
+09-25 07:43:43.661 W/FirebaseApp( 7389): Default FirebaseApp failed to initialize because no default options were found. This usually means that com.google.gms:google-services was not applied to your gradle project.
+09-25 07:43:43.662 I/FirebaseInitProvider( 7389): FirebaseApp initialization unsuccessful
+09-25 07:43:43.856 I/servicemanager(    0): Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest.
+09-25 07:43:43.673 W/SoLoader( 7389): Initializing SoLoader: 0
+09-25 07:43:43.673 W/SoLoader( 7389): Recording new base apk path: /data/app/~~IPKt9FncHxGpBwhtOvtmZg==/fr.citeparlia.quizgeo-6WnhJ67t4AfKHR02ydY5Jw==/base.apk
+09-25 07:43:43.673 W/SoLoader( 7389): Previously recorded 0 base apk paths.
+09-25 07:43:43.673 I/SoLoader( 7389): Preparing SO source: DirectorySoSource[root = /vendor/lib64 flags = 2]
+09-25 07:43:43.673 I/SoLoader( 7389): Preparing SO source: DirectorySoSource[root = /system/lib64 flags = 2]
+09-25 07:43:43.673 I/SoLoader( 7389): Preparing SO source: DirectApkSoSource[root = [/data/app/~~IPKt9FncHxGpBwhtOvtmZg==/fr.citeparlia.quizgeo-6WnhJ67t4AfKHR02ydY5Jw==/base.apk!/lib/x86_64]]
+09-25 07:43:43.689 I/hwservicemanager(  138): getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+09-25 07:43:43.689 I/Gralloc4( 7166): mapper 4.x is not supported
+09-25 07:43:43.719 V/WindowManager(  520): Sent Transition #14 createdAt=09-25 07:43:42.621 via request=TransitionRequestInfo { type = CLOSE, triggerTask = TaskInfo{userId=0 taskId=11 displayId=0 isRunning=false baseIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] flg=0x10000000 pkg=fr.citeparlia.quizgeo cmp=fr.citeparlia.quizgeo/.MainActivity } baseActivity=null topActivity=null origActivity=null realActivity=ComponentInfo{fr.citeparlia.quizgeo/fr.citeparlia.quizgeo.MainActivity} numActivities=0 lastActiveTime=171075 supportsMultiWindow=true resizeMode=1 isResizeable=true minWidth=-1 minHeight=-1 defaultMinSize=220 token=WCT{RemoteToken{804d447 Task{57b21f3 #11 type=standard A=10195:fr.citeparlia.quizgeo}}} topActivityType=1 pictureInPictureParams=null shouldDockBigOverlays=false launchIntoPipHostTaskId=-1 lastParentTaskIdBeforePip=-1 displayCutoutSafeInsets=null topActivityInfo=null launchCookies=[] positionInParent=Point(0, 0) parentTaskId=-1 isFocused=true isVisible=true isVisibleRequested=true isSleeping=false topActivityInSizeCompat=false topActivityEligibleForLetterboxEducation= false topActivityLetterboxed= false isFromDoubleTap= false topActivityLetterboxVerticalPosition= -1 topActivityLetterboxHorizontalPosition= -1 topActivityLetterboxWidth=-1 topActivityLetterboxHeight=-1 locusId=null displayAreaFeatureId=1 cameraCompatControlState=hidden}, remoteTransition = null, displayChange = null }
+09-25 07:43:43.719 V/WindowManager(  520):     startWCT=WindowContainerTransaction { changes = {} hops = [] errorCallbackToken=null taskFragmentOrganizer=null }
+09-25 07:43:43.719 V/WindowManager(  520):     info={id=14 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{RemoteToken{570d107 Task{7f55f3b #12 type=standard A=10195:fr.citeparlia.quizgeo}}} m=OPEN f=MOVE_TO_TOP leash=Surface(name=Task=12)/@0x56fdb21 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{WCT{RemoteToken{804d447 Task{57b21f3 #11 type=standard A=10195:fr.citeparlia.quizgeo}}} m=CLOSE f=NONE leash=Surface(name=Task=11)/@0x9cadc61 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{57bcf88 token=android.os.Binder@71a5f2b})/@0xc795f53 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0}]}
+09-25 07:43:43.741 V/WindowManagerShell(  837): onTransitionReady android.os.BinderProxy@ff5ec92: {id=14 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ec164a8} m=OPEN f=MOVE_TO_TOP leash=Surface(name=Task=12)/@0xd9778bc sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@6f33bc1} m=CLOSE f=NONE leash=Surface(name=Task=11)/@0xdafe045 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{57bcf88 token=android.os.Binder@71a5f2b})/@0x495b39a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0}]}
+09-25 07:43:43.749 D/SearchTargetUtil( 1095):  query= size=15
+09-25 07:43:43.749 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=teacher student,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=teacher student searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 22c800ac-2d06-45c4-96ab-d3924ae68a36
+09-25 07:43:43.750 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=pokemon cards 30th anniversary,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=pokemon cards 30th anniversary searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 7d18909e-77ae-4bbb-a460-7f00daf8f92b
+09-25 07:43:43.754 V/WindowManagerShell(  837): Playing animation for (#14)android.os.BinderProxy@ff5ec92@0
+09-25 07:43:43.755 V/WindowManagerShell(  837):  try handler com.android.wm.shell.transition.DefaultMixedHandler@f54e3d2
+09-25 07:43:43.755 V/WindowManagerShell(  837):  try handler com.android.wm.shell.keyguard.KeyguardTransitionHandler@afb2ca3
+09-25 07:43:43.755 V/WindowManagerShell(  837):  try handler com.android.wm.shell.activityembedding.ActivityEmbeddingController@d9ddba0
+09-25 07:43:43.755 V/WindowManagerShell(  837):  try handler com.android.wm.shell.recents.RecentsTransitionHandler@2e17359
+09-25 07:43:43.755 V/ShellRecents(  837): RecentsTransitionHandler.startAnimation: no controller found
+09-25 07:43:43.755 V/WindowManagerShell(  837):  try handler com.android.wm.shell.pip.PipTransition@af96b1e
+09-25 07:43:43.774 W/AccessibilityManagerService(  520):  wait for adding window timeout: 43
+09-25 07:43:43.791 V/WindowManagerShell(  837):  try handler com.android.wm.shell.splitscreen.StageCoordinator@209efff
+09-25 07:43:43.791 V/WindowManagerShell(  837):  try handler com.android.wm.shell.transition.RemoteTransitionHandler@39511cc
+09-25 07:43:43.796 V/WindowManagerShell(  837): Transition doesn't have explicit remote, search filters for match for {id=14 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ec164a8} m=OPEN f=MOVE_TO_TOP leash=Surface(name=Task=12)/@0xd9778bc sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@6f33bc1} m=CLOSE f=NONE leash=Surface(name=Task=11)/@0xdafe045 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{57bcf88 token=android.os.Binder@71a5f2b})/@0x495b39a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0}]}
+09-25 07:43:43.808 V/WindowManagerShell(  837):  Checking filter Pair{{types=[] flags=0x0] notFlags=0x0 checks=[{atype=dream independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=ANY topActivity=null},{atype=home independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@a0b6f66, appThread = android.app.IApplicationThread$Stub$Proxy@1b3b2a7, debugName = LauncherToDream }}
+09-25 07:43:43.808 V/WindowManagerShell(  837):  Checking filter Pair{{types=[] flags=0x0] notFlags=0x100 checks=[{atype=home independent=true modes=[OPEN,TO_FRONT] flags=NONE mustBeTask=false order=TOP topActivity=ComponentInfo{com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity}},{atype=standard independent=true modes=[CLOSE,TO_BACK] flags=NONE mustBeTask=false order=ANY topActivity=null}]} RemoteTransition { remoteTransition = android.window.IRemoteTransition$Stub$Proxy@e1c2354, appThread = android.app.IApplicationThread$Stub$Proxy@bb6d2fd, debugName = QuickstepLaunchHome }}
+09-25 07:43:43.808 V/WindowManagerShell(  837):  Delegate animation for #14 to null
+09-25 07:43:43.808 V/WindowManagerShell(  837):  try handler com.android.wm.shell.transition.DefaultTransitionHandler@a7d3491
+09-25 07:43:43.808 V/WindowManagerShell(  837): start default transition animation, info = {id=14 t=CLOSE f=0x0 trk=0 r=[0@Point(0, 0)] c=[{WCT{android.window.IWindowContainerToken$Stub$Proxy@ec164a8} m=OPEN f=MOVE_TO_TOP leash=Surface(name=Task=12)/@0xd9778bc sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{WCT{android.window.IWindowContainerToken$Stub$Proxy@6f33bc1} m=CLOSE f=NONE leash=Surface(name=Task=11)/@0xdafe045 sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0},{null m=TO_FRONT f=IS_WALLPAPER leash=Surface(name=WallpaperWindowToken{57bcf88 token=android.os.Binder@71a5f2b})/@0x495b39a sb=Rect(0, 0 - 1080, 2400) eb=Rect(0, 0 - 1080, 2400) d=0}]}
+09-25 07:43:43.810 V/WindowManagerShell(  837): loadAnimation: anim=android.view.animation.AnimationSet@7c220c0 animAttr=0xb type=CLOSE isEntrance=false
+09-25 07:43:43.810 I/SoLoader( 7389): Preparing SO source: ApplicationSoSource[DirectorySoSource[root = /data/app/~~IPKt9FncHxGpBwhtOvtmZg==/fr.citeparlia.quizgeo-6WnhJ67t4AfKHR02ydY5Jw==/lib/x86_64 flags = 0]]
+09-25 07:43:43.811 I/SoLoader( 7389): init finish: 4 SO sources prepared
+09-25 07:43:43.811 W/SoLoader( 7389): SoLoader initialized: 8
+09-25 07:43:43.821 V/WindowManagerShell(  837): loadAnimation: anim=android.view.animation.AnimationSet@c12374a animAttr=0xa type=CLOSE isEntrance=true
+09-25 07:43:43.823 V/WindowManagerShell(  837):  animated by com.android.wm.shell.transition.DefaultTransitionHandler@a7d3491
+09-25 07:43:43.826 W/Looper  (  837): Slow dispatch took 86ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.Transitions$TransitionPlayerImpl$$ExternalSyntheticLambda0@fa19731 m=0
+09-25 07:43:43.827 W/Looper  (  837): Slow delivery took 31ms wmshell.main h=android.os.Handler c=null m=2
+09-25 07:43:43.827 W/Looper  (  837): Drained
+09-25 07:43:43.829 V/WindowManagerShell(  837): Transition animation finished (aborted=false), notifying core (#14)android.os.BinderProxy@ff5ec92@0
+09-25 07:43:43.830 W/WindowManager(  520): Exception thrown during dispatchAppVisibility Window{729fd1 u0 fr.citeparlia.quizgeo/fr.citeparlia.quizgeo.MainActivity EXITING}
+09-25 07:43:43.830 W/WindowManager(  520): android.os.DeadObjectException
+09-25 07:43:43.830 W/WindowManager(  520): 	at android.os.BinderProxy.transactNative(Native Method)
+09-25 07:43:43.830 W/WindowManager(  520): 	at android.os.BinderProxy.transact(BinderProxy.java:584)
+09-25 07:43:43.830 W/WindowManager(  520): 	at android.view.IWindow$Stub$Proxy.dispatchAppVisibility(IWindow.java:546)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.WindowState.sendAppVisibilityToClients(WindowState.java:3271)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.WindowContainer.sendAppVisibilityToClients(WindowContainer.java:1221)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.WindowToken.setClientVisible(WindowToken.java:409)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.ActivityRecord.setClientVisible(ActivityRecord.java:6946)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.ActivityRecord.postApplyAnimation(ActivityRecord.java:5637)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.ActivityRecord.commitVisibility(ActivityRecord.java:5580)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.Transition.finishTransition(Transition.java:1151)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.TransitionController.finishTransition(TransitionController.java:868)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.WindowOrganizerController.finishTransition(WindowOrganizerController.java:396)
+09-25 07:43:43.830 W/WindowManager(  520): 	at android.window.IWindowOrganizerController$Stub.onTransact(IWindowOrganizerController.java:286)
+09-25 07:43:43.830 W/WindowManager(  520): 	at com.android.server.wm.WindowOrganizerController.onTransact(WindowOrganizerController.java:181)
+09-25 07:43:43.830 W/WindowManager(  520): 	at android.os.Binder.execTransactInternal(Binder.java:1344)
+09-25 07:43:43.830 W/WindowManager(  520): 	at android.os.Binder.execTransact(Binder.java:1275)
+09-25 07:43:43.830 I/Process (  520): Sending signal. PID: 6724 SIG: 9
+09-25 07:43:43.837 V/WindowManager(  520): Finish Transition #14: created at 09-25 07:43:42.621 collect-started=0.04ms request-sent=0.125ms started=9.237ms ready=802.919ms sent=1087.794ms finished=1208.015ms
+09-25 07:43:43.837 D/SearchTargetUtil( 1095): layoutType=extra_tall_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{bitmap_url=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAGUAAAB8CAMAAABHe46uAAABF1BMVEX/////xi8AAADpv5tPJoP/yTD/yzD/zTH4+Pj09PRRJ4bswp3/zzHw8PD2vy36wi7ksSrp6enX19fQ0NCsrKzAwMDtuCw5G2KziyFSQA+RkZGGhoa4uLilpaVTU1Pi4uLWpifbtJJGRkZzc3NhYWEJBwFDIG+aeBy/nX/NqIiIahnImyUnHgdoURO9kyMAAAt8YBc4ODgZGRksLCwjIyM9LwseFwCpgx8PAAAAABUgEgBPOwAwFlRIIni0k3hVRjmlh26AaVVDNyxEMQAyJglwXEppUAA+RE6MawAWHytNUloABR5cRQAjKTQGFCQcCDwXCSocCTIxEGQTCCIjHRY4KhknGiJvYEAAACgrFUgzKiKTeGNhSzc6UPDjAAAM2ElEQVRogc1aCXuaXBYOxwJaEXAj4IoiQUEQd5vNNekktV/SaTrzxfT//445F9xqkiakZmZOn6cP1ygvZ3vPOZd7cPC/lMh/AySeSf4XUMKZZny9iOXeCyYHlc2inH0nlLQOGw1y8E4w6RaUN6sW5N8LBWLrVRaa7xINaQBIr1cJgErsN99+q+QQJbNehVGz9wi0FKJsoixcAWiF9w4SySJKYbPO4zK1d5R4BTDINomZBH0bdE9SbAL+K67XCWi39L2bjAQVtJNb60phK+b2htJGlO1Qzmaamd/84E2Sg0K20NmgFPVMIlv5zQ/eJJm2ls+0tlBa+YP0Fk3vRcKVQiqV3ErEYid/ENl3YoabWjER2aLIYhuvy3t2TFgnN9yimGIzEz5ItxP7RfHUaG+qSrysRQ5i5ayfMrFiPLaH5PGNpVXW7o5VCnid7vgso0Gzkkkni3+IFPFIK62vgyycbcdJN+DDFOrm5clx43M2n/6TeuCjFLfcnwdCNxGN+Cr8+ZKSRFG1/jG9us6m36yRjxLJltdMllvySxYKxfQXh6FoFIqX5Omnr9k3Nm/LIN7KmGR7mfmpDhYBlloJw0rGFAqJtwD5MYYGaq38j7ZaXiYK0KepjdAs35/DdS44MYSbfhAnO+tgTq26peL1CU/9Kqwkz6ESmLLDqyDOrG0WWTJ/WBtY1K7QtCQfX2WDqpNapXlhTZlp8GIhBcYjEIJD8TaUA7ZTiXXJauorbTJQThzEwOXpp2DQP04d8oHCuthcpUqkAvmlJTQoJMszlXkShMSbaEM2CMxWzx/LomO9QI1VoAMOxzAMy+J/j1ViJBOyQdggDWsbh9Nl0PLET9g/2arVNwzTNAxHZdhdIFroB4KJV7Yao0iuA51moVJpwvExrOR4eunQ7K4+DmQCGC0PvxSTYl4rlAsVLZNPRlafVNqfwNzNHUoOMh/ECs0XvxNOa1+PLWHHbv0gLVX6Vc+U1MDYUUcwIUBN1TqvSbJYBvo7ISCdXL+ePGOtwmsoA3lUpXdgIEAfUoTKa2AwjXYSlZH/CuKaVqX44pci4fQXeQdGOHnV861g2i8TYCwZKUx3woxWB0GmnWSzlX8pl3OJzLHowdC+4BVvfg7CNHGkyBdsnM6nkd04juJVVbUsVeQpjlOPg83u6eb2iPHkgxShq8x6+kZ6XaXeCoSCJikAZJPF53IgrKXh+83N/enp6aEnp6f3Nze3gXv3cC7bhCstlX6yVcHyDfcfd+Xs+xvm0DwY7kwva/nco9guVlpw+vHDjny8bwXvavIDiZLkE4BOubKzd5ZrwaezXZAPH46C791EsjNzPqvrje/fbhrQauY3pkOGgdtHqqAyoAVFwfn/y83p4Zln8VscmCsrfcIZLGiHBGXXMzeFGMnZACjF8u0R/tB/yEPQIuGEXxGLBAR9f3Z2dHTkh9g/ieDqtJlLpCtBRt5E62bL9PdQ8SpILJ3Xmi24Pftwf//t7++fQL/ToeuapmsrP/512yj82zgOMiUm4HTb5qfQzBJTxHNaR78/+3gEPeUSJtVqbTEVBUpEAhCRCFRJPA4yJG6heDY/+k7ajUKz3WqckqjtyYIAw2g0eueqdreuqDTppVjh8uWy/gsKOhjdcnZ2dvp3A9BHR/ffbm9vbw7RWaiKzTMqjKOh0B00Wnd3DV0xLNUy6p8D5QxBOTs6PP0bunPX7H0/W0cSaoJBJzOMAefRUHQ4HlXPH4aTxaTZaQ+0YANhAu4Pb77A3JBV1en30OHrDPl49g1cgWLsRikUitaitdF4uLiolWrV2jhIa3ZACKYBJ31VolXTrsPUhtvDD54eHz8efgNbommxO0SDhaKhUvW8Or4ooY+i50Eq5kG++UU3RZ4V+kod08OQeAMat6dHSCOntw1wJZpiPYN5grcvDckiWi28XNB9CSeQQeYWxwqqTfpW3ZWwa2VFZdXIKiquaVFpLEEITmlSIyi14eviOIZd3dS0OEZ08LY6QFcmvT5NWUoXk68LYIteZ2HAaAvkYYj/laKln69pzbFDhWlfZTjVII+u9MAlD07RvDFzVY5GZFfyQNTZpLTWpTqEUbR6cV6KVn++HGVJ7WrQF2lONbvdLnT7Xey9aQ/E7jo8J7l6XfYHM0HB+65QRi04D5UmI1QmWvrxQsUMZ6/AFClys67TBcPqYqvqgUiKwtMcfmaLfmPEuQCLi6UyI7ioRaO1BcZyKRSd/Nb/4RSJHZbMpIoq9mxRrfdUf1gRbJejcbibOcspiTZBR5fBA/FJDR5Qq9JDC/ReDz/9rbEqcOLgvYyebVGO0qednuK7maIdgxLkXt3kl2vBgMUIUxH0ESb/BYLUxo2ZbaiiJDqz59+pxPKNmcGzfF+xZZyuDJE26iQpfFVUHsdHV6XpFYjeOic5MoZxKFQaR0ujRc9QKYY0gKz1bMeM0WurFGfZiozPy6uU4HpupgX/vqLdc6R1z2roi3M/64fDUrRWKl008NerPzNz7WmWybUxllh8REPyvogZ6LmZdnh/brCVDQZnwqLquz06GiKThYbQ5zfNOaN+faom4xzcsxhGndbFpU0cxSFXdF/xvC+59npfgaZdGNZWzFIdo9/ves4ag6YE8fKptxDFMsYnK8j11RYF7xgk8ciM7Xoo8kYTmndRk1JtiVJ7QKvVLfIt3hIRQ5K7UHmim082wZRY3tT7q+cVvdCiJbOuG+RKUixmDWJiqC4mesmHKVWjY3AIiGD0BUaSkTCe6pax88bYklyw1u4jFzRj2bo8Iyi0465tjmPq5IEQZmnFLeef+gwl8pxh86xl418n5ccguQ6mN9lN+WVQZDgMqp7M1vsExV3/jTZ6PajVHjYopYu5QFsyLeoq05/BQ6n243G6pAAcBFHq3syzHngcRQcF6awueyir3QpGhr46G0ariLIMsnNQ8ecqq5hMH3TkmdHjmTwFMwwuUVFElhF4SRKx23FMJHeke45huBnRhXd8esQQBYPBOC7VCAMvVUE2tU1OBkoGzJ0Qumln0zm8BnFUyzHc+Qkpi1++ljWtPXcsy3J66Bda5L28FBmxa2OeSr2H6AN4tRhjrGexKliM7Yq9oaffaPyz/cuWWaqlY8XAeqhczgCuPhe0TCqXTicTsVgyf91cNK8bxFj+PoUp8GaP2JU7QZMtwE+Z0YnI2QqtzkRl4X+C+fOw9X7lINkGlerbxD6FTDpRLMYjW88QLxaLscJ86RHWkDkLPNMxRruEdsHSSLLeZKRjg+srRmO0KjZYYbbefHQGsovB384Ww891N7nBMlOkGSMprqcV0+/UsMoD6VlCgAggUqY7m0TXErrQVlNIvI01/etTabotn1yPLhnDZp2ev7FIdCHNBMDk4qLncDZg2HdhMh4/jM5rKKXaz1W7FC4QO704aaQGsqeLbQhd0+dn1p5E/XZicQddkVemnDqDIcpkKYv1NksGKqlXdE4RrYsex/7OQ
+09-25 07:43:43.837 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=ford coyote,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=ford coyote searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: b10aa4ca-6757-4680-a6f1-0475ab35e489
+09-25 07:43:43.844 I/android.hardware.power-service.example(  388): Power isModeSupported: 6
+09-25 07:43:43.864 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=motorola signature 27,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=motorola signature 27 searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 8c6b0473-5a72-43d2-9560-5fe3d4ba807b
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=muscle,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=muscle searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: eebe91e4-586b-4336-abf0-3af523a2b796
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=exoplanet,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=exoplanet searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: e5805ef9-c114-4e04-af1e-121897a3a6f2
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=el niño weather,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=el niño weather searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 4801453a-017a-476c-ae5b-503ea1f9765a
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=album,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=album searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: c0702df7-a930-4c4e-b882-4de7df0231c9
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=pillsbury,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=pillsbury searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 5c1ca13f-b726-4b99-b189-8ac480759451
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=tropical storm weather forecast,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=tropical storm weather forecast searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 62f4104c-4d98-4b7a-a5a6-680eb8f3852d
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=college basketball,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=college basketball searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: bc403fb8-21b2-402f-9fba-4f2033c7413a
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=extra_tall_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{bitmap_url=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHwAAABGCAMAAAA5IQBHAAAAZlBMVEUAAAD////39/d4eHhCQkLg4ODq6urm5uZTU1NfX1+cnJzS0tLOzs6EhIQrKysYGBitra2VlZVqamrGxsbY2NhMTEyKioo7Ozt+fn6kpKQmJibw8PBvb2+8vLxaWlo0NDQNDQ0fHx8Cs7h+AAAExklEQVRoge2Y2ZaqOhCGkxBAmWeQQeH9X3JXqjKgdmvrWufmLP6L1oQkX5HUEJuxQ4cOHTp06ND/TmOVptW278nP0DN+s1brpXP/0Lf+Pnz2Oao5m55rTD3+rFqJEFw9qrhQCj36FHWkv0zJbGwuBE6cItUa1HNcr3s0xyjhVjX1LK4nhqayRCAcFXj6WXJx4xqc6LkOcVJw0KtdWie+k6+6/H3PtCKcJ6/hOLPcT+TVe/gdCRn1fY9PcN6x+QEe7+G8NMZZZe/gHQGGXnYBfp1piaCTciDDOn0uPeuzi4GLrO+3Ar6EWd/iMU2MhhVnWZH9zfwGjv5R7I46RKI+fHy1ScMnvbEEV48Lvd3kNjhY3HDilex4Da/0VpMa5brcrKh0dwTLr/DBjpF6onO93+GX/QRUqnoq05J3hzj/Bo/MiNquE76H12ade3NcU5hVMSjWZ3hzZ2JqJxbv4Yk+S6eHczKBuOApNt0TXCRJQyPUH+/+JV7Dl6fHGKuZbbrzRqumJ7iRv6q/kZ1Yv4djpHWmVZVlh+ZcTE/q4PYUf4THZGfwZPULeIbPdQHZeVdLPSM2QoJnP8J9TA+leVdjNjaC13CKUIHeTfFS0OsMuBPobnVNcBNQDw6HJiu/0bGNRlNq6N7Ab7TglCTar/OVPsGRtLONsYbrc3wMNbS2ZrZCxTV5II8w2Jda6fYj3Z4qqWKPKbpjFk6+/xTnAQ1zoUFq9mvLH+E6u2thqMz37B28/REuzfJjcMf+A5y1Nhk1uuTfbKkLoCqzxsIxlU22WGFh0b2P/h+xP8HBVRZ/mvyi3RlUqJ6FrjZDWZbmqtJBNMoIOlSjisoIcxq0ywgHb1EziSCh6G0jq69uZP+9cqlEaa2X0rbazt29Mq8s9R1vk9Z3N7m2Lh3epL2E3vpRL/T7hpNOdC5CZQjjAAU5mj5sGdtedFFjU8fzhq9mncZluDi0le4t3IMXrhblun6Tob0jsCuV6pVF4GJRv+bXhU+ZIopQz0whO+Ilk4jC3EtYEjLZS17c/vDmV/y8Ask3S90o59dcRX5sRwoFv5o0mkINmm1xiJuInywctCs0L+D6NGvh4DPt7TnZmLvZQEwvAIeC2Vo42KePPfZZIL6Gl9zBT5TfmQrjXXK88DzlOQsmB7fGAbzXTvIFvNjBIVlqetjsxm68GwAuCULwM1Y1hIP95y/hcJf0/dNZqWcZOH6t6p0r72jTouCwHWcLhzuJNHD4IfAV/DrB/prMqoDnRXA/Z/q9tMIa4QRJ9V1gCix8pAr3EbyBkhSC/bDt27aNY06PUkjeNn5QoiB4piAp71WuhfvPxcChb/4U3vIQX8KdOcnj1ybctW98SBEOTj8D6KR/qSr3JzhTaefDbe/o3mvhJjvwcjDBq7RwpuEAsdvOMMY0PIe08OmZ1xjYFh5TxK5w4pO72s+wv52G5zzx7EW3h8PRcNgtr/7U4fCHvG9+PKXUqYJc8qk3nT6zcMi6ibtlR7xNTDKquf8pXCoX8v3ZAw0tlJhhvF3Q26Dy1F576kLMsxauLnWupvlTYzOh4B/HeQlZunGhVpsbCTNXlBDTjoOvYgfPzP8nmKoG/l/hTutda7vuPE2erxk7dOjQoUOHDh0C/QMXczvMTuporAAAAABJRU5ErkJggg==,suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=true,is_personal=false,suggest_raw_text=control resonant,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=Control Resonant searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 03b6c302-1342-482a-a795-b5a8d8e8ba46
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=smithfield foods,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=smithfield foods searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 5ba6ad58-01c9-4984-9de4-3b5bb71840e5
+09-25 07:43:43.867 D/SearchTargetUtil( 1095): layoutType=short_icon_row resultType=131072 packageName=com.google.android.googlequicksearchbox extras=Bundle{suggestion_type=33,suggest_truncate_start=false,is_answer=false,is_entity=false,is_personal=false,suggest_raw_text=vampire movies,group_id=web185426,response_id=918d192f-5853-47d2-90e0-36e3d4940cff,support_query_builder=false,} searchAction=vampire movies searchActionExtras=Bundle{learn_more_url=https://support.google.com/websearch/answer/106230?hl=106230,suggestion_action_text=Report this,should_start_for_result=true,allow_pinning=true,skip_logging_in_target_handler=false,suggestion_action_rpc=2,}ParentID: null targetID: 1e4ead0b-c65b-46f2-b1b5-4acda1b910c2
+09-25 07:43:43.874 W/ProcessStats(  520): Tracking association SourceState{119bd1e com.google.android.apps.nexuslauncher/10169 BTop #13300} whose proc state 2 is better than process ProcessState{34e4377 com.google.android.apps.wellbeing/10120 pkg=com.google.android.apps.wellbeing} proc state 4 (31 skipped)
+09-25 07:43:43.875 I/ImeTracker( 1095): com.google.android.apps.nexuslauncher:7fcd07fc: onRequestHide at ORIGIN_CLIENT_HIDE_SOFT_INPUT reason HIDE_SOFT_INPUT
+09-25 07:43:43.875 I/ImeTracker( 1095): com.google.android.apps.nexuslauncher:7fcd07fc: onFailed at PHASE_CLIENT_VIEW_SERVED
+09-25 07:43:43.879 D/libEGL  ( 7166): loaded /vendor/lib64/egl/libEGL_emulation.so
+09-25 07:43:43.887 D/OneSearchSuggestProvider( 1095): Shut down the binder channel
+09-25 07:43:43.887 V/WindowManagerShell(  837): Track 0 became idle
+09-25 07:43:43.887 V/WindowManagerShell(  837): All active transition animations finished
+09-25 07:43:43.887 W/Looper  (  837): Slow dispatch took 58ms wmshell.main h=android.os.Handler c=com.android.wm.shell.transition.DefaultTransitionHandler$$ExternalSyntheticLambda0@2390984 m=0
+09-25 07:43:43.888 W/Looper  (  837): Slow delivery took 32ms wmshell.main h=android.os.Handler c=android.window.TaskOrganizer$1$$ExternalSyntheticLambda3@347756d m=0
+09-25 07:43:43.888 W/Looper  (  837): Drained
+09-25 07:43:43.897 I/IPCThreadState( 1095): oneway function results for code 2 on binder at 0x72ecf5e4a3c0 will be dropped but finished with status UNKNOWN_TRANSACTION
+09-25 07:43:43.901 W/ActivityManager(  520): setHasOverlayUi called on unknown pid: 6724
+09-25 07:43:43.915 D/libEGL  ( 7166): loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+09-25 07:43:43.936 D/jni_lib_merge( 7389): Entering merged library JNI_OnLoad.
+09-25 07:43:43.936 D/jni_lib_merge( 7389): Preparing 13 pre-merged libs (including stub)
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libfabricjni_so.  onload_func: 0x72ebca3a6010
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libreact_devsupportjni_so.  onload_func: 0x72ebca48bb70
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libreact_featureflagsjni_so.  onload_func: 0x72ebca49e6a0
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libreact_newarchdefaults_so.  onload_func: 0x72ebca4da680
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libreact_tracingjni_so.  onload_func: 0x72ebca5e3170
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libreactnativeblob_so.  onload_func: 0x72ebca5e84d0
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libreactnativejni_so.  onload_func: 0x72ebca5f49d0
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libreactnativejni_common_so.  onload_func: 0x72ebca5f7840
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register librninstance_so.  onload_func: 0x72ebca61f960
+09-25 07:43:43.937 D/jni_lib_merge( 7389): Preparing to register libturbomodulejsijni_so.  onload_func: 0x72ebca6ce4c0
+09-25 07:43:43.937 E/BpTransactionCompletedListener(  397): Failed to transact (-32)
+09-25 07:43:43.951 D/jni_lib_merge( 7389): Preparing to register libuimanagerjni_so.  onload_func: 0x72ebca6d5420
+09-25 07:43:43.952 D/jni_lib_merge( 7389): Preparing to register libyoga_so.  onload_func: 0x72ebca6dcb20
+09-25 07:43:43.952 D/jni_lib_merge( 7389): About to register 12 actual methods.
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Entering merged library JNI_OnLoad.
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing 13 pre-merged libs (including stub)
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libfabricjni_so.  onload_func: 0x72ebca3a6010
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libreact_devsupportjni_so.  onload_func: 0x72ebca48bb70
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libreact_featureflagsjni_so.  onload_func: 0x72ebca49e6a0
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libreact_newarchdefaults_so.  onload_func: 0x72ebca4da680
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libreact_tracingjni_so.  onload_func: 0x72ebca5e3170
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libreactnativeblob_so.  onload_func: 0x72ebca5e84d0
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libreactnativejni_so.  onload_func: 0x72ebca5f49d0
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libreactnativejni_common_so.  onload_func: 0x72ebca5f7840
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register librninstance_so.  onload_func: 0x72ebca61f960
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libturbomodulejsijni_so.  onload_func: 0x72ebca6ce4c0
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libuimanagerjni_so.  onload_func: 0x72ebca6d5420
+09-25 07:43:43.976 D/jni_lib_merge( 7389): Preparing to register libyoga_so.  onload_func: 0x72ebca6dcb20
+09-25 07:43:43.976 D/jni_lib_merge( 7389): About to register 12 actual methods.
+09-25 07:43:43.996 D/libEGL  ( 7166): loaded /vendor/lib64/egl/libGLESv2_emulation.so
+09-25 07:43:44.037 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:44.037 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode 1
+09-25 07:43:44.037 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:44.048 W/system_server(  520): Long monitor contention with owner binder:520_19 (2398) at boolean com.android.server.am.ActivityManagerService.unbindService(android.app.IServiceConnection)(ActivityManagerService.java:13426) waiters=1 in void com.android.server.am.BroadcastQueueModernImpl$1.onUidStateChanged(int, int, long, int) for 102ms
+09-25 07:43:44.053 W/Looper  (  520): Slow dispatch took 107ms android.ui h=com.android.server.am.ActivityManagerService$UiHandler c=com.android.server.am.UidObserverController$$ExternalSyntheticLambda0@68796d4 m=0
+09-25 07:43:44.072 I/ActivityManager(  520): Flag disabled. Ignoring finishAttachApplication from uid: 10195. pid: 7389
+09-25 07:43:44.085 D/libEGL  ( 7389): loaded /vendor/lib64/egl/libEGL_emulation.so
+09-25 07:43:44.092 D/libEGL  ( 7389): loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+09-25 07:43:44.094 D/libEGL  ( 7389): loaded /vendor/lib64/egl/libGLESv2_emulation.so
+09-25 07:43:44.143 W/JobService( 2540): onNetworkChanged() not implemented in com.android.voicemail.impl.scheduling.TaskSchedulerJobService. Must override in a subclass.
+09-25 07:43:44.147 W/OpenGLRenderer( 7166): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+09-25 07:43:44.165 D/AppCompatDelegate( 7389): Checking for metadata for AppLocalesMetadataHolderService : Service not found
+09-25 07:43:44.365 D/EGL_emulation(  837): app_time_stats: avg=44055.38ms min=44055.38ms max=44055.38ms count=1
+09-25 07:43:44.376 D/StatusBarIconController(  837): ignoring old pipeline callbacks, because the new mobile icons are enabled
+09-25 07:43:44.407 W/unknown:BridgelessReact( 7389): ReactHost{0}.startSurface(surfaceId = 0): Schedule
+09-25 07:43:44.407 W/unknown:BridgelessReact( 7389): ReactHost{0}.attachSurface(surfaceId = 0)
+09-25 07:43:44.412 W/unknown:BridgelessReact( 7389): ReactHost{0}.getOrCreateReactInstanceTask()
+09-25 07:43:44.412 W/unknown:BridgelessReact( 7389): ReactHost{0}.getOrCreateReactInstanceTask(): Start
+09-25 07:43:44.413 W/unknown:BridgelessReact( 7389): ReactHost{0}.getJSBundleLoader()
+09-25 07:43:44.413 W/unknown:BridgelessReact( 7389): ReactHost{0}.getOrCreateReactInstanceTask(): Creating BridgelessReactContext
+09-25 07:43:44.413 W/unknown:BridgelessReact( 7389): ReactHost{0}.getOrCreateReactInstanceTask(): Creating ReactInstance
+09-25 07:43:44.426 W/unknown:BridgelessReact( 7389): ReactHost{0}.onHostResume(activity)
+09-25 07:43:44.426 W/unknown:BridgelessReact( 7389): ReactHost{0}.ReactContext.onHostResume()
+09-25 07:43:44.428 D/CompatibilityChangeReporter( 7389): Compat change id reported: 237531167; UID 10195; state: DISABLED
+09-25 07:43:44.429 W/OpenGLRenderer( 7389): Unknown dataspace 0
+09-25 07:43:44.436 I/Choreographer( 7389): Skipped 45 frames!  The application may be doing too much work on its main thread.
+09-25 07:43:44.439 D/CoreBackPreview(  520): Window{cb4e93 u0 fr.citeparlia.quizgeo/fr.citeparlia.quizgeo.MainActivity}: Setting back callback OnBackInvokedCallbackInfo{mCallback=android.window.IOnBackInvokedCallback$Stub$Proxy@15240ef, mPriority=0, mIsAnimationCallback=false}
+09-25 07:43:44.466 W/OpenGLRenderer( 7389): Failed to initialize 101010-2 format, error = EGL_SUCCESS
+09-25 07:43:44.486 D/ConnectivityService(  520): releasing NetworkRequest [ REQUEST id=144, [ Transports: CELLULAR Capabilities: INTERNET&NOT_RESTRICTED&TRUSTED&NOT_VPN&NOT_VCN_MANAGED Uid: 10132 RequestorUid: 10132 RequestorPkg: com.google.android.googlequicksearchbox UnderlyingNetworks: Null] ] (release request)
+09-25 07:43:44.486 I/ConnectivityService(  520): Update capabilities for net 100 : -FOREGROUND
+09-25 07:43:44.489 I/netd    (  333): networkSetPermissionForNetwork(100, 1) <2.77ms>
+09-25 07:43:44.701 I/servicemanager(    0): Could not find android.hardware.graphics.allocator.IAllocator/default in the VINTF manifest.
+09-25 07:43:44.516 D/jni_lib_merge( 7389): Entering merged library JNI_OnLoad.
+09-25 07:43:44.517 I/hwservicemanager(  138): getTransport: Cannot find entry android.hardware.graphics.mapper@4.0::IMapper/default in either framework or device VINTF manifest.
+09-25 07:43:44.517 D/jni_lib_merge( 7389): Preparing 4 pre-merged libs (including stub)
+09-25 07:43:44.517 D/jni_lib_merge( 7389): Preparing to register libhermes_executor_so.  onload_func: 0x72ebc57d91d0
+09-25 07:43:44.517 D/jni_lib_merge( 7389): Preparing to register libhermesinstancejni_so.  onload_func: 0x72ebc57e0b10
+09-25 07:43:44.517 I/Gralloc4( 7389): mapper 4.x is not supported
+09-25 07:43:44.520 D/jni_lib_merge( 7389): Preparing to register libjsijniprofiler_so.  onload_func: 0x72ebc57e1350
+09-25 07:43:44.520 D/jni_lib_merge( 7389): About to register 3 actual methods.
+09-25 07:43:44.589 I/ExpoModulesCore( 7389): ✅ AppContext was initialized
+09-25 07:43:44.606 W/unknown:BridgelessReact( 7389): ReactHost{0}.getOrCreateReactInstanceTask(): Loading JS Bundle
+09-25 07:43:44.606 W/unknown:BridgelessReact( 7389): ReactHost{0}.getOrCreateReactInstanceTask(): DevSupportManager.onNewReactContextCreated()
+09-25 07:43:44.606 W/unknown:BridgelessReact( 7389): ReactHost{0}.startSurface(surfaceId = 0): Execute
+09-25 07:43:44.611 W/unknown:BridgelessReact( 7389): ReactHost{0}.ReactContext.onHostResume()
+09-25 07:43:44.611 W/unknown:BridgelessReact( 7389): ReactHost{0}.getOrCreateReactInstanceTask(): Executing ReactInstanceEventListeners
+09-25 07:43:44.640 W/b       ( 7389): [WARNING] Bridgeless doesn't support CatalystInstance. Accessing an API that's not part of the new architecture is not encouraged usage.
+09-25 07:43:44.645 I/ExpoModulesCore( 7389): ✅ JSI interop was installed
+09-25 07:43:44.646 D/CompatibilityChangeReporter(  520): Compat change id reported: 161145287; UID 10195; state: ENABLED
+09-25 07:43:44.653 I/ExpoModulesCore( 7389): ✅ Constants were exported
+09-25 07:43:44.683 I/A       ( 1714): Constructor was called
+09-25 07:43:44.701 D/CompatibilityChangeReporter( 7389): Compat change id reported: 210923482; UID 10195; state: ENABLED
+09-25 07:43:44.703 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class expo.modules.kotlin.views.GroupViewManagerWrapper
+09-25 07:43:44.703 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.uimanager.t
+09-25 07:43:44.704 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ScreenContainerViewManager
+09-25 07:43:44.705 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.reanimated.view.REASharedTransitionBoundaryManager
+09-25 07:43:44.706 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.host.TabsHostViewManager
+09-25 07:43:44.708 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderConfigViewManager
+09-25 07:43:44.708 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ScreenStackHeaderSubviewManager
+09-25 07:43:44.709 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.modals.formsheet.FormSheetHostViewManager
+09-25 07:43:44.710 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.scrollviewmarker.ScrollViewMarkerViewManager
+09-25 07:43:44.711 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.modals.formsheet.FormSheetContentWrapperViewManager
+09-25 07:43:44.712 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ScreenContentWrapperManager
+09-25 07:43:44.712 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.screen.StackScreenViewManager
+09-25 07:43:44.713 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaViewManager
+09-25 07:43:44.714 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.th3rdwave.safeareacontext.p
+09-25 07:43:44.715 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ScreenViewManager
+09-25 07:43:44.715 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.header.config.StackHeaderConfigViewManager
+09-25 07:43:44.715 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.th3rdwave.safeareacontext.SafeAreaProviderManager
+09-25 07:43:44.716 I/A       ( 1714): No savedInstanceState.
+09-25 07:43:44.717 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.SearchBarManager
+09-25 07:43:44.717 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.host.StackHostViewManager
+09-25 07:43:44.718 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ScreenFooterManager
+09-25 07:43:44.718 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ModalScreenViewManager
+09-25 07:43:44.719 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.safearea.SafeAreaViewManager
+09-25 07:43:44.719 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.ScreenStackViewManager
+09-25 07:43:44.720 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.stack.header.subview.StackHeaderSubviewViewManager
+09-25 07:43:44.720 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class org.reactnative.maskedview.RNCMaskedViewManager
+09-25 07:43:44.721 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.rnscreens.gamma.tabs.screen.TabsScreenViewManager
+09-25 07:43:44.728 I/A       ( 1714): makeRequest: subscribing to new source
+09-25 07:43:44.734 I/A       ( 1714): OnCreate Was Called
+09-25 07:43:44.748 W/A       ( 1714): Couldn't calculate ClientInstanceId, no account name
+09-25 07:43:44.749 I/A       ( 1714): getMinusOnePromotion
+09-25 07:43:44.775 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.gesturehandler.react.RNGestureHandlerButtonViewManager
+09-25 07:43:44.777 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.safeareaview.ReactSafeAreaViewManager
+09-25 07:43:44.779 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.modal.ReactModalHostManager
+09-25 07:43:44.780 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.progressbar.ReactProgressBarViewManager
+09-25 07:43:44.781 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollViewManager
+09-25 07:43:44.782 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.image.ReactImageManager
+09-25 07:43:44.783 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.text.ReactTextViewManager
+09-25 07:43:44.784 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.scroll.ReactHorizontalScrollContainerViewManager
+09-25 07:43:44.785 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.unimplementedview.ReactUnimplementedViewManager
+09-25 07:43:44.786 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.scroll.ReactScrollViewManager
+09-25 07:43:44.787 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.view.ReactViewManager
+09-25 07:43:44.787 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.drawer.ReactDrawerLayoutManager
+09-25 07:43:44.791 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.switchview.ReactSwitchManager
+09-25 07:43:44.793 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.swiperefresh.SwipeRefreshLayoutManager
+09-25 07:43:44.794 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.textinput.ReactTextInputManager
+09-25 07:43:44.796 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.text.SelectableTextViewManager
+09-25 07:43:44.796 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.swmansion.gesturehandler.react.RNGestureHandlerRootViewManager
+09-25 07:43:44.797 W/unknown:ViewManagerPropertyUpdater( 7389): Could not find generated setter for class com.facebook.react.views.virtual.view.ReactVirtualViewManager
+09-25 07:43:44.814 D/CompatibilityChangeReporter( 7389): Compat change id reported: 289878283; UID 10195; state: ENABLED
+09-25 07:43:44.814 I/ReactNativeJS( 7389): Running "main"
+09-25 07:43:44.843 I/ExpoModulesCore( 7389): ✅ JSI interop was installed
+09-25 07:43:44.894 I/A       ( 1714): #enqueuePeriodicJob: running = false
+09-25 07:43:44.900 I/A       ( 1714): #scheduledRefresh: enable_prod_refresh is true but we have no valid refresh schedule
+09-25 07:43:44.905 I/A       ( 1714): loading data on surface MinusOne.
+09-25 07:43:44.930 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:44.931 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode 1
+09-25 07:43:44.931 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:44.931 I/FontLog ( 5945): Received query Noto Color Emoji Compat, URI content://com.google.android.gms.fonts [CONTEXT service_id=132 ]
+09-25 07:43:44.931 I/FontLog ( 5945): Query [emojicompat-emoji-font] resolved to {Noto Color Emoji Compat, wdth 100.0, wght 400, ital 0.0, bestEffort false} [CONTEXT service_id=132 ]
+09-25 07:43:44.932 I/FontLog ( 5945): Fetch {Noto Color Emoji Compat, wdth 100.0, wght 400, ital 0.0, bestEffort false} end status Status{statusCode=SUCCESS, resolution=null} [CONTEXT service_id=132 ]
+09-25 07:43:44.936 I/FontLog ( 5945): Pulling font file for id = 3, cache size = 3 [CONTEXT service_id=132 ]
+09-25 07:43:44.938 I/FontLog ( 5945): Pulling font file for id = 3, cache size = 3 [CONTEXT service_id=132 ]
+09-25 07:43:44.960 I/Choreographer( 1714): Skipped 136 frames!  The application may be doing too much work on its main thread.
+09-25 07:43:44.990 W/AccessibilityManagerService(  520):  wait for adding window timeout: 44
+09-25 07:43:44.993 I/A       ( 1714): onApplyWindowInsets: systemWindowInsets=Insets{left=0, top=128, right=0, bottom=63}
+09-25 07:43:44.994 I/A       ( 1714): onApplyWindowInsets: Adjusting for display cutouts. Safe insets: left=0, top=128, right=0, bottom=0
+09-25 07:43:44.994 I/A       ( 1714): onApplyWindowInsets: systemWindowInsets=Insets{left=0, top=128, right=0, bottom=63}
+09-25 07:43:45.034 I/OpenGLRenderer( 1714): Davey! duration=2329ms; Flags=0, FrameTimelineVsyncId=45570, IntendedVsync=214574819423, Vsync=216841485999, InputEventId=0, HandleInputStart=216883122965, AnimationStart=216883123687, PerformTraversalsStart=216883123827, DrawStart=216898293403, FrameDeadline=214658152753, FrameInterval=216857432314, FrameStartTime=16666666, SyncQueued=216898578925, SyncStart=216898601187, IssueDrawCommandsStart=216898665036, SwapBuffers=216898757789, FrameCompleted=216903961015, DequeueBufferDuration=4228, QueueBufferDuration=448016, GpuCompleted=216903915299, SwapBuffersCompleted=216903961015, DisplayPresentTime=3086466578186258, CommandSubmissionCompleted=216898757789, 
+09-25 07:43:45.072 W/A       ( 1714): Could not collect restore state: The DisplayCoordinator's controller has not taken over yet.
+09-25 07:43:45.216 I/FontLog ( 5945): Received query Google Sans:500, URI content://com.google.android.gms.fonts [CONTEXT service_id=132 ]
+09-25 07:43:45.218 I/FontLog ( 5945): Query [Google Sans:500] resolved to {Google Sans, wdth 100.0, wght 500, ital 0.0, bestEffort false} [CONTEXT service_id=132 ]
+09-25 07:43:45.273 D/StatusBarIconController(  837): ignoring old pipeline callback because the new wifi icon is enabled
+09-25 07:43:45.292 I/FontLog ( 5945): Font PFD returned from cache for {Google Sans, wdth 100.0, wght 500, ital 0.0, bestEffort false} [CONTEXT service_id=132 ]
+09-25 07:43:45.320 I/FontLog ( 5945): Fetch {Google Sans, wdth 100.0, wght 500, ital 0.0, bestEffort false} end status Status{statusCode=SUCCESS, resolution=null} [CONTEXT service_id=132 ]
+09-25 07:43:45.383 I/FontLog ( 5945): Pulling font file for id = 4, cache size = 4 [CONTEXT service_id=132 ]
+09-25 07:43:45.475 I/FontLog ( 5945): Received query Google Sans, URI content://com.google.android.gms.fonts [CONTEXT service_id=132 ]
+09-25 07:43:45.475 I/FontLog ( 5945): Query [Google Sans] resolved to {Google Sans, wdth 100.0, wght 400, ital 0.0, bestEffort false} [CONTEXT service_id=132 ]
+09-25 07:43:45.493 W/earchbox:search( 1714): Long monitor contention with owner BG Thread #2 (2378) at void java.lang.Runtime.loadLibrary0(java.lang.ClassLoader, java.lang.Class, java.lang.String)(Runtime.java:1084) waiters=0 in void java.lang.Runtime.loadLibrary0(java.lang.ClassLoader, java.lang.Class, java.lang.String) for 507ms
+09-25 07:43:45.532 I/FontLog ( 5945): Font PFD returned from cache for {Google Sans, wdth 100.0, wght 400, ital 0.0, bestEffort false} [CONTEXT service_id=132 ]
+09-25 07:43:45.551 I/FontLog ( 5945): Fetch {Google Sans, wdth 100.0, wght 400, ital 0.0, bestEffort false} end status Status{statusCode=SUCCESS, resolution=null} [CONTEXT service_id=132 ]
+09-25 07:43:45.581 W/SQLiteLog( 1714): (28) double-quoted string literal: "MAIN_FEED"
+09-25 07:43:45.619 I/FontLog ( 5945): Pulling font file for id = 5, cache size = 5 [CONTEXT service_id=132 ]
+09-25 07:43:45.661 W/SQLiteLog( 1714): (28) double-quoted string literal: "Session::Current"
+09-25 07:43:45.661 W/SQLiteLog( 1714): (28) double-quoted string literal: "MAIN_FEED"
+09-25 07:43:45.661 W/SQLiteLog( 1714): (28) double-quoted string literal: "Session::Current"
+09-25 07:43:45.725 I/GMS_MM_Logger( 5945): Memory Metric Logging not allowed. Stopping.
+09-25 07:43:45.729 W/A       ( 1714): Didn't find the session (MAIN_FEED, true)
+09-25 07:43:45.729 W/A       ( 1714): Didn't find the session (MAIN_FEED, false)
+09-25 07:43:45.751 W/A       ( 1714): RenderableStreamDataSource#loadData - failed precheck
+09-25 07:43:45.751 W/A       ( 1714): DiscoverPrecheckException(precheckFailureReason=com.google.android.apps.search.googleapp.discover.w.a.c@d1ac949)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.apps.search.googleapp.discover.w.bb.d(PG:16)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.apps.search.googleapp.discover.w.ap.invokeSuspend(PG:5)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.apps.search.googleapp.discover.w.ap.invoke(PG:1)
+09-25 07:43:45.751 W/A       ( 1714): 	at kotlinx.coroutines.f.b.a(PG:1)
+09-25 07:43:45.751 W/A       ( 1714): 	at kotlinx.coroutines.m.a(PG:11)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.apps.search.googleapp.discover.v.bb.f(PG:2)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.apps.search.googleapp.discover.v.bb.d(PG:15)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.apps.search.googleapp.discover.v.an.invokeSuspend(PG:1)
+09-25 07:43:45.751 W/A       ( 1714): 	at i.c.b.a.a.resumeWith(PG:4)
+09-25 07:43:45.751 W/A       ( 1714): 	at kotlinx.coroutines.ea.mn(PG:6)
+09-25 07:43:45.751 W/A       ( 1714): 	at kotlinx.coroutines.a.resumeWith(PG:3)
+09-25 07:43:45.751 W/A       ( 1714): 	at i.c.b.a.a.resumeWith(PG:9)
+09-25 07:43:45.751 W/A       ( 1714): 	at kotlinx.coroutines.bk.run(PG:14)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.apps.tiktok.coroutines.f.run(PG:1)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.libraries.i.ae.run(PG:1)
+09-25 07:43:45.751 W/A       ( 1714): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+09-25 07:43:45.751 W/A       ( 1714): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.libraries.i.k.run(PG:2)
+09-25 07:43:45.751 W/A       ( 1714): 	at com.google.android.libraries.i.p.run(PG:4)
+09-25 07:43:45.751 W/A       ( 1714): 	at java.lang.Thread.run(Thread.java:1012)
+09-25 07:43:45.893 D/WindowManager(  520): captureDisplay
+09-25 07:43:45.923 W/System  ( 7166): A resource was acquired at attached stack trace but never released. See java.io.Closeable for information on avoiding resource leaks.
+09-25 07:43:45.923 W/System  ( 7166): java.lang.Throwable: Explicit termination method 'HardwareBuffer.close' not called
+09-25 07:43:45.923 W/System  ( 7166): 	at dalvik.system.CloseGuard.openWithCallSite(CloseGuard.java:288)
+09-25 07:43:45.923 W/System  ( 7166): 	at dalvik.system.CloseGuard.open(CloseGuard.java:257)
+09-25 07:43:45.923 W/System  ( 7166): 	at android.hardware.HardwareBuffer.<init>(HardwareBuffer.java:266)
+09-25 07:43:45.923 W/System  ( 7166): A resource was acquired at attached stack trace but never released. See java.io.Closeable for information on avoiding resource leaks.
+09-25 07:43:45.923 W/System  ( 7166): java.lang.Throwable: Explicit termination method 'HardwareBuffer.close' not called
+09-25 07:43:45.923 W/System  ( 7166): 	at dalvik.system.CloseGuard.openWithCallSite(CloseGuard.java:288)
+09-25 07:43:45.923 W/System  ( 7166): 	at dalvik.system.CloseGuard.open(CloseGuard.java:257)
+09-25 07:43:45.923 W/System  ( 7166): 	at android.hardware.HardwareBuffer.<init>(HardwareBuffer.java:266)
+09-25 07:43:46.575 W/unknown:ReactNative( 7389): StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-25 07:43:46.576 W/unknown:ReactNative( 7389): StatusBarModule: Ignored status bar change, current activity is edge-to-edge.
+09-25 07:43:46.712 I/ReactNativeJNI( 7389): instanceHandle is null, event of type topLayout will be dropped
+09-25 07:43:46.974 E/TaskPersister(  520): File error accessing recents directory (directory doesn't exist?).
+09-25 07:43:47.028 I/ActivityTaskManager(  520): Displayed fr.citeparlia.quizgeo/.MainActivity for user 0: +4s141ms
+09-25 07:43:47.083 D/CompatibilityChangeReporter( 7389): Compat change id reported: 171228096; UID 10195; state: ENABLED
+09-25 07:43:47.141 W/ActivityManager(  520): stopServiceToken startId 14 is last, but have 1 remaining args
+09-25 07:43:47.214 D/SplashScreenView( 7389): Building from parcel drawable: android.graphics.drawable.BitmapDrawable@dc977a1
+09-25 07:43:47.215 D/SplashScreenView( 7389): Build android.window.SplashScreenView{3570187 V.E...... ......ID 0,0-0,0}
+09-25 07:43:47.215 D/SplashScreenView( 7389): Icon: view: androidx.appcompat.widget.r{3ecf8b4 V.ED..... ......I. 0,0-0,0 #10204f0 android:id/splashscreen_icon_view} drawable: android.graphics.drawable.BitmapDrawable@dc977a1 size: 504
+09-25 07:43:47.215 D/SplashScreenView( 7389): Branding: view: android.view.View{ee4ecdd G.ED..... ......I. 0,0-0,0 #10204ef android:id/splashscreen_branding_view} drawable: null size w: 0 h: 0
+09-25 07:43:47.332 D/BoundBrokerSvc( 5969): onUnbind: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:/... cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+09-25 07:43:47.398 W/WindowOnBackDispatcher(  837): sendCancelIfRunning: isInProgress=falsecallback=android.view.ViewRootImpl$$ExternalSyntheticLambda17@4ce9e42
+09-25 07:43:47.399 W/InputManager-JNI(  520): Input channel object 'ad9c9ed Splash Screen fr.citeparlia.quizgeo (client)' was disposed without first being removed with the input manager!
+09-25 07:43:47.409 W/WindowManager(  520): Failed looking up window session=Session{aa1742c 837:u0a10168} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:6034 com.android.server.wm.Session.setOnBackInvokedCallbackInfo:944 android.view.IWindowSession$Stub.onTransact:1145 
+09-25 07:43:47.409 I/WindowManager(  520): setOnBackInvokedCallback(): No window state for package:com.android.systemui
+09-25 07:43:47.576 D/OomAdjuster(  520): Not killing cached processes
+09-25 07:43:47.781 D/SplashScreenView( 7389): remove starting view
+09-25 07:43:48.275 D/StatusBarIconController(  837): ignoring old pipeline callback because the new wifi icon is enabled
+09-25 07:43:48.452 D/EGL_emulation( 7389): app_time_stats: avg=353.13ms min=111.47ms max=700.98ms count=4
+09-25 07:43:48.453 I/Choreographer( 7389): Skipped 40 frames!  The application may be doing too much work on its main thread.
+09-25 07:43:48.667 I/OpenGLRenderer( 7389): Davey! duration=769ms; Flags=0, FrameTimelineVsyncId=46854, IntendedVsync=219174830324, Vsync=219224830316, InputEventId=0, HandleInputStart=219238119474, AnimationStart=219238119805, PerformTraversalsStart=219238899609, DrawStart=219239029982, FrameDeadline=219691496910, FrameInterval=219238113633, FrameStartTime=16666664, SyncQueued=219242669943, SyncStart=219648801371, IssueDrawCommandsStart=219649462816, SwapBuffers=220333897355, FrameCompleted=220350059573, DequeueBufferDuration=8967, QueueBufferDuration=3531288, GpuCompleted=220349694261, SwapBuffersCompleted=220350059573, DisplayPresentTime=34995393535952, CommandSubmissionCompleted=220333897355, 
+09-25 07:43:48.677 D/WindowManager(  520): captureDisplay
+09-25 07:43:48.871 D/BufferPoolAccessor2.0(  467): bufferpool2 0x708cecdd5348 : 1(3888000 size) total buffers - 1(3888000 size) used buffers - 88/94 (recycle/alloc) - 6/94 (fetch/transfer)
+09-25 07:43:49.504 D/EGL_emulation( 7389): app_time_stats: avg=102.08ms min=41.83ms max=215.53ms count=10
+09-25 07:43:49.818 D/ProfileInstaller( 7389): Skipping profile installation for fr.citeparlia.quizgeo
+09-25 07:43:49.953 D/ActivityManager(  520): freezing 1518 android.process.acore
+09-25 07:43:50.053 I/wpa_supplicant(  824): wlan0: CTRL-EVENT-BEACON-LOSS 
+09-25 07:43:50.109 I/keystore2(  159): system/security/keystore2/src/watchdog.rs:319 - Watchdog thread idle -> terminating. Have a great day.
+09-25 07:43:50.287 I/.mobile.maestro( 7188): Background concurrent copying GC freed 50830(4636KB) AllocSpace objects, 16(1276KB) LOS objects, 49% free, 10MB/20MB, paused 46us,9us total 111.479ms
+09-25 07:43:50.311 D/WindowManager(  520): captureDisplay
+09-25 07:43:50.329 W/System  ( 7166): A resource was acquired at attached stack trace but never released. See java.io.Closeable for information on avoiding resource leaks.
+09-25 07:43:50.329 W/System  ( 7166): java.lang.Throwable: Explicit termination method 'HardwareBuffer.close' not called
+09-25 07:43:50.329 W/System  ( 7166): 	at dalvik.system.CloseGuard.openWithCallSite(CloseGuard.java:288)
+09-25 07:43:50.329 W/System  ( 7166): 	at dalvik.system.CloseGuard.open(CloseGuard.java:257)
+09-25 07:43:50.329 W/System  ( 7166): 	at android.hardware.HardwareBuffer.<init>(HardwareBuffer.java:266)
+09-25 07:43:50.329 W/System  ( 7166): A resource was acquired at attached stack trace but never released. See java.io.Closeable for information on avoiding resource leaks.
+09-25 07:43:50.329 W/System  ( 7166): java.lang.Throwable: Explicit termination method 'HardwareBuffer.close' not called
+09-25 07:43:50.329 W/System  ( 7166): 	at dalvik.system.CloseGuard.openWithCallSite(CloseGuard.java:288)
+09-25 07:43:50.329 W/System  ( 7166): 	at dalvik.system.CloseGuard.open(CloseGuard.java:257)
+09-25 07:43:50.329 W/System  ( 7166): 	at android.hardware.HardwareBuffer.<init>(HardwareBuffer.java:266)
+09-25 07:43:50.952 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:50.952 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode 1
+09-25 07:43:50.952 D/BtGatt.ScanManager( 1027): uid 10131 isForeground true scanMode -1
+09-25 07:43:50.984 D/WindowManager(  520): captureDisplay
+09-25 07:43:51.235 D/WindowManager(  520): captureDisplay
+09-25 07:43:51.253 W/System  ( 7166): A resource was acquired at attached stack trace but never released. See java.io.Closeable for information on avoiding resource leaks.
+09-25 07:43:51.253 W/System  ( 7166): java.lang.Throwable: Explicit termination method 'HardwareBuffer.close' not called
+09-25 07:43:51.253 W/System  ( 7166): 	at dalvik.system.CloseGuard.openWithCallSite(CloseGuard.java:288)
+09-25 07:43:51.253 W/System  ( 7166): 	at dalvik.system.CloseGuard.open(CloseGuard.java:257)
+09-25 07:43:51.253 W/System  ( 7166): 	at android.hardware.HardwareBuffer.<init>(HardwareBuffer.java:266)
+09-25 07:43:51.253 W/System  ( 7166): A resource was acquired at attached stack trace but never released. See java.io.Closeable for information on avoiding resource leaks.
+09-25 07:43:51.253 W/System  ( 7166): java.lang.Throwable: Explicit termination method 'HardwareBuffer.close' not called
+09-25 07:43:51.253 W/System  ( 7166): 	at dalvik.system.CloseGuard.openWithCallSite(CloseGuard.java:288)
+09-25 07:43:51.253 W/System  ( 7166): 	at dalvik.system.CloseGuard.open(CloseGuard.java:257)
+09-25 07:43:51.253 W/System  ( 7166): 	at android.hardware.HardwareBuffer.<init>(HardwareBuffer.java:266)
+09-25 07:43:51.667 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:51.669 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:51.670 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:51.719 D/Maestro ( 7188): View hierarchy received in 52 ms
+09-25 07:43:51.832 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:51.833 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:51.833 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:51.858 D/Maestro ( 7188): View hierarchy received in 26 ms
+09-25 07:43:51.956 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:51.956 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:51.957 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:51.983 D/Maestro ( 7188): View hierarchy received in 27 ms
+09-25 07:43:52.058 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.059 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.059 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.082 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:43:52.138 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.139 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.139 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.152 I/netd    (  333): tetherGetStats() -> {[]} <0.32ms>
+09-25 07:43:52.154 I/netd    (  333): bandwidthSetGlobalAlert(2097152) <0.10ms>
+09-25 07:43:52.155 I/netd    (  333): bandwidthRemoveInterfaceQuota(eth0) <0.38ms>
+09-25 07:43:52.156 I/netd    (  333): bandwidthSetInterfaceQuota(eth0, 9223372036854775807) <0.36ms>
+09-25 07:43:52.166 D/Maestro ( 7188): View hierarchy received in 28 ms
+09-25 07:43:52.241 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.242 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.242 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.264 D/Maestro ( 7188): View hierarchy received in 23 ms
+09-25 07:43:52.361 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.362 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.363 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.389 D/Maestro ( 7188): View hierarchy received in 28 ms
+09-25 07:43:52.460 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.462 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.462 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.487 D/Maestro ( 7188): View hierarchy received in 27 ms
+09-25 07:43:52.544 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.544 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.545 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.567 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:43:52.633 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.634 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.634 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.659 D/Maestro ( 7188): View hierarchy received in 26 ms
+09-25 07:43:52.758 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.759 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.760 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.786 D/Maestro ( 7188): View hierarchy received in 28 ms
+09-25 07:43:52.816 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.817 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.818 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.840 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:43:52.895 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.896 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.896 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.915 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:43:52.935 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:52.935 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.936 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:52.956 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:53.013 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.014 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.014 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.037 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:43:53.056 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.057 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.057 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.091 D/Maestro ( 7188): View hierarchy received in 35 ms
+09-25 07:43:53.154 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.154 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.155 D/OomAdjuster(  520): Not killing cached processes
+09-25 07:43:53.156 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.198 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.droidguard.DroidGuardGcmTaskService started execution. cause:7 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.214 D/Maestro ( 7188): View hierarchy received in 60 ms
+09-25 07:43:53.224 D/ActivityManager(  520): sync unfroze 2970 com.google.android.gms.unstable for 6
+09-25 07:43:53.230 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.droidguard.DroidGuardGcmTaskService finished executing. cause:7 result: 1 elapsed_millis: 50 uptime_millis: 50 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.251 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.auth.account.be.legacy.AuthCronService started execution. cause:5 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.253 I/resolv  (  333): GetAddrInfoHandler::run: {101 786533 101 983141 10131 0}
+09-25 07:43:53.257 I/resolv  (  333): res_nmkquery: (QUERY, IN, A)
+09-25 07:43:53.257 I/resolv  (  333): resolv_cache_lookup: FOUND IN CACHE entry=0x7e9b74230e50
+09-25 07:43:53.257 I/resolv  (  333): doQuery: rcode=0, ancount=8, return value=164
+09-25 07:43:53.262 I/resolv  (  333): res_nmkquery: (QUERY, IN, AAAA)
+09-25 07:43:53.262 I/resolv  (  333): resolv_cache_lookup: FOUND IN CACHE entry=0x7e9b8422d390
+09-25 07:43:53.262 I/resolv  (  333): doQuery: rcode=0, ancount=8, return value=260
+09-25 07:43:53.264 D/TrafficStats( 2970): tagSocket(115) with statsTag=0x1803, statsUid=10131
+09-25 07:43:53.273 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.chimera.container.ConfigService started execution. cause:5 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.280 I/ChimeraConfigurator( 5969): Starting update, reason: 1 urgentFeatures: 
+09-25 07:43:53.340 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.341 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.342 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.343 I/GmsDebugLogger( 5969): [73] 1801
+09-25 07:43:53.347 W/ZappDownloader( 5969): No successful module downloads for requested features [].
+09-25 07:43:53.347 I/GmsDebugLogger( 5969): [30] [VisionOcrDynamite.integ:231602402100000],[VisionBarcode.optional:231818100800],[TfliteDynamiteDynamite.integ:262730502100800],[MlkitOcrCommon.optional:231818100800],[MapsCoreDynamite.integ:231112103100800],[MlkitBarcodeUi.optional:231818100000]
+09-25 07:43:53.354 I/ChimeraConfigService( 5969): Scheduling checkin for one-off execution between [3300,43201] seconds from now (1790322233353) [CONTEXT service_id=264 ]
+09-25 07:43:53.356 I/ChimeraConfigService( 5969): Scheduling checkin every 43201 seconds, with flex of 21600 seconds [CONTEXT service_id=264 ]
+09-25 07:43:53.373 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.chimera.container.ConfigService finished executing. cause:5 result: 2 elapsed_millis: 101 uptime_millis: 101 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.378 I/.gms.persistent( 5945): Background concurrent copying GC freed 372935(15MB) AllocSpace objects, 17(788KB) LOS objects, 49% free, 13MB/26MB, paused 36us,56us total 128.147ms
+09-25 07:43:53.397 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService started execution. cause:5 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.395 W/binder:2970_5( 2970): type=1400 audit(0.0:81): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+09-25 07:43:53.403 W/libc    ( 2970): Access denied finding property "persist.adb.tls_server.enable"
+09-25 07:43:53.408 W/libc    ( 2970): Access denied finding property "service.adb.tls.port"
+09-25 07:43:53.410 I/resolv  (  333): GetAddrInfoHandler::run: {101 786533 101 983141 10131 0}
+09-25 07:43:53.410 D/TrafficStats( 2970): tagSocket(120) with statsTag=0x1809, statsUid=-1
+09-25 07:43:53.399 W/binder:2970_5( 2970): type=1400 audit(0.0:82): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+09-25 07:43:53.419 W/GmsUrlRequestImpl( 5945): Content-Type header is overwritten.
+09-25 07:43:53.428 I/resolv  (  333): GetAddrInfoHandler::run: {101 786533 101 983141 10131 0}
+09-25 07:43:53.430 I/resolv  (  333): res_nmkquery: (QUERY, IN, AAAA)
+09-25 07:43:53.430 I/resolv  (  333): resolv_cache_lookup: FOUND IN CACHE entry=0x7e9b84231290
+09-25 07:43:53.430 I/resolv  (  333): doQuery: rcode=0, ancount=8, return value=264
+09-25 07:43:53.432 I/resolv  (  333): res_nmkquery: (QUERY, IN, A)
+09-25 07:43:53.432 I/resolv  (  333): resolv_cache_lookup: FOUND IN CACHE entry=0x7e9b74230350
+09-25 07:43:53.432 I/resolv  (  333): doQuery: rcode=0, ancount=8, return value=168
+09-25 07:43:53.434 D/TrafficStats( 5945): tagSocket(125) with statsTag=0x401, statsUid=10131
+09-25 07:43:53.462 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService finished executing. cause:5 result: 1 elapsed_millis: 72 uptime_millis: 72 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.472 W/GLSUser ( 5945): [AppCertManager] Exception while requesting key: 
+09-25 07:43:53.472 W/GLSUser ( 5945): java.util.concurrent.ExecutionException: avvw: Parse Proto Exception.
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dlnv.s(:com.google.android.gms@231818047@23.18.18 (190800-535401451):3)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dlnv.get(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at oub.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):78)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at otz.b(:com.google.android.gms@231818047@23.18.18 (190800-535401451):4)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at otu.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at otx.a(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at lzq.call(:com.google.android.gms@231818047@23.18.18 (190800-535401451):14)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at java.util.concurrent.FutureTask.run(FutureTask.java:264)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at aced.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):6)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at aced.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:644)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at acjn.run(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at java.lang.Thread.run(Thread.java:1012)
+09-25 07:43:53.472 W/GLSUser ( 5945): Caused by: avvw: Parse Proto Exception.
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):5)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at avxk.onSucceeded(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at jf.onSucceeded(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at ie.run(:com.google.android.gms.dynamite_cronetdynamite@231818047@23.18.18 (190800-0):4)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	... 6 more
+09-25 07:43:53.472 W/GLSUser ( 5945): Caused by: dzfz: Protocol message contained an invalid tag (zero).
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzdb.k(:com.google.android.gms@231818047@23.18.18 (190800-535401451):13)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzha.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):47)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzha.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):45)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzfd.A(:com.google.android.gms@231818047@23.18.18 (190800-535401451):2)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzex.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzcx.d(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzcx.c(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at dzcx.n(:com.google.android.gms@231818047@23.18.18 (190800-535401451):0)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at avwn.h(:com.google.android.gms@231818047@23.18.18 (190800-535401451):7)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	at avwn.f(:com.google.android.gms@231818047@23.18.18 (190800-535401451):1)
+09-25 07:43:53.472 W/GLSUser ( 5945): 	... 9 more
+09-25 07:43:53.479 D/Maestro ( 7188): View hierarchy received in 139 ms
+09-25 07:43:53.489 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService started execution. cause:5 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.498 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.auth.account.be.legacy.AuthCronService finished executing. cause:5 result: 3 elapsed_millis: 251 uptime_millis: 251 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.521 I/RemoteProvisionSysSvc(  520): getRegistration(android.hardware.security.keymint.IRemotelyProvisionedComponent/default)
+09-25 07:43:53.523 D/ActivityManager(  520): sync unfroze 3933 com.google.android.rkpdapp for 6
+09-25 07:43:53.525 I/RegistrationProxy(  520): onServiceConnected: com.android.rkpdapp.service.RemoteProvisioningService
+09-25 07:43:53.530 I/RegistrationProxy(  520): IGetRegistrationCallback.onSuccess
+09-25 07:43:53.718 I/servicemanager(    0): Found android.hardware.security.keymint.IRemotelyProvisionedComponent/default in device VINTF manifest.
+09-25 07:43:53.533 I/RemoteProvisionSysSvc(  520): Fetching key 10131 for client 245206761
+09-25 07:43:53.533 I/RegistrationProxy(  520): getKeyAsync operation started with callback 198641518
+09-25 07:43:53.533 I/RkpdRegistrationBinder( 3933): Key requested for : android.hardware.security.keymint.IRemotelyProvisionedComponent/default, clientUid: 1017, keyId: 10131, callback: 119109624
+09-25 07:43:53.534 I/RkpdRegistrationBinder( 3933): Key successfully assigned to client
+09-25 07:43:53.535 I/RemoteProvisionSysSvc(  520): Successfully fetched key for client 245206761
+09-25 07:43:53.545 D/BiometricService(  520): Sensor ID(4), oemStrength: 15, updatedStrength: 15, modality 8, state: 0, cookie: 0, sensorId 4, hasEnrollments: false cannot participate in Keystore operations
+09-25 07:43:53.545 D/BiometricService(  520): Sensor ID(0), oemStrength: 15, updatedStrength: 15, modality 2, state: 0, cookie: 0, sensorId 0, hasEnrollments: false cannot participate in Keystore operations
+09-25 07:43:53.548 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.clearcut.uploader.QosUploaderService finished executing. cause:5 result: 1 elapsed_millis: 69 uptime_millis: 69 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.552 W/SystemServiceRegistry( 2970): No service published for: persistent_data_block
+09-25 07:43:53.561 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskService started execution. cause:5 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.567 I/NetworkScheduler.Stats( 5945): Task com.google.android.gms/com.google.android.gms.tapandpay.gcmtask.TapAndPayGcmTaskService finished executing. cause:5 result: 1 elapsed_millis: 36 uptime_millis: 36 exec_start_elapsed_seconds: 225 [CONTEXT service_id=218 ]
+09-25 07:43:53.575 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.575 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.576 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.609 D/Maestro ( 7188): View hierarchy received in 34 ms
+09-25 07:43:53.670 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.670 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.671 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.777 D/Maestro ( 7188): View hierarchy received in 107 ms
+09-25 07:43:53.850 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.851 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.851 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.873 D/CompatibilityChangeReporter(  520): Compat change id reported: 197654537; UID 10195; state: ENABLED
+09-25 07:43:53.886 D/Maestro ( 7188): View hierarchy received in 36 ms
+09-25 07:43:53.929 D/TrafficStats( 2970): tagSocket(126) with statsTag=0x1809, statsUid=-1
+09-25 07:43:53.930 D/TrafficStats( 2970): tagSocket(126) with statsTag=0x1809, statsUid=-1
+09-25 07:43:53.930 D/TrafficStats( 2970): tagSocket(126) with statsTag=0x1809, statsUid=-1
+09-25 07:43:53.931 W/IntentService[D( 2970): type=1400 audit(0.0:83): avc:  denied  { read } for  name="u:object_r:system_adbd_prop:s0" dev="tmpfs" ino=292 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:system_adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+09-25 07:43:53.938 W/libc    ( 2970): Access denied finding property "persist.adb.tls_server.enable"
+09-25 07:43:53.944 W/libc    ( 2970): Access denied finding property "service.adb.tls.port"
+09-25 07:43:53.935 W/IntentService[D( 2970): type=1400 audit(0.0:84): avc:  denied  { read } for  name="u:object_r:adbd_prop:s0" dev="tmpfs" ino=60 scontext=u:r:gmscore_app:s0:c512,c768 tcontext=u:object_r:adbd_prop:s0 tclass=file permissive=0 app=com.google.android.gms
+09-25 07:43:53.991 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:53.992 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:53.992 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.021 D/Maestro ( 7188): View hierarchy received in 30 ms
+09-25 07:43:54.024 W/ProcessStats(  520): Tracking association SourceState{908403d com.google.android.gms.persistent/10131 BFgs #13404} whose proc state 4 is better than process ProcessState{235e97c com.google.android.gms.unstable/10131 pkg=com.google.android.gms} proc state 8 (67 skipped)
+09-25 07:43:54.119 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.120 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.120 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.135 D/StatusBarIconController(  837): ignoring old pipeline callbacks, because the new mobile icons are enabled
+09-25 07:43:54.148 D/Maestro ( 7188): View hierarchy received in 29 ms
+09-25 07:43:54.199 E/WakeLock( 5969): DG:service ** IS FORCE-RELEASED ON TIMEOUT **
+09-25 07:43:54.211 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.212 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.212 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.249 D/Maestro ( 7188): View hierarchy received in 38 ms
+09-25 07:43:54.267 W/eparlia.quizgeo( 7389): Cleared Reference was only reachable from finalizer (only reported once)
+09-25 07:43:54.270 W/System  ( 7389): A resource failed to call release. 
+09-25 07:43:54.279 D/StatusBarIconController(  837): ignoring old pipeline callback because the new wifi icon is enabled
+09-25 07:43:54.307 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.308 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.308 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.329 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:54.348 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.349 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.349 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.371 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:54.469 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.470 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.470 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.491 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:54.546 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.547 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.548 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.567 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:54.624 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.625 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.625 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.645 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:54.702 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.702 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.703 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.722 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:43:54.776 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.777 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.777 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.793 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:54.849 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.849 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.849 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.866 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:54.966 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:54.966 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.967 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:54.989 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:55.047 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.048 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.048 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.069 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:55.165 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.166 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.166 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.186 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:55.285 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.286 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.286 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.305 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:43:55.400 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.401 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.401 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.422 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:55.486 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.487 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.487 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.510 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:43:55.609 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.610 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.610 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.635 D/Maestro ( 7188): View hierarchy received in 26 ms
+09-25 07:43:55.653 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.654 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.654 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.671 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:55.752 D/BufferPoolAccessor2.0(  467): bufferpool2 0x708cecdd5348 : 1(3888000 size) total buffers - 0(0 size) used buffers - 107/113 (recycle/alloc) - 6/113 (fetch/transfer)
+09-25 07:43:55.752 D/BufferPoolAccessor2.0(  467): evictor expired: 1, evicted: 1
+09-25 07:43:55.770 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.770 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.771 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.788 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:55.846 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.847 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.848 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.868 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:55.922 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.923 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.923 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:55.941 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:55.999 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:55.999 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.000 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.018 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:56.077 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.078 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.078 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.094 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:56.113 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.114 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.114 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.136 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:56.231 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.232 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.232 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.250 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:56.309 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.310 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.310 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.328 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:56.423 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.423 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.424 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.442 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:56.497 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.498 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.499 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.516 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:56.611 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.612 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.613 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.632 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:56.691 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.692 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.692 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.709 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:56.803 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.804 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.804 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.821 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:56.922 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:56.923 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.923 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:56.941 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:57.004 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.005 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.005 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.024 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:43:57.082 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.082 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.083 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.099 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:57.155 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.155 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.156 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.176 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:57.277 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.278 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.279 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.281 D/StatusBarIconController(  837): ignoring old pipeline callback because the new wifi icon is enabled
+09-25 07:43:57.296 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:57.392 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.393 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.393 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.412 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:43:57.437 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.438 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.438 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.458 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:57.555 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.556 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.556 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.575 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:43:57.678 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.679 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.680 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.699 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:43:57.797 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.798 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.799 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.819 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:57.882 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:57.883 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.883 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:57.903 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:57.961 I/netd    (  333): tetherGetStats() -> {[]} <0.49ms>
+09-25 07:43:57.963 I/netd    (  333): bandwidthSetGlobalAlert(2097152) <0.11ms>
+09-25 07:43:57.972 I/wpa_supplicant(  824): wlan0: CTRL-EVENT-BEACON-LOSS 
+09-25 07:43:58.001 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.001 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.001 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.018 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:58.079 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.080 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.080 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.101 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:58.197 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.198 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.198 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.215 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:58.276 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.276 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.277 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.298 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:58.391 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.392 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.392 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.414 D/Maestro ( 7188): View hierarchy received in 23 ms
+09-25 07:43:58.420 D/OomAdjuster(  520): Not killing cached processes
+09-25 07:43:58.480 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.481 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.481 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.501 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:58.596 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.597 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.597 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.613 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:58.671 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.672 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.672 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.690 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:58.788 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.788 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.789 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.809 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:43:58.826 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.827 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.827 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.851 D/Maestro ( 7188): View hierarchy received in 25 ms
+09-25 07:43:58.947 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:58.948 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.948 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:58.964 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:59.020 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.021 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.021 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.039 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:59.093 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.093 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.094 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.111 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:59.171 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.172 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.172 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.188 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:59.284 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.284 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.285 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.301 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:43:59.358 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.358 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.359 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.377 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:59.432 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.433 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.433 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.451 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:59.469 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.469 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.470 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.487 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:59.585 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.586 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.586 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.609 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:43:59.667 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.667 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.668 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.686 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:43:59.826 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.826 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.827 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.848 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:43:59.863 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.863 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.864 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.881 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:43:59.975 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:43:59.976 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.976 W/QueryController( 7188): Could not detect idle state.
+09-25 07:43:59.994 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:00.016 I/AiAiEcho( 1648): Predicting[0]: 
+09-25 07:44:00.016 I/AiAiEcho( 1648): EchoTargets: 
+09-25 07:44:00.016 I/AiAiEcho( 1648): Filtered by AiAi flag check: 
+09-25 07:44:00.017 I/AiAiEcho( 1648): Ranked targets strategy: SORT, count: 0, ranking metadata: 
+09-25 07:44:00.017 I/AiAiEcho( 1648): #postPredictionTargets: Sending updates to UISurface lockscreen with targets# 0 (types=[])
+09-25 07:44:00.036 W/PageIndicator(  837): Total number of pages invalid: 0. Assuming 1 page.
+09-25 07:44:00.039 D/EGL_emulation(  837): app_time_stats: avg=15673.46ms min=15673.46ms max=15673.46ms count=1
+09-25 07:44:00.399 W/gle.android.gms( 5969): Cleared Reference was only reachable from finalizer (only reported once)
+09-25 07:44:00.626 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:00.627 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.627 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.644 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:00.701 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:00.702 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.702 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.719 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:00.778 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:00.779 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.779 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.794 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:00.850 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:00.851 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.851 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.871 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:44:00.930 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:00.930 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.931 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:00.946 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:01.039 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.040 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.041 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.060 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:44:01.076 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.076 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.077 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.096 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:44:01.191 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.192 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.193 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.213 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:44:01.271 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.271 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.272 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.292 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:44:01.389 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.390 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.390 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.408 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:01.465 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.466 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.466 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.484 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:01.602 E/A       ( 1714): disposing SearchServiceClient after timeout []
+09-25 07:44:01.625 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.626 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.626 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.643 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:01.701 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.701 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.702 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.719 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:01.815 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.816 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.816 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.831 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:01.930 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:01.931 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.931 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:01.945 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:02.039 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.039 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.040 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.054 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:02.110 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.111 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.111 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.132 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:44:02.231 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.232 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.232 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.254 D/Maestro ( 7188): View hierarchy received in 23 ms
+09-25 07:44:02.313 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.314 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.314 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.330 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:02.424 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.424 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.425 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.466 D/Maestro ( 7188): View hierarchy received in 42 ms
+09-25 07:44:02.520 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.521 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.522 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.540 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:02.635 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.636 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.636 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.652 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:02.709 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.709 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.710 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.728 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:02.823 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.824 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.824 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.840 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:02.937 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:02.938 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.938 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:02.954 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:02.991 I/ContentMaintenance( 5969): Internal cache bytes used: 0; limit: 100000000; download size: 0
+09-25 07:44:02.994 I/RealtimeCacheCleanup( 5969): Beginning Realtime garbage collection.
+09-25 07:44:02.994 I/RealtimeCacheCleanup( 5969): Finished Realtime garbage collection.
+09-25 07:44:03.047 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.048 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.048 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.067 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:44:03.128 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.129 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.129 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.143 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:03.198 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.199 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.200 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.222 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:44:03.278 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.279 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.279 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.297 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:03.391 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.392 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.392 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.413 D/Maestro ( 7188): View hierarchy received in 22 ms
+09-25 07:44:03.472 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.473 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.473 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.491 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:03.582 D/ActivityManager(  520): freezing 3933 com.google.android.rkpdapp
+09-25 07:44:03.589 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.590 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.591 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.607 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:03.625 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.625 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.626 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.642 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:03.736 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.737 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.737 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.753 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:03.769 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.769 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.770 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.786 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:03.879 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.880 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.880 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.886 I/keystore2(  159): system/security/keystore2/src/watchdog.rs:319 - Watchdog thread idle -> terminating. Have a great day.
+09-25 07:44:03.896 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:03.954 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:03.955 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.955 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:03.973 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:04.030 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.031 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.031 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.046 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:04.101 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.101 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.102 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.117 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:04.135 D/StatusBarIconController(  837): ignoring old pipeline callbacks, because the new mobile icons are enabled
+09-25 07:44:04.211 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.211 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.212 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.235 D/Maestro ( 7188): View hierarchy received in 24 ms
+09-25 07:44:04.293 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.293 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.294 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.310 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:04.364 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.365 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.365 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.379 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:04.437 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.437 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.437 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.452 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:04.547 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.547 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.548 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.566 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:44:04.621 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.622 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.622 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.632 I/netd    (  333): tetherGetStats() -> {[]} <0.27ms>
+09-25 07:44:04.634 I/netd    (  333): bandwidthSetGlobalAlert(2097152) <0.06ms>
+09-25 07:44:04.637 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:04.735 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.736 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.736 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.753 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:04.808 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.808 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.809 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.823 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:04.920 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.921 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.921 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.941 D/Maestro ( 7188): View hierarchy received in 21 ms
+09-25 07:44:04.955 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:04.956 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.956 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:04.971 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:05.067 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.067 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.068 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.082 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:05.136 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.137 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.137 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.146 D/BufferPoolAccessor2.0(  467): bufferpool2 0x708cecdd5348 : 1(3888000 size) total buffers - 0(0 size) used buffers - 108/115 (recycle/alloc) - 7/115 (fetch/transfer)
+09-25 07:44:05.146 D/BufferPoolAccessor2.0(  467): evictor expired: 1, evicted: 1
+09-25 07:44:05.154 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:05.247 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.248 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.248 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.263 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:05.320 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.321 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.321 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.336 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:05.430 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.431 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.431 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.446 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:05.534 D/ActivityManager(  520): freezing 838 com.google.android.permissioncontroller
+09-25 07:44:05.542 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.542 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.542 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.569 D/Maestro ( 7188): View hierarchy received in 27 ms
+09-25 07:44:05.664 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.665 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.665 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.683 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:05.740 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.741 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.741 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.759 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:05.854 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.855 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.855 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.871 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:05.928 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:05.929 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.929 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:05.942 D/Maestro ( 7188): View hierarchy received in 14 ms
+09-25 07:44:06.036 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.037 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.037 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.050 D/Maestro ( 7188): View hierarchy received in 14 ms
+09-25 07:44:06.067 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.068 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.068 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.085 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:06.164 I/wpa_supplicant(  824): wlan0: CTRL-EVENT-BEACON-LOSS 
+09-25 07:44:06.182 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.183 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.183 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.196 D/Maestro ( 7188): View hierarchy received in 14 ms
+09-25 07:44:06.253 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.254 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.254 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.266 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:06.358 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.359 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.359 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.375 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:06.432 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.433 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.433 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.448 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:06.542 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.542 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.542 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.556 D/Maestro ( 7188): View hierarchy received in 14 ms
+09-25 07:44:06.610 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.611 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.611 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.622 D/Maestro ( 7188): View hierarchy received in 12 ms
+09-25 07:44:06.713 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.714 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.714 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.726 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:06.781 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.781 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.782 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.793 D/Maestro ( 7188): View hierarchy received in 12 ms
+09-25 07:44:06.845 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.845 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.845 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.857 D/Maestro ( 7188): View hierarchy received in 12 ms
+09-25 07:44:06.952 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:06.953 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.953 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:06.964 D/Maestro ( 7188): View hierarchy received in 12 ms
+09-25 07:44:07.058 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.059 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.059 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.073 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:07.169 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.170 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.170 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.182 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:07.276 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.277 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.278 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.292 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:07.348 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.348 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.348 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.360 D/Maestro ( 7188): View hierarchy received in 12 ms
+09-25 07:44:07.454 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.455 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.456 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.470 D/Maestro ( 7188): View hierarchy received in 16 ms
+09-25 07:44:07.524 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.525 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.526 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.541 D/Maestro ( 7188): View hierarchy received in 17 ms
+09-25 07:44:07.634 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.635 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.635 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.648 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:07.703 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.704 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.704 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.716 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:07.810 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.811 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.812 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.825 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:07.879 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.880 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.880 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.892 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:07.988 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:07.988 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:07.989 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.005 D/Maestro ( 7188): View hierarchy received in 18 ms
+09-25 07:44:08.062 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.063 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.063 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.077 D/Maestro ( 7188): View hierarchy received in 15 ms
+09-25 07:44:08.130 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.131 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.131 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.143 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:08.157 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.158 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.158 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.170 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:08.218 D/OomAdjuster(  520): Not killing cached processes
+09-25 07:44:08.263 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.264 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.265 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.277 D/Maestro ( 7188): View hierarchy received in 14 ms
+09-25 07:44:08.331 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.333 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.333 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.350 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:08.428 D/ActivityManager(  520): freezing 2970 com.google.android.gms.unstable
+09-25 07:44:08.449 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.449 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.450 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.469 D/Maestro ( 7188): View hierarchy received in 20 ms
+09-25 07:44:08.526 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.527 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.528 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.537 D/BoundBrokerSvc( 5945): onUnbind: Intent { act=com.google.android.gms.clearcut.service.START dat=chimera-action:/... cmp=com.google.android.gms/.chimera.PersistentDirectBootAwareApiService }
+09-25 07:44:08.545 D/Maestro ( 7188): View hierarchy received in 19 ms
+09-25 07:44:08.638 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.639 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.639 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.651 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:08.709 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.709 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.710 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.723 D/Maestro ( 7188): View hierarchy received in 14 ms
+09-25 07:44:08.819 D/Maestro ( 7188): Requesting view hierarchy
+09-25 07:44:08.820 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.821 W/QueryController( 7188): Could not detect idle state.
+09-25 07:44:08.832 D/Maestro ( 7188): View hierarchy received in 13 ms
+09-25 07:44:09.047 D/WindowManager(  520): captureDisplay
+09-25 07:44:09.816 I/logd    (    0): logdr: UID=2000 GID=2000 PID=7508 n tail=0 logMask=99 pid=0 start=0ns deadline=0ns

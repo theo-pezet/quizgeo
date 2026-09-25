@@ -1,0 +1,35 @@
+== Installation de la version précédente (v1.1.1)
+Performing Streamed Install
+Success
+== onboarding sur l'ancienne version : échec (voir maestro-prev.log)
+== Mise à jour vers v1.2.0 par-dessus
+Performing Streamed Install
+Success
+Starting: Intent { cmp=fr.citeparlia.quizgeo/.MainActivity }
+Status: ok
+LaunchState: WARM
+Activity: fr.citeparlia.quizgeo/.MainActivity
+TotalTime: 5208
+WaitTime: 5269
+Complete
+== Installation propre de v1.2.0
+Performing Streamed Install
+Success
+== Démarrage à froid
+Starting: Intent { cmp=fr.citeparlia.quizgeo/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: fr.citeparlia.quizgeo/.MainActivity
+TotalTime: 4158
+WaitTime: 4211
+Complete
+== Scénario onboarding
+== onboarding : ÉCHEC (voir maestro-onboarding.log)
+== Scénario lesson
+== lesson : ÉCHEC (voir maestro-lesson.log)
+== Scénario tabs
+== tabs : ÉCHEC (voir maestro-tabs.log)
+== Plantages et erreurs JS
+09-25 07:44:49.081  7649  7649 I AndroidRuntime: VM exiting with result code 0.
+== Mémoire
+           TOTAL PSS:   122420            TOTAL RSS:   226000       TOTAL SWAP PSS:      231
