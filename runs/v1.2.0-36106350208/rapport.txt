@@ -1,0 +1,67 @@
+== Installation de la version précédente (v1.1.1)
+Performing Streamed Install
+Success
+== onboarding sur l'ancienne version : échec (voir maestro-prev.log)
+== Mise à jour vers v1.2.0 par-dessus
+Performing Streamed Install
+Success
+Starting: Intent { cmp=fr.citeparlia.quizgeo/.MainActivity }
+Status: ok
+LaunchState: UNKNOWN (0)
+Activity: fr.citeparlia.quizgeo/.MainActivity
+WaitTime: 1148
+Complete
+== Installation propre de v1.2.0
+Performing Streamed Install
+Success
+== Démarrage à froid
+Starting: Intent { cmp=fr.citeparlia.quizgeo/.MainActivity }
+Status: ok
+LaunchState: UNKNOWN (0)
+Activity: fr.citeparlia.quizgeo/.MainActivity
+WaitTime: 1169
+Complete
+== Scénario onboarding
+== onboarding : ÉCHEC (voir maestro-onboarding.log)
+== Scénario lesson
+== lesson : ÉCHEC (voir maestro-lesson.log)
+== Scénario tabs
+== tabs : ÉCHEC (voir maestro-tabs.log)
+== Plantages et erreurs JS
+09-25 07:15:51.696  7579  7579 D AndroidRuntime: Shutting down VM
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: FATAL EXCEPTION: main
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: Process: fr.citeparlia.quizgeo, PID: 7579
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: com.facebook.soloader.B: couldn't find DSO to load: libreactnative.so
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	existing SO sources: 
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 		SoSource 0: ApplicationSoSource[DirectorySoSource[root = /data/app/~~ul0aWrzm-gdAs60rG0jjjA==/fr.citeparlia.quizgeo-EWHp-nAlhXo_HNLVpXtP5Q==/lib/arm64 flags = 0]]
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 		SoSource 1: DirectApkSoSource[root = [/data/app/~~ul0aWrzm-gdAs60rG0jjjA==/fr.citeparlia.quizgeo-EWHp-nAlhXo_HNLVpXtP5Q==/base.apk!/lib/x86_64]]
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 		SoSource 2: DirectorySoSource[root = /system/lib64 flags = 3]
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 		SoSource 3: DirectorySoSource[root = /vendor/lib64 flags = 3]
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	Native lib dir: /data/app/~~ul0aWrzm-gdAs60rG0jjjA==/fr.citeparlia.quizgeo-EWHp-nAlhXo_HNLVpXtP5Q==/lib/arm64
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.soloader.SoLoader.g(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:107)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.soloader.SoLoader.w(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:21)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.soloader.SoLoader.v(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:2)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.soloader.SoLoader.y(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:27)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.soloader.SoLoader.u(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:27)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.soloader.SoLoader.t(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:6)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.react.internal.featureflags.ReactNativeFeatureFlagsCxxInterop.<clinit>(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:10)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at H6.d.a(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:6)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at H6.b.C(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:8)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.react.defaults.a.d(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:49)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.react.defaults.a.c(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:2)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.facebook.react.I.a(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:6)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at fr.citeparlia.quizgeo.MainApplication.onCreate(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:29)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1316)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6998)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(Unknown Source:0)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2236)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.os.Looper.loopOnce(Looper.java:205)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:294)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:8177)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
+09-25 07:15:51.696  7579  7579 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
+09-25 07:16:16.223  7355  7355 I AndroidRuntime: VM exiting with result code 0.
+== Mémoire

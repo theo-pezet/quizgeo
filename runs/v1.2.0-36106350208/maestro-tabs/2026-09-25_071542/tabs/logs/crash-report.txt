@@ -1,0 +1,34 @@
+09-25 07:15:51.696 E/AndroidRuntime( 7579): Process: fr.citeparlia.quizgeo, PID: 7579
+09-25 07:15:51.696 E/AndroidRuntime( 7579): com.facebook.soloader.B: couldn't find DSO to load: libreactnative.so
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	existing SO sources: 
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 		SoSource 0: ApplicationSoSource[DirectorySoSource[root = /data/app/~~ul0aWrzm-gdAs60rG0jjjA==/fr.citeparlia.quizgeo-EWHp-nAlhXo_HNLVpXtP5Q==/lib/arm64 flags = 0]]
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 		SoSource 1: DirectApkSoSource[root = [/data/app/~~ul0aWrzm-gdAs60rG0jjjA==/fr.citeparlia.quizgeo-EWHp-nAlhXo_HNLVpXtP5Q==/base.apk!/lib/x86_64]]
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 		SoSource 2: DirectorySoSource[root = /system/lib64 flags = 3]
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 		SoSource 3: DirectorySoSource[root = /vendor/lib64 flags = 3]
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	Native lib dir: /data/app/~~ul0aWrzm-gdAs60rG0jjjA==/fr.citeparlia.quizgeo-EWHp-nAlhXo_HNLVpXtP5Q==/lib/arm64
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.soloader.SoLoader.g(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:107)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.soloader.SoLoader.w(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:21)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.soloader.SoLoader.v(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:2)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.soloader.SoLoader.y(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:27)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.soloader.SoLoader.u(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:27)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.soloader.SoLoader.t(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:6)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.react.internal.featureflags.ReactNativeFeatureFlagsCxxInterop.<clinit>(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:10)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at H6.d.a(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:6)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at H6.b.C(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:8)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.react.defaults.a.d(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:49)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.react.defaults.a.c(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:2)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.facebook.react.I.a(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:6)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at fr.citeparlia.quizgeo.MainApplication.onCreate(r8-map-id-6eaf7d5cb91187fe46828bfb0dd3f4e937a7dbb3809ba7dc50afe309531cb597:29)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1316)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6998)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.app.ActivityThread.-$$Nest$mhandleBindApplication(Unknown Source:0)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2236)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.os.Handler.dispatchMessage(Handler.java:106)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.os.Looper.loopOnce(Looper.java:205)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.os.Looper.loop(Looper.java:294)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at android.app.ActivityThread.main(ActivityThread.java:8177)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at java.lang.reflect.Method.invoke(Native Method)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:552)
+09-25 07:15:51.696 E/AndroidRuntime( 7579): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:971)
+

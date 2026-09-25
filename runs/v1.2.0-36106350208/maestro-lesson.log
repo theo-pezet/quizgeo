@@ -1,0 +1,18 @@
+Running on test
+ > Flow lesson
+Launch app "fr.citeparlia.quizgeo"... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on "Le vocabulaire de base"... FAILED
+
+Element not found: Text matching regex: Le vocabulaire de base
+
+Element with Text matching regex: Le vocabulaire de base not found. Check the UI hierarchy in debug artifacts to verify if the element exists.
+
+Possible causes:
+- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.
+- Element may be temporarily unavailable due to loading state.
+- This could be a real regression that needs to be addressed.
+
+==== Debug output (logs & screenshots) ====
+
+/home/runner/work/quizgeo/quizgeo/out/maestro-lesson/2026-09-25_071502
