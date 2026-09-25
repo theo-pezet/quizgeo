@@ -1,6 +1,6 @@
 import { Redirect, router, useFocusEffect, useIsFocused } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
+import { BackHandler, Pressable, ScrollView, StyleSheet, View, useWindowDimensions, type LayoutChangeEvent } from 'react-native';
 
 import { CATALOG, isWorldComplete, worldProgress, worldsOf, type Unit, type World } from '@/content';
 import { useContent } from '@/content/useContent';
@@ -142,6 +142,17 @@ export default function PathScreen() {
   const showTutorial = onboardingDone && !tutorialDone;
   // Les panneaux vont dans la couche superposée, ancrée en bas de l'écran,
   // jamais dans le contenu qui défile (sinon ils s'ouvrent hors de vue).
+  // Bouton retour Android : ferme d'abord la feuille ouverte au lieu de quitter l'app.
+  useEffect(() => {
+    if (!picked && !noEnergy) return;
+    const sub = BackHandler.addEventListener('hardwareBackPress', () => {
+      setPicked(null);
+      setNoEnergy(false);
+      return true;
+    });
+    return () => sub.remove();
+  }, [picked, noEnergy]);
+
   const overlay = noEnergy ? <NoEnergySheet onClose={() => setNoEnergy(false)} /> : picked && !showTutorial ? sheet(picked) : null;
 
   function sheet(picked: Unit) {

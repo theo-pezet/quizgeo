@@ -10,7 +10,14 @@ appId: fr.citeparlia.quizgeo
 - tapOn: "Le vocabulaire de base"
 - waitForAnimationToEnd
 - takeScreenshot: shots/10-feuille-unite
-- tapOn: "Commencer.*"
+# Bouton retour avec la feuille ouverte : doit la fermer, pas quitter l'app.
+- pressKey: back
+- waitForAnimationToEnd
+- takeScreenshot: shots/10b-retour-ferme-la-feuille
+- assertVisible: "Le vocabulaire de base"
+- tapOn: "Le vocabulaire de base"
+- waitForAnimationToEnd
+- tapOn: "Commencer ·.*"
 - waitForAnimationToEnd
 - takeScreenshot: shots/11-question-1
 # Bouton retour Android : doit demander confirmation, pas quitter.

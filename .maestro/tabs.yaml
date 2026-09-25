@@ -18,7 +18,7 @@ appId: fr.citeparlia.quizgeo
 - inputText: "seo"
 - takeScreenshot: shots/23-deck-clavier
 - pressKey: back
-- tapOn: "Réviser.*"
+- tapOn: "Apprendre de nouvelles cartes|Réviser .*"
 - waitForAnimationToEnd
 - takeScreenshot: shots/24-carte-recto
 - tapOn:
