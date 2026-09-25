@@ -37,10 +37,23 @@ jobs:
           echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
           sudo udevadm control --reload-rules
           sudo udevadm trigger --name-match=kvm
-      - name: Télécharger les APK
+      - name: Préparer les APK (depuis les App Bundles, pour l'émulateur x86_64)
+        # L'APK publié ne contient que le code arm64 (téléphones) : l'émulateur
+        # x86_64 ne peut pas le lancer. On reconstruit un APK universel depuis
+        # l'App Bundle de la même release (même code, toutes architectures),
+        # signé avec une clé de test : les deux versions partagent cette clé,
+        # donc la mise à jour par-dessus reste testable.
         run: |
-          gh release download "$TAG" --pattern '*.apk' --output app.apk
-          if [ -n "$PREV_TAG" ]; then gh release download "$PREV_TAG" --pattern '*.apk' --output prev.apk || true; fi
+          set -e
+          curl -fsSL -o bundletool.jar https://github.com/google/bundletool/releases/download/1.17.2/bundletool-all-1.17.2.jar
+          keytool -genkeypair -keystore test.jks -storepass android -keypass android -alias test -keyalg RSA -keysize 2048 -validity 365 -dname "CN=test" > /dev/null
+          universal() {
+            gh release download "$1" --pattern '*.aab' --output "$2.aab"
+            java -jar bundletool.jar build-apks --bundle="$2.aab" --output="$2.apks" --mode=universal --ks=test.jks --ks-pass=pass:android --ks-key-alias=test --key-pass=pass:android
+            unzip -o -q "$2.apks" universal.apk && mv universal.apk "$2.apk"
+          }
+          universal "$TAG" app
+          if [ -n "$PREV_TAG" ]; then universal "$PREV_TAG" prev || rm -f prev.apk; fi
           ls -la *.apk
       - name: Installer Maestro
         run: |
