@@ -1,0 +1,35 @@
+# Une leçon : verdict en bas, bouton retour Android, fin de leçon.
+appId: fr.citeparlia.quizgeo
+---
+- launchApp
+- waitForAnimationToEnd
+- tapOn: "Le vocabulaire de base"
+- waitForAnimationToEnd
+- takeScreenshot: shots/10-feuille-unite
+- tapOn: "Commencer.*"
+- waitForAnimationToEnd
+- takeScreenshot: shots/11-question-1
+# Bouton retour Android : doit demander confirmation, pas quitter.
+- pressKey: back
+- waitForAnimationToEnd
+- takeScreenshot: shots/12-retour-android
+- tapOn:
+    text: "Annuler|Cancel"
+    optional: true
+- repeat:
+    times: 14
+    commands:
+      # Un choix au hasard (zone des réponses), puis Vérifier / Continuer.
+      - tapOn:
+          point: "50%,38%"
+          optional: true
+      - tapOn:
+          text: "Vérifier"
+          optional: true
+      - waitForAnimationToEnd
+      - takeScreenshot: shots/13-verdict
+      - tapOn:
+          text: "Continuer|Décision suivante|Voir le bilan"
+          optional: true
+      - waitForAnimationToEnd
+- takeScreenshot: shots/14-apres-questions

@@ -1,0 +1,41 @@
+# Premier lancement : langue, matière, niveau, objectif, rappels, tuto.
+appId: fr.citeparlia.quizgeo
+---
+- launchApp
+- extendedWaitUntil:
+    visible: "Français"
+    timeout: 30000
+- takeScreenshot: shots/01-premier-lancement
+- tapOn: "Français"
+- tapOn: "Continuer"
+- takeScreenshot: shots/02-matieres
+- tapOn: ".*Marketing digital.*"
+- tapOn: "Continuer"
+- takeScreenshot: shots/03-niveau
+- tapOn:
+    text: "Je pars de zéro"
+    index: 0
+- tapOn: "Continuer"
+- takeScreenshot: shots/04-objectif
+- tapOn: "Continuer"
+- takeScreenshot: shots/05-rappels
+- tapOn: "C.est parti"
+- waitForAnimationToEnd
+- takeScreenshot: shots/06-tuto
+- tapOn:
+    text: "Passer"
+    optional: true
+- tapOn:
+    text: "Suivant"
+    optional: true
+- tapOn:
+    text: "Suivant"
+    optional: true
+- tapOn:
+    text: "Suivant"
+    optional: true
+- tapOn:
+    text: "Compris"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/07-parcours

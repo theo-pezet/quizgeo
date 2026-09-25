@@ -1,0 +1,79 @@
+# Teste un APK publié dans un émulateur Android (API 34), sans téléphone :
+# mise à jour depuis la version précédente, onboarding, leçon, bouton retour,
+# clavier, rappels. Captures et vidéo publiées sur la branche device-tests.
+name: Test sur émulateur
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release à tester (ex. v1.2.0)'
+        required: true
+        default: 'v1.2.0'
+      prev_tag:
+        description: 'Release précédente, pour tester la mise à jour (vide = pas de test de mise à jour)'
+        required: false
+        default: 'v1.1.1'
+
+permissions:
+  contents: write
+
+jobs:
+  emulator:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    env:
+      TAG: ${{ github.event.inputs.tag }}
+      PREV_TAG: ${{ github.event.inputs.prev_tag }}
+      GH_TOKEN: ${{ github.token }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+      - name: Activer KVM (émulateur accéléré)
+        run: |
+          echo 'KERNEL=="kvm", GROUP="kvm", MODE="0666", OPTIONS+="static_node=kvm"' | sudo tee /etc/udev/rules.d/99-kvm4all.rules
+          sudo udevadm control --reload-rules
+          sudo udevadm trigger --name-match=kvm
+      - name: Télécharger les APK
+        run: |
+          gh release download "$TAG" --pattern '*.apk' --output app.apk
+          if [ -n "$PREV_TAG" ]; then gh release download "$PREV_TAG" --pattern '*.apk' --output prev.apk || true; fi
+          ls -la *.apk
+      - name: Installer Maestro
+        run: |
+          curl -fsSL "https://get.maestro.mobile.dev" | bash
+          echo "$HOME/.maestro/bin" >> "$GITHUB_PATH"
+      - name: Émulateur + scénarios
+        uses: reactivecircus/android-emulator-runner@v2
+        with:
+          api-level: 34
+          target: google_apis
+          arch: x86_64
+          profile: pixel_6
+          disable-animations: true
+          emulator-options: -no-window -gpu swiftshader_indirect -no-snapshot -noaudio -no-boot-anim
+          script: ./tools/device-test.sh
+      - name: Publier les résultats sur la branche device-tests
+        if: always()
+        run: |
+          set -e
+          DIR="runs/${TAG}-${{ github.run_id }}"
+          mkdir -p /tmp/res && cp -r out/. /tmp/res/ || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git fetch origin device-tests || true
+          if git rev-parse --verify origin/device-tests >/dev/null 2>&1; then
+            git checkout -B device-tests origin/device-tests
+          else
+            git checkout --orphan device-tests && git rm -rf . > /dev/null
+          fi
+          mkdir -p "$DIR" && cp -r /tmp/res/. "$DIR/"
+          git add runs && git commit -m "Test émulateur $TAG (run ${{ github.run_id }})" && git push origin device-tests
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: emulateur-${{ github.event.inputs.tag }}
+          path: out/

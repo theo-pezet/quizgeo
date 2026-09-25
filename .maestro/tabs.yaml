@@ -1,0 +1,50 @@
+# Onglets : ligue, deck (clavier sur la recherche), profil et rappels.
+appId: fr.citeparlia.quizgeo
+---
+- launchApp
+- waitForAnimationToEnd
+- takeScreenshot: shots/20-parcours
+- tapOn: "Ligue"
+- waitForAnimationToEnd
+- takeScreenshot: shots/21-ligue
+- tapOn: "Deck"
+- waitForAnimationToEnd
+- takeScreenshot: shots/22-deck
+- tapOn: "Chercher un terme…"
+- inputText: "seo"
+- takeScreenshot: shots/23-deck-clavier
+- pressKey: back
+- tapOn: "Réviser.*"
+- waitForAnimationToEnd
+- takeScreenshot: shots/24-carte-recto
+- tapOn:
+    text: "Voir la réponse"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/25-carte-verso
+- pressKey: back
+- waitForAnimationToEnd
+- takeScreenshot: shots/26-deck-retour
+- tapOn:
+    text: "Annuler|Cancel|Confirmer"
+    optional: true
+- tapOn:
+    text: "Profil"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/27-profil
+- scrollUntilVisible:
+    element: "Rappels.*"
+    direction: DOWN
+    optional: true
+- takeScreenshot: shots/28-profil-reglages
+- tapOn:
+    rightOf: "Rappels.*"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/29-permission-rappels
+- tapOn:
+    text: "Allow|Autoriser"
+    optional: true
+- waitForAnimationToEnd
+- takeScreenshot: shots/30-rappels-actives
