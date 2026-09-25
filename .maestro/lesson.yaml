@@ -2,6 +2,10 @@
 appId: fr.citeparlia.quizgeo
 ---
 - launchApp
+# Fenêtre système « … isn't responding » de l'émulateur : on attend.
+- tapOn:
+    text: "Wait|Attendre"
+    optional: true
 - waitForAnimationToEnd
 - tapOn: "Le vocabulaire de base"
 - waitForAnimationToEnd

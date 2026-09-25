@@ -10,6 +10,11 @@ OUT=out
 mkdir -p "$OUT"
 log() { echo "== $*" | tee -a "$OUT/rapport.txt"; }
 
+# Laisser l'émulateur finir de démarrer, et masquer les fenêtres système
+# « X ne répond pas » (le lanceur rame sur les serveurs de CI).
+sleep 45
+adb shell settings put global hide_error_dialogs 1
+adb shell am broadcast -a android.intent.action.CLOSE_SYSTEM_DIALOGS > /dev/null
 adb shell settings put global window_animation_scale 0
 adb shell settings put global transition_animation_scale 0
 adb shell settings put global animator_duration_scale 0
