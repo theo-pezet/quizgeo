@@ -1,0 +1,33 @@
+Running on test
+ > Flow tabs
+Launch app "fr.citeparlia.quizgeo"... COMPLETED
+Tap on (Optional) "Wait|Attendre"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Wait|Attendre
+Wait for animation to end... COMPLETED
+Take screenshot shots/20-parcours... COMPLETED
+Tap on "Ligue"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/21-ligue... COMPLETED
+Tap on "Deck"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/22-deck... COMPLETED
+Tap on "Chercher un terme…"... COMPLETED
+Input text seo... COMPLETED
+Take screenshot shots/23-deck-clavier... COMPLETED
+Press Back key... COMPLETED
+Tap on "Réviser.*"... FAILED
+
+Element not found: Text matching regex: Réviser.*
+
+Element with Text matching regex: Réviser.* not found. Check the UI hierarchy in debug artifacts to verify if the element exists.
+
+Possible causes:
+- Element selector may be incorrect - check if there are similar elements with slightly different names/properties.
+- Element may be temporarily unavailable due to loading state.
+- This could be a real regression that needs to be addressed.
+
+==== Debug output (logs & screenshots) ====
+
+/home/runner/work/quizgeo/quizgeo/out/maestro-tabs/2026-09-25_083648
