@@ -1,0 +1,33 @@
+Running on test
+ > Flow onboarding
+Launch app "fr.citeparlia.quizgeo"... COMPLETED
+Tap on (Optional) "Wait|Attendre"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Wait|Attendre
+Assert that "Français" is visible... COMPLETED
+Take screenshot shots/01-premier-lancement... COMPLETED
+Tap on "Français"... COMPLETED
+Tap on "Continuer"... COMPLETED
+Take screenshot shots/02-matieres... COMPLETED
+Tap on ".*Marketing digital.*"... COMPLETED
+Tap on "Continuer"... COMPLETED
+Take screenshot shots/03-niveau... COMPLETED
+Tap on "Je pars de zéro", Index: 0... COMPLETED
+Tap on "Continuer"... COMPLETED
+Take screenshot shots/04-objectif... COMPLETED
+Tap on "Continuer"... COMPLETED
+Take screenshot shots/05-rappels... COMPLETED
+Tap on "C.est parti"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/06-tuto... COMPLETED
+Tap on (Optional) "Passer"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Passer
+Tap on (Optional) "Suivant"... COMPLETED
+Tap on (Optional) "Suivant"... COMPLETED
+Tap on (Optional) "Suivant"... COMPLETED
+Tap on (Optional) "Compris"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/07-parcours... COMPLETED

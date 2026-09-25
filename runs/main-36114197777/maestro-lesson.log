@@ -1,0 +1,33 @@
+Running on test
+ > Flow lesson
+Launch app "fr.citeparlia.quizgeo"... COMPLETED
+Tap on (Optional) "Wait|Attendre"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Wait|Attendre
+Wait for animation to end... COMPLETED
+Tap on "Le vocabulaire de base"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/10-feuille-unite... COMPLETED
+Press Back key... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/10b-retour-ferme-la-feuille... COMPLETED
+Assert that "Le vocabulaire de base" is visible... COMPLETED
+Tap on "Le vocabulaire de base"... COMPLETED
+Wait for animation to end... COMPLETED
+Tap on "Commencer ·.*"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/11-question-1... COMPLETED
+Press Back key... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/12-retour-android... COMPLETED
+Tap on (Optional) "Annuler|Cancel"... COMPLETED
+Repeat 14 times...
+  Tap on point (50%,38%)... COMPLETED
+  Tap on (Optional) "Vérifier"... COMPLETED
+  Wait for animation to end... COMPLETED
+  Take screenshot shots/13-verdict... COMPLETED
+  Tap on (Optional) "Continuer|Décision suivante|Voir le bilan"... COMPLETED
+  Wait for animation to end... COMPLETED
+Repeat 14 times... COMPLETED
+Take screenshot shots/14-apres-questions... COMPLETED

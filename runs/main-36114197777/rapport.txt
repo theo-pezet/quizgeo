@@ -1,0 +1,34 @@
+== Installation de la version précédente (v1.1.1)
+Performing Streamed Install
+Success
+== Mise à jour vers main par-dessus
+Performing Streamed Install
+Success
+Starting: Intent { cmp=fr.citeparlia.quizgeo/.MainActivity }
+Status: ok
+LaunchState: WARM
+Activity: fr.citeparlia.quizgeo/.MainActivity
+TotalTime: 4046
+WaitTime: 4058
+Complete
+== Installation propre de main
+Performing Streamed Install
+Success
+== Démarrage à froid
+Starting: Intent { cmp=fr.citeparlia.quizgeo/.MainActivity }
+Status: ok
+LaunchState: COLD
+Activity: fr.citeparlia.quizgeo/.MainActivity
+TotalTime: 2872
+WaitTime: 2886
+Complete
+== Scénario onboarding
+== onboarding : OK
+== Scénario lesson
+== lesson : OK
+== Scénario tabs
+== tabs : OK
+== Plantages et erreurs JS
+09-25 09:18:30.963  8933  8933 I AndroidRuntime: VM exiting with result code 0.
+== Mémoire
+           TOTAL PSS:   207929            TOTAL RSS:   313856       TOTAL SWAP PSS:      488

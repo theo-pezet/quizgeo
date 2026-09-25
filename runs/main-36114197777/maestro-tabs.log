@@ -1,0 +1,46 @@
+Running on test
+ > Flow tabs
+Launch app "fr.citeparlia.quizgeo"... COMPLETED
+Tap on (Optional) "Wait|Attendre"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Wait|Attendre
+Wait for animation to end... COMPLETED
+Take screenshot shots/20-parcours... COMPLETED
+Tap on "Ligue"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/21-ligue... COMPLETED
+Tap on "Deck"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/22-deck... COMPLETED
+Tap on "Chercher un terme…"... COMPLETED
+Input text seo... COMPLETED
+Take screenshot shots/23-deck-clavier... COMPLETED
+Press Back key... COMPLETED
+Tap on "Apprendre de nouvelles cartes|Réviser .*"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/24-carte-recto... COMPLETED
+Tap on (Optional) "Voir la réponse"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/25-carte-verso... COMPLETED
+Press Back key... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/26-deck-retour... COMPLETED
+Tap on (Optional) "Annuler|Cancel|Confirmer"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Annuler|Cancel|Confirmer
+Tap on (Optional) "Profil"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/27-profil... COMPLETED
+Scrolling DOWN until "Rappels.*" is visible with speed 40, visibility percentage 100%, timeout 20000 ms, with centering disabled... COMPLETED
+Take screenshot shots/28-profil-reglages... COMPLETED
+Tap on (Optional) Right of "Rappels.*"... COMPLETED
+Wait for animation to end... COMPLETED
+Take screenshot shots/29-permission-rappels... COMPLETED
+Tap on (Optional) "Allow|Autoriser"... WARNED
+
+
+ Warning: Element not found: Text matching regex: Allow|Autoriser
+Wait for animation to end... COMPLETED
+Take screenshot shots/30-rappels-actives... COMPLETED
