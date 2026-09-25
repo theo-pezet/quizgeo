@@ -13,11 +13,11 @@ on:
       tag:
         description: 'Release à tester (ex. v1.2.0)'
         required: true
-        default: 'v1.2.0'
+        default: 'v1.2.1'
       prev_tag:
         description: 'Release précédente, pour tester la mise à jour (vide = pas de test de mise à jour)'
         required: false
-        default: 'v1.1.1'
+        default: 'v1.2.0'
 
 permissions:
   contents: write
