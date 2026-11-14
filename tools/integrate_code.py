@@ -4,8 +4,8 @@ Intègre des exercices « lis le code » (fichiers JSON {"exercises": [...]}) da
 src/data/code.extra.json, après validation. Chaque exercice est rattaché à une
 unité EXISTANTE (unitId) et servi en priorité dans ses leçons.
 
-Format d'un exercice (textes en trois langues {"fr","en","es"} ; le code est
-identique dans les trois langues) :
+Format d'un exercice (textes en anglais : une chaîne, ou {"en": "…"} ; l'app
+est en anglais uniquement depuis la 1.3) :
 
   qcm      : key, unitId, kind, prompt, code {lang, src}, choices [L…] (2 à 4),
              answer (index), whyWrong [L|null…] (aligné sur choices, null pour
@@ -30,7 +30,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 TARGET = ROOT / 'src' / 'data' / 'code.extra.json'
-LANGS = ('fr', 'en', 'es')
+LANGS = ('en',)
 CODE_LANGS = {'python', 'html', 'css', 'js', 'text'}
 
 
@@ -41,14 +41,15 @@ def unit_ids() -> set[str]:
     return ids
 
 
-def tri(v, where: str) -> dict:
-    if not isinstance(v, dict) or any(l not in v or not isinstance(v[l], str) or not v[l].strip() for l in LANGS):
-        raise ValueError(f'{where} : texte trilingue attendu')
-    for l in LANGS:
-        if v[l].startswith('TODO'):
-            raise ValueError(f'{where}.{l} : traduction manquante')
-        v[l] = v[l].replace(' — ', ' : ').replace('—', ',').strip()
-    return {l: v[l] for l in LANGS}
+def tri(v, where: str) -> str:
+    """Un texte anglais : une chaîne, ou {"en": "…"} (les autres langues sont ignorées)."""
+    if isinstance(v, dict):
+        v = v.get('en')
+    if not isinstance(v, str) or not v.strip():
+        raise ValueError(f'{where} : texte anglais attendu')
+    if v.startswith('TODO'):
+        raise ValueError(f'{where} : texte manquant')
+    return v.replace(' — ', ': ').replace('—', ',').strip()
 
 
 def validate(e: dict, units: set[str]) -> dict:
@@ -81,10 +82,9 @@ def validate(e: dict, units: set[str]) -> dict:
         if e.get('output') is not None:
             out['output'] = str(e['output'])
         # deux choix identiques = question cassée (la casse compte quand les choix sont du code)
-        for l in LANGS:
-            norm = (lambda t: t.strip()) if e.get('code') else (lambda t: t.strip().lower())
-            if len({norm(c[l]) for c in out['choices']}) != len(choices):
-                raise ValueError(f'{key} : choix en double en {l}')
+        norm = (lambda t: t.strip()) if e.get('code') else (lambda t: t.strip().lower())
+        if len({norm(c) for c in out['choices']}) != len(choices):
+            raise ValueError(f'{key} : choix en double')
     elif kind == 'vf':
         out['prompt'] = tri(e.get('prompt'), key + '.prompt')
         if not isinstance(e.get('isTrue'), bool):

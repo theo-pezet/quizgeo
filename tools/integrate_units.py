@@ -5,7 +5,8 @@ charge au démarrage (src/content/extra.ts).
 
     python3 tools/integrate_units.py chemin/vers/dossier/*.json
 
-Chaque fichier décrit une unité, ses cartes et ses exercices en trois langues.
+Chaque fichier décrit une unité, ses cartes et ses exercices, en anglais (l'app
+est en anglais uniquement depuis la 1.3 ; un texte peut s'écrire "…" ou {"en": "…"}).
 Le script valide la structure, dérive les identifiants (cartes :
 `<matière>-x-<slug>`, exercices : `<unité>:x:<n>`), refuse les doublons et
 réécrit units.extra.json trié par identifiant d'unité. Relancer le script avec
@@ -17,18 +18,18 @@ import re
 import sys
 from pathlib import Path
 
-LANGS = ("fr", "en", "es")
+LANGS = ("en",)
 TARGET = Path("src/data/units.extra.json")
 DASH = re.compile("[—–]")
 
 
 def text(value, where):
-    if not isinstance(value, dict) or any(not isinstance(value.get(l), str) or not value[l].strip() for l in LANGS):
-        raise ValueError(f"{where} : texte manquant dans une langue")
-    for l in LANGS:
-        if DASH.search(value[l]):
-            value[l] = DASH.sub(",", value[l])
-    return {l: value[l].strip() for l in LANGS}
+    """Un texte anglais : une chaîne, ou {"en": "…"} (ancien format multilingue, les autres langues sont ignorées)."""
+    if isinstance(value, dict):
+        value = value.get("en")
+    if not isinstance(value, str) or not value.strip():
+        raise ValueError(f"{where} : texte anglais manquant")
+    return DASH.sub(",", value).strip()
 
 
 def texts(values, where, n=None):
