@@ -1,6 +1,8 @@
-import type { fr } from './fr';
-
-export const en: Record<keyof typeof fr, string> = {
+/**
+ * Textes de l'interface. L'application est en anglais uniquement (1.3) :
+ * ce dictionnaire est la référence, chaque texte visible a sa clé ici.
+ */
+export const en = {
   'common.continue': 'Continue',
   'common.back': 'Back',
   'common.close': 'Close',
@@ -18,7 +20,6 @@ export const en: Record<keyof typeof fr, string> = {
   'common.openSettings': 'Open settings',
   'common.level': 'Level {level}',
   'common.record': 'best {value}',
-  'common.language': 'Language',
   'common.example': 'E.g. {text}',
   'common.true': 'True',
   'common.false': 'False',
@@ -31,8 +32,11 @@ export const en: Record<keyof typeof fr, string> = {
   'tabs.profile': 'Profile',
 
   'onboarding.step': '{step} / {total}',
-  'onboarding.lang.title': 'Which language?',
-  'onboarding.lang.body': 'The interface, the lessons and the vocabulary deck are all available in French, English and Spanish. You can change it later in your Profile.',
+  'onboarding.welcome.title': 'Welcome to Skilltrail',
+  'onboarding.welcome.body': 'Digital marketing, AI and code, learned in English: the language the industry actually uses. Every term is the exact one you will meet at work.',
+  'onboarding.welcome.point1': 'Short lessons on a path, with an explanation after every answer.',
+  'onboarding.welcome.point2': 'A spaced-repetition deck so you never forget what you learned.',
+  'onboarding.welcome.point3': 'Case studies that put the theory to work.',
   'onboarding.subject.title': 'Where do we start?',
   'onboarding.subject.body': 'Independent courses, split into worlds. You can switch between them at any time.',
   'onboarding.goal.title': 'Your daily goal',
@@ -45,7 +49,7 @@ export const en: Record<keyof typeof fr, string> = {
   'onboarding.reminders.title': 'Keep your streak',
   'onboarding.reminders.body': 'One session a day keeps the streak alive. A reminder at the time you choose stops you losing it by accident (Android only).',
   'onboarding.reminders.toggle': 'Remind me',
-  'onboarding.rule.energy': 'A lesson costs 5 energy points out of 25; they come back over time. Reviewing is free.',
+  'onboarding.rule.energy': 'A lesson costs 5 energy points out of 30 (more as you climb the leagues); they come back over time. Reviewing is free.',
   'onboarding.rule.crowns': 'Each unit has 5 crowns: the first opens the next unit, 3 complete it, 5 master it. They crack if you don’t come back.',
   'onboarding.rule.gems': 'Gems are earned by playing, never with money.',
   'onboarding.go': 'Let’s go',
@@ -89,6 +93,14 @@ export const en: Record<keyof typeof fr, string> = {
   'session.typed.expected': 'Expected answer: {answer}',
   'session.order.hint': 'Tap the steps below in the right order.',
   'session.order.solution': 'Correct order:',
+  'session.pretest.tag': 'Warm-up guess · no penalty',
+  'session.pretest.note': 'Warm-up: guessing before the lesson, even wrong, helps the right answer stick. You will meet this question again.',
+  'session.sure': 'I’m sure',
+  'session.sure.hint': 'Tell yourself how confident you are before checking. A confident mistake is the one you remember best once corrected.',
+  'session.sure.miss': 'You were sure: this one goes to the top of your review list.',
+  'session.previous': 'Previous question',
+  'session.previous.tag': 'Previous question · read only',
+  'session.previous.back': 'Back to the current question',
   'session.whyWrong': 'Why it’s wrong',
   'session.remember': 'Key takeaway',
   'session.bugline.wrong': 'That line is valid: the problem is elsewhere.',
@@ -150,7 +162,7 @@ export const en: Record<keyof typeof fr, string> = {
   'energy.empty.body': 'You have {count} point(one:|other:s) left; a lesson costs 5. Next lesson possible in {wait}.',
   'energy.refill': 'Refill ({cost} gems)',
   'energy.missing': 'need {count} more',
-  'energy.watchAd': 'Watch a video (+25 ⚡)',
+  'energy.watchAd': 'Watch a video (refill ⚡)',
   'energy.reviewErrors': 'Review my mistakes (free)',
   'energy.reviewDeck': 'Review the deck (free)',
 
@@ -181,6 +193,10 @@ export const en: Record<keyof typeof fr, string> = {
   'league.maxTier': '(top league)',
   'league.you': 'You',
   'league.note': 'Your three rivals follow you week after week. Offline league: opponents are simulated.',
+  'league.perk.title': 'League perk: +{bonus} max energy',
+  'league.perk.body': 'The {tier} League raises your energy cap to {max}. Get demoted and you lose it: defend your spot.',
+  'league.perk.next': 'Reach {tier} League to unlock +{bonus} max energy.',
+  'league.perk.max': 'You have the biggest perk in the game.',
   'league.tier.0': 'Bronze',
   'league.tier.1': 'Silver',
   'league.tier.2': 'Gold',
@@ -211,6 +227,18 @@ export const en: Record<keyof typeof fr, string> = {
   'deck.review.tap': 'Tap to see the answer',
   'deck.review.show': 'Show the answer',
   'deck.review.example': 'Example',
+  'deck.face.term': 'What does it mean?',
+  'deck.face.definition': 'Which term is this?',
+  'deck.face.example': 'Which term does this example illustrate?',
+  'deck.face.cloze': 'Fill in the blank',
+  'deck.face.duel': 'Which of the two is described here?',
+  'deck.face.pill.definition': 'reverse',
+  'deck.face.pill.example': 'example',
+  'deck.face.pill.cloze': 'cloze',
+  'deck.face.pill.duel': 'duel',
+  'deck.face.think': 'Say the answer in your head before you flip.',
+  'deck.face.missing': 'Missing word: {answer}',
+  'deck.face.rival': 'Not to be confused with',
   'deck.grade.again': 'Again',
   'deck.grade.hard': 'Hard',
   'deck.grade.good': 'Good',
@@ -336,7 +364,7 @@ export const en: Record<keyof typeof fr, string> = {
   'tutorial.1.title': 'Your path',
   'tutorial.1.body': 'Each circle is a unit: a 10-exercise lesson you replay to earn its crowns. Units open one after another, world by world.',
   'tutorial.2.title': 'Energy',
-  'tutorial.2.body': 'A lesson costs 5 points out of 25. They come back over time; reviewing your mistakes and the deck is always free.',
+  'tutorial.2.body': 'A lesson costs 5 points out of 30, and higher leagues raise that cap (as long as you stay there). Points come back over time; reviewing your mistakes and the deck is always free.',
   'tutorial.3.title': 'Goal and quests',
   'tutorial.3.body': 'Reach your daily goal and finish the quests to earn gems. One session a day keeps your streak alive.',
   'tutorial.4.title': 'Crowns',
@@ -360,7 +388,7 @@ export const en: Record<keyof typeof fr, string> = {
   'profile.medals': 'Monthly medals',
   'profile.medals.empty': 'Finish {target} lessons in a month to earn the first one.',
   'reminder.energy.title': 'Energy refilled',
-  'reminder.energy.body': 'Your 25 points are back: five lessons are waiting.',
+  'reminder.energy.body': 'Your energy is full again: your next lessons are waiting.',
 
   'subject.marketing.title': 'Digital marketing',
   'subject.marketing.tagline': 'SEO, GEO, ads, analytics, growth',
@@ -391,5 +419,5 @@ export const en: Record<keyof typeof fr, string> = {
   'privacy.ads.body': 'This version contains no ads and no advertising SDK. If a future version adds some, your consent will be asked first and this page will be updated.',
   'privacy.delete.title': 'Erase my data',
   'privacy.delete.body': 'Profile → “Reset my progress”, or uninstall the app: nothing remains anywhere else.',
-  'privacy.footer': 'Skilltrail · {units} units · {exercises} exercises · {cards} cards · publisher: Cité par l’IA (cite-par-lia.fr). Last update: September 2026.',
-};
+  'privacy.footer': 'Skilltrail · {units} units · {exercises} exercises · {cards} cards · publisher: Cité par l’IA (cite-par-lia.fr). Last update: November 2026.',
+} satisfies Record<string, string>;

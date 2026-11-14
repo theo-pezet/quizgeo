@@ -1,11 +1,10 @@
 /**
- * Qualité des exercices écrits à la main (clés `:x:`, `:w:`, `:c:`), dans les
- * trois langues :
+ * Qualité des exercices écrits à la main (clés `:x:`, `:w:`, `:c:`) :
  * - la bonne réponse ne doit pas se deviner à sa longueur : dans un QCM (hors
  *   vrai/faux) comme dans chaque étape de cas pratique, elle ne dépasse jamais
  *   1,6 fois le plus long des distracteurs ;
  * - aucun texte affiché ne garde de Markdown brut (`code`) : l'app l'affiche
- *   dans un simple Text, on écrit « code » (fr), “code” (en), «code» (es) ;
+ *   dans un simple Text, on écrit “code” ;
  * - pas de « ... » à la place de « … », sauf dans du code cité (spread
  *   « [...arr] », « f(...) », « 0x... ») ;
  * - pas de tiret cadratin.
@@ -15,7 +14,7 @@ import { contentFor } from '..';
 import type { Exercise } from '@/game';
 import type { Lang } from '@/i18n/translate';
 
-const LANGS: Lang[] = ['fr', 'en', 'es'];
+const LANGS: Lang[] = ['en'];
 const MAX_RATIO = 1.6;
 
 const HANDWRITTEN = /:(x|w|c):/;

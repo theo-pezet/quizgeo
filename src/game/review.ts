@@ -25,6 +25,9 @@ export interface AnswerOutcome {
 /**
  * Applique une réponse à la progression d'une question.
  *
+ * `confident` : l'apprenant s'est dit « sûr » avant de valider ; une erreur
+ * l'est alors aussi (`confidentMiss`), une bonne réponse efface la marque.
+ *
  * `creditedThisSession` : la question a déjà reçu une bonne réponse dans la
  * session en cours. Une nouvelle bonne réponse est alors comptée (`correct`,
  * `seen`) mais ne fait pas progresser le streak — voir AnswerAction dans
@@ -38,6 +41,7 @@ export function applyAnswer(
   correct: boolean,
   now: IsoDate,
   creditedThisSession = false,
+  confident = false,
 ): AnswerOutcome {
   const prev = before ?? emptyQuestionProgress(key);
   const wasInQueue = prev.inReview;
@@ -55,6 +59,8 @@ export function applyAnswer(
     lastSeenAt: now,
     inReview,
   };
+  // Erreur commise en étant sûr : à revoir en premier (voir learning.ts).
+  if (!correct && confident) progress.confidentMiss = true;
 
   return {
     progress,
@@ -63,11 +69,19 @@ export function applyAnswer(
   };
 }
 
-/** Les questions actuellement dans la file, plus anciennes d'abord. */
+/** Les questions actuellement dans la file : les erreurs « sûres » d'abord, puis les plus anciennes. */
 export function reviewQueue(progress: Progress): QuestionProgress[] {
   return Object.values(progress.questions)
     .filter((q) => q.inReview)
-    .sort(compareByLastSeen);
+    .sort(compareReview);
+}
+
+/** Ordre de la file : erreurs commises en étant sûr en tête, puis par ancienneté. */
+export function compareReview(a: QuestionProgress, b: QuestionProgress): number {
+  const ca = a.confidentMiss === true;
+  const cb = b.confidentMiss === true;
+  if (ca !== cb) return ca ? -1 : 1;
+  return compareByLastSeen(a, b);
 }
 
 /**

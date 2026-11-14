@@ -1,33 +1,28 @@
 /**
- * Traductions de l'interface. Le français est la langue de référence : les
- * dictionnaires anglais et espagnol doivent avoir exactement les mêmes clés
- * (le compilateur le vérifie). Ici : les accès liés au réglage de langue.
+ * Textes de l'interface, en anglais uniquement (1.3). `useT()` et `t()`
+ * gardent leur forme : un écran n'a pas à savoir qu'il n'y a qu'une langue.
  */
 
-import { useSettings } from '@/store/progress';
+import { translate, type Key, type Lang, type Params, type T } from './translate';
 
-import { detectLang, translate, type Key, type Lang, type Params, type T } from './translate';
-
-export { DICTS, LANGS, detectLang, format, monthLabel, translate } from './translate';
+export { DICTS, detectLang, format, monthLabel, translate } from './translate';
 export { formatDay, ordinal } from './format';
 export type { Key, Lang, Params, T } from './translate';
 
 export function currentLang(): Lang {
-  return useSettings.getState().lang ?? detectLang();
+  return 'en';
 }
 
 export function useLang(): Lang {
-  const lang = useSettings((s) => s.lang);
-  return lang ?? detectLang();
+  return 'en';
 }
 
-/** `const t = useT(); t('common.continue')` : se met à jour quand la langue change. */
+/** `const t = useT(); t('common.continue')`. */
 export function useT(): T {
-  const lang = useLang();
-  return (key: Key, params?: Params) => translate(lang, key, params);
+  return (key: Key, params?: Params) => translate('en', key, params);
 }
 
-/** Hors React (notifications, confirmations) : la langue courante. */
+/** Hors React (notifications, confirmations). */
 export function t(key: Key, params?: Params): string {
-  return translate(currentLang(), key, params);
+  return translate('en', key, params);
 }

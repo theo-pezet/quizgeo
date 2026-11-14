@@ -17,7 +17,7 @@ export function feedbackTone(colors: ReturnType<typeof useColors>, correct: bool
  * le bouton « Continuer » est toujours visible sans défiler. Les
  * explications défilent dans la barre si elles sont longues.
  */
-export function FeedbackPanel({ feedback, combo, onNext }: { feedback: Feedback; combo: number; onNext: () => void }) {
+export function FeedbackPanel({ feedback, combo, onNext, nextLabel }: { feedback: Feedback; combo: number; onNext: () => void; nextLabel?: string }) {
   const colors = useColors();
   const t = useT();
   const { height } = useWindowDimensions();
@@ -33,6 +33,16 @@ export function FeedbackPanel({ feedback, combo, onNext }: { feedback: Feedback;
               {feedback.correct ? (combo >= 3 ? t('session.correctCombo', { combo }) : t('session.correct')) : t('session.wrong')}
             </Text>
           </View>
+          {feedback.pretest && (
+            <Text variant="small" secondary>
+              {t('session.pretest.note')}
+            </Text>
+          )}
+          {feedback.confidentMiss && (
+            <Text variant="small" style={{ color: tone.text, fontWeight: '700' }}>
+              {t('session.sure.miss')}
+            </Text>
+          )}
           {(hasWhy || feedback.explain) && (
             <ScrollView style={{ maxHeight: Math.round(height * 0.3) }} contentContainerStyle={styles.body} showsVerticalScrollIndicator>
               {hasWhy && (
@@ -59,7 +69,7 @@ export function FeedbackPanel({ feedback, combo, onNext }: { feedback: Feedback;
               )}
             </ScrollView>
           )}
-          <Button label={t('common.continue')} tone={feedback.correct ? 'success' : 'danger'} onPress={onNext} />
+          <Button label={nextLabel ?? t('common.continue')} tone={feedback.correct ? 'success' : 'danger'} onPress={onNext} />
         </View>
       </Shake>
     </FadeUp>

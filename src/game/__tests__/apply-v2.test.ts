@@ -197,3 +197,13 @@ describe('boutique et ligue', () => {
     expect(applyLeagueOutcomeSeen(p).league.pendingOutcome).toBeNull();
   });
 });
+
+describe('énergie et ligue', () => {
+  it('une meilleure ligue relève le plafond de la recharge et du remboursement', () => {
+    const p = applyTick(progressWith(), AT_19H);
+    const gold: Progress = { ...p, gems: 1000, league: { ...p.league, tier: 2 }, energy: { value: 10, updatedAt: AT_19H.toISOString() } };
+    const refilled = applyBuyRefill(gold, AT_19H);
+    expect(refilled?.energy.value).toBe(MAX_ENERGY + 10);
+    expect(applyBuyRefill(refilled as Progress, AT_19H)).toBeNull();
+  });
+});

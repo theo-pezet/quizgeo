@@ -11,6 +11,7 @@ import {
   allUnitTraits,
   applyUnlockAnimationPlayed,
   canStartLesson,
+  maxEnergyFor,
   currentUnit,
   dailyRatio,
   isActiveToday,
@@ -128,7 +129,7 @@ export default function PathScreen() {
   if (!settingsHydrated) return null;
 
   const startUnit = (unit: Unit, skipTest = false) => {
-    if (!canStartLesson(progress.energy, new Date())) {
+    if (!canStartLesson(progress.energy, new Date(), maxEnergyFor(progress.league))) {
       setPicked(null);
       setNoEnergy(true);
       return;
@@ -208,7 +209,7 @@ export default function PathScreen() {
       <View style={styles.header}>
         <View style={styles.stats}>
           <Stat icon={flame ? 'flame' : 'flame-outline'} color={flame ? colors.streak : colors.textSecondary} value={displayedStreak(progress.streak, today)} />
-          <EnergyBadge energy={progress.energy} now={now} compact />
+          <EnergyBadge energy={progress.energy} now={now} max={maxEnergyFor(progress.league)} compact />
           <Stat icon="diamond" color={colors.gem} value={progress.gems} />
           <Stat icon="star" color={colors.gold} value={level.level} />
         </View>
@@ -287,7 +288,7 @@ export default function PathScreen() {
                 layout.current.worlds.set(world.id, e.nativeEvent.layout.y);
                 maybeScroll();
               }}>
-              <WorldBanner world={world} title={world.title[lang]} subtitle={world.subtitle[lang]} done={done} complete={complete} open={open} label={t('path.world.label', { index: world.index })} progressLabel={t('path.world.progress', { done, total, count: total })} lockedLabel={t('path.world.locked')} completeLabel={t('path.world.complete')} />
+              <WorldBanner world={world} title={world.title} subtitle={world.subtitle} done={done} complete={complete} open={open} label={t('path.world.label', { index: world.index })} progressLabel={t('path.world.progress', { done, total, count: total })} lockedLabel={t('path.world.locked')} completeLabel={t('path.world.complete')} />
               {world.unitIds.map((unitId, i) => {
                 const unit = UNIT_BY_ID.get(unitId);
                 if (!unit) return null;

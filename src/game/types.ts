@@ -226,6 +226,12 @@ export interface QuestionProgress {
    * ont le même streak, et pourtant l'une est dans la file et l'autre non.
    */
   inReview: boolean;
+  /**
+   * Dernière erreur commise en se disant « sûr » (effet d'hypercorrection) :
+   * la question passe en tête de la file « à revoir ». Effacé par une bonne
+   * réponse. Absent avant la 1.3.
+   */
+  confidentMiss?: boolean;
 }
 
 export interface UnitProgress {
@@ -267,7 +273,12 @@ export interface CardState {
   reps: number;
   lapses: number;
   lastReviewedAt: IsoDate | null;
+  /** Le visage montré à la dernière révision du deck (voir faces.ts). Absent avant la 1.3. */
+  lastFace?: CardFace;
 }
+
+/** Les visages d'une carte du deck (voir faces.ts). */
+export type CardFace = 'term' | 'definition' | 'example' | 'cloze' | 'duel';
 
 /** Énergie : ce qui limite le nombre de leçons d'affilée (voir energy.ts). */
 export interface EnergyState {

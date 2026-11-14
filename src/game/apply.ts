@@ -14,11 +14,11 @@ import { daysBetween, localHour, toDayKey } from './dates';
 import { GEMS, SHOP, addGems, spendGems, streakMilestoneGems, xpMultiplier } from './economy';
 import {
   LESSON_ENERGY_COST,
-  MAX_ENERGY,
   MISTAKE_ENERGY_COST,
   PERFECT_ENERGY_REFUND,
   canStartLesson,
   currentEnergy,
+  maxEnergyFor,
   modeCostsEnergy,
   refillEnergy,
   refundEnergy,
@@ -36,6 +36,7 @@ import { MIN_SESSION_LENGTH, XP_CORRECT_REVIEW, addXp, isPerfectSession, levelUp
 import {
   emptyQuestionProgress,
   emptyUnitProgress,
+  type CardFace,
   type CardState,
   type Catalog,
   type DayKey,
@@ -58,7 +59,7 @@ export function applyTick(progress: Progress, now: Date): Progress {
     ...progress,
     quests: ensureQuests(progress.quests, today),
     league: ensureLeague(progress.league, today),
-    energy: settleEnergy(progress.energy, now),
+    energy: settleEnergy(progress.energy, now, maxEnergyFor(progress.league)),
     daily: ensureDaily(progress.daily, today),
     monthly: ensureMonthly(progress.monthly, today),
   };
@@ -86,8 +87,9 @@ function grantQuests(progress: Progress, event: QuestEvent): { progress: Progres
 export function applyStartLesson(progress: Progress, mode: SessionMode, now: Date): Progress | null {
   const p = applyTick(progress, now);
   if (!modeCostsEnergy(mode)) return p;
-  if (!canStartLesson(p.energy, now)) return null;
-  return { ...p, energy: spendEnergy(p.energy, LESSON_ENERGY_COST, now) };
+  const max = maxEnergyFor(p.league);
+  if (!canStartLesson(p.energy, now, max)) return null;
+  return { ...p, energy: spendEnergy(p.energy, LESSON_ENERGY_COST, now, max) };
 }
 
 export interface AnswerAction {
@@ -117,6 +119,8 @@ export interface AnswerAction {
    * ne doit pas donner de couronne à l'unité, ni ouvrir la suivante.
    */
   skipTest?: boolean;
+  /** L'apprenant s'est dit « sûr » avant de valider (effet d'hypercorrection, voir learning.ts). */
+  confident?: boolean;
 }
 
 export interface AnswerResult {
@@ -144,7 +148,7 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
   const before = ticked.questions[action.question.key];
   const outcome = action.skipTest
     ? { progress: before, enteredQueue: false, leftQueue: false }
-    : applyAnswer(before, action.question.key, action.correct, nowIso, action.creditedThisSession);
+    : applyAnswer(before, action.question.key, action.correct, nowIso, action.creditedThisSession, action.confident === true);
 
   // Le boost double les XP de réponse, jamais les bonus de session.
   const xpGained =
@@ -166,7 +170,7 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
       ...ticked.counters,
       reviewRecovered: ticked.counters.reviewRecovered + (outcome.leftQueue ? 1 : 0),
     },
-    energy: energySpent > 0 ? spendEnergy(ticked.energy, energySpent, action.now) : ticked.energy,
+    energy: energySpent > 0 ? spendEnergy(ticked.energy, energySpent, action.now, maxEnergyFor(ticked.league)) : ticked.energy,
     league: addLeagueXp(ticked.league, xpGained),
   };
 
@@ -314,7 +318,7 @@ export function applySessionEnd(
 
   // 1b. Énergie et gemmes de la session.
   const energyRefunded = lesson && perfect ? PERFECT_ENERGY_REFUND : 0;
-  if (energyRefunded > 0) next = { ...next, energy: refundEnergy(next.energy, energyRefunded, now) };
+  if (energyRefunded > 0) next = { ...next, energy: refundEnergy(next.energy, energyRefunded, now, maxEnergyFor(next.league)) };
   let gemsGained = 0;
   if (counted) {
     if (lesson) gemsGained += GEMS.lesson + (perfect ? GEMS.perfect : 0);
@@ -455,6 +459,8 @@ export interface CardReviewAction {
   cardId: string;
   grade: Grade;
   now: Date;
+  /** Le visage sous lequel la carte a été montrée : retenu pour varier la fois suivante. */
+  face?: CardFace;
 }
 
 export interface CardReviewResult {
@@ -507,7 +513,8 @@ export function applyCardReview(progress: Progress, action: CardReviewAction): C
   const before = ticked.cards[action.cardId];
   const first = isFirstReviewOfDay(before, today);
   const xpGained = (correct && first ? XP_CORRECT_REVIEW : 0) * xpMultiplier(ticked.boost, action.now);
-  const card = reviewCard(before, action.cardId, action.grade, today, action.now.toISOString());
+  const reviewed = reviewCard(before, action.cardId, action.grade, today, action.now.toISOString());
+  const card = action.face ? { ...reviewed, lastFace: action.face } : reviewed;
   let next: Progress = {
     ...ticked,
     xp: addXp(ticked.xp, xpGained),
@@ -561,10 +568,11 @@ export function applyUnlockAnimationPlayed(progress: Progress, unitId: UnitId): 
 
 /** Recharge complète de l'énergie contre des gemmes. Null si trop pauvre, ou déjà plein. */
 export function applyBuyRefill(progress: Progress, now: Date): Progress | null {
-  if (currentEnergy(progress.energy, now) >= MAX_ENERGY) return null;
+  const max = maxEnergyFor(progress.league);
+  if (currentEnergy(progress.energy, now, max) >= max) return null;
   const gems = spendGems(progress.gems, SHOP.refill.cost);
   if (gems === null) return null;
-  return { ...progress, gems, energy: refillEnergy(now) };
+  return { ...progress, gems, energy: refillEnergy(now, max) };
 }
 
 /** Le bilan de ligue a été affiché. */

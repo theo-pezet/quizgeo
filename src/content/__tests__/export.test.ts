@@ -12,9 +12,9 @@ import { contentFor } from '..';
 
 const dir = process.env.EXPORT_CONTENT_DIR;
 
-(dir ? it : it.skip)('exporte cartes et exercices dans les trois langues', () => {
+(dir ? it : it.skip)('exporte cartes et exercices (anglais)', () => {
   mkdirSync(dir as string, { recursive: true });
-  for (const lang of ['fr', 'en', 'es'] as const) {
+  for (const lang of ['en'] as const) {
     const c = contentFor(lang);
     writeFileSync(join(dir as string, `cards.${lang}.json`), JSON.stringify(c.CARDS, null, 1));
     writeFileSync(join(dir as string, `exercises.${lang}.json`), JSON.stringify(c.EXERCISES, null, 1));

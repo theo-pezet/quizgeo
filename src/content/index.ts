@@ -15,7 +15,6 @@ import { localizedCards, localizedExtras } from './localize';
 import { SUBJECTS as SUBJECTS_BASE } from './subjects';
 import type { Card, Subject, Unit } from './types';
 import { UNITS as UNITS_BASE } from './units';
-import { UNIT_TEXT } from './units.i18n';
 import { WORLDS } from './worlds';
 
 export { WORLDS, WORLD_BY_UNIT, isWorldComplete, worldProgress, worldsOf, type World } from './worlds';
@@ -62,8 +61,8 @@ function build(lang: Lang): Content {
     title: translate(lang, `subject.${s.id}.title` as 'subject.marketing.title'),
     tagline: translate(lang, `subject.${s.id}.tagline` as 'subject.marketing.tagline'),
   }));
-  const UNITS: Unit[] = orderUnits([...UNITS_BASE.map((u) => (lang === 'fr' ? u : { ...u, ...(UNIT_TEXT[lang][u.id] ?? {}) })), ...extraUnits(lang)]);
-  const CARDS = localizedCards(lang);
+  const UNITS: Unit[] = orderUnits([...UNITS_BASE, ...extraUnits()]);
+  const CARDS = localizedCards();
   const texts: GenTexts = {
     whatMeans: (term) => translate(lang, 'gen.whatMeans', { term }),
     whichTerm: translate(lang, 'gen.whichTerm'),
@@ -82,7 +81,7 @@ function build(lang: Lang): Content {
     }
     EXERCISES.push(...generateExercises(unit, resolveUnitCards(unit, CARDS), subjectCards, texts));
   }
-  EXERCISES.push(...localizedExtras(lang));
+  EXERCISES.push(...localizedExtras());
   const unitIdsOfSubject = new Map<string, Set<string>>();
   for (const s of SUBJECTS) unitIdsOfSubject.set(s.id, new Set(UNITS.filter((u) => u.subjectId === s.id).map((u) => u.id)));
   return {

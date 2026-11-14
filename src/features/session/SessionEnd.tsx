@@ -149,7 +149,7 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
         </Moment>
       )}
       {page.kind === 'world' && world && (
-        <Moment key="world" emoji={world.emoji} color={world.color} title={t('end.world.title')} body={t('end.world.body', { world: world.title[lang] })} />
+        <Moment key="world" emoji={world.emoji} color={world.color} title={t('end.world.title')} body={t('end.world.body', { world: world.title })} />
       )}
       {page.kind === 'quest' && (
         <Moment key="quest" icon="flag" color={colors.success} title={t('end.quest.title')} body="">

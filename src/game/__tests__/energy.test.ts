@@ -3,6 +3,7 @@ import {
   LESSON_ENERGY_COST,
   MAX_ENERGY,
   canStartLesson,
+  maxEnergyFor,
   currentEnergy,
   minutesToLesson,
   minutesToNextEnergy,
@@ -54,7 +55,7 @@ describe('settleEnergy', () => {
 
   it('cale le compteur sur maintenant quand c’est plein', () => {
     expect(settleEnergy(state(0, null), T0)).toEqual({ value: MAX_ENERGY, updatedAt: T0.toISOString() });
-    expect(settleEnergy(state(24), at(12))).toEqual({ value: MAX_ENERGY, updatedAt: at(12).toISOString() });
+    expect(settleEnergy(state(MAX_ENERGY - 1), at(12))).toEqual({ value: MAX_ENERGY, updatedAt: at(12).toISOString() });
   });
 });
 
@@ -74,7 +75,7 @@ describe('spendEnergy / refundEnergy / refillEnergy', () => {
   });
 
   it('rembourse sans dépasser le plein', () => {
-    expect(refundEnergy(state(24), 2, T0)).toEqual({ value: MAX_ENERGY, updatedAt: T0.toISOString() });
+    expect(refundEnergy(state(MAX_ENERGY - 1), 2, T0)).toEqual({ value: MAX_ENERGY, updatedAt: T0.toISOString() });
     expect(refundEnergy(state(10), 2, T0).value).toBe(12);
   });
 
@@ -100,5 +101,33 @@ describe('attentes', () => {
     expect(minutesToLesson(state(5), T0)).toBe(0);
     expect(minutesToLesson(state(0), T0)).toBe(5 * ENERGY_REGEN_MINUTES);
     expect(minutesToLesson(state(3), at(5))).toBe(7 + ENERGY_REGEN_MINUTES);
+  });
+});
+
+describe('plafond avec bonus de ligue', () => {
+  it('vaut 30 en Bronze, 40 en Or, 60 au Diamant : le bonus suit la ligue actuelle', () => {
+    expect(MAX_ENERGY).toBe(30);
+    expect(maxEnergyFor({ tier: 0 })).toBe(30);
+    expect(maxEnergyFor({ tier: 2 })).toBe(40);
+    expect(maxEnergyFor({ tier: 9 })).toBe(60);
+  });
+
+  it('une relégation fait retomber l’énergie au nouveau plafond', () => {
+    expect(currentEnergy(state(40), T0, maxEnergyFor({ tier: 1 }))).toBe(35);
+  });
+
+  it('toutes les fonctions respectent un plafond plus haut', () => {
+    const max = 40;
+    expect(currentEnergy(state(0, null), T0, max)).toBe(max);
+    expect(currentEnergy(state(30), at(12 * 5), max)).toBe(35);
+    expect(currentEnergy(state(30), at(12 * 50), max)).toBe(max);
+    expect(settleEnergy(state(39), at(12), max)).toEqual({ value: max, updatedAt: at(12).toISOString() });
+    expect(settleEnergy(state(0, null), T0, max).value).toBe(max);
+    expect(spendEnergy(state(max), 5, T0, max).value).toBe(35);
+    expect(refundEnergy(state(38), 5, T0, max).value).toBe(max);
+    expect(refillEnergy(T0, max).value).toBe(max);
+    expect(canStartLesson(state(5), T0, max)).toBe(true);
+    expect(minutesToNextEnergy(state(30), T0, max)).toBe(ENERGY_REGEN_MINUTES);
+    expect(minutesToLesson(state(0), T0, max)).toBe(5 * ENERGY_REGEN_MINUTES);
   });
 });

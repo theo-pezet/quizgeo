@@ -8,62 +8,44 @@
  */
 
 import { en } from './en';
-import { es } from './es';
-import { fr } from './fr';
 
-export type Lang = 'fr' | 'en' | 'es';
-export type Key = keyof typeof fr;
+/** L'application est en anglais uniquement (1.3). Le type reste pour les signatures. */
+export type Lang = 'en';
+export type Key = keyof typeof en;
 export type Params = Record<string, string | number>;
 export type T = (key: Key, params?: Params) => string;
 
-export const LANGS: readonly { id: Lang; label: string; flag: string }[] = [
-  { id: 'fr', label: 'Français', flag: '🇫🇷' },
-  { id: 'en', label: 'English', flag: '🇬🇧' },
-  { id: 'es', label: 'Español', flag: '🇪🇸' },
-];
-
-export const DICTS: Record<Lang, Record<Key, string>> = { fr, en, es };
+export const DICTS: Record<Lang, Record<Key, string>> = { en };
 
 const PLURAL = /\(one:([^|)]*)\|other:([^)]*)\)/g;
 const PARAM = /\{(\w+)\}/g;
 
-/** Singulier ou pluriel : en français, 0 et 1 sont au singulier (« 0 point »). */
-function isOne(count: number, lang: Lang): boolean {
-  return lang === 'fr' ? Math.abs(count) < 2 : Math.abs(count) === 1;
+/** Singulier ou pluriel : en anglais, seul 1 est au singulier (« 0 points »). */
+function isOne(count: number): boolean {
+  return Math.abs(count) === 1;
 }
 
-export function format(template: string, params?: Params, lang: Lang = 'en'): string {
+export function format(template: string, params?: Params, _lang: Lang = 'en'): string {
   let out = template;
   if (params) {
     const count = params.count;
-    if (typeof count === 'number') out = out.replace(PLURAL, (_m, one: string, other: string) => (isOne(count, lang) ? one : other));
+    if (typeof count === 'number') out = out.replace(PLURAL, (_m, one: string, other: string) => (isOne(count) ? one : other));
     out = out.replace(PARAM, (m, name: string) => (name in params ? String(params[name]) : m));
   }
   return out;
 }
 
 export function translate(lang: Lang, key: Key, params?: Params): string {
-  const template = DICTS[lang][key] ?? DICTS.fr[key] ?? key;
+  const template = DICTS[lang]?.[key] ?? DICTS.en[key] ?? key;
   return format(template, params, lang);
 }
 
-/** La langue du téléphone, si on la gère ; sinon l'anglais. */
+/** L'application est en anglais uniquement. */
 export function detectLang(): Lang {
-  try {
-    const locale = (Intl.DateTimeFormat().resolvedOptions().locale ?? '').toLowerCase();
-    if (locale.startsWith('fr')) return 'fr';
-    if (locale.startsWith('es')) return 'es';
-  } catch {
-    // Pas d'Intl : anglais.
-  }
   return 'en';
 }
 
-/**
- * « septembre 2026 » depuis « 2026-09 », dans la langue demandée. En français
- * et en espagnol le mois garde sa minuscule dans une phrase ; `standalone`
- * met la majuscule pour un libellé isolé (pastille de médaille).
- */
+/** « September 2026 » depuis « 2026-09 ». `standalone` : majuscule garantie (pastille de médaille). */
 export function monthLabel(lang: Lang, month: string, standalone = false): string {
   const [y, m] = month.split('-').map(Number);
   try {

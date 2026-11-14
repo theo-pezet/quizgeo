@@ -15,6 +15,8 @@ export * from './streak';
 export * from './session';
 export * from './badges';
 export * from './srs';
+export * from './faces';
+export * from './learning';
 export * from './ads';
 export * from './energy';
 export * from './economy';

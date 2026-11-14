@@ -1,12 +1,12 @@
 /**
  * La machine à états d'une session, sur le vrai contenu : une file vide ne
- * coûte rien, le rattrapage ne repose pas deux fois le même exercice, et la
- * barre de progression ne recule jamais.
+ * coûte rien, le rattrapage repose une erreur au plus RELEARN_MAX fois, le
+ * prétest est sans conséquence, et la barre de progression ne recule jamais.
  */
 import { act, create } from 'react-test-renderer';
 
 import { content } from '@/content/useContent';
-import { currentEnergy } from '@/game';
+import { PRETEST_SIZE, RELEARN_MAX, currentEnergy } from '@/game';
 import { useProgress } from '@/store/progress';
 
 import { useSession, type SessionSpec } from '../useSession';
@@ -47,7 +47,7 @@ describe('useSession', () => {
     expect(r.get().state.phase).toBe('empty');
   });
 
-  it('tout rater : chaque exercice revient une seule fois, la barre ne recule pas', () => {
+  it('tout rater : chaque exercice revient, au plus RELEARN_MAX fois, la barre ne recule pas', () => {
     const unitId = content().UNITS[0].id;
     const s = mount({ mode: 'unit', unitId });
     expect(s.get().state.phase).toBe('question');
@@ -70,8 +70,43 @@ describe('useSession', () => {
       }
     }
     const retries = s.get().state.steps.filter((step) => step.retry).map((step) => step.exercise.key);
-    expect(new Set(retries).size).toBe(retries.length);
+    for (const key of new Set(retries)) expect(retries.filter((k) => k === key).length).toBeLessThanOrEqual(RELEARN_MAX);
     expect(new Set(retries)).toEqual(mainKeys);
     expect(lastRatio).toBe(1);
+  });
+
+  it('prétest : une unité jamais commencée s’ouvre sur deux questions sans conséquence', () => {
+    const unitId = content().UNITS[0].id;
+    const s = mount({ mode: 'unit', unitId });
+    const state = s.get().state;
+    expect(state.pretestCount).toBe(PRETEST_SIZE);
+    expect(state.steps.slice(0, PRETEST_SIZE).every((step) => step.pretest === true)).toBe(true);
+    expect(s.get().inPretest).toBe(true);
+    const key = s.get().current?.exercise.key as string;
+    act(() => {
+      s.get().answer(false);
+    });
+    expect(s.get().state.feedback?.pretest).toBe(true);
+    expect(useProgress.getState().progress.questions[key]).toBeUndefined();
+    expect(s.get().ratio).toBe(0);
+  });
+
+  it('une erreur « sûre » est signalée et marquée pour la révision', () => {
+    const unitId = content().UNITS[0].id;
+    const s = mount({ mode: 'unit', unitId });
+    for (let i = 0; i < s.get().state.pretestCount; i += 1) {
+      act(() => {
+        s.get().answer(true);
+      });
+      act(() => {
+        s.get().next();
+      });
+    }
+    const key = s.get().current?.exercise.key as string;
+    act(() => {
+      s.get().answer(false, undefined, true);
+    });
+    expect(s.get().state.feedback?.confidentMiss).toBe(true);
+    expect(useProgress.getState().progress.questions[key].confidentMiss).toBe(true);
   });
 });
