@@ -25,7 +25,7 @@ celles de Google (titre 30, description courte 80, description longue 4 000).
 ## Description longue (4 000)
 
 ```
-Le marketing digital, l'intelligence artificielle, Python et le web, en 5 minutes par jour, sans cours, sans compte, sans publicité. Disponible en français, en anglais et en espagnol.
+Le marketing digital, l'intelligence artificielle, Python et le web, en 5 minutes par jour, sans cours, sans compte, sans publicité. Entièrement en anglais, la langue du marketing et du code.
 
 Skilltrail transforme ton temps mort en compétences : un chemin d'unités par matière, des exercices variés, une révision espacée qui te fait revenir sur ce que tu oublies, et une vraie boucle de jeu pour tenir dans la durée.
 
