@@ -15,16 +15,24 @@ import type { DayKey, LeagueOutcome, LeagueResult, LeagueState } from './types';
 
 export const LEAGUE_TIERS = [
   'Bronze',
-  'Argent',
-  'Or',
-  'Saphir',
-  'Rubis',
-  'Émeraude',
-  'Améthyste',
-  'Perle',
-  'Obsidienne',
-  'Diamant',
+  'Silver',
+  'Gold',
+  'Sapphire',
+  'Ruby',
+  'Emerald',
+  'Amethyst',
+  'Pearl',
+  'Obsidian',
+  'Diamond',
 ] as const;
+
+/** Bonus d'énergie maximale de chaque ligue : celui de la ligue actuelle, perdu en cas de relégation. */
+export const LEAGUE_ENERGY_BONUS: readonly number[] = [0, 5, 10, 12, 14, 16, 18, 20, 25, 30];
+
+export function leagueEnergyBonus(tier: number): number {
+  const i = Math.max(0, Math.min(LEAGUE_ENERGY_BONUS.length - 1, Math.floor(tier)));
+  return LEAGUE_ENERGY_BONUS[i];
+}
 
 export const LEAGUE_SIZE = 30;
 export const PROMOTION_ZONE = 7;
@@ -33,11 +41,11 @@ export const LEAGUE_DAYS = 7;
 export const MAX_HISTORY = 12;
 
 const FIRST_NAMES = [
-  'Léa', 'Hugo', 'Chloé', 'Nathan', 'Manon', 'Lucas', 'Emma', 'Enzo', 'Inès', 'Louis',
-  'Jade', 'Gabriel', 'Camille', 'Raphaël', 'Sarah', 'Arthur', 'Zoé', 'Adam', 'Lina', 'Jules',
-  'Alice', 'Tom', 'Anna', 'Noah', 'Eva', 'Liam', 'Rose', 'Sacha', 'Mila', 'Ethan',
-  'Nina', 'Théo', 'Lola', 'Maxime', 'Clara', 'Léo', 'Julia', 'Paul', 'Louna', 'Axel',
-  'Maya', 'Samuel', 'Iris', 'Rayan', 'Ambre', 'Victor', 'Élise', 'Mathis', 'Agathe', 'Yanis',
+  'Olivia', 'James', 'Emma', 'Noah', 'Ava', 'Liam', 'Mia', 'Lucas', 'Sophia', 'Ethan',
+  'Chloe', 'Mason', 'Grace', 'Logan', 'Ella', 'Jack', 'Zoe', 'Ryan', 'Lily', 'Owen',
+  'Alice', 'Leo', 'Nora', 'Adam', 'Maya', 'Daniel', 'Ruby', 'Sam', 'Iris', 'Henry',
+  'Nina', 'Theo', 'Hannah', 'Max', 'Clara', 'Oscar', 'Julia', 'Paul', 'Layla', 'Axel',
+  'Aria', 'Samuel', 'Elena', 'Kai', 'Amber', 'Victor', 'Eliza', 'Felix', 'Hazel', 'Ivan',
 ];
 
 /** Le lundi de la semaine qui contient `day`. */
@@ -147,7 +155,7 @@ export function leagueStandings(state: LeagueState, today: DayKey, dayFraction =
   // À XP égal, l'utilisateur passe devant : on ne le relègue pas sur une égalité.
   let at = list.findIndex((c) => c.xp <= state.xpThisWeek);
   if (at === -1) at = list.length;
-  list.splice(at, 0, { name: 'Toi', xp: state.xpThisWeek, isUser: true, rival: false });
+  list.splice(at, 0, { name: 'You', xp: state.xpThisWeek, isUser: true, rival: false });
   return list;
 }
 

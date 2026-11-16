@@ -5,8 +5,8 @@ import { Alert, Linking, Platform, StyleSheet, Switch, View } from 'react-native
 import { CATALOG } from '@/content';
 import { useContent } from '@/content/useContent';
 import { useActiveSubjects } from '@/content/useSubjects';
-import { BADGES, DAILY_GOALS, MAX_FREEZES, MONTHLY_TARGET, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, displayedStreak, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
-import { LANGS, monthLabel, useLang, useT, type Key } from '@/i18n';
+import { BADGES, DAILY_GOALS, MAX_FREEZES, MONTHLY_TARGET, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, maxEnergyFor, displayedStreak, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
+import { monthLabel, useLang, useT, type Key } from '@/i18n';
 import { confirm } from '@/lib/confirm';
 import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
@@ -26,8 +26,6 @@ export default function ProfileScreen() {
   const progress = useProgress((s) => s.progress);
   const reset = useProgress((s) => s.reset);
   const setProgress = useProgress((s) => s.setProgress);
-  const lang = useSettings((s) => s.lang);
-  const setLang = useSettings((s) => s.setLang);
   const hapticsOn = useSettings((s) => s.haptics);
   const setHaptics = useSettings((s) => s.setHaptics);
   const remindersOn = useSettings((s) => s.reminders);
@@ -58,7 +56,8 @@ export default function ProfileScreen() {
   const today = toDayKey(now);
   const level = levelProgress(progress.xp);
   const traits = allUnitTraits(progress, EXERCISES, CATALOG, today);
-  const energyValue = currentEnergy(progress.energy, now);
+  const maxEnergy = maxEnergyFor(progress.league);
+  const energyValue = currentEnergy(progress.energy, now, maxEnergy);
   const boostLeft = boostMinutesLeft(progress.boost, now);
   // Achats : toujours une confirmation, puis on relit l'état le plus récent.
   const buy = (item: string, cost: number, apply: (p: typeof progress) => typeof progress | null) =>
@@ -111,11 +110,11 @@ export default function ProfileScreen() {
             <Text variant="h2">{progress.gems}</Text>
           </View>
         </View>
-        <EnergyBadge energy={progress.energy} now={now} />
+        <EnergyBadge energy={progress.energy} now={now} max={maxEnergy} />
         <Button
           label={t('profile.shop.refill', { cost: gems(SHOP.refill.cost) })}
           tone="secondary"
-          disabled={progress.gems < SHOP.refill.cost || energyValue >= 25}
+          disabled={progress.gems < SHOP.refill.cost || energyValue >= maxEnergy}
           onPress={() => buy(t('profile.shop.item.refill'), SHOP.refill.cost, (p) => applyBuyRefill(p, new Date()))}
         />
         <Button
@@ -245,13 +244,6 @@ export default function ProfileScreen() {
         <Text variant="small" secondary>
           {t('profile.subjects.hint')}
         </Text>
-
-        <Text variant="bodyBold">{t('common.language')}</Text>
-        <View style={styles.choices}>
-          {LANGS.map((l) => (
-            <Button key={l.id} label={`${l.flag} ${l.label}`} size="sm" tone={l.id === lang ? 'primary' : 'secondary'} style={styles.choice} onPress={() => setLang(l.id)} />
-          ))}
-        </View>
 
         <Text variant="bodyBold">{t('profile.settings.goal')}</Text>
         <View style={styles.choices}>

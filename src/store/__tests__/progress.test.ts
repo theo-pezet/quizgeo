@@ -13,7 +13,7 @@ jest.mock('@react-native-async-storage/async-storage', () =>
   require('@react-native-async-storage/async-storage/jest/async-storage-mock'),
 );
 
-const { EXERCISES } = contentFor('fr');
+const { EXERCISES } = contentFor('en');
 const NEW_KEYS = new Set(Object.values(CODE_KEYS_V1_1).flat());
 /** Unités de code qui existaient en 1.0 (py-audit-1 et py-ia-1 n'ont que des exercices 1.1). */
 const CODE_UNITS = Object.keys(CODE_KEYS_V1_1).filter((u) => EXERCISES.some((e) => e.unitId === u && !NEW_KEYS.has(e.key)));

@@ -1,18 +1,18 @@
 /**
  * Intégrité du contenu : tout ce qui casserait silencieusement l'app est
- * vérifié ici, une fois pour toutes, dans les trois langues.
+ * vérifié ici, une fois pour toutes. Le contenu est en anglais uniquement
+ * depuis la 1.3.
  */
 
 import { CATALOG, WORLDS, WORLD_BY_UNIT, contentFor, type Content } from '..';
 import { isConfusable, resolveUnitCards, shortDefinition, shownDefinition } from '../generate';
-import type { Lang } from '@/i18n/translate';
+import keysV12 from './keys-v1.2.json';
 
 const MIN_EXERCISES_PER_UNIT = 5;
-const LANGS: Lang[] = ['fr', 'en', 'es'];
-const FR = contentFor('fr');
+const EN: Content = contentFor('en');
 
-describe.each(LANGS)('le contenu en %s', (lang) => {
-  const c: Content = contentFor(lang);
+describe('le contenu', () => {
+  const c = EN;
 
   it('a des cartes aux identifiants uniques, sans texte vide', () => {
     expect(new Set(c.CARDS.map((x) => x.id)).size).toBe(c.CARDS.length);
@@ -24,10 +24,12 @@ describe.each(LANGS)('le contenu en %s', (lang) => {
     for (const card of c.CARDS) expect(known.has(card.subject)).toBe(true);
   });
 
-  it('garde les mêmes identifiants et clés qu’en français', () => {
-    expect(c.CARDS.map((x) => x.id)).toEqual(FR.CARDS.map((x) => x.id));
-    expect(c.EXERCISES.map((e) => e.key)).toEqual(FR.EXERCISES.map((e) => e.key));
-    expect(c.UNITS.map((u) => u.id)).toEqual(FR.UNITS.map((u) => u.id));
+  it('garde, unité par unité, exactement les clés d’exercice de la 1.2 (la progression et les couronnes y sont rattachées)', () => {
+    const frozen = keysV12 as Record<string, string[]>;
+    for (const [unitId, keys] of Object.entries(frozen)) {
+      const now = c.exercisesOfUnit(unitId).map((e) => e.key);
+      expect({ unitId, keys: [...now].sort() }).toEqual({ unitId, keys: [...keys].sort() });
+    }
   });
 
   it('a des unités avec un titre et une description', () => {
@@ -37,31 +39,15 @@ describe.each(LANGS)('le contenu en %s', (lang) => {
     }
   });
 
-  it('a des exercices cohérents', () => {
+  it('a des choix distincts et des textes non vides', () => {
     for (const e of c.EXERCISES) {
-      const ref = FR.EXERCISE_BY_KEY.get(e.key);
-      expect(ref?.kind).toBe(e.kind);
-      if (e.kind === 'qcm' && ref?.kind === 'qcm') {
-        expect(e.choices.length).toBe(ref.choices.length);
-        expect(new Set(e.choices).size).toBe(e.choices.length);
-        expect(e.answer).toBe(ref.answer);
+      if (e.kind === 'qcm') {
+        expect({ key: e.key, distinct: new Set(e.choices).size === e.choices.length }).toEqual({ key: e.key, distinct: true });
         expect(e.prompt.trim()).not.toBe('');
       }
-      if (e.kind === 'cloze' && ref?.kind === 'cloze') {
+      if (e.kind === 'cloze') {
         expect(e.text).toContain('___');
         expect(e.bank).not.toContain(e.answer);
-      }
-      if (e.kind === 'match' && ref?.kind === 'match') expect(e.pairs.length).toBe(ref.pairs.length);
-      if (e.kind === 'order' && ref?.kind === 'order') expect(e.steps.length).toBe(ref.steps.length);
-      if (e.kind === 'bugline' && ref?.kind === 'bugline') expect(e.lines).toEqual(ref.lines);
-      if (e.kind === 'compose' && ref?.kind === 'compose') expect([e.tokens, e.extra]).toEqual([ref.tokens, ref.extra]);
-      if (e.kind === 'qcm' && ref?.kind === 'qcm') {
-        expect(e.output).toBe(ref.output);
-        expect(e.whyWrong?.length).toBe(ref.whyWrong?.length);
-      }
-      if (e.kind === 'case' && ref?.kind === 'case') {
-        expect(e.steps.length).toBe(ref.steps.length);
-        e.steps.forEach((s, i) => expect(s.choices.length).toBe(ref.steps[i].choices.length));
       }
     }
   });
@@ -70,10 +56,25 @@ describe.each(LANGS)('le contenu en %s', (lang) => {
     const manual = c.EXERCISES.filter((e) => e.key.includes(':x:'));
     for (const e of manual) expect(JSON.stringify(e)).not.toMatch(/[—–]/);
   });
+
+  it('ne contient plus de français ni d’espagnol (textes, code et sorties compris)', () => {
+    const FOREIGN = /[àâçéèêëîïôûùœ¿¡ñ]|\b(le|la|les|des|une|est|avec|pour|dans|vous|nous|sont|pas|sur|notre)\b/;
+    // Ce qui reste en français l'est exprès : noms propres, la mention légale
+    // française exacte, un exemple d'encodage, et les exercices sur l'attribut
+    // HTML « lang » (une page en français).
+    const ALLOWED = /Théo|Genève|Gen\\u00e8ve|Cafetière|Publicité|Collaboration commerciale avec Marque X|Collaboration commerciale|Le Chat|Boréal Cosmétiques|Café|Léa|\\?"é\\?"|Bienvenue sur notre boutique|Bonjour|Français/g;
+    const LANG_LESSONS = new Set(['web-html-2:w:4', 'web-html-4:w:1', 'web-html-4:w:7']);
+    const texts: { where: string; text: string }[] = [];
+    for (const card of c.CARDS) texts.push({ where: card.id, text: `${card.term} ${card.definition} ${card.example}` });
+    for (const e of c.EXERCISES) if (!LANG_LESSONS.has(e.key)) texts.push({ where: e.key, text: JSON.stringify({ ...e, key: '', unitId: '', cardId: '' }) });
+    for (const u of c.UNITS) texts.push({ where: u.id, text: `${u.title} ${u.description}` });
+    const bad = texts.filter((x) => FOREIGN.test(x.text.replace(ALLOWED, '')));
+    expect(bad.map((x) => x.where)).toEqual([]);
+  });
 });
 
 describe('les unités', () => {
-  const { UNITS, SUBJECTS, CARDS, CARD_BY_ID, exercisesOfUnit } = FR;
+  const { UNITS, SUBJECTS, CARDS, CARD_BY_ID, exercisesOfUnit } = EN;
 
   it('ont des identifiants uniques et une matière connue', () => {
     expect(new Set(UNITS.map((u) => u.id)).size).toBe(UNITS.length);
@@ -116,14 +117,14 @@ describe('les unités', () => {
 
 describe('les mondes', () => {
   it('couvrent chaque unité exactement une fois, dans l’ordre du chemin', () => {
-    const { UNITS } = FR;
+    const { UNITS } = EN;
     const covered = WORLDS.flatMap((w) => w.unitIds);
     expect(covered).toEqual(UNITS.map((u) => u.id));
     for (const unit of UNITS) expect(WORLD_BY_UNIT.get(unit.id)?.subjectId).toBe(unit.subjectId);
   });
 
   it('sont numérotés de 1 à n par matière', () => {
-    for (const s of FR.SUBJECTS) {
+    for (const s of EN.SUBJECTS) {
       const idx = WORLDS.filter((w) => w.subjectId === s.id).map((w) => w.index);
       expect(idx).toEqual(idx.map((_, i) => i + 1));
     }
@@ -131,7 +132,7 @@ describe('les mondes', () => {
 });
 
 describe('les exercices', () => {
-  const { EXERCISES, UNITS } = FR;
+  const { EXERCISES, UNITS } = EN;
 
   it('ont des clés uniques et une unité connue', () => {
     expect(new Set(EXERCISES.map((e) => e.key)).size).toBe(EXERCISES.length);
@@ -140,19 +141,17 @@ describe('les exercices', () => {
   });
 
   it('remise en ordre : au moins 3 étapes, toutes distinctes et non vides', () => {
-    for (const lang of ['fr', 'en', 'es'] as const) {
-      for (const ex of contentFor(lang).EXERCISES) {
-        if (ex.kind !== 'order') continue;
-        expect(ex.steps.length).toBeGreaterThanOrEqual(3);
-        expect(new Set(ex.steps).size).toBe(ex.steps.length);
-        for (const st of ex.steps) expect(st.trim().length).toBeGreaterThan(0);
-      }
+    for (const ex of EN.EXERCISES) {
+      if (ex.kind !== 'order') continue;
+      expect(ex.steps.length).toBeGreaterThanOrEqual(3);
+      expect(new Set(ex.steps).size).toBe(ex.steps.length);
+      for (const st of ex.steps) expect(st.trim().length).toBeGreaterThan(0);
     }
   });
 
   it('cas pratiques : titre, scénario, décisions avec 2 à 4 choix et réponse dans les bornes', () => {
-    for (const lang of ['fr', 'en', 'es'] as const) {
-      for (const ex of contentFor(lang).EXERCISES) {
+    {
+      for (const ex of EN.EXERCISES) {
         if (ex.kind !== 'case') continue;
         expect(ex.title.trim().length).toBeGreaterThan(0);
         expect(ex.scenario.trim().length).toBeGreaterThan(0);
@@ -169,8 +168,9 @@ describe('les exercices', () => {
   });
 
   it('QCM générés : aucun distracteur confondable avec la bonne réponse, aucun choix en double', () => {
-    for (const lang of ['fr', 'en', 'es'] as const) {
-      const c = contentFor(lang);
+    {
+      const lang = 'en' as const;
+      const c = EN;
       const byId = new Map(c.CARDS.map((card) => [card.id, card]));
       const defToId = new Map<string, string>();
       for (const card of c.CARDS) defToId.set(shownDefinition(card, lang, 'choice').text, card.id);
@@ -192,7 +192,7 @@ describe('les exercices', () => {
   });
 
   it('ligne fautive : 2 à 8 lignes, réponse dans les bornes', () => {
-    for (const ex of FR.EXERCISES) {
+    for (const ex of EN.EXERCISES) {
       if (ex.kind !== 'bugline') continue;
       expect(ex.lines.length).toBeGreaterThanOrEqual(2);
       expect(ex.lines.length).toBeLessThanOrEqual(8);
@@ -203,7 +203,7 @@ describe('les exercices', () => {
   });
 
   it('assemblage : au moins 3 morceaux, 0 à 4 intrus, aucun intrus égal à un morceau de la solution', () => {
-    for (const ex of FR.EXERCISES) {
+    for (const ex of EN.EXERCISES) {
       if (ex.kind !== 'compose') continue;
       expect(ex.tokens.length).toBeGreaterThanOrEqual(3);
       expect(ex.extra.length).toBeLessThanOrEqual(4);
@@ -212,7 +212,7 @@ describe('les exercices', () => {
   });
 
   it('QCM avec explication par choix : une entrée par choix, aucune pour la bonne réponse', () => {
-    for (const ex of FR.EXERCISES) {
+    for (const ex of EN.EXERCISES) {
       if (ex.kind !== 'qcm' || !ex.whyWrong) continue;
       expect(ex.whyWrong.length).toBe(ex.choices.length);
       expect(ex.whyWrong[ex.answer] ?? null).toBeNull();

@@ -77,8 +77,6 @@ export const useProgress = create<ProgressStore>()(
   ),
 );
 
-export type SettingsLang = 'fr' | 'en' | 'es';
-
 export interface PlacementRecord {
   score: number;
   total: number;
@@ -88,8 +86,6 @@ export interface PlacementRecord {
 }
 
 interface SettingsStore {
-  /** Langue de l'interface et du contenu ; null tant que l'utilisateur n'a pas choisi. */
-  lang: SettingsLang | null;
   onboardingDone: boolean;
   haptics: boolean;
   /** Rappels (série en danger, énergie rechargée). Demande la permission à l'activation. */
@@ -106,7 +102,6 @@ interface SettingsStore {
   placements: Record<string, PlacementRecord>;
   /** Les réglages ont été relus depuis le disque. */
   hydrated: boolean;
-  setLang: (lang: SettingsLang) => void;
   setOnboardingDone: (done: boolean) => void;
   setHaptics: (on: boolean) => void;
   setReminders: (on: boolean) => void;
@@ -124,7 +119,6 @@ interface SettingsStore {
 export const useSettings = create<SettingsStore>()(
   persist(
     (set) => ({
-      lang: null,
       onboardingDone: false,
       haptics: true,
       reminders: false,
@@ -135,7 +129,6 @@ export const useSettings = create<SettingsStore>()(
       tutorialDone: false,
       placements: {},
       hydrated: false,
-      setLang: (lang) => set({ lang }),
       setOnboardingDone: (onboardingDone) => set({ onboardingDone }),
       setHaptics: (haptics) => set({ haptics }),
       setReminders: (reminders) => set({ reminders }),
@@ -150,17 +143,17 @@ export const useSettings = create<SettingsStore>()(
     }),
     {
       name: 'settings.v1',
-      version: 2,
+      version: 3,
       // v2 : la matière « web » est devenue html / css / js.
+      // v3 : l'application est en anglais uniquement, le réglage de langue disparaît.
       migrate: (persisted) => {
-        const raw = (persisted ?? {}) as Record<string, unknown>;
+        const { lang: _lang, ...raw } = (persisted ?? {}) as Record<string, unknown>;
         const favorite = raw.favoriteSubject === 'web' ? 'html' : raw.favoriteSubject;
         const subjects = Array.isArray(raw.subjects) ? raw.subjects.flatMap((s) => (s === 'web' ? ['html', 'css', 'js'] : [s])) : null;
         return { ...raw, favoriteSubject: favorite ?? null, subjects } as unknown as SettingsStore;
       },
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({
-        lang: state.lang,
         onboardingDone: state.onboardingDone,
         haptics: state.haptics,
         reminders: state.reminders,

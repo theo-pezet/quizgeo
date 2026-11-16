@@ -3,9 +3,10 @@ import { useCallback, useMemo, useRef, useState } from 'react';
 import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
 
 import { CATALOG } from '@/content';
+import { faceAvailability, faceMaterial } from '@/content/faces';
 import { useContent } from '@/content/useContent';
-import { applyCardReview, applySessionEnd, composeDeckSession, previewIntervals, toDayKey, type Grade } from '@/game';
-import { useT, type T } from '@/i18n';
+import { applyCardReview, applySessionEnd, composeDeckSession, interleaveBy, pickCardFace, previewIntervals, shouldRelearn, toDayKey, type CardFace, type Grade } from '@/game';
+import { useT, type Key, type T } from '@/i18n';
 import { confirm } from '@/lib/confirm';
 import { haptics } from '@/lib/haptics';
 import { useProgress } from '@/store/progress';
@@ -26,11 +27,14 @@ export default function DeckReviewRoute() {
   const startProgress = useRef(useProgress.getState().progress);
   const today = toDayKey(new Date());
 
-  const queue = useMemo(() => {
+  // Toutes matières : les cartes sont entrelacées par matière (voir src/game/learning.ts).
+  const [queue, setQueue] = useState<string[]>(() => {
     const ids = subjectId ? cardIdsOf(subjectId) : CARDS.map((c) => c.id);
-    return composeDeckSession(startProgress.current.cards, ids, today, Math.random);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    const picked = composeDeckSession(startProgress.current.cards, ids, today, Math.random);
+    return subjectId ? picked : interleaveBy(picked, (id) => CARD_BY_ID.get(id)?.subject ?? '');
+  });
+  // « Encore » : la carte revient en fin de séance, jusqu'à être retrouvée (au plus RELEARN_MAX fois).
+  const lapses = useRef(new Map<string, number>());
 
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -42,6 +46,13 @@ export default function DeckReviewRoute() {
   const card = cardId ? CARD_BY_ID.get(cardId) : undefined;
   const cardState = useProgress((s) => (cardId ? s.progress.cards[cardId] : undefined));
   const preview = cardId ? previewIntervals(cardState, cardId, today) : null;
+  // Le visage de la carte : tiré une fois par carte (voir src/game/faces.ts).
+  const material = useMemo(() => (card ? faceMaterial(card, CARD_BY_ID) : null), [card, CARD_BY_ID]);
+  const face: CardFace = useMemo(
+    () => (material ? pickCardFace(useProgress.getState().progress.cards[cardId as string], faceAvailability(material), Math.random) : 'term'),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [cardId, index],
+  );
 
   const finish = (done: number, correct: number) => {
     const store = useProgress.getState();
@@ -63,15 +74,24 @@ export default function DeckReviewRoute() {
   const grade = (g: Grade) => {
     if (!cardId) return;
     const store = useProgress.getState();
-    const r = applyCardReview(store.progress, { cardId, grade: g, now: new Date() });
+    const r = applyCardReview(store.progress, { cardId, grade: g, now: new Date(), face });
     store.setProgress(r.progress);
     void (r.correct ? haptics.tap() : haptics.wrong());
     const nextCounts = { ...counts, [g]: counts[g] + 1 };
     setCounts(nextCounts);
     setXp(xp + r.xpGained);
     setFlipped(false);
-    if (index + 1 >= queue.length) {
-      const done = queue.length;
+    let nextQueue = queue;
+    if (g === 'again') {
+      const n = (lapses.current.get(cardId) ?? 0) + 1;
+      lapses.current.set(cardId, n);
+      if (shouldRelearn(n)) {
+        nextQueue = [...queue, cardId];
+        setQueue(nextQueue);
+      }
+    }
+    if (index + 1 >= nextQueue.length) {
+      const done = nextQueue.length;
       finish(done, done - nextCounts.again);
     } else {
       setIndex(index + 1);
@@ -202,15 +222,26 @@ export default function DeckReviewRoute() {
               </Text>
             </View>
           )}
+          {face !== 'term' && (
+            <View style={[styles.pill, { backgroundColor: colors.surfaceAlt }]}>
+              <Text variant="small" secondary style={styles.pillText}>
+                {t(`deck.face.pill.${face}` as Key)}
+              </Text>
+            </View>
+          )}
         </View>
 
         <View style={styles.face}>
-          <Text variant="title" style={styles.term}>
-            {card.term}
-          </Text>
+          {face === 'term' || flipped ? (
+            <Text variant="title" style={styles.term}>
+              {card.term}
+            </Text>
+          ) : (
+            <FaceFront face={face} material={material} card={card} accent={accent} />
+          )}
           {!flipped && (
             <Text variant="small" secondary style={styles.term}>
-              {t('deck.review.tap')}
+              {face === 'term' ? t('deck.review.tap') : t('deck.face.think')}
             </Text>
           )}
         </View>
@@ -218,9 +249,25 @@ export default function DeckReviewRoute() {
         {flipped && (
           <FadeUp style={styles.back}>
             <View style={[styles.rule, { backgroundColor: colors.border }]} />
+            {face === 'cloze' && material?.cloze && (
+              <Text variant="bodyBold" style={{ color: accent }}>
+                {t('deck.face.missing', { answer: material.cloze.answer })}
+              </Text>
+            )}
             <Text variant="body" style={styles.definition}>
               {card.definition}
             </Text>
+            {face === 'duel' && material?.duel && (
+              <View style={[styles.example, { backgroundColor: colors.surfaceAlt, borderLeftColor: colors.danger }]}>
+                <Text variant="small" style={[styles.pillText, { color: colors.danger }]}>
+                  {t('deck.face.rival')}
+                </Text>
+                <Text variant="bodyBold">{material.duel.rival.term}</Text>
+                <Text variant="small" style={styles.exampleText}>
+                  {material.duel.rival.definition}
+                </Text>
+              </View>
+            )}
             {card.example ? (
               <View style={[styles.example, { backgroundColor: colors.surfaceAlt, borderLeftColor: accent }]}>
                 <Text variant="small" style={[styles.pillText, { color: accent }]}>
@@ -235,6 +282,63 @@ export default function DeckReviewRoute() {
         )}
       </Pressable>
     </Screen>
+  );
+}
+
+/**
+ * Le recto d'une carte selon son visage : on cherche le terme à partir de la
+ * définition, d'un exemple, d'un texte à trou, ou on départage deux jumelles.
+ */
+function FaceFront({ face, material, card, accent }: { face: CardFace; material: ReturnType<typeof faceMaterial> | null; card: { term: string }; accent: string }) {
+  const t = useT();
+  const colors = useColors();
+  const prompt = <Text variant="small" style={[styles.pillText, styles.term, { color: accent }]}>{t(`deck.face.${face}` as Key)}</Text>;
+  if (face === 'definition' && material?.definition) {
+    return (
+      <>
+        {prompt}
+        <Text variant="body" style={[styles.definition, styles.term]}>{material.definition}</Text>
+      </>
+    );
+  }
+  if (face === 'example' && material?.example) {
+    return (
+      <>
+        {prompt}
+        <Text variant={looksLikeCode(material.example) ? 'mono' : 'body'} style={[styles.definition, styles.term]}>{material.example}</Text>
+      </>
+    );
+  }
+  if (face === 'cloze' && material?.cloze) {
+    return (
+      <>
+        {prompt}
+        <Text variant="h2" style={styles.term}>{card.term}</Text>
+        <Text variant="body" style={[styles.definition, styles.term]}>{material.cloze.text}</Text>
+      </>
+    );
+  }
+  if (face === 'duel' && material?.duel) {
+    return (
+      <>
+        {prompt}
+        <View style={styles.duel}>
+          <View style={[styles.pill, { backgroundColor: colors.surfaceAlt }]}>
+            <Text variant="bodyBold">{card.term}</Text>
+          </View>
+          <Text variant="small" secondary>vs</Text>
+          <View style={[styles.pill, { backgroundColor: colors.surfaceAlt }]}>
+            <Text variant="bodyBold">{material.duel.rival.term}</Text>
+          </View>
+        </View>
+        <Text variant="body" style={[styles.definition, styles.term]}>{material.duel.definition}</Text>
+      </>
+    );
+  }
+  return (
+    <Text variant="title" style={styles.term}>
+      {card.term}
+    </Text>
   );
 }
 
@@ -263,6 +367,7 @@ const styles = StyleSheet.create({
   pillText: { fontWeight: '800', fontSize: 12, letterSpacing: 0.3 },
   face: { flexGrow: 1, justifyContent: 'center', gap: space.sm, paddingVertical: space.md },
   term: { textAlign: 'center' },
+  duel: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: space.sm },
   back: { gap: space.md },
   rule: { height: 2, borderRadius: 1 },
   definition: { lineHeight: 24 },

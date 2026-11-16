@@ -72,13 +72,15 @@ def words(s: str, min_len: int) -> set[str]:
 
 def load_cards(export_dir: Path) -> list[dict]:
     """Lit l'export JSON du contenu localisé (voir src/content/__tests__/export.test.ts)."""
-    per_lang = {l: {c['id']: c for c in json.load(open(export_dir / f'cards.{l}.json'))} for l in ('fr', 'en', 'es')}
+    # Depuis la 1.3, l'export ne contient que l'anglais ; un ancien export en trois langues reste lisible.
+    langs = tuple(l for l in ('fr', 'en', 'es') if (export_dir / f'cards.{l}.json').exists())
+    per_lang = {l: {c['id']: c for c in json.load(open(export_dir / f'cards.{l}.json'))} for l in langs}
     cards = []
-    for cid, c in per_lang['fr'].items():
+    for cid, c in per_lang['en'].items():
         cards.append({
             'id': cid, 'subject': c['subject'], 'topic': c['topic'],
-            'term': {l: per_lang[l][cid]['term'] for l in ('fr', 'en', 'es')},
-            'definition': {l: per_lang[l][cid]['definition'] for l in ('fr', 'en', 'es')},
+            'term': {l: per_lang[l][cid]['term'] for l in langs},
+            'definition': {l: per_lang[l][cid]['definition'] for l in langs},
         })
     return cards
 
@@ -92,14 +94,14 @@ def main() -> None:
     pairs: set[tuple[str, str]] = set()
     reasons: dict[tuple[str, str], str] = {}
     for subject, group in by_subject.items():
-        tw = {c['id']: set().union(*(words(c['term'][l], 3) for l in ('fr', 'en', 'es'))) - GENERIC for c in group}
-        dw = {c['id']: {l: words(c['definition'][l], 4) for l in ('fr', 'en')} for c in group}
+        tw = {c['id']: set().union(*(words(t, 3) for t in c['term'].values())) - GENERIC for c in group}
+        dw = {c['id']: {l: words(t, 4) for l, t in c['definition'].items() if l in ('fr', 'en')} for c in group}
         for a, b in itertools.combinations(group, 2):
             key = tuple(sorted((a['id'], b['id'])))
             shared = tw[a['id']] & tw[b['id']]
             if shared:
                 pairs.add(key); reasons[key] = 'term:' + ','.join(sorted(shared)); continue
-            for l in ('fr', 'en'):
+            for l in dw[a['id']]:
                 x, y = dw[a['id']][l], dw[b['id']][l]
                 if x and y:
                     j = len(x & y) / len(x | y)

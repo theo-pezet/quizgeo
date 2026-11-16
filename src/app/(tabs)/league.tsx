@@ -9,6 +9,8 @@ import {
   PROMOTION_ZONE,
   applyLeagueOutcomeSeen,
   dayFractionOf,
+  leagueEnergyBonus,
+  maxEnergyFor,
   daysLeftInWeek,
   leagueStandings,
   toDayKey,
@@ -44,6 +46,9 @@ export default function LeagueScreen() {
   const zone = isPromo(rank) ? 'promotion' : isDemo(rank) ? 'demotion' : 'stay';
   const rules = canUp && canDown ? t('league.rules', { up: PROMOTION_ZONE, down: DEMOTION_ZONE }) : canUp ? t('league.rules.up', { up: PROMOTION_ZONE }) : t('league.rules.down', { down: DEMOTION_ZONE });
   const tierName = (i: number) => t(`league.tier.${i}` as Key);
+  // Bonus d'énergie de la ligue actuelle, et celui de la suivante.
+  const perk = leagueEnergyBonus(tier);
+  const nextPerkTier = canUp ? tier + 1 : null;
   const zoneColor = zone === 'promotion' ? colors.success : zone === 'demotion' ? colors.danger : colors.textSecondary;
 
   return (
@@ -80,6 +85,17 @@ export default function LeagueScreen() {
             {!canUp && rank <= PROMOTION_ZONE ? ` ${t('league.maxTier')}` : ''}
           </Text>
         </View>
+      </Card>
+
+      <Card>
+        <View style={styles.zone}>
+          <Icon name="flash" size={18} color={colors.energy} />
+          <Text variant="bodyBold">{t('league.perk.title', { bonus: perk })}</Text>
+        </View>
+        <Text variant="small" secondary>
+          {t('league.perk.body', { tier: tierName(tier), max: maxEnergyFor(progress.league) })}{' '}
+          {nextPerkTier !== null ? t('league.perk.next', { tier: tierName(nextPerkTier), bonus: leagueEnergyBonus(nextPerkTier) }) : t('league.perk.max')}
+        </Text>
       </Card>
 
       <View style={styles.list}>

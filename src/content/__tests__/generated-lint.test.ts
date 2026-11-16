@@ -1,5 +1,5 @@
 /**
- * Lint du contenu généré (generate.ts), dans les trois langues : ce qu'un
+ * Lint du contenu généré (generate.ts) : ce qu'un
  * relecteur repérerait d'un coup d'œil et qu'aucun type ne garantit.
  *
  * Les contrôles sont écrits indépendamment de cardText.ts (repliement,
@@ -10,9 +10,9 @@ import type { ClozeExercise, Exercise, MatchExercise, QcmExercise } from '@/game
 import { answerMatches } from '@/lib/text';
 
 import { contentFor } from '..';
-import { head, shortDefinition, shownDefinition } from '../generate';
+import { head, shortDefinition } from '../generate';
 
-const LANGS = ['fr', 'en', 'es'] as const;
+const LANGS = ['en'] as const;
 /** Sigles trop génériques pour trahir une réponse : toutes les cartes de la matière IA les portent. */
 const GENERIC = new Set(['IA', 'AI']);
 
@@ -137,29 +137,16 @@ describe.each(LANGS)('exercices générés en %s', (lang) => {
     expect(bad).toEqual([]);
   });
 
-  it('« Terme : définition » suit la typographie de la langue', () => {
+  it('« Term: definition » suit la typographie anglaise (pas d’espace avant « : »)', () => {
     for (const e of generated) {
       if (!('explain' in e) || !e.explain || kindOf(e) === 'match') continue;
       const first = e.explain.split('\n')[0];
-      if (lang === 'fr') expect(first).toMatch(/^[^\n]+? : /);
-      else expect(first).not.toMatch(/^[^\n:]+? : /);
+      expect(first).not.toMatch(/^[^\n:]+? : /);
     }
   });
 });
 
 describe('aides du générateur', () => {
-  it('retire le terme anglais entre parenthèses et le propose en mode tapé', () => {
-    const fr = contentFor('fr');
-    const reach = fr.CARD_BY_ID.get('marketing-reach');
-    expect(reach).toBeDefined();
-    if (!reach) return;
-    const shown = shownDefinition(reach, 'fr');
-    expect(shown.text).not.toMatch(/\(reach\)/i);
-    expect(shown.trailing?.toLowerCase()).toBe('reach');
-    const typed = fr.EXERCISES.find((e) => e.kind === 'qcm' && e.key.endsWith(':term:marketing-reach'));
-    if (typed && typed.kind === 'qcm' && typed.typed) expect(answerMatches('reach', typed.typed.answer, typed.typed.accept)).toBe(true);
-  });
-
   it('head : espace insécable avant « : » en français seulement', () => {
     expect(head('ROI', 'Retour sur investissement.', 'fr')).toBe('ROI : Retour sur investissement.');
     expect(head('ROI', 'Return on Investment.', 'en')).toBe('ROI: Return on Investment.');

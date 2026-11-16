@@ -4,7 +4,7 @@ import { BackHandler, Pressable, StyleSheet, Switch, View } from 'react-native';
 
 import { useContent } from '@/content/useContent';
 import { DAILY_GOALS, applySetDailyGoal } from '@/game';
-import { LANGS, detectLang, useT, type Lang } from '@/i18n';
+import { useT } from '@/i18n';
 import { requestReminderPermission } from '@/lib/notifications';
 import { useProgress, useSettings } from '@/store/progress';
 import { Button, FadeUp, Icon, Pop, ProgressBar, Screen, Text, radius, shade, space, tint, useColors, useIsDark } from '@/ui';
@@ -14,10 +14,9 @@ const HOURS = [8, 12, 19, 21];
 const STEPS = 5;
 
 /**
- * Cinq écrans, deux minutes : la langue, les matières (une ou plusieurs),
+ * Cinq écrans, deux minutes : l'accueil, les matières (une ou plusieurs),
  * le niveau (partir de zéro ou passer un test), l'objectif, les rappels.
- * Tout se change ensuite dans le Profil. Le choix de langue s'applique
- * immédiatement : l'écran suivant est déjà traduit.
+ * Tout se change ensuite dans le Profil.
  *
  * `replay=1` (depuis le Profil) : les choix partent des réglages actuels, et
  * la fin ramène au Profil au lieu d'empiler un second jeu d'onglets. Quitter
@@ -33,8 +32,6 @@ export default function OnboardingScreen() {
   const { replay } = useLocalSearchParams<{ replay?: string }>();
   const isReplay = replay === '1';
   const { SUBJECTS } = useContent();
-  const lang = useSettings((s) => s.lang);
-  const setLang = useSettings((s) => s.setLang);
   const [step, setStep] = useState(0);
   const previous = useSettings((s) => s.subjects);
   const [subjects, setSubjects] = useState<string[]>(previous && previous.length > 0 ? previous : [SUBJECTS[0].id]);
@@ -53,12 +50,10 @@ export default function OnboardingScreen() {
     });
     return () => sub.remove();
   }, [step]);
-  const chosenLang: Lang = lang ?? detectLang();
 
   const finish = async () => {
     const settings = useSettings.getState();
     const progress = useProgress.getState();
-    if (!settings.lang) settings.setLang(chosenLang);
     const chosen = SUBJECTS.filter((x) => subjects.includes(x.id)).map((x) => x.id);
     settings.setSubjects(chosen.length === SUBJECTS.length ? null : chosen);
     const keep = isReplay && settings.favoriteSubject && chosen.includes(settings.favoriteSubject) ? settings.favoriteSubject : null;
@@ -104,28 +99,21 @@ export default function OnboardingScreen() {
       {step === 0 && (
         <FadeUp key="s0" style={styles.stepWrap}>
           <Pop>
-            <Text style={styles.big}>🌍</Text>
+            <Text style={styles.big}>👋</Text>
           </Pop>
-          <Text variant="title" style={styles.centerText}>{t('onboarding.lang.title')}</Text>
+          <Text variant="title" style={styles.centerText}>{t('onboarding.welcome.title')}</Text>
           <Text variant="body" secondary style={styles.centerText}>
-            {t('onboarding.lang.body')}
+            {t('onboarding.welcome.body')}
           </Text>
           <View style={styles.list}>
-            {LANGS.map((l) => {
-              const active = l.id === chosenLang;
-              return (
-                <Pressable
-                  key={l.id}
-                  onPress={() => setLang(l.id)}
-                  style={[styles.card, { borderColor: active ? colors.primary : colors.border, backgroundColor: active ? selected(colors.primary) : colors.surface }]}>
-                  <Text style={styles.emoji}>{l.flag}</Text>
-                  <Text variant="bodyBold" style={styles.grow}>
-                    {l.label}
-                  </Text>
-                  {active && <Icon name="checkmark-circle" size={22} color={colors.primary} />}
-                </Pressable>
-              );
-            })}
+            {(['onboarding.welcome.point1', 'onboarding.welcome.point2', 'onboarding.welcome.point3'] as const).map((k, i) => (
+              <View key={k} style={[styles.card, { borderColor: colors.border, backgroundColor: colors.surface }]}>
+                <Text style={styles.emoji}>{['🗺️', '🃏', '🛠️'][i]}</Text>
+                <Text variant="body" style={styles.grow}>
+                  {t(k)}
+                </Text>
+              </View>
+            ))}
           </View>
         </FadeUp>
       )}

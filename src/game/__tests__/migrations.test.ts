@@ -155,3 +155,4 @@ describe('v3 : exercices « lis le code » ajoutés en 1.1', () => {
     expect(migratePersistedProgress(undefined, 2)).toEqual(emptyProgress());
   });
 });
+

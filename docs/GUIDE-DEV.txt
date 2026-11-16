@@ -19,7 +19,8 @@ progression des utilisateurs y sont liées.
   découpé en mondes, des exercices, une révision espacée (Anki), une boucle
   de jeu (énergie, gemmes, série, ligue, quêtes, défi du mois).
 - 100 % hors ligne, pas de compte, pas de serveur, pas de pub (prévue, désactivée).
-- Trois langues : français (référence), anglais, espagnol. Interface ET contenu.
+- Anglais uniquement depuis la 1.3 (interface ET contenu), avec les termes
+  exacts du métier. Jusqu'à la 1.2 : français, anglais, espagnol.
 - Stack : Expo SDK 57 (React Native 0.86), TypeScript, expo-router, zustand,
   jest. Un moteur de règles pur, testé à 100 %, séparé de l'interface.
 - Livraison : GitHub Actions construit l'APK (téléchargement direct) et l'App
@@ -66,7 +67,7 @@ exporté, jouer l'onboarding et une leçon, capturer des écrans.
                              exercices, génération, localisation
     src/data/                données : deck.json (Excel importé), i18n/*.json
                              (traductions du contenu), units.extra.json
-                             (unités rédigées en JSON, 3 langues)
+                             (unités rédigées en JSON, en anglais)
     src/i18n/                textes de l'interface (fr.ts référence, en.ts, es.ts)
     src/store/               persistance (zustand + AsyncStorage)
     src/lib/                 adaptateurs : sons, vibrations, notifications,
@@ -117,10 +118,21 @@ Fichiers et rôles :
 - srs.ts         : répétition espacée du deck, type SM-2 (grades again / hard /
                    good / easy, intervalles, previewIntervals, deckStats,
                    composeDeckSession).
+- learning.ts    : prétest (pickPretest, unitStarted), entrelacement
+                   (interleaveBy), réapprentissage (shouldRelearn,
+                   RELEARN_MAX = 2). Confiance : applyAnswer(…, confident)
+                   pose QuestionProgress.confidentMiss, compareReview le met
+                   en tête de la file. Références des études dans l'en-tête.
+- faces.ts       : « une carte, plusieurs visages » : pickCardFace choisit le
+                   recto d'une carte du deck (terme, définition, exemple,
+                   trou, duel contre sa jumelle si elle rechute), jamais le
+                   même que CardState.lastFace. Matière : src/content/faces.ts.
 - session.ts     : composition des sessions (composeUnitSession = 10 exercices
                    d'une unité, composeReviewSession, composeFreeSession),
                    presentQcm (mélange des choix).
-- energy.ts      : 25 points max, une leçon en coûte 5, une erreur 1, un
+- energy.ts      : 30 points max + bonus de ligue (maxEnergyFor : ligue
+                   actuelle, perdu en cas de relégation ; LEAGUE_ENERGY_BONUS dans league.ts : 0, 5,
+                   10, 12, 14, 16, 18, 20, 25, 30), une leçon en coûte 5, une erreur 1, un
                    sans-faute rembourse 2, +1 toutes les 12 minutes. Révision
                    et deck gratuits. canStartLesson, currentEnergy, minutesToLesson.
 - economy.ts     : gemmes (GEMS : leçon 10, sans-faute 20, deck 5, objectif 15,
@@ -170,16 +182,16 @@ un test dans src/game/__tests__, et on ne touche pas aux écrans.
 - subjects.ts : six matières (marketing, ia, python, html, css, js) avec
   emoji et couleur. Titres traduits via i18n (subject.<id>.title / tagline).
 - worlds.ts   : les MONDES (sections du chemin) : id `<matière>-w<n>`,
-  emoji, couleur, titre et sous-titre en 3 langues, liste d'unités DANS
+  emoji, couleur, titre et sous-titre, liste d'unités DANS
   L'ORDRE. Les unités rédigées en JSON (units.extra.json) rejoignent le
   monde qu'elles déclarent, à la suite. L'ordre du chemin = l'ordre des
   mondes puis des unités dans chaque monde (src/content/index.ts, STRUCTURE).
 - units.ts    : les unités historiques écrites en TypeScript : id, matière,
-  titre et description (français), et leurs cartes : soit une tranche d'un
+  titre et description (anglais), et leurs cartes : soit une tranche d'un
   sous-thème du deck (`slice('seo', 0, 8)` = les 8 premières cartes SEO de la
   matière), soit une liste d'identifiants, soit rien (unité composée
   uniquement d'exercices écrits à la main). Titres EN/ES dans units.i18n.ts.
-- Chiffres en v1.1.0 (identiques dans les 3 langues) : 105 unités, 27 mondes,
+- Chiffres en v1.1.0 : 105 unités, 27 mondes,
   1518 cartes, 1925 exercices dont 529 « lis le code » (voir 4.7).
   Répartition : marketing 36 unités (9 mondes), IA 22 (5), Python 26 (5),
   HTML 6 (2), CSS 5 (3), JavaScript 10 (3). Les
@@ -196,7 +208,8 @@ un test dans src/game/__tests__, et on ne touche pas aux écrans.
 - src/data/deck.json : 1118 cartes importées du classeur Excel de l'auteur
   (docs/deck-source.xlsx) par tools/build_deck.py. Anglais d'origine.
   Champs : id, subject, topic, level, term, definition, example, tags, cloze.
-- src/content/cards.extra.ts : ~190 cartes écrites à la main en français
+- src/data/cards.manual.json (chargé par cards.extra.ts) : ~190 cartes écrites
+  à la main, en anglais depuis la 1.3
   (histoire de l'IA, acteurs, agents, données, HTML/CSS/JS…). Identifiants
   `<matière>-x-<slug>` (préfixe historique `web-x-` conservé pour html/css/js).
 - Traductions : src/data/i18n/deck.fr.json, deck.es.json (id → term,
@@ -219,10 +232,10 @@ Trois origines :
   la carte a un cloze, plus une association par groupe de 4 cartes. Les
   distracteurs viennent du même sous-thème. Déterministe (graine = id de
   l'unité) : les clés `<unité>:def:<carte>` etc. sont stables.
-- Écrits à la main en TypeScript (src/content/extras.ts, français) : clés
+- Écrits à la main (src/data/exercises.manual.json, chargé par extras.ts) : clés
   `<unité>:x:<n>`. Traductions dans src/data/i18n/extras.en.json / es.json
   (clé → champs traduits), superposées par localize.ts.
-- Rédigés en JSON, trois langues d'un coup (src/data/units.extra.json) :
+- Rédigés en JSON (src/data/units.extra.json) :
   voir « Ajouter une unité » ci-dessous. Chargés par src/content/extra.ts.
 
 4.4 Le point d'entrée : contentFor(lang)
@@ -239,8 +252,10 @@ de l'utilisateur (settings.subjects).
 
 4.5 Tests d'intégrité
 
-src/content/__tests__/content.test.ts vérifie, dans les 3 langues : ids
-uniques, textes non vides, mêmes clés d'exercice qu'en français, choix
+src/content/__tests__/content.test.ts vérifie : ids uniques, textes non
+vides, AUCUN texte français ou espagnol restant, et pour chaque unité de la
+1.2 EXACTEMENT les mêmes clés d'exercice (keys-v1.2.json : les couronnes
+dépendent du streak minimal de tous les exercices d'une unité), choix
 cohérents, au moins 5 exercices par unité, mondes couvrant chaque unité
 exactement une fois, aucun tiret cadratin dans les textes manuels.
 
@@ -287,7 +302,7 @@ questions et 12 scripts ont été importés avec son accord par
 tools/pyquest_import.py, puis traduits).
 
 - src/data/code.extra.json : les exercices code, rattachés aux unités
-  EXISTANTES par unitId, en trois langues (le code lui-même est identique
+  EXISTANTES par unitId, en anglais (identifiants et chaînes du code compris
   dans les trois). Chargés par src/content/extra.ts (CODE_EXERCISES) avec
   les exercices JSON des unités. Clés `<unitId>:c:<n>` (import PyQuest) et
   `<unitId>:w:<n>` (rédaction par agents).
@@ -342,28 +357,22 @@ Attention : les traductions deck.fr/es.json sont indexées par id ; une
 nouvelle carte n'aura pas de traduction tant qu'on ne l'ajoute pas.
 
 
-5. LES TRADUCTIONS DE L'INTERFACE (src/i18n)
--------------------------------------------
+5. LES TEXTES DE L'INTERFACE (src/i18n)
+---------------------------------------
 
-- fr.ts est la référence ; en.ts et es.ts sont typés `Record<keyof typeof fr,
-  string>` : une clé manquante est une erreur de compilation.
-- Syntaxe : `{nom}` interpole un paramètre ; `(one:jour|other:jours)` choisit
-  selon le paramètre `count`.
+- Anglais uniquement depuis la 1.3 : src/i18n/en.ts est le seul dictionnaire
+  (fr.ts et es.ts ont été retirés). `Lang` vaut 'en' ; useT(), t(),
+  translate() gardent leur forme pour ne pas toucher aux écrans.
+- Syntaxe : `{nom}` interpole un paramètre ; `(one:day|other:days)` choisit
+  selon le paramètre `count` (seul 1 est au singulier).
 - Dans un composant : `const t = useT(); t('common.continue')`. Hors React :
-  `t()` de src/i18n (lit la langue courante). Le contenu (src/content) utilise
-  `translate(lang, clé)` de src/i18n/translate.ts, sans dépendance au store.
-- La langue : settings.lang (null tant que l'utilisateur n'a pas choisi ;
-  detectLang() propose celle du téléphone). Changer la langue re-rend toute
-  l'app et recharge le contenu, la progression ne bouge pas.
-- monthLabel(lang, « AAAA-MM ») donne « septembre 2026 » via Intl (minuscule
-  dans une phrase ; `standalone` met la majuscule pour un libellé isolé).
-- Pluriel : en français 0 et 1 sont au singulier (« 0 carte »).
-- src/i18n/format.ts : formatDay(dayKey, lang, options) pour afficher une
-  date (jamais de « 2026-09-23 » à l'écran) et ordinal(n, lang).
-- Typographie française : espace fine insécable (U+202F) devant ; ? ! et
-  dans les guillemets, insécable (U+00A0) devant : et %.
-- src/i18n/__tests__ vérifie mêmes clés, mêmes paramètres, pluriels bien
-  formés et absence de tiret cadratin dans les trois dictionnaires.
+  `t()` de src/i18n.
+- src/i18n/format.ts : formatDay(dayKey, lang, options) et ordinal(n).
+- src/i18n/__tests__ vérifie : pas de tiret cadratin, pluriels bien formés,
+  aucun texte français ou espagnol.
+- Générés depuis les cartes : la 1.2 ne posait une carte « dans un sens » que
+  si c'était possible dans les trois langues. src/data/gen-vetoes.json fige
+  les deux cartes concernées pour que les clés d'exercice ne bougent pas.
 
 
 6. LA PERSISTANCE (src/store/progress.ts)
@@ -381,7 +390,7 @@ Deux stores zustand persistés dans AsyncStorage :
   couronne. `reset()` remet un état vide mais garde l'objectif du jour.
 - Le splash reste affiché tant que polices et stores ne sont pas prêts
   (_layout.tsx) ; un listener AppState rejoue applyTick() au retour de l'app.
-- useSettings (clé « settings.v1 », version 2) : langue, onboardingDone,
+- useSettings (clé « settings.v1 », version 3 : le réglage de langue a disparu) : onboardingDone,
   matières choisies (subjects, null = toutes), tutorialDone, placements
   (résultats des tests de niveau), sons, vibrations, rappels et heure,
   matière favorite. La migration v2 renomme la matière « web » en html/css/js.
@@ -410,6 +419,9 @@ d'Android 15+).
   couronnes, bouton de lancement (coût ⚡ 5) ou test de sortie si verrouillé.
   Le mini-tuto (src/ui/Tutorial.tsx, 4 cartes) s'affiche une fois.
 - session/[unitId].tsx, session/review.tsx, session/free.tsx : une SESSION
+  (bouton ↶ « question précédente » : la vue de la question d'avant reste
+  montée, cachée, et se réaffiche telle quelle avec son verdict ;
+  useSession expose `previous`)
   (src/features/session). useSession.ts est la machine à états : compose la
   file, prélève l'énergie, applique chaque réponse (applyAnswerAction), remet
   les exercices ratés en fin de session (rattrapage), et à la fin appelle
@@ -430,7 +442,7 @@ d'Android 15+).
   aujourd'hui (pont leçon → deck dans useSession).
 - (tabs)/profile.tsx : niveau, tuiles, alerte de série, boutique, entraînement
   (révision des erreurs, sessions libres, tests de niveau), Blitz, badges,
-  médailles mensuelles, réglages (matières, langue, objectif, sons,
+  médailles mensuelles, réglages (matières, objectif, sons,
   vibrations, rappels + heure, revoir l'intro, confidentialité, réinitialiser).
 - privacy.tsx : politique de confidentialité dans l'app (public/privacy.html
   est la version en ligne, exigée par Google).
@@ -498,7 +510,9 @@ données » : aucune donnée collectée ni partagée.
 9. CONVENTIONS
 --------------
 
-- Langue du code et des commentaires : français ; identifiants en anglais.
+- Commentaires du code : français (historique) ; identifiants en anglais ;
+  tout texte visible par l'utilisateur, y compris dans le code des exercices,
+  en anglais.
 - Pas de tiret cadratin dans les textes visibles (les tests le vérifient
   pour le contenu manuel).
 - Toute règle dans src/game avec test ; les écrans ne contiennent pas de

@@ -16,6 +16,7 @@
  */
 
 import confusablesJson from '@/data/confusables.json';
+import vetoesJson from '@/data/gen-vetoes.json';
 import type { Exercise, MatchExercise, QcmExercise } from '@/game';
 import { hashString, mulberry32 } from '@/lib/random';
 
@@ -45,19 +46,17 @@ export interface GenTexts {
   whichTerm: string;
   match: string;
   example: (text: string) => string;
-  /** Langue du contenu : typographie de « Terme : définition », variantes acceptées en mode tapé. Français par défaut. */
+  /** Langue du contenu : typographie de « Terme : définition », variantes acceptées en mode tapé. Anglais par défaut. */
   lang?: CardLang;
 }
 
-export const GEN_TEXTS_FR: GenTexts = {
-  whatMeans: (term) => `Que signifie « ${term} » ?`,
-  whichTerm: 'Quel terme correspond à cette définition ?',
-  match: 'Associe chaque terme à sa définition',
-  example: (text) => `Exemple : ${text}`,
-  lang: 'fr',
+export const GEN_TEXTS_EN: GenTexts = {
+  whatMeans: (term) => `What does “${term}” mean?`,
+  whichTerm: 'Which term matches this definition?',
+  match: 'Match each term with its definition',
+  example: (text) => `Example: ${text}`,
+  lang: 'en',
 };
-
-const LANGS: readonly CardLang[] = ['fr', 'en', 'es'];
 const CLOZE = /\{\{c\d+::(.*?)(?:::.*?)?\}\}/g;
 const FIRST_CLOZE = /\{\{c\d+::(.*?)(?:::.*?)?\}\}/;
 
@@ -69,7 +68,7 @@ const MAX_TYPED = 30;
 const MATCH_MAX = 90;
 
 /** « Terme : définition » selon la langue : espace insécable avant « : » en français, pas d'espace en anglais et en espagnol. */
-export function head(term: string, text: string, lang: CardLang = 'fr'): string {
+export function head(term: string, text: string, lang: CardLang = 'en'): string {
   return lang === 'fr' ? `${term} : ${text}` : `${term}: ${text}`;
 }
 
@@ -108,7 +107,7 @@ export type DefinitionUse = 'prompt' | 'choice';
 const SHOWN = new WeakMap<Card, Partial<Record<string, DisplayedDefinition>>>();
 
 /** La définition d'une carte telle qu'affichée dans les exercices générés (voir displayDefinition). */
-export function shownDefinition(card: Card, lang: CardLang = 'fr', use: DefinitionUse = 'prompt'): DisplayedDefinition {
+export function shownDefinition(card: Card, lang: CardLang = 'en', use: DefinitionUse = 'prompt'): DisplayedDefinition {
   let cache = SHOWN.get(card);
   if (!cache) {
     cache = {};
@@ -125,7 +124,7 @@ export function shownDefinition(card: Card, lang: CardLang = 'fr', use: Definiti
 }
 
 /** La définition raccourcie d'une carte, pour une association. */
-export function matchDefinition(card: Card, lang: CardLang = 'fr'): string {
+export function matchDefinition(card: Card, lang: CardLang = 'en'): string {
   return truncate(shownDefinition(card, lang).text, MATCH_MAX);
 }
 
@@ -197,55 +196,24 @@ function clozeParts(card: Card, subjectCards: readonly Card[], lang: CardLang): 
 }
 
 // ---------------------------------------------------------------------------
-// Ce qu'on génère pour chaque carte : la même décision dans les trois langues.
-
-interface LangCards {
-  byId: ReadonlyMap<string, Card>;
-  bySubject: ReadonlyMap<string, Card[]>;
-}
-
-const LANG_CARDS: Partial<Record<CardLang, LangCards>> = {};
-
-function langCards(lang: CardLang): LangCards {
-  let lc = LANG_CARDS[lang];
-  if (!lc) {
-    const cards = localizedCards(lang);
-    const bySubject = new Map<string, Card[]>();
-    for (const c of cards) {
-      const list = bySubject.get(c.subject);
-      if (list) list.push(c);
-      else bySubject.set(c.subject, [c]);
-    }
-    lc = { byId: new Map(cards.map((c) => [c.id, c])), bySubject };
-    LANG_CARDS[lang] = lc;
-  }
-  return lc;
-}
-
-const PLAN = new Map<string, boolean>();
+// Ce qu'on génère pour chaque carte.
 
 /**
- * Pose-t-on cette carte dans ce sens ? Oui seulement si c'est possible dans
- * les trois langues (une carte inconnue du contenu, dans un test, n'est jugée
- * que dans sa langue).
+ * Exercices jamais générés, figés à la 1.3 : jusqu'à la 1.2, une carte n'était
+ * posée dans un sens que si c'était possible dans les TROIS langues. Passer à
+ * l'anglais seul aurait ajouté ces exercices aux unités, donc fait perdre des
+ * couronnes (elles dépendent du streak minimal de TOUS les exercices). La
+ * liste garde les clés d'exercice exactement identiques.
  */
+const VETOED: Readonly<Record<'term' | 'cloze', ReadonlySet<string>>> = {
+  term: new Set((vetoesJson as { term: string[]; cloze: string[] }).term),
+  cloze: new Set((vetoesJson as { term: string[]; cloze: string[] }).cloze),
+};
+
+/** Pose-t-on cette carte dans ce sens ? */
 function planned(kind: 'term' | 'cloze', card: Card, subjectCards: readonly Card[], lang: CardLang): boolean {
-  const ok = (c: Card, subject: readonly Card[], l: CardLang) =>
-    kind === 'term' ? termPromptOk(shownDefinition(c, l).text) : clozeParts(c, subject, l) !== undefined;
-  if (!ok(card, subjectCards, lang)) return false;
-  const key = `${kind}\u0000${card.id}`;
-  let res = PLAN.get(key);
-  if (res === undefined) {
-    res = true;
-    for (const l of LANGS) {
-      if (l === lang) continue;
-      const lc = langCards(l);
-      const other = lc.byId.get(card.id);
-      if (other && !ok(other, lc.bySubject.get(other.subject) ?? [], l)) res = false;
-    }
-    PLAN.set(key, res);
-  }
-  return res;
+  if (VETOED[kind].has(card.id)) return false;
+  return kind === 'term' ? termPromptOk(shownDefinition(card, lang).text) : clozeParts(card, subjectCards, lang) !== undefined;
 }
 
 // ---------------------------------------------------------------------------
@@ -260,6 +228,11 @@ const CONFUSABLES: Record<string, readonly string[]> = confusablesJson as Record
 
 export function isConfusable(a: string, b: string): boolean {
   return CONFUSABLES[a]?.includes(b) ?? false;
+}
+
+/** Les cartes qu'on pourrait confondre avec celle-ci (duel du deck). */
+export function confusablesOf(id: string): readonly string[] {
+  return CONFUSABLES[id] ?? [];
 }
 
 interface Candidate {
@@ -425,9 +398,9 @@ export function generateExercises(
   unit: Unit,
   unitCards: readonly Card[],
   subjectCards: readonly Card[],
-  texts: GenTexts = GEN_TEXTS_FR,
+  texts: GenTexts = GEN_TEXTS_EN,
 ): Exercise[] {
-  const lang: CardLang = texts.lang ?? 'fr';
+  const lang: CardLang = texts.lang ?? 'en';
   const rng = mulberry32(hashString(unit.id));
   const out: Exercise[] = [];
   const unitTopics = new Set(unitCards.map((c) => c.topic));

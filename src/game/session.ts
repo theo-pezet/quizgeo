@@ -6,7 +6,8 @@
  * l'horloge ni le stockage.
  */
 
-import { compareByLastSeen } from './review';
+import { interleaveBy } from './learning';
+import { compareReview } from './review';
 import { FULL_SESSION_LENGTH } from './xp';
 import type { Exercise, QcmExercise, QuestionProgress, Rng, SessionMode } from './types';
 
@@ -75,20 +76,24 @@ export function composeUnitSession(
 }
 
 /**
- * Session de révision : jusqu'à 10 questions de la file, les plus anciennes
- * d'abord. Si la file en compte moins, la session est PLUS COURTE — on ne
- * complète jamais avec des questions au hasard.
+ * Session de révision : jusqu'à 10 questions de la file, les erreurs « sûres »
+ * puis les plus anciennes d'abord. Si la file en compte moins, la session est
+ * PLUS COURTE — on ne complète jamais avec des questions au hasard.
+ * `groupOf` (la matière d'un exercice) : les questions retenues sont
+ * entrelacées par matière (voir learning.ts).
  */
 export function composeReviewSession(
   queue: readonly QuestionProgress[],
   byKey: ReadonlyMap<string, Exercise>,
   length: number = SESSION_LENGTH,
+  groupOf?: (exercise: Exercise) => string,
 ): Exercise[] {
-  return [...queue]
-    .sort(compareByLastSeen)
+  const picked = [...queue]
+    .sort(compareReview)
     .map((entry) => byKey.get(entry.key))
     .filter((q): q is Exercise => q !== undefined)
     .slice(0, length);
+  return groupOf ? interleaveBy(picked, groupOf) : picked;
 }
 
 /**

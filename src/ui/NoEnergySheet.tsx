@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 import { StyleSheet, View } from 'react-native';
 
 import { FEATURES } from '@/config/features';
-import { SHOP, applyBuyRefill, currentEnergy, minutesToLesson, reviewQueueSize } from '@/game';
+import { SHOP, applyBuyRefill, currentEnergy, maxEnergyFor, minutesToLesson, reviewQueueSize } from '@/game';
 import { useContent } from '@/content/useContent';
 import { useT } from '@/i18n';
 import { useProgress } from '@/store/progress';
@@ -23,8 +23,9 @@ export function NoEnergySheet({ onClose }: { onClose: () => void }) {
   const progress = useProgress((s) => s.progress);
   const setProgress = useProgress((s) => s.setProgress);
   const now = new Date();
-  const value = currentEnergy(progress.energy, now);
-  const wait = minutesToLesson(progress.energy, now);
+  const max = maxEnergyFor(progress.league);
+  const value = currentEnergy(progress.energy, now, max);
+  const wait = minutesToLesson(progress.energy, now, max);
   const canPay = progress.gems >= SHOP.refill.cost;
   const hasErrors = reviewQueueSize(progress, useContent().EXERCISE_BY_KEY) > 0;
   // « 1 h » plutôt que « 1 h 0 min ».

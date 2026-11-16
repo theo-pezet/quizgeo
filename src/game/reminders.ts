@@ -7,7 +7,7 @@
  */
 
 import { addDays, toDayKey } from './dates';
-import { MAX_ENERGY, currentEnergy, minutesToNextEnergy, ENERGY_REGEN_MINUTES } from './energy';
+import { currentEnergy, maxEnergyFor, minutesToNextEnergy, ENERGY_REGEN_MINUTES } from './energy';
 import { displayedStreak, isActiveToday } from './streak';
 import type { Progress } from './types';
 
@@ -96,9 +96,10 @@ export function planReminders(progress: Progress, now: Date, prefs: ReminderPref
   out.push(...lapses);
 
   if (prefs.energy) {
-    const value = currentEnergy(progress.energy, now);
-    if (value < MAX_ENERGY) {
-      const minutes = minutesToNextEnergy(progress.energy, now) + (MAX_ENERGY - value - 1) * ENERGY_REGEN_MINUTES;
+    const max = maxEnergyFor(progress.league);
+    const value = currentEnergy(progress.energy, now, max);
+    if (value < max) {
+      const minutes = minutesToNextEnergy(progress.energy, now, max) + (max - value - 1) * ENERGY_REGEN_MINUTES;
       out.push({
         id: 'energy',
         at: new Date(now.getTime() + minutes * 60000),

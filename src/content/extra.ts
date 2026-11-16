@@ -1,17 +1,17 @@
 /**
- * Les unités ajoutées après coup, rédigées au format JSON en trois langues
+ * Les unités ajoutées après coup, rédigées au format JSON (en anglais)
  * (src/data/units.extra.json, produit par tools/integrate_units.py). Ici :
- * la conversion vers les types de l'app, pour une langue donnée.
+ * la conversion vers les types de l'app.
  */
 
 import codeExtra from '@/data/code.extra.json';
 import unitsExtra from '@/data/units.extra.json';
 import type { CodeBlock, Exercise } from '@/game';
-import { translate, type Lang } from '@/i18n/translate';
+import { translate } from '@/i18n/translate';
 
 import type { Card, Unit } from './types';
 
-type L = Record<Lang, string>;
+type L = string;
 
 interface ExtraCard {
   id: string;
@@ -53,32 +53,32 @@ export const EXTRA_UNIT_WORLDS: readonly { id: string; subjectId: string; world:
   world: u.unit.world,
 }));
 
-export function extraUnits(lang: Lang): Unit[] {
+export function extraUnits(): Unit[] {
   return EXTRA_UNITS.map((u) => ({
     id: u.unit.id,
     subjectId: u.unit.subjectId,
-    title: u.unit.title[lang],
-    description: u.unit.description[lang],
+    title: u.unit.title,
+    description: u.unit.description,
     cards: [...u.unit.cardIds],
   }));
 }
 
-export function extraCards(lang: Lang): Card[] {
+export function extraCards(): Card[] {
   return EXTRA_UNITS.flatMap((u) =>
     u.cards.map((c) => ({
       id: c.id,
       subject: c.subject,
       topic: c.topic,
       level: c.level,
-      term: c.term[lang],
-      definition: c.definition[lang],
-      example: c.example[lang],
+      term: c.term,
+      definition: c.definition,
+      example: c.example,
       tags: ['#manual'],
     })),
   );
 }
 
-export function extraExercises(lang: Lang): Exercise[] {
+export function extraExercises(): Exercise[] {
   const out: Exercise[] = [];
   const all: ExtraExercise[] = [...EXTRA_UNITS.flatMap((u) => u.exercises), ...CODE_EXERCISES];
   for (const e of all) {
@@ -90,37 +90,37 @@ export function extraExercises(lang: Lang): Exercise[] {
             kind: 'qcm',
             key: e.key,
             unitId: e.unitId,
-            prompt: e.prompt[lang],
-            choices: e.choices.map((c) => c[lang]),
+            prompt: e.prompt,
+            choices: [...e.choices],
             answer: e.answer,
-            explain: e.explain[lang],
+            explain: e.explain,
             ...(e.code ? { code: { lang: e.code.lang as CodeBlock['lang'], src: e.code.src } } : {}),
-            ...(e.whyWrong ? { whyWrong: e.whyWrong.map((w) => (w ? w[lang] : null)) } : {}),
+            ...(e.whyWrong ? { whyWrong: e.whyWrong.map((w) => (w ?? null)) } : {}),
             ...(e.output !== undefined ? { output: e.output } : {}),
             ...priority,
           });
           break;
         case 'vf':
-          out.push({ kind: 'qcm', key: e.key, unitId: e.unitId, prompt: e.prompt[lang], choices: [translate(lang, 'common.true'), translate(lang, 'common.false')], answer: e.isTrue ? 0 : 1, explain: e.explain[lang], ...priority });
+          out.push({ kind: 'qcm', key: e.key, unitId: e.unitId, prompt: e.prompt, choices: [translate('en', 'common.true'), translate('en', 'common.false')], answer: e.isTrue ? 0 : 1, explain: e.explain, ...priority });
           break;
         case 'bugline':
-          out.push({ kind: 'bugline', key: e.key, unitId: e.unitId, prompt: e.prompt[lang], lang: e.lang as CodeBlock['lang'], lines: [...e.lines], answer: e.answer, explain: e.explain[lang], ...priority });
+          out.push({ kind: 'bugline', key: e.key, unitId: e.unitId, prompt: e.prompt, lang: e.lang as CodeBlock['lang'], lines: [...e.lines], answer: e.answer, explain: e.explain, ...priority });
           break;
         case 'compose':
-          out.push({ kind: 'compose', key: e.key, unitId: e.unitId, prompt: e.prompt[lang], lang: e.lang as CodeBlock['lang'], tokens: [...e.tokens], extra: [...e.extra], explain: e.explain[lang], ...priority });
+          out.push({ kind: 'compose', key: e.key, unitId: e.unitId, prompt: e.prompt, lang: e.lang as CodeBlock['lang'], tokens: [...e.tokens], extra: [...e.extra], explain: e.explain, ...priority });
           break;
         case 'order':
-          out.push({ kind: 'order', key: e.key, unitId: e.unitId, prompt: e.prompt[lang], steps: e.steps.map((s) => s[lang]), explain: e.explain[lang] });
+          out.push({ kind: 'order', key: e.key, unitId: e.unitId, prompt: e.prompt, steps: [...e.steps], explain: e.explain });
           break;
         case 'case':
           out.push({
             kind: 'case',
             key: e.key,
             unitId: e.unitId,
-            title: e.title[lang],
-            scenario: e.scenario[lang],
-            steps: e.steps.map((s) => ({ prompt: s.prompt[lang], choices: s.choices.map((c) => c[lang]), answer: s.answer, feedback: s.feedback[lang] })),
-            explain: e.explain[lang],
+            title: e.title,
+            scenario: e.scenario,
+            steps: e.steps.map((s) => ({ prompt: s.prompt, choices: [...s.choices], answer: s.answer, feedback: s.feedback })),
+            explain: e.explain,
           });
           break;
       }

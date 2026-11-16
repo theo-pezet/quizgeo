@@ -211,7 +211,7 @@ export default function PlacementRoute() {
           {t('placement.result.title', { score, total: questions.length })}
         </Text>
         <Text variant="body" secondary style={styles.center}>
-          {skip > 0 && world ? t('placement.result.skip', { count: skip, world: world.title[lang] }) : t('placement.result.none')}
+          {skip > 0 && world ? t('placement.result.skip', { count: skip, world: world.title }) : t('placement.result.none')}
         </Text>
         {skip > 0 && (
           <View style={[styles.list, { backgroundColor: colors.surfaceAlt }]}>

@@ -10,6 +10,8 @@ import {
   clearLeagueOutcome,
   daysLeftInWeek,
   ensureLeague,
+  LEAGUE_ENERGY_BONUS,
+  leagueEnergyBonus,
   leagueStandings,
   resultForRank,
   userRank,
@@ -187,5 +189,17 @@ describe('divers', () => {
 
   it('a 10 divisions', () => {
     expect(LEAGUE_TIERS).toHaveLength(10);
+  });
+});
+
+describe('bonus d’énergie de ligue', () => {
+  it('donne +10 dès l’Or et grandit avec la ligue, bornes comprises', () => {
+    expect(LEAGUE_ENERGY_BONUS).toHaveLength(LEAGUE_TIERS.length);
+    expect(leagueEnergyBonus(0)).toBe(0);
+    expect(leagueEnergyBonus(2)).toBe(10);
+    expect(leagueEnergyBonus(9)).toBe(30);
+    expect(leagueEnergyBonus(-3)).toBe(0);
+    expect(leagueEnergyBonus(42)).toBe(30);
+    for (let i = 1; i < LEAGUE_ENERGY_BONUS.length; i += 1) expect(LEAGUE_ENERGY_BONUS[i]).toBeGreaterThan(LEAGUE_ENERGY_BONUS[i - 1]);
   });
 });

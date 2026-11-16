@@ -4,8 +4,7 @@ Application mobile (Android, et web) pour apprendre le marketing digital,
 l'IA, Python et HTML / CSS / JavaScript. Un chemin d'unités par matière,
 découpé en **mondes** thématiques (comme Duolingo), un deck de vocabulaire en
 répétition espacée (comme Anki), et des cas pratiques. Interface et contenu
-en **français, anglais et espagnol** (choix au premier lancement, puis dans
-le Profil).
+**en anglais uniquement** (depuis la 1.3), avec les termes exacts du métier.
 
 - **Web** : https://theo-pezet.github.io/quizgeo/ (publié à chaque push sur `main`)
 - **APK Android** : onglet *Releases* (construit et signé par GitHub Actions ;
@@ -23,8 +22,24 @@ le Profil).
 - **Des cas pratiques** à plusieurs décisions, avec un retour à chaque étape.
 - **Cinq couronnes par unité** : le chemin avance à 3, la maîtrise va à 5,
   et sans révision une couronne se fissure tous les 14 jours.
-- **Énergie** (25, une leçon en coûte 5, une erreur 1, un sans-faute en
+- **Énergie** (30, une leçon en coûte 5, une erreur 1, un sans-faute en
   rembourse 2, +1 toutes les 12 min) — les révisions restent gratuites.
+  **Bonus de ligue** : la ligue actuelle relève le plafond (+5 Argent,
+  +10 Or… +30 Diamant) ; une relégation le fait redescendre.
+- **Une carte, plusieurs visages** (deck) : après deux révisions, une carte
+  se présente tantôt par son terme, tantôt par sa définition, un exemple ou
+  un texte à trou (terme masqué), jamais deux fois de suite pareil. Une carte
+  qui rechute passe en **duel** contre la notion qu'on confond avec elle.
+  Règles : `src/game/faces.ts` ; matière : `src/content/faces.ts`.
+- **Science de l'apprentissage** (`src/game/learning.ts`) : **prétest**
+  (une unité jamais commencée s'ouvre sur deux questions à deviner, sans
+  conséquence), **« I'm sure »** avant de valider (une erreur commise en étant
+  sûr passe en tête de la file « à revoir » : effet d'hypercorrection),
+  **révisions entrelacées** par matière (file d'erreurs et deck), et
+  **réapprentissage jusqu'au critère** (une erreur revient dans la même séance,
+  jusqu'à deux fois, en leçon comme au deck).
+- **Question précédente** : pendant une leçon, un petit bouton ↶ réaffiche la
+  question d'avant, telle qu'elle a été répondue, avec son explication.
 - **Gemmes** et boutique (recharge, gel de série, boost XP ×2), **quêtes du
   jour**, **ligue hebdomadaire** (30 joueurs, 10 divisions ; adversaires
   simulés hors ligne, remplaçables par un service en ligne).
@@ -32,11 +47,13 @@ le Profil).
 - **Blitz** (60 s, XP ×2), **test de sortie** (8/10 sur une unité verrouillée
   valide les précédentes), **rappels locaux** (série en danger, énergie
   rechargée, Android uniquement), trois **rivaux** récurrents en ligue.
-- **Trois langues.** Le classeur Excel (anglais) est traduit vers le français
-  et l'espagnol (`src/data/i18n/deck.*.json`), les cartes et exercices écrits
-  à la main (français) vers l'anglais et l'espagnol (`xcards.*.json`,
-  `extras.*.json`). Les identifiants ne changent jamais : la progression
-  survit à un changement de langue. Textes d'interface : `src/i18n/`.
+- **Anglais uniquement (1.3).** Le marketing, l'IA et le code se pratiquent en
+  anglais : l'app n'a plus de français ni d'espagnol. Contenu : `deck.json`
+  (classeur Excel), `cards.manual.json` et `exercises.manual.json` (cartes et
+  exercices écrits à la main), `units.extra.json`, `code.extra.json`. Les
+  identifiants n'ont pas changé : la progression est conservée, et
+  `src/content/__tests__/keys-v1.2.json` garantit que chaque unité garde
+  exactement ses clés d'exercice (donc ses couronnes).
 - **Mondes.** `src/content/worlds.ts` regroupe les unités en sections avec
   nom, couleur et emblème ; un monde est terminé quand toutes ses unités ont
   3 couronnes (écran dédié en fin de leçon).
