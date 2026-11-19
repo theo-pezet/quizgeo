@@ -25,8 +25,17 @@ import {
   type UnitProgress,
 } from './types';
 
-/** Score minimal d'une session pour acquérir la première couronne. */
+/** Score minimal d'une session pour acquérir la première couronne, une fois toutes les questions de l'unité vues. */
 export const FIRST_TRAIT_MIN_SCORE = 6;
+
+/**
+ * Voie rapide (1.4) : une leçon complète réussie à 8/10 ou plus donne la
+ * première couronne, donc ouvre l'unité suivante, même si l'unité compte
+ * encore des questions jamais vues. 80 % : le seuil classique de la
+ * pédagogie de maîtrise. Les couronnes 2 à 5 exigent toujours TOUTES les
+ * questions de l'unité, réussies dans des séances différentes.
+ */
+export const FAST_TRACK_MIN_SCORE = 8;
 
 /** Couronnes nécessaires pour que le chemin avance. Au-delà : maîtrise. */
 export const PATH_TRAITS = 3;
@@ -124,7 +133,8 @@ export function allUnitTraits(
  *
  * Le verrou se pose aussi lorsque l'unité atteint 2 ou 3 couronnes sans être
  * passée par une session à ≥ 6/10 : avoir tous ses exercices à streak ≥ 1
- * est une preuve de maîtrise plus forte que le score d'une session.
+ * est une preuve de maîtrise plus forte que le score d'une session. Et par la
+ * voie rapide : une leçon complète à ≥ 8/10 (FAST_TRACK_MIN_SCORE).
  */
 export function applyUnitSessionResult(
   unit: UnitProgress | undefined,
@@ -140,7 +150,8 @@ export function applyUnitSessionResult(
   const earnsFirstTrait =
     prev.firstTraitEarned ||
     params.computedTraitsAtLeast2 ||
-    (params.allQuestionsSeen && params.score >= FIRST_TRAIT_MIN_SCORE);
+    (params.allQuestionsSeen && params.score >= FIRST_TRAIT_MIN_SCORE) ||
+    (params.questionCount === FULL_SESSION_LENGTH && params.score >= FAST_TRACK_MIN_SCORE);
 
   return {
     ...prev,

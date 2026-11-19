@@ -1,4 +1,5 @@
 import {
+  FAST_TRACK_MIN_SCORE,
   FIRST_TRAIT_MIN_SCORE,
   effectiveStreak,
   allUnitTraits,
@@ -202,10 +203,31 @@ describe('applyUnitSessionResult', () => {
     expect(r.firstTraitEarned).toBe(false);
   });
 
-  it('ne l’acquiert pas si une question n’a pas été vue', () => {
+  it('ne l’acquiert pas à 7/10 si une question n’a pas été vue', () => {
     const r = applyUnitSessionResult(undefined, UNIT, {
-      score: 10,
+      score: FAST_TRACK_MIN_SCORE - 1,
       questionCount: 10,
+      allQuestionsSeen: false,
+      computedTraitsAtLeast2: false,
+    });
+    expect(r.firstTraitEarned).toBe(false);
+  });
+
+  it('voie rapide : l’acquiert à 8/10 sur une leçon complète, même sans avoir tout vu', () => {
+    const r = applyUnitSessionResult(undefined, UNIT, {
+      score: FAST_TRACK_MIN_SCORE,
+      questionCount: 10,
+      allQuestionsSeen: false,
+      computedTraitsAtLeast2: false,
+    });
+    expect(r.firstTraitEarned).toBe(true);
+    expect(FAST_TRACK_MIN_SCORE).toBe(8);
+  });
+
+  it('voie rapide : pas sur une session écourtée', () => {
+    const r = applyUnitSessionResult(undefined, UNIT, {
+      score: 8,
+      questionCount: 9,
       allQuestionsSeen: false,
       computedTraitsAtLeast2: false,
     });
