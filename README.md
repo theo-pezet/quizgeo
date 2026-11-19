@@ -24,8 +24,10 @@ répétition espacée (comme Anki), et des cas pratiques. Interface et contenu
   (`src/lib/askClaude.ts`).
 - **Le deck et le chemin se parlent** : les leçons nourrissent la révision espacée.
 - **Des cas pratiques** à plusieurs décisions, avec un retour à chaque étape.
-- **Cinq couronnes par unité** : le chemin avance à 3, la maîtrise va à 5,
-  et sans révision une couronne se fissure tous les 14 jours.
+- **Cinq couronnes par unité** : la 1re ouvre l'unité suivante (dès une leçon
+  réussie à 8/10, ou 6/10 une fois toutes les questions vues), le chemin
+  avance à 3, la maîtrise va à 5, et sans révision une couronne se fissure
+  tous les 14 jours.
 - **Énergie** (30, une leçon en coûte 5, une erreur 1, un sans-faute en
   rembourse 2, +1 toutes les 12 min) — les révisions restent gratuites.
   **Bonus de ligue** : la ligue actuelle relève le plafond (+5 Argent,

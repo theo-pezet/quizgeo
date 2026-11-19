@@ -106,7 +106,9 @@ Fichiers et rôles :
 - xp.ts          : XP par réponse et par session, niveaux (levelProgress).
 - mastery.ts     : les COURONNES. unitTraits() dérive 0 à 5 couronnes d'une
                    unité depuis les streaks de ses exercices : 1 = tous vus et
-                   première session ≥ 6/10 (verrou firstTraitEarned), puis
+                   une session ≥ 6/10, OU une leçon complète ≥ 8/10 même sans
+                   tout avoir vu (voie rapide, FAST_TRACK_MIN_SCORE ; verrou
+                   firstTraitEarned), puis
                    2/3/4/5 = streak minimal ≥ 1/2/3/4. PATH_TRAITS = 3 (le
                    chemin avance à 3), MAX_TRAITS = 5. effectiveStreak() fait
                    perdre un cran par 14 jours sans revoir (DECAY_DAYS) : les
