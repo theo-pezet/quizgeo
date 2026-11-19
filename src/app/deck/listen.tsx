@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
 import { useContent } from '@/content/useContent';
+import { useActiveSubjects } from '@/content/useSubjects';
 import { pickListenCards, toDayKey } from '@/game';
 import { useT } from '@/i18n';
 import { speak, stopSpeaking } from '@/lib/speech';
@@ -25,10 +26,12 @@ type Phase = 'term' | 'pause' | 'answer' | 'gap';
 export default function DeckListenRoute() {
   const colors = useColors();
   const t = useT();
-  const { CARDS, CARD_BY_ID, cardIdsOf, SUBJECT_BY_ID } = useContent();
+  const { CARD_BY_ID, cardIdsOf, SUBJECT_BY_ID } = useContent();
+  const active = useActiveSubjects();
   const { subjectId } = useLocalSearchParams<{ subjectId?: string }>();
   const [ids] = useState(() => {
-    const all = subjectId ? cardIdsOf(subjectId) : CARDS.map((c) => c.id);
+    // Toutes matières : celles que l'apprenant a choisies.
+    const all = subjectId ? cardIdsOf(subjectId) : active.flatMap((s) => cardIdsOf(s.id));
     return pickListenCards(useProgress.getState().progress.cards, all, toDayKey(new Date()));
   });
   const [index, setIndex] = useState(0);

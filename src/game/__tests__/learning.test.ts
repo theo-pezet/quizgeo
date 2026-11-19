@@ -119,9 +119,11 @@ describe('fiches « New », réponse tapée, auto-explication (1.4)', () => {
   it('intercale une fiche puis deux questions, puis le reste des questions', () => {
     const woven = weaveLearn(['A', 'B'], [1, 2, 3, 4, 5]);
     expect(woven).toEqual([{ learn: 'A' }, { question: 1 }, { question: 2 }, { learn: 'B' }, { question: 3 }, { question: 4 }, { question: 5 }]);
-    // Plus de fiches que de questions : les fiches restent, au plus LEARN_MAX.
-    const many = weaveLearn(['a', 'b', 'c', 'd', 'e', 'f', 'g'], [1]);
+    // Jamais de fiche après la dernière question, et au plus LEARN_MAX fiches.
+    expect(weaveLearn(['a', 'b', 'c'], [1])).toEqual([{ learn: 'a' }, { question: 1 }]);
+    const many = weaveLearn(['a', 'b', 'c', 'd', 'e', 'f', 'g'], Array.from({ length: 20 }, (_, i) => i));
     expect(many.filter((x) => 'learn' in x)).toHaveLength(LEARN_MAX);
+    expect(many[many.length - 1]).toEqual({ question: 19 });
     expect(weaveLearn([], [1, 2])).toEqual([{ question: 1 }, { question: 2 }]);
     expect(TYPED_FROM_TRAITS).toBe(1);
   });

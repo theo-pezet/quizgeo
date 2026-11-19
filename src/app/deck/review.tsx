@@ -5,6 +5,7 @@ import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
 import { CATALOG } from '@/content';
 import { faceAvailability, faceMaterial } from '@/content/faces';
 import { useContent } from '@/content/useContent';
+import { useActiveSubjects } from '@/content/useSubjects';
 import { applyCardReview, applySessionEnd, composeDeckSession, interleaveBy, pickCardFace, previewIntervals, shouldRelearn, toDayKey, type CardFace, type Grade } from '@/game';
 import { useT, type Key, type T } from '@/i18n';
 import { looksLikeCode } from '@/lib/code';
@@ -24,14 +25,16 @@ function intervalLabel(t: T, days: number): string {
 export default function DeckReviewRoute() {
   const colors = useColors();
   const t = useT();
-  const { CARDS, CARD_BY_ID, EXERCISES, SUBJECT_BY_ID, cardIdsOf } = useContent();
+  const { CARD_BY_ID, EXERCISES, SUBJECT_BY_ID, cardIdsOf } = useContent();
+  const active = useActiveSubjects();
   const { subjectId } = useLocalSearchParams<{ subjectId?: string }>();
   const startProgress = useRef(useProgress.getState().progress);
   const today = toDayKey(new Date());
 
   // Toutes matières : les cartes sont entrelacées par matière (voir src/game/learning.ts).
   const [queue, setQueue] = useState<string[]>(() => {
-    const ids = subjectId ? cardIdsOf(subjectId) : CARDS.map((c) => c.id);
+    // Toutes matières : celles que l'apprenant a choisies.
+    const ids = subjectId ? cardIdsOf(subjectId) : active.flatMap((s) => cardIdsOf(s.id));
     const picked = composeDeckSession(startProgress.current.cards, ids, today, Math.random);
     return subjectId ? picked : interleaveBy(picked, (id) => CARD_BY_ID.get(id)?.subject ?? '');
   });
@@ -248,7 +251,7 @@ export default function DeckReviewRoute() {
           )}
           {(face === 'term' || flipped) && (
             <View style={styles.listen}>
-              <ListenButton key={`${cardId}-${flipped ? 'b' : 'f'}`} text={flipped ? `${card.term}. ${card.definition}` : card.term} color={accent} />
+              <ListenButton key={`${cardId}-${flipped ? 'b' : 'f'}`} text={flipped ? `${card.term}. ${card.definition}` : card.term} color={accent} center />
             </View>
           )}
         </View>

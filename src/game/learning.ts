@@ -109,11 +109,16 @@ export function shouldRelearn(failsThisSession: number): boolean {
 export const LEARN_MAX = 6;
 export const LEARN_EVERY = 2;
 
-/** Intercale les fiches entre les questions : fiche, LEARN_EVERY questions, fiche… puis le reste. */
+/**
+ * Intercale les fiches entre les questions : fiche, LEARN_EVERY questions,
+ * fiche… puis le reste. Une fiche n'est jamais placée après la dernière
+ * question : celles qui ne trouvent pas de place restent au deck.
+ */
 export function weaveLearn<L, Q>(learn: readonly L[], questions: readonly Q[], every: number = LEARN_EVERY): ({ learn: L } | { question: Q })[] {
   const out: ({ learn: L } | { question: Q })[] = [];
   let q = 0;
   for (const l of learn.slice(0, LEARN_MAX)) {
+    if (q >= questions.length) break;
     out.push({ learn: l });
     for (let i = 0; i < every && q < questions.length; i += 1) out.push({ question: questions[q++] });
   }
