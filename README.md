@@ -18,6 +18,10 @@ répétition espacée (comme Anki), et des cas pratiques. Interface et contenu
   session (rattrapage), entre dans la file « à revoir » jusqu'à deux bonnes
   réponses d'affilée, et la carte du deck correspondante est replanifiée.
 - **Une explication à chaque réponse**, juste ou fausse, avec un exemple.
+  Pas compris ? **Ask Claude** ouvre Claude (l'app sur Android, un nouvel
+  onglet sur le web) avec la question, ta réponse, la bonne réponse et
+  l'explication déjà écrites ; **Share** envoie le même texte ailleurs
+  (`src/lib/askClaude.ts`).
 - **Le deck et le chemin se parlent** : les leçons nourrissent la révision espacée.
 - **Des cas pratiques** à plusieurs décisions, avec un retour à chaque étape.
 - **Cinq couronnes par unité** : le chemin avance à 3, la maîtrise va à 5,
@@ -33,8 +37,12 @@ répétition espacée (comme Anki), et des cas pratiques. Interface et contenu
   Règles : `src/game/faces.ts` ; matière : `src/content/faces.ts`.
 - **Science de l'apprentissage** (`src/game/learning.ts`) : **prétest**
   (une unité jamais commencée s'ouvre sur deux questions à deviner, sans
-  conséquence), **« I'm sure »** avant de valider (une erreur commise en étant
-  sûr passe en tête de la file « à revoir » : effet d'hypercorrection),
+  conséquence, reposées en fin de leçon), **« I'm sure »** avant de valider
+  (juste et sûr : la réponse compte double et sort de la file « à revoir » ;
+  faux et sûr : en tête de la file, effet d'hypercorrection ; jamais proposé
+  quand la réponse est encore fraîche : rattrapage, prétest, erreur du jour),
+  **leçons ciblées** (la première leçon d'une unité suit l'ordre de rédaction,
+  les suivantes posent d'abord le jamais vu et les erreurs),
   **révisions entrelacées** par matière (file d'erreurs et deck), et
   **réapprentissage jusqu'au critère** (une erreur revient dans la même séance,
   jusqu'à deux fois, en leçon comme au deck).

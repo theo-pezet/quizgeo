@@ -339,7 +339,16 @@ et fusionne dans code.extra.json ; puis `npm test`.
    premier choix est toujours le bon). Le gabarit complet est dans l'en-tête
    du script. Un modèle IA fait ça très bien avec ce gabarit.
 2. Si besoin, créer le monde d'accueil dans worlds.ts (ou viser un monde
-   existant par son id, ex. « python-w2 »).
+   existant par son id, ex. « python-w2 »). Par défaut l'unité se range EN
+   FIN de monde ; pour la placer ailleurs, citer son id à la bonne place dans
+   la liste du monde (worlds.ts), comme les unités « premiers pas » de la
+   1.4. Insérer une unité avant des unités déjà jouées ne les referme pas
+   (isUnitUnlocked, mastery.ts).
+   Types d'exercice : qcm (code, output et whyWrong facultatifs), vf, order,
+   case, compose, bugline. Les exercices écrits à la main sont posés DANS
+   L'ORDRE du fichier à la première leçon : du plus simple au plus dur.
+   Les sources des unités « premiers pas » (CSS, JavaScript) sont dans
+   tools/units/debutants/ : les modifier puis relancer le script.
 3.     python3 tools/integrate_units.py chemin/unite.json
    Le script valide, dérive les identifiants, fusionne dans
    src/data/units.extra.json.
