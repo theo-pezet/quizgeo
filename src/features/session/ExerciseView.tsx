@@ -11,8 +11,11 @@ import { TypeView } from './TypeView';
 
 interface Props {
   exercise: Exercise;
-  /** `whyWrong` : l'explication propre au mauvais choix, quand l'exercice en a. */
-  onAnswer: (correct: boolean, whyWrong?: string) => void;
+  /**
+   * `whyWrong` : l'explication propre au mauvais choix, quand l'exercice en a.
+   * `given` : la réponse donnée, en texte (pour « Ask Claude »), quand l'exercice sait la dire.
+   */
+  onAnswer: (correct: boolean, whyWrong?: string, given?: string) => void;
   locked: boolean;
   /** Mode maîtrise (unité à 3 couronnes ou plus) : les QCM typables se tapent. */
   hard?: boolean;

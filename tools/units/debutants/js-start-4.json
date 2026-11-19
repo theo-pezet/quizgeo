@@ -1,0 +1,234 @@
+{
+ "unit": {
+  "id": "js-start-4",
+  "subjectId": "js",
+  "topic": "js-start",
+  "world": "js-w1",
+  "title": "JavaScript: making decisions",
+  "description": "true and false, comparing values, if, else if and else, combining conditions"
+ },
+ "cards": [
+  {
+   "slug": "boolean",
+   "level": "debutant",
+   "term": "Boolean",
+   "definition": "A value that is either true or false: the answer to a yes or no question.",
+   "example": "let isOpen = true;"
+  },
+  {
+   "slug": "comparison",
+   "level": "debutant",
+   "term": "Comparison operators",
+   "definition": "Compare two values and give true or false: > greater than, < less than, >= at least, <= at most.",
+   "example": "18 >= 18 is true."
+  },
+  {
+   "slug": "strict-equality",
+   "level": "debutant",
+   "term": "Strict equality (===)",
+   "definition": "Checks that two values are equal AND of the same type, and gives true or false.",
+   "example": "5 === 5 is true, but \"5\" === 5 is false."
+  },
+  {
+   "slug": "if-else",
+   "level": "debutant",
+   "term": "if / else",
+   "definition": "Runs a block of code only when a condition is true, and another block otherwise.",
+   "example": "if (age >= 18) { allow(); } else { refuse(); }"
+  },
+  {
+   "slug": "logical",
+   "level": "debutant",
+   "term": "Logical operators (&&, ||)",
+   "definition": "Combine conditions: && needs both sides to be true, || needs at least one of them.",
+   "example": "if (age >= 18 && hasTicket) lets in adults who have a ticket."
+  },
+  {
+   "slug": "not-equal",
+   "level": "debutant",
+   "term": "Not equal (!==)",
+   "definition": "Gives true when two values are different, in value or in type.",
+   "example": "\"red\" !== \"blue\" is true."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "true",
+    "false",
+    "8",
+    "3"
+   ],
+   "explain": "A comparison answers a yes or no question with a boolean: true or false.",
+   "whyWrong": [
+    "8 is greater than 5, so the comparison is true.",
+    "A comparison gives true or false, not a number.",
+    "> compares; it does not subtract."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(8 > 5);"
+   },
+   "output": "true"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which sign checks that two values are equal?",
+   "choices": [
+    "===",
+    "=",
+    "=>",
+    "!=="
+   ],
+   "explain": "= stores a value, === compares two values. Mixing them up is one of the most common beginner mistakes.",
+   "whyWrong": [
+    "A single = stores a value in a variable; it does not compare.",
+    "=> is used to write arrow functions.",
+    "!== checks that two values are DIFFERENT."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Welcome",
+    "Too young",
+    "Welcome, then Too young",
+    "Nothing"
+   ],
+   "explain": "if runs its block when the condition is true; else runs when it is false. Exactly one of the two runs.",
+   "whyWrong": [
+    "20 is at least 18: the condition is true, so the first block runs.",
+    "Only one of the two blocks runs, never both.",
+    "With an else, one of the two blocks always runs."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let age = 20;\nif (age >= 18) {\n  console.log(\"Welcome\");\n} else {\n  console.log(\"Too young\");\n}"
+   },
+   "output": "Welcome"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Nothing",
+    "In stock",
+    "0",
+    "An error"
+   ],
+   "explain": "Without else, when the condition is false, the block is simply skipped.",
+   "whyWrong": [
+    "0 is not greater than 0: the condition is false.",
+    "console.log is inside the if block, which does not run.",
+    "An if without else is perfectly valid."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let stock = 0;\nif (stock > 0) {\n  console.log(\"In stock\");\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "false",
+    "true",
+    "5",
+    "An error"
+   ],
+   "explain": "=== checks the value AND the type. \"5\" is a string, 5 is a number: they are not strictly equal.",
+   "whyWrong": [
+    "They look alike, but one is text and the other a number.",
+    "A comparison gives true or false.",
+    "Comparing two different types is allowed."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(\"5\" === 5);"
+   },
+   "output": "false"
+  },
+  {
+   "kind": "vf",
+   "prompt": "In if (x = 10), the single = compares x with 10.",
+   "isTrue": false,
+   "explain": "A single = assigns: it puts 10 into x. To compare, write x === 10."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "false",
+    "true",
+    "25",
+    "undefined"
+   ],
+   "explain": "&& (and) is true only when both sides are true. || (or) is true when at least one side is.",
+   "whyWrong": [
+    "&& needs BOTH sides to be true, and hasTicket is false.",
+    "The result is a boolean here, not the age.",
+    "Both variables have values, so nothing is undefined."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let age = 25;\nlet hasTicket = false;\nconsole.log(age >= 18 && hasTicket);"
+   },
+   "output": "false"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the start of a condition that checks that score is greater than 100.",
+   "lang": "js",
+   "tokens": [
+    "if",
+    "(",
+    "score",
+    ">",
+    "100",
+    ")"
+   ],
+   "extra": [
+    "<",
+    "="
+   ],
+   "explain": "if (score > 100) runs its block only when score is above 100."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This code prints \"Admin\" even for a guest. Which line is wrong?",
+   "lang": "js",
+   "lines": [
+    "let role = \"guest\";",
+    "if (role = \"admin\") {",
+    "  console.log(\"Admin\");",
+    "}"
+   ],
+   "answer": 1,
+   "explain": "role = \"admin\" assigns instead of comparing, and a text that is not empty counts as true. Write role === \"admin\"."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Mild",
+    "Hot",
+    "Cold",
+    "Mild, then Cold"
+   ],
+   "explain": "else if adds another test. JavaScript checks the tests from top to bottom and runs only the first block whose condition is true.",
+   "whyWrong": [
+    "15 is not above 25, so the first block is skipped.",
+    "15 is above 10: the second test is true, so the else is never reached.",
+    "As soon as one test is true, the rest is skipped."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let temp = 15;\nif (temp > 25) {\n  console.log(\"Hot\");\n} else if (temp > 10) {\n  console.log(\"Mild\");\n} else {\n  console.log(\"Cold\");\n}"
+   },
+   "output": "Mild"
+  }
+ ]
+}

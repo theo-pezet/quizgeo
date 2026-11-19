@@ -23,7 +23,8 @@
  *    par la file et le deck.
  */
 
-import type { Exercise, Progress } from './types';
+import { toDayKey } from './dates';
+import type { DayKey, Exercise, Progress, QuestionProgress } from './types';
 
 export const PRETEST_SIZE = 2;
 export const RELEARN_MAX = 2;
@@ -35,18 +36,40 @@ export function unitStarted(progress: Progress, unitId: string): boolean {
 }
 
 /**
- * Les questions du prétest : les premiers QCM d'au moins trois choix de la
- * leçon (on les retrouvera donc pendant la leçon), sans doublon. Vide pour
+ * Les questions du prétest : les DERNIERS QCM d'au moins trois choix de la
+ * leçon, sans doublon, rendus dans l'ordre de la leçon. On les retrouve donc
+ * en fin de leçon, après avoir appris ce qui les précède : les prendre en
+ * tête les faisait reposer aussitôt, réponse encore sous les yeux. Vide pour
  * une unité déjà commencée.
  */
 export function pickPretest(session: readonly Exercise[], started: boolean, size: number = PRETEST_SIZE): Exercise[] {
   if (started) return [];
   const out: Exercise[] = [];
-  for (const e of session) {
-    if (out.length >= size) break;
-    if (e.kind === 'qcm' && e.choices.length >= 3 && !out.some((o) => o.key === e.key)) out.push(e);
+  for (let i = session.length - 1; i >= 0 && out.length < size; i -= 1) {
+    const e = session[i];
+    if (e.kind === 'qcm' && e.choices.length >= 3 && !out.some((o) => o.key === e.key)) out.unshift(e);
   }
   return out;
+}
+
+/**
+ * Proposer « I'm sure » sur cette question ? Non quand la bonne réponse est
+ * encore fraîche, ce qui rendrait le « sûr » trop facile :
+ * - rattrapage, ou question déjà ratée ou dévoilée (prétest) dans la séance ;
+ * - question ratée le jour même (dernière erreur datée d'aujourd'hui).
+ * Le lendemain, le bouton revient : une bonne réponse sûre fait alors sortir
+ * la question de la file « à revoir » d'un coup (CONFIDENT_STEP, review.ts).
+ */
+export function sureAllowed(params: {
+  question: QuestionProgress | undefined;
+  /** La question a déjà été ratée, ou sa réponse montrée, dans cette séance. */
+  revealedThisSession: boolean;
+  retry: boolean;
+  today: DayKey;
+}): boolean {
+  if (params.retry || params.revealedThisSession) return false;
+  const miss = params.question?.lastMissAt;
+  return miss === undefined || toDayKey(new Date(miss)) !== params.today;
 }
 
 /**

@@ -74,7 +74,7 @@ describe('BugLineView', () => {
     });
     pressByText(tree, '3total = price * qty');
     pressByText(tree, 'common.check');
-    expect(onAnswer).toHaveBeenCalledWith(true, undefined);
+    expect(onAnswer).toHaveBeenCalledWith(true, undefined, 'line 3: total = price * qty');
 
     const wrong = jest.fn();
     act(() => {
@@ -82,7 +82,7 @@ describe('BugLineView', () => {
     });
     pressByText(tree, '1price = 19.9');
     pressByText(tree, 'common.check');
-    expect(wrong).toHaveBeenCalledWith(false, 'session.bugline.wrong');
+    expect(wrong).toHaveBeenCalledWith(false, 'session.bugline.wrong', 'line 1: price = 19.9');
   });
 });
 
@@ -95,7 +95,7 @@ describe('ComposeView', () => {
     });
     for (const tok of compose.tokens) pressByText(tree, tok);
     pressByText(tree, 'common.check');
-    expect(onAnswer).toHaveBeenCalledWith(true, undefined);
+    expect(onAnswer).toHaveBeenCalledWith(true, undefined, 'print ( 3 * 4 )');
 
     const wrong = jest.fn();
     act(() => {
@@ -103,7 +103,7 @@ describe('ComposeView', () => {
     });
     for (const tok of ['print', '(', '3', '+', '4', ')']) pressByText(tree, tok);
     pressByText(tree, 'common.check');
-    expect(wrong).toHaveBeenCalledWith(false, 'session.compose.yours:print ( 3 + 4 )');
+    expect(wrong).toHaveBeenCalledWith(false, 'session.compose.yours:print ( 3 + 4 )', 'print ( 3 + 4 )');
   });
 });
 
@@ -219,7 +219,7 @@ describe('Bouton d’action dans la barre fixe', () => {
     const ready = setAction.mock.calls.at(-1)?.[0];
     expect(ready).toMatchObject({ disabled: false });
     act(() => ready.onPress());
-    expect(onAnswer).toHaveBeenCalledWith(true, undefined);
+    expect(onAnswer).toHaveBeenCalledWith(true, undefined, 'Référencement naturel');
     act(() => tree.unmount());
     expect(setAction).toHaveBeenLastCalledWith(null);
   });

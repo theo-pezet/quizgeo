@@ -703,5 +703,17 @@
  [
   "python-response-status-code",
   "python-x-timeout-et-erreurs-http"
+ ],
+ [
+  "css-x-stylesheet",
+  "css-x-link-tag"
+ ],
+ [
+  "css-x-style-tag",
+  "css-x-inline-style"
+ ],
+ [
+  "css-x-auto-margins",
+  "css-x-margin"
  ]
 ]

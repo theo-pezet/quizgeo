@@ -9,7 +9,7 @@ import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: ClozeExercise;
-  onAnswer: (correct: boolean) => void;
+  onAnswer: (correct: boolean, whyWrong?: string, given?: string) => void;
   locked: boolean;
 }
 
@@ -21,7 +21,7 @@ export function ClozeView({ exercise, onAnswer, locked }: Props) {
   const [picked, setPicked] = useState<string | null>(null);
   const [before, after] = exercise.text.split('___');
   const inlineAction = useSessionAction(
-    locked ? null : { label: t('common.check'), disabled: picked === null, onPress: () => picked !== null && onAnswer(picked === exercise.answer) },
+    locked ? null : { label: t('common.check'), disabled: picked === null, onPress: () => picked !== null && onAnswer(picked === exercise.answer, undefined, picked) },
   );
 
   return (

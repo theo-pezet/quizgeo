@@ -33,29 +33,82 @@ export function shuffle<T>(items: readonly T[], rng: Rng): T[] {
  * pour que toutes les questions continuent d'être vues (les couronnes en
  * dépendent). Sans prioritaires, ou sans le reste, le vivier est inchangé.
  */
-function mixPriority(questions: readonly Exercise[], rng: Rng, length: number): readonly Exercise[] {
+function mixPriority(questions: readonly Exercise[], rng: Rng, length: number, pick: Picker = shuffle): readonly Exercise[] {
   const priority = questions.filter((q) => q.priority === true);
   const rest = questions.filter((q) => q.priority !== true);
   if (priority.length === 0 || rest.length === 0) return questions;
   const k = Math.min(priority.length, Math.ceil(length * PRIORITY_SHARE));
   const fill = Math.min(rest.length, Math.max(0, length - k));
-  return [...shuffle(priority, rng).slice(0, k), ...shuffle(rest, rng).slice(0, fill)];
+  return [...pick(priority, rng).slice(0, k), ...pick(rest, rng).slice(0, fill)];
+}
+
+type Picker = (items: readonly Exercise[], rng: Rng) => Exercise[];
+
+/** Mélange, puis range du moins su au mieux su (le hasard départage les ex aequo). */
+function weakestFirst(strength: (exercise: Exercise) => number): Picker {
+  return (items, rng) =>
+    shuffle(items, rng)
+      .map((exercise, i) => ({ exercise, i, w: strength(exercise) }))
+      .sort((a, b) => a.w - b.w || a.i - b.i)
+      .map((x) => x.exercise);
+}
+
+/** Exercice écrit à la main (clés `:x:`, `:w:`, `:c:`), par opposition aux exercices générés depuis les cartes. */
+const HANDWRITTEN = /:(x|w|c):/;
+
+/**
+ * L'ordre de rédaction : les exercices écrits à la main d'abord (ils sont
+ * rangés du plus simple au plus dur), puis les exercices générés depuis les
+ * cartes, chacun dans l'ordre du contenu.
+ */
+export function authoredOrder(questions: readonly Exercise[]): Exercise[] {
+  return [...questions.filter((q) => HANDWRITTEN.test(q.key)), ...questions.filter((q) => !HANDWRITTEN.test(q.key))];
+}
+
+export interface UnitSessionOptions {
+  /**
+   * Ce que l'apprenant sait d'un exercice : plus c'est bas, plus il passe en
+   * premier (jamais vu, raté, puis streak croissant). Quand l'unité compte
+   * plus d'exercices qu'une leçon, la leçon prend les moins sus : on ne
+   * repose pas ce qu'on vient de réussir en étant sûr tant qu'il reste du
+   * neuf ou des erreurs.
+   */
+  strength?: (exercise: Exercise) => number;
+  /**
+   * Unité jamais commencée : la première leçon suit l'ordre de rédaction,
+   * des bases vers le plus difficile, au lieu d'un tirage au hasard.
+   */
+  firstTime?: boolean;
 }
 
 /**
- * Session d'unité : les 4 ou 5 questions de l'unité, cyclées jusqu'à 10, dans
- * un ordre aléatoire à chaque cycle, sans jamais poser deux fois la même
- * question d'affilée — y compris au raccord entre deux cycles.
+ * Session d'unité : jusqu'à 10 exercices de l'unité ; une petite unité est
+ * cyclée jusqu'à 10, dans un ordre aléatoire à chaque cycle, sans jamais poser
+ * deux fois la même question d'affilée, y compris au raccord entre deux cycles.
  */
 export function composeUnitSession(
   questions: readonly Exercise[],
   rng: Rng,
   length: number = SESSION_LENGTH,
+  options: UnitSessionOptions = {},
 ): Exercise[] {
   if (questions.length === 0) return [];
-  const pool = mixPriority(questions, rng, length);
-
   const out: Exercise[] = [];
+  let pool: readonly Exercise[];
+  if (options.firstTime) {
+    // Première leçon : l'ordre de rédaction, puis on cycle si l'unité est petite.
+    const ordered = authoredOrder(questions);
+    if (ordered.length >= length) return ordered.slice(0, length);
+    out.push(...ordered);
+    pool = ordered;
+  } else if (options.strength) {
+    const pick = weakestFirst(options.strength);
+    pool = mixPriority(questions, rng, length, pick);
+    if (pool.length > length) pool = pick(pool, rng).slice(0, length);
+  } else {
+    pool = mixPriority(questions, rng, length);
+  }
+
   while (out.length < length) {
     const cycle = shuffle(pool, rng);
     const previous = out[out.length - 1];

@@ -232,6 +232,12 @@ export interface QuestionProgress {
    * réponse. Absent avant la 1.3.
    */
   confidentMiss?: boolean;
+  /**
+   * Date de la dernière mauvaise réponse. Le jour même, la bonne réponse est
+   * encore fraîche : « I'm sure » n'est pas proposé (voir sureAllowed dans
+   * learning.ts). Absent avant la 1.4, et pour une question jamais ratée.
+   */
+  lastMissAt?: IsoDate;
 }
 
 export interface UnitProgress {

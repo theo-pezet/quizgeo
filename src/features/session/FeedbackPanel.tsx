@@ -1,6 +1,10 @@
-import { ScrollView, StyleSheet, View, useWindowDimensions } from 'react-native';
+import * as Linking from 'expo-linking';
+import { useState } from 'react';
+import { Platform, Pressable, ScrollView, Share, StyleSheet, View, useWindowDimensions } from 'react-native';
 
+import type { Exercise } from '@/game';
 import { useT } from '@/i18n';
+import { buildAskPrompt, claudeUrl, deviceLocale } from '@/lib/askClaude';
 import { Button, FadeUp, Icon, Shake, Text, space, useColors } from '@/ui';
 
 import type { Feedback } from './useSession';
@@ -17,7 +21,20 @@ export function feedbackTone(colors: ReturnType<typeof useColors>, correct: bool
  * le bouton « Continuer » est toujours visible sans défiler. Les
  * explications défilent dans la barre si elles sont longues.
  */
-export function FeedbackPanel({ feedback, combo, onNext, nextLabel }: { feedback: Feedback; combo: number; onNext: () => void; nextLabel?: string }) {
+export function FeedbackPanel({
+  feedback,
+  combo,
+  onNext,
+  nextLabel,
+  ask,
+}: {
+  feedback: Feedback;
+  combo: number;
+  onNext: () => void;
+  nextLabel?: string;
+  /** L'exercice répondu : affiche « Ask Claude » et « Share ». */
+  ask?: { exercise: Exercise; unitTitle?: string };
+}) {
   const colors = useColors();
   const t = useT();
   const { height } = useWindowDimensions();
@@ -69,6 +86,7 @@ export function FeedbackPanel({ feedback, combo, onNext, nextLabel }: { feedback
               )}
             </ScrollView>
           )}
+          {ask && <AskRow feedback={feedback} exercise={ask.exercise} unitTitle={ask.unitTitle} tint={tone.text} />}
           <Button label={nextLabel ?? t('common.continue')} tone={feedback.correct ? 'success' : 'danger'} onPress={onNext} />
         </View>
       </Shake>
@@ -76,7 +94,58 @@ export function FeedbackPanel({ feedback, combo, onNext, nextLabel }: { feedback
   );
 }
 
+/**
+ * « Ask Claude » ouvre une conversation Claude avec la question, la réponse
+ * donnée, la bonne réponse et l'explication déjà écrites (l'app Claude sur
+ * Android si elle est installée, sinon le navigateur). « Share » envoie le
+ * même texte où l'on veut (copier, une autre IA, un ami) ; sur le web, sans
+ * partage natif, il est copié dans le presse-papiers.
+ */
+function AskRow({ feedback, exercise, unitTitle, tint }: { feedback: Feedback; exercise: Exercise; unitTitle?: string; tint: string }) {
+  const t = useT();
+  const colors = useColors();
+  const [copied, setCopied] = useState(false);
+  const prompt = () => buildAskPrompt({ exercise, unitTitle, correct: feedback.correct, given: feedback.given, whyWrong: feedback.whyWrong, locale: deviceLocale() });
+
+  const openClaude = () => {
+    void Linking.openURL(claudeUrl(prompt())).catch(() => undefined);
+  };
+  const share = async () => {
+    const text = prompt();
+    if (Platform.OS !== 'web') {
+      await Share.share({ message: text }).catch(() => undefined);
+      return;
+    }
+    const nav = (globalThis as { navigator?: { share?: (d: { text: string }) => Promise<void>; clipboard?: { writeText: (s: string) => Promise<void> } } }).navigator;
+    if (nav?.share) {
+      await nav.share({ text }).catch(() => undefined);
+    } else if (nav?.clipboard) {
+      await nav.clipboard.writeText(text).catch(() => undefined);
+      setCopied(true);
+    }
+  };
+
+  return (
+    <View style={styles.ask}>
+      <Pressable onPress={openClaude} accessibilityRole="link" accessibilityHint={t('session.ask.hint')} hitSlop={8} style={[styles.askBtn, { borderColor: tint }]}>
+        <Icon name="sparkles" size={16} color={tint} />
+        <Text variant="small" style={{ color: tint, fontWeight: '800' }}>
+          {t('session.ask')}
+        </Text>
+      </Pressable>
+      <Pressable onPress={() => void share()} accessibilityRole="button" accessibilityLabel={t('session.ask.share')} hitSlop={8} style={[styles.askBtn, { borderColor: colors.border }]}>
+        <Icon name={copied ? 'checkmark' : 'share-outline'} size={16} color={colors.textSecondary} />
+        <Text variant="small" secondary style={{ fontWeight: '700' }}>
+          {copied ? t('session.ask.copied') : t('session.ask.share')}
+        </Text>
+      </Pressable>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
+  ask: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
+  askBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 2, borderRadius: 999, paddingVertical: 4, paddingHorizontal: space.sm },
   panel: { gap: space.md },
   head: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
   body: { gap: space.md },

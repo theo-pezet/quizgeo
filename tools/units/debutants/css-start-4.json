@@ -1,0 +1,223 @@
+{
+ "unit": {
+  "id": "css-start-4",
+  "subjectId": "css",
+  "topic": "css-start",
+  "world": "css-w1",
+  "title": "CSS: boxes and spacing",
+  "description": "width and height, padding, border, margin, block and inline elements, centering a box"
+ },
+ "cards": [
+  {
+   "slug": "width-height",
+   "level": "debutant",
+   "term": "width and height",
+   "definition": "Set the size of the content area of an element, for example 300px wide and 200px tall.",
+   "example": ".card { width: 300px; } keeps every card 300 pixels wide."
+  },
+  {
+   "slug": "padding",
+   "level": "debutant",
+   "term": "Padding",
+   "definition": "The space INSIDE a box, between its content and its border; it shows the background color of the box.",
+   "example": "button { padding: 12px 24px; } gives the label room to breathe."
+  },
+  {
+   "slug": "margin",
+   "level": "debutant",
+   "term": "Margin",
+   "definition": "The space OUTSIDE a box, between its border and the elements around it; it is always transparent.",
+   "example": "p { margin-bottom: 16px; } leaves a gap under each paragraph."
+  },
+  {
+   "slug": "border",
+   "level": "debutant",
+   "term": "Border",
+   "definition": "The line drawn around a box, between padding and margin. The shorthand gives width, style and color: 2px solid black.",
+   "example": ".card { border: 1px solid #ddd; } draws a thin light gray frame."
+  },
+  {
+   "slug": "block-inline",
+   "level": "debutant",
+   "term": "Block vs inline",
+   "definition": "Block elements (div, p, h1) start on a new line and take the full width; inline ones (span, a, strong) sit inside a line of text.",
+   "example": "Two <span> stay side by side; two <div> stack one under the other."
+  },
+  {
+   "slug": "auto-margins",
+   "level": "debutant",
+   "term": "Centering with auto margins",
+   "definition": "margin: 0 auto on a block that has a set width puts equal automatic space on its left and right.",
+   "example": ".page { width: 800px; margin: 0 auto; } centers the page column."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which property sets the space INSIDE a box, between the text and the border?",
+   "choices": [
+    "padding",
+    "margin",
+    "border",
+    "spacing"
+   ],
+   "explain": "padding is the inside space (it shows the background color). margin is the outside space (always transparent).",
+   "whyWrong": [
+    "margin is the space OUTSIDE the border.",
+    "border is the line itself, not a space.",
+    "spacing is not a CSS property."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which property pushes a box away from the elements around it?",
+   "choices": [
+    "margin",
+    "padding",
+    "width",
+    "outline"
+   ],
+   "explain": "margin adds transparent space outside the border, pushing the neighbors away.",
+   "whyWrong": [
+    "padding adds space inside the box, between content and border.",
+    "width sets the size of the content, not the space around it.",
+    "outline draws a line around the box without taking any space."
+   ]
+  },
+  {
+   "kind": "order",
+   "prompt": "Put the layers of a box in order, from the inside out.",
+   "steps": [
+    "Content (the text or the image)",
+    "Padding",
+    "Border",
+    "Margin"
+   ],
+   "explain": "Content first, then padding (inside space), then the border line, then margin (outside space)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How wide is this box, from one border to the other?",
+   "choices": [
+    "122px",
+    "100px",
+    "111px",
+    "120px"
+   ],
+   "explain": "By default, padding and border are added to the width: 100 + 10 + 10 + 1 + 1 = 122px.",
+   "whyWrong": [
+    "100px is only the content: padding and border are added on each side.",
+    "Padding and border count twice: once on the left, once on the right.",
+    "You added the padding on both sides but forgot the border."
+   ],
+   "code": {
+    "lang": "css",
+    "src": ".box {\n  width: 100px;\n  padding: 10px;\n  border: 1px solid black;\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does border: 2px solid red; draw?",
+   "choices": [
+    "A solid red line, 2px thick, around the box",
+    "A red background, 2px from the edge",
+    "A dashed red line, 2px thick",
+    "Red text with a 2px shadow"
+   ],
+   "explain": "The border shorthand gives the width (2px), the style (solid) and the color (red) in one line.",
+   "whyWrong": [
+    "border draws a line; the background is set with background-color.",
+    "solid means a continuous line; a dashed one is written dashed.",
+    "Text color and shadows have their own properties."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which of these elements is INLINE: it stays inside a line of text?",
+   "choices": [
+    "<span>",
+    "<div>",
+    "<p>",
+    "<h1>"
+   ],
+   "explain": "Inline elements (span, a, strong) flow inside a line. Block elements (div, p, h1) stack and take the full width.",
+   "whyWrong": [
+    "<div> is a block: it starts on a new line.",
+    "<p> is a block: each paragraph starts on a new line.",
+    "<h1> is a block: headings take the full width."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "By default, a <div> placed after another <div> appears on a new line, below it.",
+   "isTrue": true,
+   "explain": "div is a block element: blocks stack vertically and take all the width available."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "This box has a set width. What goes in place of \"___\" to center it on the page?",
+   "choices": [
+    "margin: 0 auto;",
+    "text-align: center;",
+    "padding: auto;",
+    "align: center;"
+   ],
+   "explain": "margin: 0 auto means no space above and below, and equal automatic space left and right: the block is centered.",
+   "whyWrong": [
+    "text-align centers the text INSIDE the box, not the box itself.",
+    "padding cannot be set to auto.",
+    "align is not a CSS property."
+   ],
+   "code": {
+    "lang": "css",
+    "src": ".page {\n  width: 800px;\n  ___\n}"
+   }
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a declaration that adds 16 pixels of space inside a box, on every side.",
+   "lang": "css",
+   "tokens": [
+    "padding",
+    ":",
+    "16px",
+    ";"
+   ],
+   "extra": [
+    "margin",
+    "16"
+   ],
+   "explain": "padding: 16px; adds space inside the box, on all four sides."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The card should have a thin gray border, but none appears. Which line is wrong?",
+   "lang": "css",
+   "lines": [
+    ".card {",
+    "  width: 300px;",
+    "  border: 1px gray;",
+    "  padding: 20px;",
+    "}"
+   ],
+   "answer": 2,
+   "explain": "A border needs a style to be visible: border: 1px solid gray; Without solid (or dashed, dotted), the style stays none."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does padding: 10px 20px; mean?",
+   "choices": [
+    "10px top and bottom, 20px left and right",
+    "10px left and right, 20px top and bottom",
+    "10px at the top, 20px at the bottom",
+    "10px on every side, then 20px more"
+   ],
+   "explain": "With two values, the first one is for top and bottom, the second one for left and right.",
+   "whyWrong": [
+    "The first value is vertical (top and bottom), the second horizontal.",
+    "Two values mean vertical then horizontal, not top then bottom.",
+    "Each side gets one of the two values, not both."
+   ]
+  }
+ ]
+}

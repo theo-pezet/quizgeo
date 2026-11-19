@@ -1,6 +1,6 @@
 import { applyAnswerAction } from '../apply';
-import { PRETEST_SIZE, RELEARN_MAX, interleaveBy, pickPretest, shouldRelearn, unitStarted } from '../learning';
-import { applyAnswer, compareReview, reviewQueue } from '../review';
+import { PRETEST_SIZE, RELEARN_MAX, interleaveBy, pickPretest, shouldRelearn, sureAllowed, unitStarted } from '../learning';
+import { CONFIDENT_STEP, applyAnswer, compareReview, reviewQueue } from '../review';
 import { composeReviewSession } from '../session';
 import { emptyProgress, emptyQuestionProgress, type Exercise, type QuestionProgress } from '../types';
 
@@ -9,9 +9,11 @@ const order = (key: string): Exercise => ({ kind: 'order', key, unitId: 'u', pro
 const NOW = '2026-11-14T10:00:00.000Z';
 
 describe('prétest', () => {
-  it('prend les premiers QCM d’au moins trois choix, sans doublon', () => {
+  it('prend les derniers QCM d’au moins trois choix, sans doublon, dans l’ordre de la leçon', () => {
     const session = [order('u:o'), qcm('u:a', 2), qcm('u:b'), qcm('u:b'), qcm('u:c'), qcm('u:d')];
-    expect(pickPretest(session, false).map((e) => e.key)).toEqual(['u:b', 'u:c']);
+    expect(pickPretest(session, false).map((e) => e.key)).toEqual(['u:c', 'u:d']);
+    // Jamais la toute première question : elle reviendrait aussitôt.
+    expect(pickPretest([qcm('u:a'), qcm('u:b'), qcm('u:c'), qcm('u:a')], false).map((e) => e.key)).toEqual(['u:c', 'u:a']);
     expect(PRETEST_SIZE).toBe(2);
     expect(pickPretest(session, false, 3).map((e) => e.key)).toEqual(['u:b', 'u:c', 'u:d']);
   });
@@ -74,5 +76,41 @@ describe('réapprentissage jusqu’au critère', () => {
     expect(shouldRelearn(1)).toBe(true);
     expect(shouldRelearn(RELEARN_MAX)).toBe(true);
     expect(shouldRelearn(RELEARN_MAX + 1)).toBe(false);
+  });
+});
+
+describe('« I’m sure »', () => {
+  const TODAY = '2026-11-14';
+  const missed = applyAnswer(undefined, 'k', false, NOW).progress;
+
+  it('date la dernière erreur, et la garde après une bonne réponse', () => {
+    expect(missed.lastMissAt).toBe(NOW);
+    const later = '2026-11-15T10:00:00.000Z';
+    expect(applyAnswer(missed, 'k', true, later).progress.lastMissAt).toBe(NOW);
+    expect(applyAnswer(undefined, 'k', true, NOW).progress.lastMissAt).toBeUndefined();
+  });
+
+  it('n’est pas proposé quand la réponse est fraîche : rattrapage, déjà dévoilée, ratée le jour même', () => {
+    expect(sureAllowed({ question: undefined, revealedThisSession: false, retry: false, today: TODAY })).toBe(true);
+    expect(sureAllowed({ question: undefined, revealedThisSession: false, retry: true, today: TODAY })).toBe(false);
+    expect(sureAllowed({ question: undefined, revealedThisSession: true, retry: false, today: TODAY })).toBe(false);
+    const missedToday = { ...missed, lastMissAt: new Date(2026, 10, 14, 9).toISOString() };
+    expect(sureAllowed({ question: missedToday, revealedThisSession: false, retry: false, today: TODAY })).toBe(false);
+    // Le lendemain, le bouton revient.
+    expect(sureAllowed({ question: missedToday, revealedThisSession: false, retry: false, today: '2026-11-15' })).toBe(true);
+  });
+
+  it('une bonne réponse sûre vaut deux : la question sort aussitôt de la file', () => {
+    expect(CONFIDENT_STEP).toBe(2);
+    const sure = applyAnswer(missed, 'k', true, NOW, false, true);
+    expect(sure.progress.streak).toBe(2);
+    expect(sure.leftQueue).toBe(true);
+    const plain = applyAnswer(missed, 'k', true, NOW, false, false);
+    expect(plain.progress.streak).toBe(1);
+    expect(plain.progress.inReview).toBe(true);
+    // Déjà créditée dans la séance : rien de plus, sûr ou pas.
+    expect(applyAnswer({ ...missed, streak: 1 }, 'k', true, NOW, true, true).progress.streak).toBe(1);
+    // Plafond respecté.
+    expect(applyAnswer({ ...missed, streak: 4 }, 'k', true, NOW, false, true).progress.streak).toBe(5);
   });
 });

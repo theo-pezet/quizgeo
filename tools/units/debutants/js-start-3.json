@@ -1,0 +1,240 @@
+{
+ "unit": {
+  "id": "js-start-3",
+  "subjectId": "js",
+  "topic": "js-start",
+  "world": "js-w1",
+  "title": "JavaScript: numbers and text",
+  "description": "Calculating with + - * / and %, joining text, mixing text and numbers, length, capital letters"
+ },
+ "cards": [
+  {
+   "slug": "arithmetic",
+   "level": "debutant",
+   "term": "Arithmetic operators",
+   "definition": "The symbols that calculate: + adds, - subtracts, * multiplies, / divides.",
+   "example": "console.log(10 / 4) prints 2.5."
+  },
+  {
+   "slug": "concatenation",
+   "level": "debutant",
+   "term": "Concatenation",
+   "definition": "Joining pieces of text end to end with the + sign.",
+   "example": "\"Hello \" + \"Ana\" gives \"Hello Ana\"."
+  },
+  {
+   "slug": "remainder",
+   "level": "debutant",
+   "term": "Remainder (%)",
+   "definition": "Gives what is left after a whole division: 7 % 3 gives 1.",
+   "example": "n % 2 === 0 tells you that n is even."
+  },
+  {
+   "slug": "length",
+   "level": "debutant",
+   "term": ".length",
+   "definition": "Gives how many characters a piece of text has, spaces included, or how many items a list holds.",
+   "example": "\"Hi you\".length is 6."
+  },
+  {
+   "slug": "touppercase",
+   "level": "debutant",
+   "term": "toUpperCase()",
+   "definition": "Returns a copy of a text written in capital letters; the original text does not change.",
+   "example": "\"sale\".toUpperCase() gives \"SALE\"."
+  },
+  {
+   "slug": "number-fn",
+   "level": "debutant",
+   "term": "Number()",
+   "definition": "Converts a text such as \"42\" into a value you can calculate with, so that + adds instead of joining.",
+   "example": "Number(\"5\") + 1 gives 6."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "21",
+    "73",
+    "10",
+    "4"
+   ],
+   "explain": "* is the multiplication sign in JavaScript (not x), and / divides.",
+   "whyWrong": [
+    "* multiplies; it does not glue the digits together.",
+    "10 would be 7 + 3; * multiplies.",
+    "4 would be 7 - 3; * multiplies."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(7 * 3);"
+   },
+   "output": "21"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Hello Ana",
+    "HelloAna",
+    "\"Hello \" + \"Ana\"",
+    "An error"
+   ],
+   "explain": "With text, + joins the pieces end to end: this is concatenation. Spaces inside the quotes are kept.",
+   "whyWrong": [
+    "The space is inside the first text, so it is kept.",
+    "The + sign is applied, it is not printed.",
+    "Joining two texts with + is allowed."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(\"Hello \" + \"Ana\");"
+   },
+   "output": "Hello Ana"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "52",
+    "7",
+    "\"7\"",
+    "An error"
+   ],
+   "explain": "As soon as one side of + is text, JavaScript joins instead of adding: \"5\" + 2 gives \"52\". A classic trap with form fields.",
+   "whyWrong": [
+    "\"5\" is text, so + joins instead of adding.",
+    "Nothing is added: the result is the text 52.",
+    "JavaScript does not stop: it turns 2 into text."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(\"5\" + 2);"
+   },
+   "output": "52"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Hi Ana!",
+    "Hi name!",
+    "Hi + name + !",
+    "Hi Ana"
+   ],
+   "explain": "Text and variables can be joined with +. name is replaced by its value, \"Ana\".",
+   "whyWrong": [
+    "name without quotes is the variable: its value is used.",
+    "The + signs join the pieces; they are not printed.",
+    "The \"!\" is joined at the end as well."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let name = \"Ana\";\nconsole.log(\"Hi \" + name + \"!\");"
+   },
+   "output": "Hi Ana!"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "4",
+    "5",
+    "1",
+    "\"Sale\""
+   ],
+   "explain": ".length gives the number of characters of a text. Spaces count too.",
+   "whyWrong": [
+    "Count the letters: S, a, l, e.",
+    "It is one text, but .length counts its characters.",
+    ".length gives a number, not the text."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(\"Sale\".length);"
+   },
+   "output": "4"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "1",
+    "3.33",
+    "3",
+    "0"
+   ],
+   "explain": "% gives the remainder: 3 fits 3 times in 10 (that makes 9), and 1 is left. Handy to test even numbers: n % 2 === 0.",
+   "whyWrong": [
+    "% is not a division: it gives what is left over.",
+    "3 is how many times 3 fits in 10; % gives what is left.",
+    "10 is not a multiple of 3, so something is left over."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(10 % 3);"
+   },
+   "output": "1"
+  },
+  {
+   "kind": "vf",
+   "prompt": "Number(\"8\") + 2 gives 10.",
+   "isTrue": true,
+   "explain": "Number() turns the text \"8\" into the number 8, so + adds instead of joining."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints the result of 12 divided by 4.",
+   "lang": "js",
+   "tokens": [
+    "console.log",
+    "(",
+    "12",
+    "/",
+    "4",
+    ")"
+   ],
+   "extra": [
+    "x",
+    ":"
+   ],
+   "explain": "In JavaScript, / divides and * multiplies. console.log(12 / 4) prints 3."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "SALE",
+    "sale",
+    "Sale",
+    "word"
+   ],
+   "explain": "toUpperCase() gives a copy written in capital letters. toLowerCase() does the opposite.",
+   "whyWrong": [
+    "toUpperCase() returns the text in capital letters.",
+    "Every letter becomes a capital, not just the first one.",
+    "The value of word is used, not its name."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let word = \"sale\";\nconsole.log(word.toUpperCase());"
+   },
+   "output": "SALE"
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The total should be 30, but the console shows 1020. Which line causes it?",
+   "lang": "js",
+   "lines": [
+    "let price = \"10\";",
+    "let extra = 20;",
+    "let total = price + extra;",
+    "console.log(total);"
+   ],
+   "answer": 0,
+   "explain": "price holds the text \"10\" because of the quotes, so + joins: \"10\" + 20 gives \"1020\". Write let price = 10; without quotes."
+  }
+ ]
+}

@@ -9,7 +9,7 @@ import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: BugLineExercise;
-  onAnswer: (correct: boolean, whyWrong?: string) => void;
+  onAnswer: (correct: boolean, whyWrong?: string, given?: string) => void;
   locked: boolean;
 }
 
@@ -27,7 +27,7 @@ export function BugLineView({ exercise, onAnswer, locked }: Props) {
           onPress: () => {
             if (selected === null) return;
             const ok = selected === exercise.answer;
-            onAnswer(ok, ok ? undefined : t('session.bugline.wrong'));
+            onAnswer(ok, ok ? undefined : t('session.bugline.wrong'), `line ${selected + 1}: ${exercise.lines[selected].trim()}`);
           },
         },
   );

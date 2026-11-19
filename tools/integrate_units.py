@@ -5,11 +5,15 @@ charge au démarrage (src/content/extra.ts).
 
     python3 tools/integrate_units.py chemin/vers/dossier/*.json
 
+Types d'exercice : qcm (bonne réponse en premier ; code, output et whyWrong
+facultatifs), vf, order, case, compose (morceaux à assembler) et bugline
+(ligne fautive).
+
 Chaque fichier décrit une unité, ses cartes et ses exercices, en anglais (l'app
 est en anglais uniquement depuis la 1.3 ; un texte peut s'écrire "…" ou {"en": "…"}).
 Le script valide la structure, dérive les identifiants (cartes :
 `<matière>-x-<slug>`, exercices : `<unité>:x:<n>`), refuse les doublons et
-réécrit units.extra.json trié par identifiant d'unité. Relancer le script avec
+réécrit units.extra.json (ordre conservé, nouvelles unités à la fin). Relancer le script avec
 le même fichier remplace l'unité (mêmes identifiants : la progression survit).
 """
 
@@ -75,6 +79,14 @@ def convert(doc: dict) -> dict:
             out = {**base, "kind": "qcm", "prompt": text(e["prompt"], key), "choices": choices, "answer": 0, "explain": text(e["explain"], key)}
             if "code" in e:
                 out["code"] = {"lang": e["code"]["lang"], "src": e["code"]["src"]}
+            if "output" in e:
+                out["output"] = e["output"]
+            if "whyWrong" in e:
+                # Une explication par mauvais choix, alignée sur `choices` (la bonne réponse, en tête, n'en a pas).
+                why = e["whyWrong"]
+                if not isinstance(why, list) or len(why) != len(choices) - 1:
+                    raise ValueError(f"{key} : whyWrong attend une entrée par mauvais choix")
+                out["whyWrong"] = [None] + texts(why, f"{key}.whyWrong")
         elif kind == "vf":
             out = {**base, "kind": "vf", "prompt": text(e["prompt"], key), "isTrue": bool(e["isTrue"]), "explain": text(e["explain"], key)}
         elif kind == "order":
@@ -92,6 +104,16 @@ def convert(doc: dict) -> dict:
             if len(steps) < 2:
                 raise ValueError(f"{key} : au moins 2 décisions")
             out = {**base, "kind": "case", "title": text(e["title"], key), "scenario": text(e["scenario"], key), "steps": steps, "explain": text(e["explain"], key)}
+        elif kind == "compose":
+            tokens, extra = e["tokens"], e.get("extra", [])
+            if len(tokens) < 3 or len(extra) > 4 or any(x in tokens for x in extra):
+                raise ValueError(f"{key} : au moins 3 morceaux, 0 à 4 intrus distincts des morceaux")
+            out = {**base, "kind": "compose", "prompt": text(e["prompt"], key), "lang": e["lang"], "tokens": tokens, "extra": extra, "explain": text(e["explain"], key)}
+        elif kind == "bugline":
+            lines, answer = e["lines"], e["answer"]
+            if not 2 <= len(lines) <= 8 or not 0 <= answer < len(lines):
+                raise ValueError(f"{key} : 2 à 8 lignes, réponse dans les bornes")
+            out = {**base, "kind": "bugline", "prompt": text(e["prompt"], key), "lang": e["lang"], "lines": lines, "answer": answer, "explain": text(e["explain"], key)}
         else:
             raise ValueError(f"{key} : kind inconnu {kind}")
         exercises.append(out)
@@ -114,13 +136,16 @@ def convert(doc: dict) -> dict:
 
 def main(paths):
     data = json.load(open(TARGET)) if TARGET.exists() else {"units": []}
+    # L'ordre du fichier compte : les unités d'un même monde s'y ajoutent dans
+    # cet ordre (worlds.ts). Une unité remplacée garde sa place, une nouvelle
+    # se range à la fin.
     by_id = {u["unit"]["id"]: u for u in data["units"]}
     for p in paths:
         doc = json.load(open(p))
         unit = convert(doc)
         by_id[unit["unit"]["id"]] = unit
         print(f"{unit['unit']['id']}: {len(unit['cards'])} cartes, {len(unit['exercises'])} exercices")
-    units = [by_id[k] for k in sorted(by_id)]
+    units = list(by_id.values())
     # Unicité globale des cartes.
     seen = set()
     for u in units:

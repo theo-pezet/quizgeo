@@ -10,7 +10,7 @@ import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: QcmExercise & { typed: NonNullable<QcmExercise['typed']> };
-  onAnswer: (correct: boolean) => void;
+  onAnswer: (correct: boolean, whyWrong?: string, given?: string) => void;
   locked: boolean;
 }
 
@@ -26,7 +26,7 @@ export function TypeView({ exercise, onAnswer, locked }: Props) {
   const submit = () => {
     if (empty || locked) return;
     Keyboard.dismiss();
-    onAnswer(correct);
+    onAnswer(correct, undefined, value.trim());
   };
 
   const inlineAction = useSessionAction(locked ? null : { label: t('common.check'), disabled: empty, onPress: submit });

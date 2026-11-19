@@ -15,6 +15,14 @@ import {
 /** Cinq couronnes : le streak d'un exercice monte jusqu'à 5. */
 export const STREAK_CAP = 5;
 export const REVIEW_EXIT_STREAK = 2;
+/**
+ * Une bonne réponse donnée en se disant « sûr » vaut deux bonnes réponses :
+ * la question sort aussitôt de la file « à revoir » et l'unité avance plus
+ * vite. Le bouton « I'm sure » n'est jamais proposé quand la réponse est
+ * encore fraîche (question ratée le jour même ou dans la séance, voir
+ * `sureAllowed` dans learning.ts) : on ne peut pas s'en servir pour tricher.
+ */
+export const CONFIDENT_STEP = 2;
 
 export interface AnswerOutcome {
   progress: QuestionProgress;
@@ -26,7 +34,8 @@ export interface AnswerOutcome {
  * Applique une réponse à la progression d'une question.
  *
  * `confident` : l'apprenant s'est dit « sûr » avant de valider ; une erreur
- * l'est alors aussi (`confidentMiss`), une bonne réponse efface la marque.
+ * l'est alors aussi (`confidentMiss`), une bonne réponse efface la marque et
+ * fait monter le streak de CONFIDENT_STEP au lieu de 1.
  *
  * `creditedThisSession` : la question a déjà reçu une bonne réponse dans la
  * session en cours. Une nouvelle bonne réponse est alors comptée (`correct`,
@@ -47,7 +56,7 @@ export function applyAnswer(
   const wasInQueue = prev.inReview;
 
   let streak = 0;
-  if (correct) streak = creditedThisSession ? prev.streak : Math.min(prev.streak + 1, STREAK_CAP);
+  if (correct) streak = creditedThisSession ? prev.streak : Math.min(prev.streak + (confident ? CONFIDENT_STEP : 1), STREAK_CAP);
   const inReview = correct ? wasInQueue && streak < REVIEW_EXIT_STREAK : true;
 
   const progress: QuestionProgress = {
@@ -61,6 +70,9 @@ export function applyAnswer(
   };
   // Erreur commise en étant sûr : à revoir en premier (voir learning.ts).
   if (!correct && confident) progress.confidentMiss = true;
+  // Date de la dernière erreur : « I'm sure » est masqué le jour même.
+  if (!correct) progress.lastMissAt = now;
+  else if (prev.lastMissAt !== undefined) progress.lastMissAt = prev.lastMissAt;
 
   return {
     progress,

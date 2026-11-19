@@ -109,4 +109,47 @@ describe('useSession', () => {
     expect(s.get().state.feedback?.confidentMiss).toBe(true);
     expect(useProgress.getState().progress.questions[key].confidentMiss).toBe(true);
   });
+
+  it('« I’m sure » : proposé sur une question neuve, jamais sur une question ratée dans la séance', () => {
+    const unitId = content().UNITS[0].id;
+    const s = mount({ mode: 'unit', unitId });
+    // Prétest : pas de « sûr ».
+    expect(s.get().canBeSure).toBe(false);
+    for (let i = 0; i < s.get().state.pretestCount; i += 1) {
+      act(() => {
+        s.get().answer(true);
+      });
+      act(() => {
+        s.get().next();
+      });
+    }
+    expect(s.get().canBeSure).toBe(true);
+    const missed = s.get().current?.exercise.key as string;
+    act(() => {
+      s.get().answer(false);
+    });
+    // On va jusqu'au rattrapage de cette question, en répondant juste au reste.
+    let guard = 0;
+    while (guard < 40) {
+      guard += 1;
+      act(() => {
+        s.get().next();
+      });
+      const cur = s.get().current;
+      if (s.get().state.phase !== 'question' || !cur) break;
+      if (cur.exercise.key === missed) {
+        expect(s.get().canBeSure).toBe(false);
+        // Même « sûr », la bonne réponse ne compte pas double.
+        act(() => {
+          s.get().answer(true, undefined, true);
+        });
+        expect(useProgress.getState().progress.questions[missed].streak).toBe(1);
+        return;
+      }
+      act(() => {
+        s.get().answer(true);
+      });
+    }
+    throw new Error('la question ratée n’est pas revenue');
+  });
 });

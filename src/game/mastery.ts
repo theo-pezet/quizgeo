@@ -160,6 +160,11 @@ export function applyUnitSessionResult(
  * s'ouvre quand celle qui la précède dans SON chemin a ≥ 1 couronne. Les
  * matières sont indépendantes : autant de portes d'entrée que de matières.
  * Une unité absente du catalogue reste fermée.
+ *
+ * Le chemin acquis ne se referme jamais, même quand du contenu s'insère en
+ * amont (les unités « premiers pas » de la 1.4, placées AVANT des unités déjà
+ * jouées) : une unité est aussi ouverte dès qu'elle-même ou une unité plus
+ * loin dans son chemin a une couronne.
  */
 export function isUnitUnlocked(
   unitId: UnitId,
@@ -170,7 +175,10 @@ export function isUnitUnlocked(
   if (unit === undefined) return false;
   if (unit.index === 0) return true;
   const previous = previousUnit(catalog, unitId);
-  return previous !== null && (traitsByUnit[previous.id] ?? 0) >= 1;
+  if (previous !== null && (traitsByUnit[previous.id] ?? 0) >= 1) return true;
+  return subjectUnits(catalog, unit.subjectId)
+    .slice(unit.index)
+    .some((u) => (traitsByUnit[u.id] ?? 0) >= 1);
 }
 
 export function unlockedUnits(

@@ -1,0 +1,228 @@
+{
+ "unit": {
+  "id": "js-start-1",
+  "subjectId": "js",
+  "topic": "js-start",
+  "world": "js-w1",
+  "title": "JavaScript: first lines",
+  "description": "What JavaScript does, printing with console.log, text in quotes, numbers, comments"
+ },
+ "cards": [
+  {
+   "slug": "console-log",
+   "level": "debutant",
+   "term": "console.log()",
+   "definition": "Prints a value in the browser console (F12), so you can see what your code is doing.",
+   "example": "console.log(\"Hello\") shows Hello in the console."
+  },
+  {
+   "slug": "string",
+   "level": "debutant",
+   "term": "String",
+   "definition": "A piece of text in JavaScript, written between quotes: \"Hello\" or 'Hello'.",
+   "example": "\"42\" between quotes is text, not a number."
+  },
+  {
+   "slug": "number",
+   "level": "debutant",
+   "term": "Number",
+   "definition": "A numeric value written without quotes, whole or decimal, that you can calculate with: 42, 3.5.",
+   "example": "console.log(2 + 3) prints 5."
+  },
+  {
+   "slug": "js-comment",
+   "level": "debutant",
+   "term": "JavaScript comment",
+   "definition": "Text after // (one line) or between /* and */ that the computer ignores; it explains the code to humans.",
+   "example": "// Total with tax, written above a line, says what it computes."
+  },
+  {
+   "slug": "statement",
+   "level": "debutant",
+   "term": "Statement",
+   "definition": "One instruction for the computer, usually one line, often closed by a semicolon.",
+   "example": "console.log(\"Hi\"); is a single instruction."
+  },
+  {
+   "slug": "case-sensitivity",
+   "level": "debutant",
+   "term": "Case sensitivity",
+   "definition": "Capital and small letters are different in JavaScript: console and Console are two different names.",
+   "example": "Console.log(\"Hi\") fails; console.log(\"Hi\") works."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is JavaScript used for in a web page?",
+   "choices": [
+    "Making the page react: clicks, forms, changes",
+    "Choosing the colors and the layout",
+    "Writing the headings and the paragraphs",
+    "Hosting the website on the internet"
+   ],
+   "explain": "HTML is the content, CSS is the look, JavaScript is the behavior: it reacts to the user and changes the page.",
+   "whyWrong": [
+    "Colors and layout are the job of CSS.",
+    "Headings and paragraphs are the job of HTML.",
+    "Hosting is done by a server, not by a language in the page."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this line show in the console?",
+   "choices": [
+    "Hello",
+    "\"Hello\"",
+    "console.log",
+    "Nothing: it is an error"
+   ],
+   "explain": "console.log() prints what is inside the parentheses. The quotes tell JavaScript that it is text.",
+   "whyWrong": [
+    "The quotes only mark where the text starts and ends; they are not printed.",
+    "console.log is the command, not what it prints.",
+    "This line is valid: it prints the text."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(\"Hello\");"
+   },
+   "output": "Hello"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "5",
+    "2 + 3",
+    "23",
+    "\"5\""
+   ],
+   "explain": "Numbers are written without quotes. 2 + 3 is computed first, then 5 is printed.",
+   "whyWrong": [
+    "Without quotes, JavaScript computes the expression.",
+    "2 and 3 are numbers, so + adds them.",
+    "console.log prints the value without quotes."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(2 + 3);"
+   },
+   "output": "5"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "2 + 3",
+    "5",
+    "23",
+    "Nothing"
+   ],
+   "explain": "Between quotes it is a string: JavaScript prints it exactly as written, without calculating.",
+   "whyWrong": [
+    "The quotes make it text: nothing is computed.",
+    "Nothing is added: it is one single piece of text.",
+    "It prints the text written between the quotes."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(\"2 + 3\");"
+   },
+   "output": "2 + 3"
+  },
+  {
+   "kind": "vf",
+   "prompt": "\"42\" (with quotes) and 42 (without quotes) are the same kind of value in JavaScript.",
+   "isTrue": false,
+   "explain": "\"42\" is a string (text) and 42 is a number. Only the number can be used in calculations."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What happens with the first line?",
+   "choices": [
+    "Nothing: it is a comment",
+    "It prints Say hello",
+    "It causes an error",
+    "It renames the program"
+   ],
+   "explain": "// starts a comment: JavaScript ignores the rest of the line. Comments explain the code to humans.",
+   "whyWrong": [
+    "Only the second line prints something.",
+    "A comment is valid code: it is simply skipped.",
+    "Comments never change how the code runs."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "// Say hello\nconsole.log(\"Hi\");"
+   },
+   "output": "Hi"
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This code stops with an error. Which line is wrong?",
+   "lang": "js",
+   "lines": [
+    "console.log(\"Start\");",
+    "Console.log(\"Middle\");",
+    "console.log(\"End\");"
+   ],
+   "answer": 1,
+   "explain": "JavaScript is case sensitive: Console with a capital C does not exist. It must be console.log."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints the text Welcome in the console.",
+   "lang": "js",
+   "tokens": [
+    "console.log",
+    "(",
+    "\"Welcome\"",
+    ")",
+    ";"
+   ],
+   "extra": [
+    "print",
+    "Welcome"
+   ],
+   "explain": "console.log(\"Welcome\"); the text goes between quotes, inside the parentheses."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which of these is a string (a piece of text)?",
+   "choices": [
+    "\"blue\"",
+    "blue",
+    "42",
+    "3.5"
+   ],
+   "explain": "Text must be written between quotes: \"blue\" or 'blue'. Without quotes, JavaScript reads a name or a number.",
+   "whyWrong": [
+    "Without quotes, blue is read as a name, not as text.",
+    "42 is a number.",
+    "3.5 is a number with a decimal point."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many lines appear in the console?",
+   "choices": [
+    "2",
+    "3",
+    "1",
+    "0"
+   ],
+   "explain": "Each console.log prints one line, from top to bottom. The line that starts with // is a comment and never runs.",
+   "whyWrong": [
+    "The third line starts with //: it is a comment and never runs.",
+    "Both lines without // run, one after the other.",
+    "The first two lines are normal instructions, so they run."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "console.log(\"One\");\nconsole.log(\"Two\");\n// console.log(\"Three\");"
+   },
+   "output": "One\nTwo"
+  }
+ ]
+}

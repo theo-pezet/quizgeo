@@ -23,7 +23,7 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
   const colors = useColors();
   const t = useT();
   const { SUBJECT_BY_ID, UNIT_BY_ID } = useContent();
-  const { state, current, previous, answer, next, ratio, counter, inPretest, hard } = useSession(spec);
+  const { state, current, previous, answer, next, ratio, counter, inPretest, hard, canBeSure } = useSession(spec);
   const boostLeft = useProgress((s) => boostMinutesLeft(s.progress.boost, new Date()));
   const unit = spec.mode === 'unit' ? UNIT_BY_ID.get(spec.unitId) : undefined;
   const world = unit ? WORLD_BY_UNIT.get(unit.id) : undefined;
@@ -103,12 +103,12 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
   const noteTone = !verdict && action?.note ? feedbackTone(colors, action.note.correct) : null;
   const barTone = peeking ? feedbackTone(colors, previous.feedback.correct) : verdict ? feedbackTone(colors, verdict.correct) : noteTone;
   const footer = peeking ? (
-    <FeedbackPanel feedback={previous.feedback} combo={0} onNext={() => setPeek(false)} nextLabel={t('session.previous.back')} />
+    <FeedbackPanel feedback={previous.feedback} combo={0} onNext={() => setPeek(false)} nextLabel={t('session.previous.back')} ask={{ exercise: previous.step.exercise, unitTitle: unit?.title }} />
   ) : verdict ? (
-    <FeedbackPanel feedback={verdict} combo={state.combo} onNext={next} />
+    <FeedbackPanel feedback={verdict} combo={state.combo} onNext={next} ask={{ exercise: current.exercise, unitTitle: unit?.title }} />
   ) : action ? (
     <View style={styles.actionWrap}>
-      {!inPretest && !action.note && (
+      {!inPretest && canBeSure && !action.note && (
         <Pressable
           onPress={() => setSure((v) => !v)}
           accessibilityRole="switch"
@@ -173,10 +173,10 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
               exercise={current.exercise}
               hard={hard}
               locked={state.phase === 'feedback'}
-              onAnswer={(correct, whyWrong) => {
+              onAnswer={(correct, whyWrong, given) => {
                 void (correct ? haptics.correct() : haptics.wrong());
                 sounds.play(correct ? 'correct' : 'wrong');
-                answer(correct, whyWrong, sure);
+                answer(correct, whyWrong, sure && canBeSure, given);
               }}
             />
           </SessionActionProvider>

@@ -1,0 +1,238 @@
+{
+ "unit": {
+  "id": "css-start-2",
+  "subjectId": "css",
+  "topic": "css-start",
+  "world": "css-w1",
+  "title": "CSS: text and colors",
+  "description": "Text color, background color, font size and weight, alignment, hex color codes, comments"
+ },
+ "cards": [
+  {
+   "slug": "text-color",
+   "level": "debutant",
+   "term": "Text color (color)",
+   "definition": "The property that paints the letters of an element, not the box behind them.",
+   "example": "button { color: white; } makes the label of every button white."
+  },
+  {
+   "slug": "background-color",
+   "level": "debutant",
+   "term": "background-color",
+   "definition": "Fills the box behind the content of an element with a color.",
+   "example": "body { background-color: #f5f5f5; } gives the whole page a light gray backdrop."
+  },
+  {
+   "slug": "font-size",
+   "level": "debutant",
+   "term": "font-size",
+   "definition": "Sets how big the letters are, usually in pixels (px) or in rem.",
+   "example": "h1 { font-size: 32px; } makes main headings twice the usual 16px."
+  },
+  {
+   "slug": "font-weight",
+   "level": "debutant",
+   "term": "font-weight",
+   "definition": "Sets how thick the letters are: normal, bold, or a number from 100 (thin) to 900 (very heavy).",
+   "example": "Bold is the same as 700; normal is 400."
+  },
+  {
+   "slug": "text-align",
+   "level": "debutant",
+   "term": "text-align",
+   "definition": "Places the lines inside their box: left, right, center or justify.",
+   "example": "h1 { text-align: center; } centers the main heading."
+  },
+  {
+   "slug": "hex-color",
+   "level": "debutant",
+   "term": "Hex color code",
+   "definition": "A color written as # and six characters: two for red, two for green, two for blue, each from 00 to ff.",
+   "example": "#ff0000 is pure red, #000000 black, #ffffff white."
+  },
+  {
+   "slug": "css-comment",
+   "level": "debutant",
+   "term": "CSS comment",
+   "definition": "A note written between /* and */ that the browser skips; it explains the code to humans.",
+   "example": "/* Main button */ above a rule says what it styles."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which property changes the color of the TEXT?",
+   "choices": [
+    "color",
+    "background-color",
+    "text-color",
+    "font-color"
+   ],
+   "explain": "The text color is simply color. The box behind the text has its own property: background-color.",
+   "whyWrong": [
+    "background-color paints behind the text, not the letters.",
+    "text-color does not exist: the browser ignores it.",
+    "font-color does not exist in CSS."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this button look like?",
+   "choices": [
+    "White text on a navy background",
+    "Navy text on a white background",
+    "Navy text, with no background",
+    "White text, with no background"
+   ],
+   "explain": "color paints the letters (white), background-color fills the box behind them (navy).",
+   "whyWrong": [
+    "It is the other way round: color is the text, background-color the box.",
+    "color: white sets the text; navy is used for the background.",
+    "background-color: navy does fill the background."
+   ],
+   "code": {
+    "lang": "css",
+    "src": "button {\n  color: white;\n  background-color: navy;\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which declaration makes a heading bigger?",
+   "choices": [
+    "font-size: 32px;",
+    "font-weight: 32px;",
+    "text-size: 32px;",
+    "size: 32px;"
+   ],
+   "explain": "font-size sets the size of the letters. px means pixels: 16px is the usual size of body text.",
+   "whyWrong": [
+    "font-weight sets how thick the letters are, not their size.",
+    "text-size does not exist in CSS.",
+    "size is not a property for text."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you center the text of a heading?",
+   "choices": [
+    "text-align: center;",
+    "align: center;",
+    "text-align: middle;",
+    "center: true;"
+   ],
+   "explain": "text-align places the lines inside their box: left, right, center or justify.",
+   "whyWrong": [
+    "align alone is not a CSS property.",
+    "middle is not a valid value here: write center.",
+    "CSS has no property called center."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which declaration makes text bold?",
+   "choices": [
+    "font-weight: bold;",
+    "font-style: bold;",
+    "text-weight: bold;",
+    "font-size: bold;"
+   ],
+   "explain": "font-weight controls how thick the letters are: normal (400) or bold (700).",
+   "whyWrong": [
+    "font-style is used for italic, not bold.",
+    "text-weight does not exist in CSS.",
+    "font-size expects a size, such as 20px."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What color is #000000?",
+   "choices": [
+    "Black",
+    "White",
+    "Red",
+    "Gray"
+   ],
+   "explain": "In a hex code, 00 means none of that light. No red, no green, no blue: black.",
+   "whyWrong": [
+    "White is #ffffff: every pair at its maximum.",
+    "Red is #ff0000: only the first pair is high.",
+    "A gray has three equal middle pairs, like #808080."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "color: red; and color: #ff0000; give the same red.",
+   "isTrue": true,
+   "explain": "red is a color name, #ff0000 is the same red written in hex: full red, no green, no blue."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a declaration that sets the size of the text to 20 pixels.",
+   "lang": "css",
+   "tokens": [
+    "font-size",
+    ":",
+    "20px",
+    ";"
+   ],
+   "extra": [
+    "font-weight",
+    "20"
+   ],
+   "explain": "font-size: 20px; is the property, a colon, the value with its unit, then a semicolon. Without px, the browser ignores the size."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The heading is not centered. Which line is wrong?",
+   "lang": "css",
+   "lines": [
+    "h1 {",
+    "  color: navy;",
+    "  text-align: centre;",
+    "}"
+   ],
+   "answer": 2,
+   "explain": "CSS uses the American spelling: center, not centre. An unknown value makes the browser skip that declaration."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the browser do with the first line?",
+   "choices": [
+    "Nothing: it is a note for humans",
+    "It shows it above the heading",
+    "It renames the heading",
+    "It reports an error"
+   ],
+   "explain": "Everything between /* and */ is a comment: the browser skips it. Comments explain your code to the next reader.",
+   "whyWrong": [
+    "Comments are never shown on the page.",
+    "A comment changes nothing on the page.",
+    "Comments are valid CSS, so there is no error."
+   ],
+   "code": {
+    "lang": "css",
+    "src": "/* Big blue title */\nh1 {\n  color: blue;\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The same property appears twice. What color is the text?",
+   "choices": [
+    "Green",
+    "Red",
+    "A mix of red and green",
+    "None: the rule breaks"
+   ],
+   "explain": "When a property is repeated, the declaration written last wins. CSS is read from top to bottom.",
+   "whyWrong": [
+    "Red comes first, then the line below replaces it.",
+    "CSS never mixes two colors: one value wins.",
+    "Repeating a property is allowed: the last one wins."
+   ],
+   "code": {
+    "lang": "css",
+    "src": "p {\n  color: red;\n  color: green;\n}"
+   }
+  }
+ ]
+}

@@ -295,6 +295,14 @@ describe('déverrouillage', () => {
     expect(isUnitUnlocked('py-2', t, CATALOG)).toBe(false);
   });
 
+  it('ne referme jamais une unité quand du contenu s’insère avant elle', () => {
+    // seo-2 sans couronne, mais seo-3 (plus loin) couronnée : seo-2 et seo-3 restent ouvertes.
+    const t = traits({ 'seo-3': 2 });
+    expect(isUnitUnlocked('seo-2', t, CATALOG)).toBe(true);
+    expect(isUnitUnlocked('seo-3', t, CATALOG)).toBe(true);
+    expect(isUnitUnlocked('ia-2', t, CATALOG)).toBe(false);
+  });
+
   it('traite une unité absente de la carte comme sans couronne', () => {
     expect(isUnitUnlocked('seo-2', {}, CATALOG)).toBe(false);
   });
