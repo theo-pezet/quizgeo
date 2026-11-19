@@ -1,0 +1,27 @@
+# TEMPORAIRE : ajoute expo-speech et react-native-webview (versions de l'Expo SDK)
+# et pousse package.json + package-lock.json. Retiré dans le commit suivant.
+name: Ajout de dépendances (temporaire)
+on:
+  push:
+    branches: [ameliorations-retours-joueur]
+permissions:
+  contents: write
+jobs:
+  deps:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - name: Installer si absent
+        run: |
+          if grep -q '"expo-speech"' package.json && grep -q '"react-native-webview"' package.json; then echo "déjà là"; exit 0; fi
+          npx expo install expo-speech react-native-webview
+          git config user.name "github-actions[bot]"
+          git config user.email "41898299+github-actions[bot]@users.noreply.github.com"
+          git add package.json package-lock.json
+          git commit -m "Dépendances : expo-speech et react-native-webview (npx expo install)"
+          git push
