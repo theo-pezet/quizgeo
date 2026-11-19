@@ -82,7 +82,7 @@ describe('useSession', () => {
         lastRatio = s.get().ratio;
       }
     }
-    const retries = s.get().state.steps.filter((step) => step.retry).map((step) => step.exercise.key);
+    const retries = s.get().state.steps.filter((step) => step.retry).flatMap((step) => (step.exercise ? [step.exercise.key] : []));
     for (const key of new Set(retries)) expect(retries.filter((k) => k === key).length).toBeLessThanOrEqual(RELEARN_MAX);
     expect(new Set(retries)).toEqual(mainKeys);
     expect(lastRatio).toBe(1);

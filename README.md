@@ -46,12 +46,30 @@ répétition espacée (comme Anki), et des cas pratiques. Interface et contenu
   **révisions entrelacées** par matière (file d'erreurs et deck), et
   **réapprentissage jusqu'au critère** (une erreur revient dans la même séance,
   jusqu'à deux fois, en leçon comme au deck).
+- **Fiches « New »** : la première leçon d'une unité intercale ses notions
+  (définition, exemple, bouton écouter) entre les questions : on voit un
+  exemple avant d'être interrogé (effet de l'exemple résolu).
+- **Voix** (`expo-speech`, synthèse du téléphone, hors ligne) : écouter un
+  terme ou une définition, et **mode écoute** du deck, mains libres : le terme
+  est lu, une pause laisse le temps de dire la réponse à voix haute, puis la
+  réponse est lue. Le deck invite aussi à dire la réponse à voix haute avant
+  de retourner la carte (effet de production).
+- **Bac à sable** (`/sandbox`, WebView ou iframe) : « Try it » ouvre le code
+  d'un exercice HTML, CSS ou JavaScript, modifiable, avec le rendu en direct et
+  la console.
+- **File « à revoir » espacée** : une erreur revient le lendemain, une
+  première bonne réponse la repousse de 3 jours (`REVIEW_GAPS`).
+- **Pourquoi ?** : une bonne réponse sur trois cache l'explication derrière un
+  champ « explique-le en une phrase » (auto-explication).
 - **Question précédente** : pendant une leçon, un petit bouton ↶ réaffiche la
   question d'avant, telle qu'elle a été répondue, avec son explication.
 - **Gemmes** et boutique (recharge, gel de série, boost XP ×2), **quêtes du
   jour**, **ligue hebdomadaire** (30 joueurs, 10 divisions ; adversaires
   simulés hors ligne, remplaçables par un service en ligne).
 - Série quotidienne avec gels, 17 badges, niveaux, sessions libres par matière.
+  Un rattrapage ne rapporte pas d'XP, et les petits événements (niveau,
+  quêtes, badges, série) tiennent sur l'écran de résumé : seules la couronne
+  (avec ce qui est maîtrisé) et le monde terminé ont leur page.
 - **Blitz** (60 s, XP ×2), **test de sortie** (8/10 sur une unité verrouillée
   valide les précédentes), **rappels locaux** (série en danger, énergie
   rechargée, Android uniquement), trois **rivaux** récurrents en ligue.
