@@ -3,8 +3,8 @@ import { StyleSheet, View } from 'react-native';
 
 import { CATALOG, WORLD_BY_UNIT, isWorldComplete } from '@/content';
 import { useContent } from '@/content/useContent';
-import { MONTHLY_TARGET, PATH_TRAITS, allUnitTraits, levelProgress, toDayKey, type Quest } from '@/game';
-import { formatDay, monthLabel, useLang, useT, type Key } from '@/i18n';
+import { PATH_TRAITS, allUnitTraits, levelProgress, toDayKey, type Quest, type SessionEndResult } from '@/game';
+import { formatDay, useLang, useT, type Key } from '@/i18n';
 import { sounds, type SoundName } from '@/lib/sounds';
 import { useProgress } from '@/store/progress';
 import { Button, Confetti, Crowns, FadeUp, Icon, Pop, ProgressBar, Ring, Screen, Text, radius, space, tint, useColors, useCountUp, type IconName } from '@/ui';
@@ -12,16 +12,7 @@ import { Button, Confetti, Crowns, FadeUp, Icon, Pop, ProgressBar, Ring, Screen,
 import { exitSession } from './exit';
 import type { SessionSpec, SessionState } from './useSession';
 
-type Page =
-  | { kind: 'recap' }
-  | { kind: 'skip' }
-  | { kind: 'levelUp' }
-  | { kind: 'crown' }
-  | { kind: 'world' }
-  | { kind: 'quest'; quests: Quest[] }
-  | { kind: 'badge' }
-  | { kind: 'monthly' }
-  | { kind: 'streak' };
+type Page = { kind: 'recap' } | { kind: 'skip' } | { kind: 'crown' } | { kind: 'world' };
 
 const QUEST_KEYS: Record<Quest['kind'], Key> = {
   xp: 'quest.xp',
@@ -33,15 +24,16 @@ const QUEST_KEYS: Record<Quest['kind'], Key> = {
 };
 
 /**
- * L'écran de fin : une page par événement, chacune tenant dans l'écran, avec
- * un seul bouton fixe en bas. La première page résume ; les suivantes
- * n'existent que s'il s'est passé quelque chose (niveau, couronne, monde,
- * quête, badge, série).
+ * L'écran de fin : la première page résume la séance ET liste les petits
+ * événements (niveau, quêtes, badges, défi du mois, série) ; seuls les vrais
+ * moments d'apprentissage ont leur page (couronne, monde, test de sortie).
+ * Avant la 1.4, chaque événement avait sa page : une leçon pouvait enchaîner
+ * cinq écrans de félicitations, et les récompenses attendues finissent par
+ * peser moins qu'un retour sur ce qu'on maîtrise (Deci, Koestner & Ryan 1999).
  */
 export function SessionEnd({ state, spec, color }: { state: SessionState; spec: SessionSpec; color: string }) {
   const colors = useColors();
   const t = useT();
-  const lang = useLang();
   const { EXERCISES, UNIT_BY_ID } = useContent();
   const progress = useProgress((s) => s.progress);
   const r = state.result;
@@ -60,13 +52,8 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
     const out: Page[] = [{ kind: 'recap' }];
     if (!r) return out;
     if (state.skipTest) out.push({ kind: 'skip' });
-    if (r.levelUp.crossed) out.push({ kind: 'levelUp' });
     if (crownGained || r.newlyUnlockedUnits.length > 0) out.push({ kind: 'crown' });
     if (worldDone) out.push({ kind: 'world' });
-    if (r.questsCompleted.length > 0) out.push({ kind: 'quest', quests: r.questsCompleted });
-    if (r.newBadges.length > 0) out.push({ kind: 'badge' });
-    if (r.monthlyCompleted) out.push({ kind: 'monthly' });
-    if (r.streakIncremented || r.freezeConsumedFor) out.push({ kind: 'streak' });
     return out;
   }, [r, state.skipTest, crownGained, worldDone]);
 
@@ -75,10 +62,8 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
 
   useEffect(() => {
     const sound: SoundName | null =
-      page.kind === 'recap' ? (perfect ? 'perfect' : r?.goalReached ? 'goal' : null)
-      : page.kind === 'levelUp' ? 'levelup'
+      page.kind === 'recap' ? (perfect ? 'perfect' : r?.levelUp.crossed ? 'levelup' : r?.goalReached ? 'goal' : null)
       : page.kind === 'crown' || page.kind === 'world' ? 'crown'
-      : page.kind === 'badge' || page.kind === 'quest' || page.kind === 'monthly' ? 'badge'
       : null;
     if (sound) {
       const timer = setTimeout(() => sounds.play(sound), 200);
@@ -91,10 +76,11 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
 
   return (
     <Screen footer={footer}>
-      {(perfect && page.kind === 'recap') || page.kind === 'world' || page.kind === 'levelUp' || page.kind === 'monthly' ? <Confetti /> : null}
+      {(page.kind === 'recap' && (perfect || r?.levelUp.crossed || r?.monthlyCompleted)) || page.kind === 'world' ? <Confetti /> : null}
       {page.kind === 'recap' && (
         <Recap state={state} color={color} perfect={perfect} good={good} />
       )}
+      {page.kind === 'recap' && r && <Extras result={r} streak={progress.streak.current} />}
       {page.kind === 'skip' && state.skipTest && (
         <Moment
           key="skip"
@@ -110,9 +96,6 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
           }
         />
       )}
-      {page.kind === 'levelUp' && r && (
-        <Moment key="level" icon="arrow-up-circle" color={color} title={t('end.levelUp.title', { level: r.levelUp.to })} body={t('end.levelUp.body', { from: r.levelUp.from, to: r.levelUp.to })} />
-      )}
       {page.kind === 'crown' && r && (
         <Moment
           key="crown"
@@ -126,6 +109,11 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
                 : t('end.unlocked.title')
           }
           body={crownGained ? (r.traitsAfter >= 5 ? t('end.crown.body5') : r.traitsAfter >= PATH_TRAITS ? t('end.crown.body3') : t('end.crown.body1')) : ''}>
+          {crownGained && spec.mode === 'unit' && UNIT_BY_ID.get(spec.unitId) && (
+            <Text variant="bodyBold" style={styles.center}>
+              {t('end.mastered', { description: UNIT_BY_ID.get(spec.unitId)?.description ?? '' })}
+            </Text>
+          )}
           {crownGained && (
             <Pop delay={300}>
               <Crowns count={r.traitsAfter} size={30} />
@@ -150,47 +138,6 @@ export function SessionEnd({ state, spec, color }: { state: SessionState; spec: 
       )}
       {page.kind === 'world' && world && (
         <Moment key="world" emoji={world.emoji} color={world.color} title={t('end.world.title')} body={t('end.world.body', { world: world.title })} />
-      )}
-      {page.kind === 'quest' && (
-        <Moment key="quest" icon="flag" color={colors.success} title={t('end.quest.title')} body="">
-          <View style={[styles.list, { backgroundColor: colors.surfaceAlt }]}>
-            {page.quests.map((q) => (
-              <View key={q.id} style={styles.listRow}>
-                <Icon name="checkmark-circle" size={18} color={colors.success} />
-                <Text variant="bodyBold" style={styles.grow}>
-                  {t(QUEST_KEYS[q.kind], { n: q.target })}
-                </Text>
-                <Icon name="diamond" size={16} color={colors.gem} />
-                <Text variant="bodyBold" style={{ color: colors.gem }}>
-                  {q.reward}
-                </Text>
-              </View>
-            ))}
-          </View>
-        </Moment>
-      )}
-      {page.kind === 'badge' && r && (
-        <Moment key="badge" icon="medal" color={colors.gold} title={t('end.badge.title')} body="">
-          <View style={styles.badges}>
-            {r.newBadges.map((id) => (
-              <View key={id} style={[styles.badge, { backgroundColor: colors.goldSoft, borderColor: colors.gold }]}>
-                <Text variant="h2">{t(`badge.${id}` as Key)}</Text>
-              </View>
-            ))}
-          </View>
-        </Moment>
-      )}
-      {page.kind === 'monthly' && r && (
-        <Moment key="monthly" icon="medal" color={colors.gold} title={t('monthly.end.title')} body={t('monthly.end.body', { target: MONTHLY_TARGET, month: monthLabel(lang, r.progress.monthly.month ?? '') })} />
-      )}
-      {page.kind === 'streak' && r && (
-        <Moment
-          key="streak"
-          icon="flame"
-          color={colors.streak}
-          title={t('end.streak.title', { count: progress.streak.current })}
-          body={r.freezeConsumedFor ? t('end.streak.freeze', { day: formatDay(r.freezeConsumedFor, lang) }) : t('end.streak.body')}
-        />
       )}
       {state.adShown && page.kind === 'recap' && (
         <Text variant="small" secondary style={styles.center}>
@@ -256,6 +203,51 @@ function Recap({ state, color, perfect, good }: { state: SessionState; color: st
   );
 }
 
+/** Les petits événements de la séance, en une liste sous le résumé. */
+function Extras({ result: r, streak }: { result: SessionEndResult; streak: number }) {
+  const colors = useColors();
+  const t = useT();
+  const lang = useLang();
+  const rows: { key: string; icon: IconName; color: string; text: string; gems?: number }[] = [];
+  if (r.levelUp.crossed) rows.push({ key: 'level', icon: 'arrow-up-circle', color: colors.primary, text: t('end.levelUp.title', { level: r.levelUp.to }) });
+  for (const q of r.questsCompleted) rows.push({ key: `q-${q.id}`, icon: 'flag', color: colors.success, text: `${t('end.quest.title')}: ${t(QUEST_KEYS[q.kind], { n: q.target })}`, gems: q.reward });
+  for (const id of r.newBadges) rows.push({ key: `b-${id}`, icon: 'medal', color: colors.gold, text: `${t('end.badge.title')}: ${t(`badge.${id}` as Key)}` });
+  if (r.monthlyCompleted) rows.push({ key: 'monthly', icon: 'medal', color: colors.gold, text: t('monthly.end.title') });
+  if (r.streakIncremented || r.freezeConsumedFor)
+    rows.push({
+      key: 'streak',
+      icon: 'flame',
+      color: colors.streak,
+      text: r.freezeConsumedFor ? `${t('end.streak.title', { count: streak })} · ${t('end.streak.freeze', { day: formatDay(r.freezeConsumedFor, lang) })}` : t('end.streak.title', { count: streak }),
+    });
+  if (rows.length === 0) return null;
+  return (
+    <FadeUp delay={480} style={styles.fullWidth}>
+      <View style={[styles.list, { backgroundColor: colors.surfaceAlt }]}>
+        <Text variant="small" secondary style={styles.label}>
+          {t('end.also')}
+        </Text>
+        {rows.map((row) => (
+          <View key={row.key} style={styles.listRow}>
+            <Icon name={row.icon} size={18} color={row.color} />
+            <Text variant="small" style={styles.grow}>
+              {row.text}
+            </Text>
+            {row.gems !== undefined && (
+              <>
+                <Icon name="diamond" size={14} color={colors.gem} />
+                <Text variant="small" style={{ color: colors.gem }}>
+                  {row.gems}
+                </Text>
+              </>
+            )}
+          </View>
+        ))}
+      </View>
+    </FadeUp>
+  );
+}
+
 function Tile({ color, icon, label, value }: { color: string; icon: IconName; label: string; value: string }) {
   const colors = useColors();
   return (
@@ -314,6 +306,5 @@ const styles = StyleSheet.create({
   grow: { flex: 1 },
   list: { width: '100%', borderRadius: radius.md, padding: space.md, gap: space.sm },
   listRow: { flexDirection: 'row', alignItems: 'center', gap: space.sm },
-  badges: { gap: space.sm, alignItems: 'center' },
-  badge: { borderWidth: 2, borderRadius: radius.pill, paddingVertical: space.sm, paddingHorizontal: space.xl },
+  label: { fontWeight: '800', textTransform: 'uppercase', fontSize: 11, letterSpacing: 0.6 },
 });

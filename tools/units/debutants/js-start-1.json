@@ -223,6 +223,23 @@
     "src": "console.log(\"One\");\nconsole.log(\"Two\");\n// console.log(\"Three\");"
    },
    "output": "One\nTwo"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints the number 42.",
+   "lang": "js",
+   "tokens": [
+    "console.log",
+    "(",
+    "42",
+    ")",
+    ";"
+   ],
+   "extra": [
+    "print",
+    "log"
+   ],
+   "explain": "console.log(42); A number is written without quotes."
   }
  ]
 }

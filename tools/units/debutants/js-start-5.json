@@ -233,6 +233,23 @@
     "src": "let total = 0;\nfor (const price of [5, 10, 15]) {\n  total = total + price;\n}\nconsole.log(total);"
    },
    "output": "30"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints the first item of the list colors.",
+   "lang": "js",
+   "tokens": [
+    "console.log",
+    "(",
+    "colors",
+    "[0]",
+    ")"
+   ],
+   "extra": [
+    "[1]",
+    ".first"
+   ],
+   "explain": "console.log(colors[0]) prints the first item: positions start at 0."
   }
  ]
 }

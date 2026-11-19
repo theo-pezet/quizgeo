@@ -218,6 +218,47 @@
     "Two values mean vertical then horizontal, not top then bottom.",
     "Each side gets one of the two values, not both."
    ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that gives every .card a thin solid gray border.",
+   "lang": "css",
+   "tokens": [
+    ".card",
+    "{",
+    "border",
+    ":",
+    "1px",
+    "solid",
+    "gray",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "border-color",
+    "#card"
+   ],
+   "explain": ".card { border: 1px solid gray; } The border shorthand gives a width, a style and a color."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that centers .page horizontally (it already has a width).",
+   "lang": "css",
+   "tokens": [
+    ".page",
+    "{",
+    "margin",
+    ":",
+    "0",
+    "auto",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "text-align",
+    "center"
+   ],
+   "explain": ".page { margin: 0 auto; } No space above and below, equal automatic space left and right."
   }
  ]
 }

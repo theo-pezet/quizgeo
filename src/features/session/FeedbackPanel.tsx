@@ -1,11 +1,13 @@
 import * as Linking from 'expo-linking';
+import { router } from 'expo-router';
 import { useState } from 'react';
-import { Platform, Pressable, ScrollView, Share, StyleSheet, View, useWindowDimensions } from 'react-native';
+import { Platform, Pressable, ScrollView, Share, StyleSheet, TextInput, View, useWindowDimensions } from 'react-native';
 
 import type { Exercise } from '@/game';
 import { useT } from '@/i18n';
 import { buildAskPrompt, claudeUrl, deviceLocale } from '@/lib/askClaude';
-import { Button, FadeUp, Icon, Shake, Text, space, useColors } from '@/ui';
+import { sandboxSource } from '@/lib/sandbox';
+import { Button, FadeUp, Icon, Shake, Text, fonts, radius, space, useColors } from '@/ui';
 
 import type { Feedback } from './useSession';
 
@@ -27,6 +29,7 @@ export function FeedbackPanel({
   onNext,
   nextLabel,
   ask,
+  noPrompt = false,
 }: {
   feedback: Feedback;
   combo: number;
@@ -34,12 +37,18 @@ export function FeedbackPanel({
   nextLabel?: string;
   /** L'exercice répondu : affiche « Ask Claude » et « Share ». */
   ask?: { exercise: Exercise; unitTitle?: string };
+  /** Relecture (question précédente) : l'explication se montre sans l'invite « pourquoi ? ». */
+  noPrompt?: boolean;
 }) {
   const colors = useColors();
   const t = useT();
   const { height } = useWindowDimensions();
   const tone = feedbackTone(colors, feedback.correct);
   const hasWhy = !feedback.correct && !!feedback.whyWrong;
+  // Auto-explication : l'explication attend que l'apprenant ait formulé la sienne (voir learning.ts).
+  const [explaining, setExplaining] = useState(!noPrompt && feedback.explainPrompt === true && !!feedback.explain);
+  const [mine, setMine] = useState('');
+  const [compared, setCompared] = useState('');
   return (
     <FadeUp>
       <Shake trigger={feedback.correct ? null : 1}>
@@ -60,8 +69,46 @@ export function FeedbackPanel({
               {t('session.sure.miss')}
             </Text>
           )}
-          {(hasWhy || feedback.explain) && (
+          {explaining && (
+            <View style={styles.body}>
+              <Text variant="small" style={{ color: tone.text, fontWeight: '700' }}>
+                {t('session.explain.prompt')}
+              </Text>
+              <TextInput
+                value={mine}
+                onChangeText={setMine}
+                placeholder={t('session.explain.placeholder')}
+                placeholderTextColor={colors.textSecondary}
+                multiline
+                style={[styles.input, { borderColor: tone.border, color: colors.text, backgroundColor: colors.surface }]}
+              />
+              <View style={styles.row}>
+                <Button
+                  label={t('session.explain.compare')}
+                  size="sm"
+                  tone="outline"
+                  disabled={mine.trim() === ''}
+                  onPress={() => {
+                    setCompared(mine.trim());
+                    setExplaining(false);
+                  }}
+                />
+                <Button label={t('session.explain.skip')} size="sm" tone="ghost" onPress={() => setExplaining(false)} />
+              </View>
+            </View>
+          )}
+          {!explaining && (hasWhy || feedback.explain) && (
             <ScrollView style={{ maxHeight: Math.round(height * 0.3) }} contentContainerStyle={styles.body} showsVerticalScrollIndicator>
+              {compared !== '' && (
+                <View style={[styles.why, { borderLeftColor: tone.border }]}>
+                  <Text variant="small" style={[styles.label, { color: tone.text }]}>
+                    {t('session.explain.yours')}
+                  </Text>
+                  <Text variant="small" style={styles.explain}>
+                    {compared}
+                  </Text>
+                </View>
+              )}
               {hasWhy && (
                 <View style={[styles.why, { borderLeftColor: tone.border }]}>
                   <Text variant="small" style={[styles.label, { color: tone.text }]}>
@@ -74,7 +121,7 @@ export function FeedbackPanel({
               )}
               {feedback.explain && (
                 <View style={styles.remember}>
-                  {hasWhy && (
+                  {(hasWhy || compared !== '') && (
                     <Text variant="small" secondary style={styles.label}>
                       {t('session.remember')}
                     </Text>
@@ -134,6 +181,7 @@ function AskRow({ feedback, exercise, unitTitle, tint }: { feedback: Feedback; e
     }
   };
 
+  const sandbox = sandboxSource(exercise);
   return (
     <View style={styles.ask}>
       <Pressable onPress={openClaude} accessibilityRole="link" accessibilityHint={t('session.ask.hint')} hitSlop={8} style={[styles.askBtn, { borderColor: tint }]}>
@@ -148,11 +196,25 @@ function AskRow({ feedback, exercise, unitTitle, tint }: { feedback: Feedback; e
           {copied ? t('session.ask.copied') : t('session.ask.share')}
         </Text>
       </Pressable>
+      {sandbox && (
+        <Pressable
+          onPress={() => router.push({ pathname: '/sandbox', params: { lang: sandbox.lang, code: sandbox.code } })}
+          accessibilityRole="button"
+          hitSlop={8}
+          style={[styles.askBtn, { borderColor: colors.border }]}>
+          <Icon name="code-slash" size={16} color={colors.textSecondary} />
+          <Text variant="small" secondary style={{ fontWeight: '700' }}>
+            {t('session.tryIt')}
+          </Text>
+        </Pressable>
+      )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  input: { borderWidth: 2, borderRadius: radius.md, padding: space.sm, minHeight: 56, textAlignVertical: 'top', fontFamily: fonts.regular },
+  row: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   ask: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   askBtn: { flexDirection: 'row', alignItems: 'center', gap: 6, borderWidth: 2, borderRadius: 999, paddingVertical: 4, paddingHorizontal: space.sm },
   panel: { gap: space.md },

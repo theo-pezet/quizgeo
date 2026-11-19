@@ -218,6 +218,25 @@
    "prompt": "Inside one pair of braces, you can write several declarations, one after another.",
    "isTrue": true,
    "explain": "p { color: gray; font-size: 18px; } sets both the color and the size of every paragraph."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that makes every main heading (h1) navy.",
+   "lang": "css",
+   "tokens": [
+    "h1",
+    "{",
+    "color",
+    ":",
+    "navy",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "=",
+    "#h1"
+   ],
+   "explain": "h1 { color: navy; } The selector h1 targets every main heading; color sets the color of its text."
   }
  ]
 }

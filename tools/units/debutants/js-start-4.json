@@ -229,6 +229,24 @@
     "src": "let temp = 15;\nif (temp > 25) {\n  console.log(\"Hot\");\n} else if (temp > 10) {\n  console.log(\"Mild\");\n} else {\n  console.log(\"Cold\");\n}"
    },
    "output": "Mild"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the start of a condition that checks that age is at least 18.",
+   "lang": "js",
+   "tokens": [
+    "if",
+    "(",
+    "age",
+    ">=",
+    "18",
+    ")"
+   ],
+   "extra": [
+    "=>",
+    "="
+   ],
+   "explain": "if (age >= 18) runs its block when age is 18 or more. >= means at least."
   }
  ]
 }

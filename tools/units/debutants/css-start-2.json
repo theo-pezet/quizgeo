@@ -233,6 +233,44 @@
     "lang": "css",
     "src": "p {\n  color: red;\n  color: green;\n}"
    }
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that centers the text of every h2 heading.",
+   "lang": "css",
+   "tokens": [
+    "h2",
+    "{",
+    "text-align",
+    ":",
+    "center",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "align",
+    "middle"
+   ],
+   "explain": "h2 { text-align: center; } text-align places the lines of text; center puts them in the middle."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that gives the body a light gray background (#eeeeee).",
+   "lang": "css",
+   "tokens": [
+    "body",
+    "{",
+    "background-color",
+    ":",
+    "#eeeeee",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "color",
+    "eeeeee"
+   ],
+   "explain": "body { background-color: #eeeeee; } A hex color starts with #, followed by six characters."
   }
  ]
 }

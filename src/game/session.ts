@@ -54,7 +54,7 @@ function weakestFirst(strength: (exercise: Exercise) => number): Picker {
 }
 
 /** Exercice écrit à la main (clés `:x:`, `:w:`, `:c:`), par opposition aux exercices générés depuis les cartes. */
-const HANDWRITTEN = /:(x|w|c):/;
+export const HANDWRITTEN = /:(x|w|c):/;
 
 /**
  * L'ordre de rédaction : les exercices écrits à la main d'abord (ils sont

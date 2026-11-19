@@ -220,6 +220,46 @@
     "This rule targets every paragraph of the page.",
     "This rule targets every paragraph of every page that uses the file."
    ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that sets the width of the element with id \"logo\" to 120px.",
+   "lang": "css",
+   "tokens": [
+    "#logo",
+    "{",
+    "width",
+    ":",
+    "120px",
+    ";",
+    "}"
+   ],
+   "extra": [
+    ".logo",
+    "120"
+   ],
+   "explain": "#logo { width: 120px; } A hash targets an id; the width needs its unit, px."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that colors both h1 and h2 headings navy.",
+   "lang": "css",
+   "tokens": [
+    "h1",
+    ",",
+    "h2",
+    "{",
+    "color",
+    ":",
+    "navy",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "+",
+    ".h2"
+   ],
+   "explain": "h1, h2 { color: navy; } A comma groups selectors so they share the same declarations."
   }
  ]
 }

@@ -1,5 +1,5 @@
 import { applyAnswerAction } from '../apply';
-import { PRETEST_SIZE, RELEARN_MAX, interleaveBy, pickPretest, shouldRelearn, sureAllowed, unitStarted } from '../learning';
+import { LEARN_MAX, PRETEST_SIZE, RELEARN_MAX, TYPED_FROM_TRAITS, interleaveBy, pickPretest, shouldPromptExplain, shouldRelearn, sureAllowed, unitStarted, weaveLearn } from '../learning';
 import { CONFIDENT_STEP, applyAnswer, compareReview, reviewQueue } from '../review';
 import { composeReviewSession } from '../session';
 import { emptyProgress, emptyQuestionProgress, type Exercise, type QuestionProgress } from '../types';
@@ -112,5 +112,29 @@ describe('« I’m sure »', () => {
     expect(applyAnswer({ ...missed, streak: 1 }, 'k', true, NOW, true, true).progress.streak).toBe(1);
     // Plafond respecté.
     expect(applyAnswer({ ...missed, streak: 4 }, 'k', true, NOW, false, true).progress.streak).toBe(5);
+  });
+});
+
+describe('fiches « New », réponse tapée, auto-explication (1.4)', () => {
+  it('intercale une fiche puis deux questions, puis le reste des questions', () => {
+    const woven = weaveLearn(['A', 'B'], [1, 2, 3, 4, 5]);
+    expect(woven).toEqual([{ learn: 'A' }, { question: 1 }, { question: 2 }, { learn: 'B' }, { question: 3 }, { question: 4 }, { question: 5 }]);
+    // Plus de fiches que de questions : les fiches restent, au plus LEARN_MAX.
+    const many = weaveLearn(['a', 'b', 'c', 'd', 'e', 'f', 'g'], [1]);
+    expect(many.filter((x) => 'learn' in x)).toHaveLength(LEARN_MAX);
+    expect(weaveLearn([], [1, 2])).toEqual([{ question: 1 }, { question: 2 }]);
+    expect(TYPED_FROM_TRAITS).toBe(1);
+  });
+
+  it('invite à s’expliquer une bonne réponse sur trois', () => {
+    expect([0, 1, 2, 3, 4, 5, 6].map(shouldPromptExplain)).toEqual([false, false, false, true, false, false, true]);
+  });
+
+  it('un rattrapage ne rapporte pas d’XP', () => {
+    const base = { question: qcm('u:a'), correct: true, mode: 'unit' as const, chrono: false, now: new Date(NOW), creditedThisSession: false };
+    expect(applyAnswerAction(emptyProgress(), base).xpGained).toBeGreaterThan(0);
+    const r = applyAnswerAction(emptyProgress(), { ...base, retry: true });
+    expect(r.xpGained).toBe(0);
+    expect(r.progress.questions['u:a'].correct).toBe(1);
   });
 });

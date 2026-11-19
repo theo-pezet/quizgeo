@@ -219,6 +219,24 @@
     "Code inside a function is just as visible.",
     "Copying is allowed, just much harder to maintain."
    ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the first line of a function named greet that takes a parameter name.",
+   "lang": "js",
+   "tokens": [
+    "function",
+    "greet",
+    "(",
+    "name",
+    ")",
+    "{"
+   ],
+   "extra": [
+    "def",
+    "return"
+   ],
+   "explain": "function greet(name) { starts the function: keyword, name, parameters in parentheses, then the opening brace."
   }
  ]
 }

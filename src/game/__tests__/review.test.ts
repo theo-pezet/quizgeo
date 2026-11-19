@@ -1,4 +1,4 @@
-import { applyAnswer, compareByLastSeen, reviewQueue, reviewQueueSize } from '../review';
+import { REVIEW_GAPS, applyAnswer, compareByLastSeen, isReviewDue, reviewQueue, reviewQueueSize } from '../review';
 import { emptyQuestionProgress, type QuestionProgress } from '../types';
 import { progressWith } from './fixtures';
 
@@ -161,5 +161,42 @@ describe('compareByLastSeen', () => {
   it('trie deux dates', () => {
     expect(compareByLastSeen(q('A', T1), q('B', T2))).toBeLessThan(0);
     expect(compareByLastSeen(q('A', T2), q('B', T1))).toBeGreaterThan(0);
+  });
+});
+
+describe('espacement de la file (1.4)', () => {
+  // 10 h heure locale : le jour local ne bascule pas, quel que soit le fuseau de la machine de test.
+  const at = (day: number) => new Date(2026, 10, day, 10).toISOString();
+
+  it('replanifie au lendemain après une erreur, à J+3 après une bonne réponse insuffisante', () => {
+    const miss = applyAnswer(undefined, 'k', false, at(14)).progress;
+    expect(miss.reviewDue).toBe('2026-11-15');
+    const once = applyAnswer(miss, 'k', true, at(15)).progress;
+    expect(once.inReview).toBe(true);
+    expect(once.reviewDue).toBe('2026-11-18');
+    // Déjà créditée dans la séance : la date ne bouge pas.
+    expect(applyAnswer(once, 'k', true, at(16), true).progress.reviewDue).toBe('2026-11-18');
+    // Créditée sans date (sauvegarde ancienne) : toujours pas de date.
+    expect(applyAnswer({ ...once, reviewDue: undefined }, 'k', true, at(16), true).progress.reviewDue).toBeUndefined();
+    // Sortie de la file : plus de date.
+    const out = applyAnswer(once, 'k', true, at(18)).progress;
+    expect(out.inReview).toBe(false);
+    expect(out.reviewDue).toBeUndefined();
+    expect(REVIEW_GAPS).toEqual([1, 3]);
+  });
+
+  it('ne propose que les questions arrivées à échéance', () => {
+    const p = progressWith();
+    p.questions = {
+      due: { ...emptyQuestionProgress('due'), inReview: true, lastSeenAt: at(1), reviewDue: '2026-11-15' },
+      later: { ...emptyQuestionProgress('later'), inReview: true, lastSeenAt: at(2), reviewDue: '2026-11-20' },
+      old: { ...emptyQuestionProgress('old'), inReview: true, lastSeenAt: at(3) },
+      out: { ...emptyQuestionProgress('out'), inReview: false, reviewDue: '2026-11-01' },
+    };
+    expect(reviewQueue(p, '2026-11-15').map((q) => q.key)).toEqual(['due', 'old']);
+    expect(reviewQueue(p).map((q) => q.key)).toEqual(['due', 'later', 'old']);
+    expect(reviewQueueSize(p, undefined, '2026-11-15')).toBe(2);
+    expect(reviewQueueSize(p, undefined, '2026-11-20')).toBe(3);
+    expect(isReviewDue(p.questions.out)).toBe(false);
   });
 });

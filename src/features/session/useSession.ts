@@ -9,7 +9,8 @@
 
 import { useCallback, useMemo, useRef, useState } from 'react';
 
-import { CATALOG } from '@/content';
+import { CATALOG, type Card } from '@/content';
+import { resolveUnitCards } from '@/content/generate';
 import { content } from '@/content/useContent';
 import { FEATURES } from '@/config/features';
 import {
@@ -21,7 +22,8 @@ import {
   applyStartLesson,
   applyTick,
   GEMS,
-  PATH_TRAITS,
+  HANDWRITTEN,
+  TYPED_FROM_TRAITS,
   questsReward,
   SKIP_TEST_MIN_SCORE,
   toDayKey,
@@ -32,10 +34,12 @@ import {
   effectiveStreak,
   reviewQueue,
   pickPretest,
+  shouldPromptExplain,
   shouldRelearn,
   shouldShowAd,
   sureAllowed,
   unitStarted,
+  weaveLearn,
   type Exercise,
   type Progress,
   type Quest,
@@ -50,12 +54,28 @@ export type SessionSpec =
   | { mode: 'review' }
   | { mode: 'free'; subjectId: string };
 
-export interface Step {
+export interface QuestionStep {
   exercise: Exercise;
   /** Rattrapage : l'exercice a déjà été raté dans cette session. */
   retry: boolean;
   /** Prétest : question posée AVANT la leçon, sans aucune conséquence (voir learning.ts). */
   pretest?: boolean;
+  learn?: undefined;
+}
+
+/** Fiche « New » : une notion et son exemple, à lire avant d'être interrogé dessus (voir learning.ts). */
+export interface LearnStep {
+  learn: Card;
+  exercise?: undefined;
+  retry: false;
+  pretest?: false;
+}
+
+export type Step = QuestionStep | LearnStep;
+
+/** Une question du parcours principal (ni fiche, ni prétest, ni rattrapage). */
+function isMain(step: Step): boolean {
+  return step.learn === undefined && step.pretest !== true && !step.retry;
 }
 
 export interface Feedback {
@@ -69,6 +89,8 @@ export interface Feedback {
   whyWrong?: string;
   /** La réponse donnée, en texte, quand l'exercice sait la dire (pour « Ask Claude »). */
   given?: string;
+  /** Auto-explication : l'explication reste cachée derrière « Why is it right? » (voir learning.ts). */
+  explainPrompt?: boolean;
 }
 
 export interface SessionState {
@@ -118,7 +140,7 @@ function compose(spec: SessionSpec, progress: Progress): Exercise[] {
     }
     case 'review':
       // Entrelacées par matière (voir learning.ts).
-      return composeReviewSession(reviewQueue(progress), EXERCISE_BY_KEY, undefined, (e) => SUBJECT_OF_UNIT.get(e.unitId) ?? e.unitId);
+      return composeReviewSession(reviewQueue(progress, toDayKey(new Date())), EXERCISE_BY_KEY, undefined, (e) => SUBJECT_OF_UNIT.get(e.unitId) ?? e.unitId);
     case 'free':
       return composeFreeSession(exercisesOfSubject(spec.subjectId), rng);
   }
@@ -129,25 +151,33 @@ function compose(spec: SessionSpec, progress: Progress): Exercise[] {
  * session : le résultat est mémorisé par l'appelant. Une file vide ne coûte
  * rien : on le sait AVANT de prélever.
  */
-function start(spec: SessionSpec): { steps: Step[]; started: boolean; empty: boolean; startProgress: Progress; hard: boolean; pretestCount: number } {
+function start(spec: SessionSpec): { steps: Step[]; started: boolean; empty: boolean; startProgress: Progress; hard: boolean; pretestCount: number; mainCount: number } {
   const store = useProgress.getState();
   const now = new Date();
   const exercises = compose(spec, applyTick(store.progress, now));
-  if (exercises.length === 0) return { steps: [], started: true, empty: true, startProgress: store.progress, hard: false, pretestCount: 0 };
+  if (exercises.length === 0) return { steps: [], started: true, empty: true, startProgress: store.progress, hard: false, pretestCount: 0, mainCount: 0 };
   const started = applyStartLesson(store.progress, spec.mode, now);
-  if (started === null) return { steps: [], started: false, empty: false, startProgress: store.progress, hard: false, pretestCount: 0 };
+  if (started === null) return { steps: [], started: false, empty: false, startProgress: store.progress, hard: false, pretestCount: 0, mainCount: 0 };
   store.setProgress(started);
-  // Mode maîtrise : dès 3 couronnes, les QCM typables se tapent.
-  const hard = spec.mode === 'unit' && unitTraits(started, spec.unitId, content().EXERCISES, toDayKey(now)) >= PATH_TRAITS;
+  // Rappel plutôt que reconnaissance : dès la 1re couronne, les QCM typables se tapent.
+  const hard = spec.mode === 'unit' && unitTraits(started, spec.unitId, content().EXERCISES, toDayKey(now)) >= TYPED_FROM_TRAITS;
+  const lesson = spec.mode === 'unit' && !spec.skipTest;
+  const firstTime = lesson && !unitStarted(started, spec.unitId);
   // Prétest : une unité jamais commencée s'ouvre sur deux questions de la leçon.
-  const pretest = spec.mode === 'unit' && !spec.skipTest ? pickPretest(exercises, unitStarted(started, spec.unitId)) : [];
+  const pretest = lesson ? pickPretest(exercises, !firstTime) : [];
+  // Première leçon : les fiches « New » de l'unité s'intercalent entre les questions.
+  const { UNIT_BY_ID, CARDS } = content();
+  const unit = spec.mode === 'unit' ? UNIT_BY_ID.get(spec.unitId) : undefined;
+  const cards = firstTime && unit ? resolveUnitCards(unit, CARDS) : [];
+  const main: Step[] = weaveLearn(cards, exercises).map((x) => ('learn' in x ? { learn: x.learn, retry: false } : { exercise: x.question, retry: false }));
   return {
-    steps: [...pretest.map((exercise) => ({ exercise, retry: false, pretest: true })), ...exercises.map((exercise) => ({ exercise, retry: false }))],
+    steps: [...pretest.map((exercise) => ({ exercise, retry: false, pretest: true })), ...main],
     started: true,
     empty: false,
     startProgress: started,
     hard,
     pretestCount: pretest.length,
+    mainCount: exercises.length,
   };
 }
 
@@ -164,6 +194,8 @@ export function useSession(spec: SessionSpec) {
   // Réponses déjà dévoilées dans la séance (erreur, ou question du prétest) :
   // « I'm sure » n'y est plus proposé.
   const revealed = useRef(new Set<string>());
+  // Bonnes réponses éligibles à l'auto-explication (voir shouldPromptExplain).
+  const explainable = useRef(0);
   // Quêtes et objectif du jour bouclés PAR une réponse : annoncés à la fin.
   const answerQuests = useRef<Quest[]>([]);
   const answerGoal = useRef(false);
@@ -176,7 +208,7 @@ export function useSession(spec: SessionSpec) {
     feedback: null,
     previousFeedback: null,
     correctCount: 0,
-    mainCount: initialSteps.length - init.pretestCount,
+    mainCount: init.mainCount,
     pretestCount: init.pretestCount,
     combo: 0,
     bestCombo: 0,
@@ -192,16 +224,17 @@ export function useSession(spec: SessionSpec) {
 
   // « I'm sure » est-il proposé sur l'exercice courant ? Lu au rendu : la
   // progression enregistrée ne change qu'au moment de la réponse.
-  const storedQuestion = useProgress((s) => (current ? s.progress.questions[current.exercise.key] : undefined));
+  const storedQuestion = useProgress((s) => (current?.exercise ? s.progress.questions[current.exercise.key] : undefined));
   const canBeSure =
     current !== undefined &&
+    current.learn === undefined &&
     !current.pretest &&
     sureAllowed({ question: storedQuestion, revealedThisSession: revealed.current.has(current.exercise.key), retry: current.retry, today: toDayKey(new Date()) });
 
   /** L'exercice courant vient d'être répondu. */
   const answer = useCallback(
     (correct: boolean, whyWrong?: string, confident = false, given?: string) => {
-      if (!current || state.phase !== 'question') return;
+      if (!current || current.learn !== undefined || state.phase !== 'question') return;
       // Prétest : aucune conséquence, seulement le verdict et l'explication.
       if (current.pretest) {
         revealed.current.add(current.exercise.key);
@@ -220,6 +253,7 @@ export function useSession(spec: SessionSpec) {
         now,
         creditedThisSession: credited.current.has(key),
         skipTest: spec.mode === 'unit' && spec.skipTest === true,
+        retry: current.retry,
         // « Sûr » ne compte que là où il est proposé (voir sureAllowed).
         confident: confident && canBeSure,
       });
@@ -249,10 +283,17 @@ export function useSession(spec: SessionSpec) {
         retryQueue.current = retryQueue.current.filter((e) => e.key !== key);
       }
 
+      // Auto-explication : une bonne réponse éligible sur SELF_EXPLAIN_EVERY.
+      let explainPrompt = false;
+      if (correct && !current.retry && current.exercise.explain && HANDWRITTEN.test(key)) {
+        explainable.current += 1;
+        explainPrompt = shouldPromptExplain(explainable.current);
+      }
+
       setState((s) => ({
         ...s,
         phase: 'feedback',
-        feedback: { correct, explain: current.exercise.explain, whyWrong: correct ? undefined : whyWrong, confidentMiss: !correct && confident && canBeSure, given },
+        feedback: { correct, explain: current.exercise.explain, whyWrong: correct ? undefined : whyWrong, confidentMiss: !correct && confident && canBeSure, given, explainPrompt },
         correctCount: s.correctCount + (correct && !current.retry ? 1 : 0),
         combo: correct ? s.combo + 1 : 0,
         bestCombo: correct ? Math.max(s.bestCombo, s.combo + 1) : s.bestCombo,
@@ -316,14 +357,15 @@ export function useSession(spec: SessionSpec) {
     [mode, unitId, spec],
   );
 
-  /** « Continuer » après le retour sur la réponse. */
+  /** « Continuer » après le retour sur la réponse, ou après une fiche « New ». */
   const next = useCallback(() => {
     setState((s) => {
-      if (s.phase !== 'feedback') return s;
+      const onLearn = s.phase === 'question' && s.steps[s.index]?.learn !== undefined;
+      if (s.phase !== 'feedback' && !onLearn) return s;
       const nextIndex = s.index + 1;
       if (nextIndex < s.steps.length) return { ...s, index: nextIndex, phase: 'question', feedback: null, previousFeedback: s.feedback };
       if (retryQueue.current.length > 0) {
-        const retries = retryQueue.current.map((exercise) => ({ exercise, retry: true }));
+        const retries: Step[] = retryQueue.current.map((exercise) => ({ exercise, retry: true }));
         retryQueue.current = [];
         return { ...s, steps: [...s.steps, ...retries], index: nextIndex, phase: 'question', feedback: null, previousFeedback: s.feedback };
       }
@@ -334,20 +376,25 @@ export function useSession(spec: SessionSpec) {
   // La barre suit le parcours principal (réponse comprise dès le verdict) et
   // ne recule jamais : le rattrapage la laisse pleine, avec son propre compteur.
   // Le prétest précède le parcours : la barre reste à zéro pendant ce temps.
+  // Les fiches « New » ne comptent pas.
   const pre = state.pretestCount;
-  const inPretest = state.index < pre;
-  const answered = Math.max(0, state.index - pre + (state.phase === 'feedback' ? 1 : 0));
+  const inPretest = current?.pretest === true;
+  const inRetry = current?.retry === true;
+  const before = state.steps.slice(0, state.index);
+  const mainBefore = before.filter(isMain).length;
+  const answered = mainBefore + (state.phase === 'feedback' && current !== undefined && isMain(current) ? 1 : 0);
   const ratio = state.mainCount === 0 ? 1 : inPretest ? 0 : Math.min(1, answered / state.mainCount);
-  const inRetry = state.index >= pre + state.mainCount;
+  const retryTotal = state.steps.filter((st) => st.retry).length;
   const counter = inPretest
     ? { index: state.index + 1, total: pre }
     : inRetry
-      ? { index: state.index - pre - state.mainCount + 1, total: state.steps.length - pre - state.mainCount }
-      : { index: Math.min(state.index - pre + 1, state.mainCount), total: state.mainCount };
+      ? { index: before.filter((st) => st.retry).length + 1, total: retryTotal }
+      : { index: Math.min(mainBefore + 1, state.mainCount), total: state.mainCount };
 
   // La question précédente et son verdict, en lecture seule.
-  const previous: { step: Step; feedback: Feedback } | null =
-    state.index > 0 && state.previousFeedback && state.steps[state.index - 1] ? { step: state.steps[state.index - 1], feedback: state.previousFeedback } : null;
+  const prevStep = state.steps[state.index - 1];
+  const previous: { step: QuestionStep; feedback: Feedback } | null =
+    state.index > 0 && state.previousFeedback && prevStep?.exercise !== undefined ? { step: prevStep, feedback: state.previousFeedback } : null;
 
   return { state, current, previous, answer, next, ratio, counter, inRetry, inPretest, unitId, hard: init.hard, canBeSure };
 }

@@ -121,6 +121,12 @@ export interface AnswerAction {
   skipTest?: boolean;
   /** L'apprenant s'est dit « sûr » avant de valider (effet d'hypercorrection, voir learning.ts). */
   confident?: boolean;
+  /**
+   * Rattrapage : l'exercice a déjà été raté dans la séance. La réponse compte
+   * pour la progression mais ne rapporte pas d'XP : avant la 1.4, rater puis
+   * rattraper rapportait plus que réussir du premier coup.
+   */
+  retry?: boolean;
 }
 
 export interface AnswerResult {
@@ -151,9 +157,9 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
     : applyAnswer(before, action.question.key, action.correct, nowIso, action.creditedThisSession, action.confident === true);
 
   // Le boost double les XP de réponse, jamais les bonus de session.
-  const xpGained =
-    xpForAnswer({ mode: action.mode, correct: action.correct, chrono: action.chrono }) *
-    xpMultiplier(ticked.boost, action.now);
+  const xpGained = action.retry
+    ? 0
+    : xpForAnswer({ mode: action.mode, correct: action.correct, chrono: action.chrono }) * xpMultiplier(ticked.boost, action.now);
 
   // Le Blitz (chrono) coûte ses 5 points au lancement, et rien de plus : en
   // 60 s de réponses rapides, les erreurs videraient toute la jauge.

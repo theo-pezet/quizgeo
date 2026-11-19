@@ -235,6 +235,24 @@
    ],
    "answer": 0,
    "explain": "price holds the text \"10\" because of the quotes, so + joins: \"10\" + 20 gives \"1020\". Write let price = 10; without quotes."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints \"Hi \" joined with the variable name.",
+   "lang": "js",
+   "tokens": [
+    "console.log",
+    "(",
+    "\"Hi \"",
+    "+",
+    "name",
+    ")"
+   ],
+   "extra": [
+    "\"name\"",
+    "-"
+   ],
+   "explain": "console.log(\"Hi \" + name) joins the text and the value of name."
   }
  ]
 }

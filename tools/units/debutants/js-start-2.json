@@ -223,6 +223,23 @@
     "src": "let price = 10;\nlet total = price * 2;\nconsole.log(total);"
    },
    "output": "20"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that creates a constant named vat holding 0.2.",
+   "lang": "js",
+   "tokens": [
+    "const",
+    "vat",
+    "=",
+    "0.2",
+    ";"
+   ],
+   "extra": [
+    "let",
+    "=="
+   ],
+   "explain": "const vat = 0.2; const is for a value that never changes."
   }
  ]
 }
