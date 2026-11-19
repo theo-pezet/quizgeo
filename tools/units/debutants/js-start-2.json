@@ -1,0 +1,245 @@
+{
+ "unit": {
+  "id": "js-start-2",
+  "subjectId": "js",
+  "topic": "js-start",
+  "world": "js-w1",
+  "title": "JavaScript: variables",
+  "description": "let and const, giving a name to a value, changing it, naming rules, undefined"
+ },
+ "cards": [
+  {
+   "slug": "let",
+   "level": "debutant",
+   "term": "let",
+   "definition": "Declares a variable whose value can be changed later in the program.",
+   "example": "let score = 0; then score = 10; works."
+  },
+  {
+   "slug": "const",
+   "level": "debutant",
+   "term": "const",
+   "definition": "Declares a variable that keeps its first value: giving it a new one causes an error.",
+   "example": "const vat = 0.2; then vat = 0.1; fails."
+  },
+  {
+   "slug": "assignment",
+   "level": "debutant",
+   "term": "Assignment operator (=)",
+   "definition": "Stores the value on its right into the variable on its left; it does not compare anything.",
+   "example": "price = 20 puts 20 into price."
+  },
+  {
+   "slug": "camelcase",
+   "level": "debutant",
+   "term": "camelCase",
+   "definition": "The usual way to name variables: words joined together, each new word starting with a capital letter.",
+   "example": "totalPrice, firstName, isLoggedIn."
+  },
+  {
+   "slug": "undefined",
+   "level": "debutant",
+   "term": "undefined",
+   "definition": "The value of a variable that has been declared but has not received any value yet.",
+   "example": "let city; console.log(city); prints undefined."
+  },
+  {
+   "slug": "reserved-word",
+   "level": "debutant",
+   "term": "Reserved word",
+   "definition": "A word that JavaScript keeps for itself (let, const, if, function) and that cannot be used to name a variable.",
+   "example": "let if = 3; is an error."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is a variable?",
+   "choices": [
+    "A named box that stores a value",
+    "A line that prints some text",
+    "A file that holds the CSS",
+    "A mistake in the code"
+   ],
+   "explain": "A variable gives a name to a value so you can reuse it: let age = 30; stores 30 under the name age.",
+   "whyWrong": [
+    "Printing is the job of console.log.",
+    "CSS files are not variables.",
+    "A mistake in the code is a bug."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Paris",
+    "city",
+    "\"city\"",
+    "undefined"
+   ],
+   "explain": "console.log(city) prints the value stored in city, not the word city.",
+   "whyWrong": [
+    "Without quotes, city is the name of the variable: its value is printed.",
+    "console.log prints the value, without quotes.",
+    "city received a value on the first line."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let city = \"Paris\";\nconsole.log(city);"
+   },
+   "output": "Paris"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "8",
+    "5",
+    "13",
+    "58"
+   ],
+   "explain": "let allows a new value: score = 8 replaces 5. The value stored last is the one printed.",
+   "whyWrong": [
+    "The second line replaces 5 with 8.",
+    "= replaces the value; it does not add.",
+    "Numbers are not glued together like text."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let score = 5;\nscore = 8;\nconsole.log(score);"
+   },
+   "output": "8"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What happens when this code runs?",
+   "choices": [
+    "An error: a const cannot get a new value",
+    "vat becomes 0.1",
+    "vat becomes 0.3",
+    "Nothing: the second line is skipped"
+   ],
+   "explain": "Use const for values that never change, let for values that will. Giving a const a new value throws a TypeError.",
+   "whyWrong": [
+    "const means constant: the value is locked.",
+    "= replaces a value, it never adds, and here it is not even allowed.",
+    "JavaScript does not silently skip it: it stops with an error."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "const vat = 0.2;\nvat = 0.1;"
+   }
+  },
+  {
+   "kind": "vf",
+   "prompt": "let total = 0; creates a variable named total that holds the number 0.",
+   "isTrue": true,
+   "explain": "let declares the variable, total is its name, and = stores the value 0 in it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which name follows the usual JavaScript style (camelCase)?",
+   "choices": [
+    "totalPrice",
+    "total price",
+    "Total-Price",
+    "total_Price!"
+   ],
+   "explain": "camelCase: words joined together, each new word with a capital letter. A name cannot contain spaces or hyphens.",
+   "whyWrong": [
+    "A name cannot contain a space.",
+    "A hyphen is read as a minus sign.",
+    "Special characters such as ! are not allowed in names."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "undefined",
+    "name",
+    "0",
+    "An error"
+   ],
+   "explain": "A variable declared without a value holds undefined until you give it one.",
+   "whyWrong": [
+    "console.log prints the value, not the name.",
+    "An empty variable does not hold 0.",
+    "Declaring a variable without a value is allowed."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let name;\nconsole.log(name);"
+   },
+   "output": "undefined"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that creates a variable age holding 30, a value that may change later.",
+   "lang": "js",
+   "tokens": [
+    "let",
+    "age",
+    "=",
+    "30",
+    ";"
+   ],
+   "extra": [
+    "const",
+    "=="
+   ],
+   "explain": "let age = 30; uses let because the value may change. const would lock it."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This code stops with an error. Which line is wrong?",
+   "lang": "js",
+   "lines": [
+    "const price = 10;",
+    "let qty = 3;",
+    "price = 12;",
+    "console.log(price * qty);"
+   ],
+   "answer": 2,
+   "explain": "price was declared with const, so it cannot receive a new value. Declare it with let if it must change."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "20",
+    "price * 2",
+    "10",
+    "102"
+   ],
+   "explain": "A variable can be used in a calculation: price * 2 uses the value of price, 10.",
+   "whyWrong": [
+    "Without quotes, the expression is computed.",
+    "price is 10, then it is multiplied by 2.",
+    "* multiplies; it does not glue digits together."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let price = 10;\nlet total = price * 2;\nconsole.log(total);"
+   },
+   "output": "20"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that creates a constant named vat holding 0.2.",
+   "lang": "js",
+   "tokens": [
+    "const",
+    "vat",
+    "=",
+    "0.2",
+    ";"
+   ],
+   "extra": [
+    "let",
+    "=="
+   ],
+   "explain": "const vat = 0.2; const is for a value that never changes."
+  }
+ ]
+}

@@ -1,0 +1,255 @@
+{
+ "unit": {
+  "id": "js-start-5",
+  "subjectId": "js",
+  "topic": "js-start",
+  "world": "js-w1",
+  "title": "JavaScript: lists and loops",
+  "description": "Arrays, positions counted from 0, length, push, repeating code with for and for...of"
+ },
+ "cards": [
+  {
+   "slug": "array",
+   "level": "debutant",
+   "term": "Array",
+   "definition": "An ordered list of values between square brackets, separated by commas.",
+   "example": "let colors = [\"red\", \"green\", \"blue\"];"
+  },
+  {
+   "slug": "index",
+   "level": "debutant",
+   "term": "Index",
+   "definition": "The position of an item in a list, counted from 0: the first item is at position 0.",
+   "example": "colors[0] is \"red\", colors[2] is \"blue\"."
+  },
+  {
+   "slug": "push",
+   "level": "debutant",
+   "term": "push()",
+   "definition": "Adds one or more items at the end of a list, and changes that list.",
+   "example": "colors.push(\"pink\") makes the list one item longer."
+  },
+  {
+   "slug": "for-loop",
+   "level": "debutant",
+   "term": "for loop",
+   "definition": "Repeats a block a set number of times, with a counter that changes at each turn.",
+   "example": "for (let i = 0; i < 3; i++) runs 3 times, with i at 0, 1, then 2."
+  },
+  {
+   "slug": "for-of",
+   "level": "debutant",
+   "term": "for...of loop",
+   "definition": "Goes through the items of a list one by one and gives each item in turn to the block.",
+   "example": "for (const c of colors) { console.log(c); } prints each color."
+  },
+  {
+   "slug": "increment",
+   "level": "debutant",
+   "term": "Increment (++)",
+   "definition": "Adds 1 to a variable that holds a number: i++ is short for i = i + 1.",
+   "example": "let lives = 2; lives++; leaves 3."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "apple",
+    "pear",
+    "kiwi",
+    "undefined"
+   ],
+   "explain": "Positions (indexes) start at 0: fruits[0] is the first item, fruits[1] the second one.",
+   "whyWrong": [
+    "pear is at position 1: counting starts at 0.",
+    "kiwi is at position 2, the last one.",
+    "Position 0 exists: it is the first item."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let fruits = [\"apple\", \"pear\", \"kiwi\"];\nconsole.log(fruits[0]);"
+   },
+   "output": "apple"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "3",
+    "2",
+    "4",
+    "kiwi"
+   ],
+   "explain": ".length gives how many items the list holds. The last index is always length minus 1.",
+   "whyWrong": [
+    "length counts the items from 1; only indexes start at 0.",
+    "There are three items, no more.",
+    "length gives a number, not the last item."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let fruits = [\"apple\", \"pear\", \"kiwi\"];\nconsole.log(fruits.length);"
+   },
+   "output": "3"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the list contain after these lines?",
+   "choices": [
+    "\"shoes\", then \"hat\"",
+    "\"hat\", then \"shoes\"",
+    "Only \"hat\"",
+    "Only \"shoes\""
+   ],
+   "explain": "push() adds an item at the END of the list, and changes the list itself.",
+   "whyWrong": [
+    "push adds at the end of the list, not at the start.",
+    "push adds an item; it does not replace the list.",
+    "push changes the list: \"hat\" is now in it."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let cart = [\"shoes\"];\ncart.push(\"hat\");"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many times is Hi printed?",
+   "choices": [
+    "3",
+    "2",
+    "4",
+    "Once"
+   ],
+   "explain": "i starts at 0, the loop runs while i < 3, and i++ adds 1 after each turn: 0, 1, 2. Three turns.",
+   "whyWrong": [
+    "i takes the values 0, 1 and 2: that makes three turns.",
+    "The loop stops when i reaches 3, before a fourth turn.",
+    "The block runs at every turn of the loop, not once."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "for (let i = 0; i < 3; i++) {\n  console.log(\"Hi\");\n}"
+   },
+   "output": "Hi\nHi\nHi"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "1, 2 and 3, one per line",
+    "0, 1 and 2, one per line",
+    "1 and 2, one per line",
+    "Only 3, once"
+   ],
+   "explain": "The counter starts at 1 and the loop runs while i <= 3, so i takes 1, 2, then 3.",
+   "whyWrong": [
+    "i starts at 1 here, not at 0.",
+    "<= includes 3: the loop also runs when i is 3.",
+    "console.log is inside the loop: it runs at every turn."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "for (let i = 1; i <= 3; i++) {\n  console.log(i);\n}"
+   },
+   "output": "1\n2\n3"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "red, then blue",
+    "red only",
+    "0, then 1",
+    "colors"
+   ],
+   "explain": "for...of hands each item of the list to the block in turn: first \"red\", then \"blue\".",
+   "whyWrong": [
+    "The loop goes through every item, not just the first.",
+    "for...of gives the items themselves, not their positions.",
+    "c takes each value of the list in turn."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let colors = [\"red\", \"blue\"];\nfor (const c of colors) {\n  console.log(c);\n}"
+   },
+   "output": "red\nblue"
+  },
+  {
+   "kind": "vf",
+   "prompt": "In [\"a\", \"b\", \"c\"], the item \"c\" is at index 3.",
+   "isTrue": false,
+   "explain": "Counting starts at 0: \"a\" is at 0, \"b\" at 1 and \"c\" at 2."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that adds \"milk\" at the end of the list shopping.",
+   "lang": "js",
+   "tokens": [
+    "shopping",
+    ".push",
+    "(",
+    "\"milk\"",
+    ")"
+   ],
+   "extra": [
+    ".add",
+    "milk"
+   ],
+   "explain": "shopping.push(\"milk\") adds the item at the end of the list."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This loop should print the three names, but it skips Ana and ends with undefined. Which line is wrong?",
+   "lang": "js",
+   "lines": [
+    "let names = [\"Ana\", \"Luis\", \"Mia\"];",
+    "for (let i = 1; i <= names.length; i++) {",
+    "  console.log(names[i]);",
+    "}"
+   ],
+   "answer": 1,
+   "explain": "Indexes go from 0 to length minus 1. Start at 0 and stop before length: for (let i = 0; i < names.length; i++)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "30",
+    "15",
+    "51015",
+    "0"
+   ],
+   "explain": "The loop adds each price to total: 0 + 5, then + 10, then + 15. A classic way to add up a list.",
+   "whyWrong": [
+    "15 is only the last price; the loop adds all three.",
+    "The prices are numbers, so + adds them.",
+    "total changes at every turn of the loop."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "let total = 0;\nfor (const price of [5, 10, 15]) {\n  total = total + price;\n}\nconsole.log(total);"
+   },
+   "output": "30"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints the first item of the list colors.",
+   "lang": "js",
+   "tokens": [
+    "console.log",
+    "(",
+    "colors",
+    "[0]",
+    ")"
+   ],
+   "extra": [
+    "[1]",
+    ".first"
+   ],
+   "explain": "console.log(colors[0]) prints the first item: positions start at 0."
+  }
+ ]
+}

@@ -64,12 +64,22 @@ const BASE_WORLDS: World[] = [
   w('html', 2, '🔎', '#DB2777', 'Pro HTML', 'Semantics, SEO, tracking', ['web-html-2', 'web-mkt-1']),
 
   // ------------------------------------------------------------------- CSS
-  w('css', 1, '🎨', '#0369A1', 'The basics', 'Selectors, box model, flexbox', ['web-3']),
+  // Les unités « premiers pas » (1.4, units.extra.json) ouvrent le chemin, avant web-3.
+  w('css', 1, '🎨', '#0369A1', 'The basics', 'First rules, colors, classes, boxes, flexbox', ['css-start-1', 'css-start-2', 'css-start-3', 'css-start-4', 'web-3']),
   w('css', 2, '📐', '#7C3AED', 'Layout and style', 'Responsive, colors, animations', ['web-css-2', 'web-css-3']),
   w('css', 3, '🧪', '#16A34A', 'Pro CSS', 'Typography, transforms, organization', []),
 
   // ------------------------------------------------------------ JavaScript
-  w('js', 1, '⚡', '#B45309', 'The basics', 'Variables, DOM, fetch', ['web-4', 'web-js-2']),
+  w('js', 1, '⚡', '#B45309', 'The basics', 'First lines, variables, conditions, loops, functions, DOM', [
+    'js-start-1',
+    'js-start-2',
+    'js-start-3',
+    'js-start-4',
+    'js-start-5',
+    'js-start-6',
+    'web-4',
+    'web-js-2',
+  ]),
   w('js', 2, '🛠️', '#0F766E', 'Tools', 'Git, frameworks, SDKs', ['web-5']),
   w('js', 3, '🚀', '#16A34A', 'In production', 'Performance, architecture, case studies', ['web-6', 'web-7', 'web-case-1']),
 ];

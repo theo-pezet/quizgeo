@@ -67,7 +67,7 @@ export default function PathScreen() {
   const worlds = worldsOf(subject.id).filter((w) => w.unitIds.some((id) => UNIT_BY_ID.has(id)));
   const current = currentUnit(subject.id, traits, CATALOG);
   const level = levelProgress(progress.xp);
-  const queue = reviewQueueSize(progress, EXERCISE_BY_KEY);
+  const queue = reviewQueueSize(progress, EXERCISE_BY_KEY, today);
   const flame = isActiveToday(progress.streak, today);
   const goalRatio = dailyRatio(progress.daily, today);
   const goalMet = isGoalMet(progress.daily, today);

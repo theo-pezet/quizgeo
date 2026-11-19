@@ -92,6 +92,33 @@ describe('composeUnitSession', () => {
     expect([...counts.values()]).toEqual([2, 2, 2, 2, 2]);
   });
 
+  it('première leçon d’une unité : l’ordre de rédaction, exercices écrits à la main d’abord', () => {
+    const gen = makeUnit('py-1', 3).map((q, i) => ({ ...q, key: `py-1:def:${i}` }));
+    const hand = makeUnit('py-1', 12).map((q, i) => ({ ...q, key: `py-1:x:${i + 1}` }));
+    const out = composeUnitSession([...gen, ...hand], mulberry32(4), SESSION_LENGTH, { firstTime: true });
+    expect(out.map((q) => q.key)).toEqual(hand.slice(0, SESSION_LENGTH).map((q) => q.key));
+    // Petite unité : tout dans l’ordre, puis on cycle sans répétition immédiate.
+    const small = composeUnitSession(unit4, mulberry32(4), SESSION_LENGTH, { firstTime: true });
+    expect(small).toHaveLength(SESSION_LENGTH);
+    expect(small.slice(0, 4).map((q) => q.key)).toEqual(unit4.map((q) => q.key));
+    expect(hasNoImmediateRepeat(small)).toBe(true);
+  });
+
+  it('leçons suivantes : les exercices les moins sus d’abord, ce qui est su attend', () => {
+    const big = makeUnit('py-1', 18);
+    const known = new Set(big.slice(0, 8).map((q) => q.key));
+    for (let seed = 0; seed < 30; seed += 1) {
+      const out = composeUnitSession(big, mulberry32(seed), SESSION_LENGTH, { strength: (q) => (known.has(q.key) ? 2 : 0) });
+      expect(out).toHaveLength(SESSION_LENGTH);
+      expect(out.filter((q) => known.has(q.key))).toEqual([]);
+      expect(new Set(out.map((q) => q.key)).size).toBe(SESSION_LENGTH);
+    }
+    // Petite unité : rien n’est écarté, on cycle comme avant.
+    const small = composeUnitSession(unit4, mulberry32(1), SESSION_LENGTH, { strength: () => 0 });
+    expect(small).toHaveLength(SESSION_LENGTH);
+    expect(hasNoImmediateRepeat(small)).toBe(true);
+  });
+
   it('rend une liste vide pour une unité sans question', () => {
     expect(composeUnitSession([], mulberry32(1))).toEqual([]);
   });

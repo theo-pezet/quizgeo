@@ -9,7 +9,7 @@ import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: ComposeExercise;
-  onAnswer: (correct: boolean, whyWrong?: string) => void;
+  onAnswer: (correct: boolean, whyWrong?: string, given?: string) => void;
   locked: boolean;
 }
 
@@ -38,7 +38,7 @@ export function ComposeView({ exercise, onAnswer, locked }: Props) {
       : {
           label: t('common.check'),
           disabled: !complete,
-          onPress: () => complete && onAnswer(isCorrect, isCorrect ? undefined : t('session.compose.yours', { line: joined(built) })),
+          onPress: () => complete && onAnswer(isCorrect, isCorrect ? undefined : t('session.compose.yours', { line: joined(built) }), joined(built)),
         },
   );
 

@@ -3,6 +3,9 @@
 "css-x-echelle-typographique",
 "web-x-cls-et-css"
 ],
+"css-x-auto-margins": [
+"css-x-margin"
+],
 "css-x-cascade-layers": [
 "web-x-specificite"
 ],
@@ -16,14 +19,29 @@
 "css-x-has-is-where": [
 "web-x-selecteur"
 ],
+"css-x-inline-style": [
+"css-x-style-tag"
+],
 "css-x-letter-spacing-text-transform": [
 "css-x-transform-translate-scale-rotate"
+],
+"css-x-link-tag": [
+"css-x-stylesheet"
+],
+"css-x-margin": [
+"css-x-auto-margins"
 ],
 "css-x-margin-padding-gap": [
 "web-x-box-model"
 ],
 "css-x-sass-vs-custom-properties": [
 "web-x-variables-css"
+],
+"css-x-style-tag": [
+"css-x-inline-style"
+],
+"css-x-stylesheet": [
+"css-x-link-tag"
 ],
 "css-x-transform-translate-scale-rotate": [
 "css-x-echelle-typographique",

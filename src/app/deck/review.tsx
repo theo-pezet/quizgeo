@@ -5,12 +5,15 @@ import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
 import { CATALOG } from '@/content';
 import { faceAvailability, faceMaterial } from '@/content/faces';
 import { useContent } from '@/content/useContent';
+import { useActiveSubjects } from '@/content/useSubjects';
 import { applyCardReview, applySessionEnd, composeDeckSession, interleaveBy, pickCardFace, previewIntervals, shouldRelearn, toDayKey, type CardFace, type Grade } from '@/game';
 import { useT, type Key, type T } from '@/i18n';
+import { looksLikeCode } from '@/lib/code';
 import { confirm } from '@/lib/confirm';
 import { haptics } from '@/lib/haptics';
 import { useProgress } from '@/store/progress';
 import { Button, Card, FadeUp, Icon, ProgressBar, Screen, Text, radius, shade, space, tint, useColors } from '@/ui';
+import { ListenButton } from '@/ui/ListenButton';
 
 function intervalLabel(t: T, days: number): string {
   if (days === 0) return t('deck.interval.today');
@@ -22,14 +25,16 @@ function intervalLabel(t: T, days: number): string {
 export default function DeckReviewRoute() {
   const colors = useColors();
   const t = useT();
-  const { CARDS, CARD_BY_ID, EXERCISES, SUBJECT_BY_ID, cardIdsOf } = useContent();
+  const { CARD_BY_ID, EXERCISES, SUBJECT_BY_ID, cardIdsOf } = useContent();
+  const active = useActiveSubjects();
   const { subjectId } = useLocalSearchParams<{ subjectId?: string }>();
   const startProgress = useRef(useProgress.getState().progress);
   const today = toDayKey(new Date());
 
   // Toutes matières : les cartes sont entrelacées par matière (voir src/game/learning.ts).
   const [queue, setQueue] = useState<string[]>(() => {
-    const ids = subjectId ? cardIdsOf(subjectId) : CARDS.map((c) => c.id);
+    // Toutes matières : celles que l'apprenant a choisies.
+    const ids = subjectId ? cardIdsOf(subjectId) : active.flatMap((s) => cardIdsOf(s.id));
     const picked = composeDeckSession(startProgress.current.cards, ids, today, Math.random);
     return subjectId ? picked : interleaveBy(picked, (id) => CARD_BY_ID.get(id)?.subject ?? '');
   });
@@ -244,6 +249,11 @@ export default function DeckReviewRoute() {
               {face === 'term' ? t('deck.review.tap') : t('deck.face.think')}
             </Text>
           )}
+          {(face === 'term' || flipped) && (
+            <View style={styles.listen}>
+              <ListenButton key={`${cardId}-${flipped ? 'b' : 'f'}`} text={flipped ? `${card.term}. ${card.definition}` : card.term} color={accent} center />
+            </View>
+          )}
         </View>
 
         {flipped && (
@@ -353,11 +363,6 @@ function gradeTones(colors: ReturnType<typeof useColors>): Record<Grade, string>
   return { again: colors.danger, hard: '#D97706', good: '#2563EB', easy: colors.success };
 }
 
-/** Un exemple qui ressemble à du code s'affiche en police à chasse fixe. */
-function looksLikeCode(text: string): boolean {
-  return /=>|[{}]|\w\(.*\)|<\/?[a-z]+[ >]|^\s*(def|import|from|const|let|SELECT)\b|\b[a-z_]+\.[a-z_]+\(/i.test(text);
-}
-
 const styles = StyleSheet.create({
   top: { flexDirection: 'row', alignItems: 'center', gap: space.md },
   bar: { flex: 1 },
@@ -367,6 +372,7 @@ const styles = StyleSheet.create({
   pillText: { fontWeight: '800', fontSize: 12, letterSpacing: 0.3 },
   face: { flexGrow: 1, justifyContent: 'center', gap: space.sm, paddingVertical: space.md },
   term: { textAlign: 'center' },
+  listen: { alignItems: 'center' },
   duel: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: space.sm },
   back: { gap: space.md },
   rule: { height: 2, borderRadius: 1 },

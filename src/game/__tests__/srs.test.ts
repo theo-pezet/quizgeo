@@ -1,5 +1,7 @@
 import {
   DEFAULT_DECK_SESSION,
+  LISTEN_LIMIT,
+  pickListenCards,
   EASE_MIN,
   EASE_START,
   MAX_INTERVAL,
@@ -230,5 +232,29 @@ describe('intervalles de révision : boutons distincts et retard', () => {
     expect(p.easy).toBe(MAX_INTERVAL);
     const noDue = { ...reviewing(4), due: null };
     expect(reviewCard(noDue, 'c', 'good', TODAY, NOW).intervalDays).toBe(10);
+  });
+});
+
+describe('pickListenCards', () => {
+  const st = (id: string, phase: 'new' | 'learning' | 'review', due: string | null) => ({ id, phase, ease: 2500, intervalDays: 1, due, reps: 1, lapses: 0, lastReviewedAt: null });
+
+  it('prend les cartes commencées, dues d’abord, puis par échéance', () => {
+    const cards = {
+      a: st('a', 'review', '2026-12-01'),
+      b: st('b', 'review', '2026-11-10'),
+      c: st('c', 'learning', '2026-11-12'),
+      d: st('d', 'new', null),
+      e: st('e', 'review', '2026-11-30'),
+      f: st('f', 'review', null),
+    };
+    expect(pickListenCards(cards, ['a', 'b', 'c', 'd', 'e', 'f', 'z'], '2026-11-15')).toEqual(['f', 'b', 'c', 'e', 'a']);
+    expect(pickListenCards(cards, ['a', 'b', 'c', 'e'], '2026-11-15', 2)).toEqual(['b', 'c']);
+    expect(pickListenCards(cards, ['a', 'e'], '2026-11-15')).toEqual(['e', 'a']);
+    expect(pickListenCards({ x: st('x', 'review', '2026-11-01'), y: st('y', 'review', '2026-11-01') }, ['x', 'y'], '2026-11-15')).toEqual(['x', 'y']);
+  });
+
+  it('sans carte commencée : les premières de la liste', () => {
+    expect(pickListenCards({}, ['p', 'q', 'r'], '2026-11-15', 2)).toEqual(['p', 'q']);
+    expect(LISTEN_LIMIT).toBe(20);
   });
 });

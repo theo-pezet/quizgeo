@@ -66,7 +66,7 @@ export default function ProfileScreen() {
       if (next) setProgress(next);
     });
   const crowns = Object.values(traits).reduce<number>((a, tr) => a + tr, 0);
-  const queue = reviewQueueSize(progress, EXERCISE_BY_KEY);
+  const queue = reviewQueueSize(progress, EXERCISE_BY_KEY, today);
   const deck = deckStats(progress.cards, CARDS.map((c) => c.id), today);
   const badgesEarned = Object.keys(progress.badges).length;
   const streakActive = isActiveToday(progress.streak, today);

@@ -10,7 +10,7 @@ import { useSessionAction } from './SessionAction';
 
 interface Props {
   exercise: QcmExercise;
-  onAnswer: (correct: boolean, whyWrong?: string) => void;
+  onAnswer: (correct: boolean, whyWrong?: string, given?: string) => void;
   locked: boolean;
   /** Libellé du bouton (par défaut « Vérifier »). Le test de niveau met « Suivant ». */
   checkLabel?: string;
@@ -35,7 +35,7 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
             if (selected === null) return;
             const ok = selected === presented.answer;
             const original = presented.order[selected];
-            onAnswer(ok, ok ? undefined : exercise.whyWrong?.[original] ?? undefined);
+            onAnswer(ok, ok ? undefined : exercise.whyWrong?.[original] ?? undefined, presented.choices[selected]);
           },
         },
   );

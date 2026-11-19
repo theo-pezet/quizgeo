@@ -1,0 +1,242 @@
+{
+ "unit": {
+  "id": "js-start-6",
+  "subjectId": "js",
+  "topic": "js-start",
+  "world": "js-w1",
+  "title": "JavaScript: functions",
+  "description": "Writing a function, calling it, parameters and arguments, return"
+ },
+ "cards": [
+  {
+   "slug": "function-declaration",
+   "level": "debutant",
+   "term": "Function declaration",
+   "definition": "Creates a reusable block of code with the keyword function, a name, parentheses and braces.",
+   "example": "function greet() { console.log(\"Hi\"); }"
+  },
+  {
+   "slug": "function-call",
+   "level": "debutant",
+   "term": "Function call",
+   "definition": "Runs a function: its name followed by parentheses. Without the parentheses, nothing runs.",
+   "example": "greet(); runs the code inside greet."
+  },
+  {
+   "slug": "parameter",
+   "level": "debutant",
+   "term": "Parameter",
+   "definition": "A name between the parentheses of a function that receives a value each time the function is called.",
+   "example": "In function double(n), n is filled in at each call."
+  },
+  {
+   "slug": "argument",
+   "level": "debutant",
+   "term": "Argument",
+   "definition": "The actual value you pass to a function when you call it, between the parentheses.",
+   "example": "In double(4), 4 is passed in."
+  },
+  {
+   "slug": "return",
+   "level": "debutant",
+   "term": "return",
+   "definition": "Sends a value back to the code that called the function, and stops the function at that point.",
+   "example": "function double(n) { return n * 2; } then double(4) gives 8."
+  },
+  {
+   "slug": "dry",
+   "level": "debutant",
+   "term": "DRY (Don't Repeat Yourself)",
+   "definition": "The habit of putting repeated code in one function and calling it, instead of copying it around.",
+   "example": "One formatPrice() used on every page instead of five copies."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is a function?",
+   "choices": [
+    "A named block of code you can run again and again",
+    "A list of values between square brackets",
+    "A value that is either true or false",
+    "A note that the computer ignores"
+   ],
+   "explain": "A function packs instructions under a name. You write them once and run them as often as you need.",
+   "whyWrong": [
+    "A list of values between brackets is an array.",
+    "A true or false value is a boolean.",
+    "A note ignored by the computer is a comment."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this code print?",
+   "choices": [
+    "Hi! twice",
+    "Hi! once",
+    "Nothing",
+    "greet twice"
+   ],
+   "explain": "Writing a function does not run it. Each call, greet(), runs its code once.",
+   "whyWrong": [
+    "The function is called two times, so it runs two times.",
+    "A function runs only when called, and here it is called twice.",
+    "The function prints its text, not its name."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "function greet() {\n  console.log(\"Hi!\");\n}\n\ngreet();\ngreet();"
+   },
+   "output": "Hi!\nHi!"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this code print?",
+   "choices": [
+    "Nothing, because it is never called",
+    "Hello, because it runs by itself",
+    "hello, the name of the function",
+    "An error, as nothing is called"
+   ],
+   "explain": "Writing a function only defines it. To run it, call it with its name and parentheses: hello();",
+   "whyWrong": [
+    "A function never runs by itself: it must be called.",
+    "Even when called, it would print its text, not its name.",
+    "Defining a function without calling it is allowed."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "function hello() {\n  console.log(\"Hello\");\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "8",
+    "4",
+    "n * 2",
+    "double"
+   ],
+   "explain": "The argument 4 goes into the parameter n. return sends back 4 * 2, and console.log prints it.",
+   "whyWrong": [
+    "4 is the value passed in; the function sends it back doubled.",
+    "The expression is computed with n equal to 4.",
+    "console.log prints the value sent back, not the name."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "function double(n) {\n  return n * 2;\n}\n\nconsole.log(double(4));"
+   },
+   "output": "8"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In function greet(name), what is name?",
+   "choices": [
+    "A parameter: it receives a value at each call",
+    "The value sent back by the function",
+    "The text shown on the screen",
+    "A reserved word of JavaScript"
+   ],
+   "explain": "Parameters are listed between the parentheses. greet(\"Ana\") fills name with \"Ana\".",
+   "whyWrong": [
+    "The value sent back comes from return.",
+    "name holds whatever is passed in; it is not shown by itself.",
+    "name is an ordinary name chosen by the developer."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Hi Mia",
+    "Hi name",
+    "greet(\"Mia\")",
+    "Mia"
+   ],
+   "explain": "\"Mia\" is the argument: it fills the parameter name, and return sends back \"Hi Mia\".",
+   "whyWrong": [
+    "name is replaced by the value passed in, \"Mia\".",
+    "The call runs the function; its code is not printed.",
+    "The function adds \"Hi \" in front of the name."
+   ],
+   "code": {
+    "lang": "js",
+    "src": "function greet(name) {\n  return \"Hi \" + name;\n}\n\nconsole.log(greet(\"Mia\"));"
+   },
+   "output": "Hi Mia"
+  },
+  {
+   "kind": "vf",
+   "prompt": "Code written after return, inside the same function, still runs.",
+   "isTrue": false,
+   "explain": "return sends the value back and ends the function at once. The lines below it never run."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the line that calls the function add with the numbers 2 and 3.",
+   "lang": "js",
+   "tokens": [
+    "add",
+    "(",
+    "2",
+    ",",
+    "3",
+    ")"
+   ],
+   "extra": [
+    "function",
+    "+"
+   ],
+   "explain": "Call a function with its name, then the arguments in parentheses, separated by commas: add(2, 3)."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The console shows undefined instead of 10. Which line is wrong?",
+   "lang": "js",
+   "lines": [
+    "function total(a, b) {",
+    "  a + b;",
+    "}",
+    "console.log(total(4, 6));"
+   ],
+   "answer": 1,
+   "explain": "The sum is computed but never sent back. Without return, a function gives undefined. Write return a + b;"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why put code in a function instead of copying it in three places?",
+   "choices": [
+    "To fix it once and reuse it everywhere",
+    "To make the images of the page load faster",
+    "To hide the code from the visitors",
+    "Because copying lines is forbidden"
+   ],
+   "explain": "Do not repeat yourself: one function, many calls. A fix inside the function fixes every place that uses it.",
+   "whyWrong": [
+    "Functions organize code; they do not speed up images.",
+    "Code inside a function is just as visible.",
+    "Copying is allowed, just much harder to maintain."
+   ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the first line of a function named greet that takes a parameter name.",
+   "lang": "js",
+   "tokens": [
+    "function",
+    "greet",
+    "(",
+    "name",
+    ")",
+    "{"
+   ],
+   "extra": [
+    "def",
+    "return"
+   ],
+   "explain": "function greet(name) { starts the function: keyword, name, parameters in parentheses, then the opening brace."
+  }
+ ]
+}

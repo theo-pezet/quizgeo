@@ -1,0 +1,265 @@
+{
+ "unit": {
+  "id": "css-start-3",
+  "subjectId": "css",
+  "topic": "css-start",
+  "world": "css-w1",
+  "title": "CSS: classes, ids and links",
+  "description": "Linking a stylesheet, class and id selectors, inline styles, grouping selectors, which rule wins"
+ },
+ "cards": [
+  {
+   "slug": "class-selector",
+   "level": "debutant",
+   "term": "Class selector",
+   "definition": "A dot followed by a name, like .price: it targets every element whose class attribute holds that name.",
+   "example": ".price { color: green; } styles all the elements with class=\"price\"."
+  },
+  {
+   "slug": "id-selector",
+   "level": "debutant",
+   "term": "Id selector",
+   "definition": "A hash followed by a name, like #header: it targets the one element whose id attribute matches.",
+   "example": "#logo { width: 120px; } sizes the single element with id=\"logo\"."
+  },
+  {
+   "slug": "link-tag",
+   "level": "debutant",
+   "term": "Stylesheet <link>",
+   "definition": "The HTML line, placed in <head>, that loads an external CSS file with rel=\"stylesheet\" and href.",
+   "example": "<link rel=\"stylesheet\" href=\"style.css\"> applies style.css to the page."
+  },
+  {
+   "slug": "style-tag",
+   "level": "debutant",
+   "term": "<style> tag",
+   "definition": "An HTML element, placed in <head>, whose CSS applies to that one page only.",
+   "example": "Handy for a quick test; a shared .css file is better for a whole site."
+  },
+  {
+   "slug": "inline-style",
+   "level": "debutant",
+   "term": "Inline style",
+   "definition": "CSS written directly inside an HTML tag with the style attribute; it affects that one element only.",
+   "example": "<p style=\"color: red;\">Sale</p> colors just this paragraph."
+  },
+  {
+   "slug": "selector-list",
+   "level": "debutant",
+   "term": "Selector list",
+   "definition": "Several selectors separated by commas that share the same declarations.",
+   "example": "h1, h2, h3 { font-family: Georgia; } styles three heading levels at once."
+  },
+  {
+   "slug": "source-order",
+   "level": "debutant",
+   "term": "Source order",
+   "definition": "When two rules with the same selector set the same property, the one written later in the CSS wins.",
+   "example": "p { color: red; } then p { color: blue; }: paragraphs end up blue."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "How do you target the elements that have class=\"price\"?",
+   "choices": [
+    ".price",
+    "#price",
+    "price",
+    "class.price"
+   ],
+   "explain": "A dot means class: .price targets every element whose class attribute contains price.",
+   "whyWrong": [
+    "# targets an id, not a class.",
+    "Without the dot, the browser looks for a <price> tag, which does not exist.",
+    "This is not valid CSS: write just .price."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which selector targets the element with id=\"menu\"?",
+   "choices": [
+    "#menu",
+    ".menu",
+    "menu",
+    "id:menu"
+   ],
+   "explain": "A hash means id: #menu targets the one element with id=\"menu\". An id must be unique on the page.",
+   "whyWrong": [
+    ".menu targets a class, not an id.",
+    "menu alone would target a <menu> tag.",
+    "id:menu is not valid CSS."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "The same class can be used on many elements of a page, but an id should be used only once.",
+   "isTrue": true,
+   "explain": "Classes are made to be reused: every product card can have class=\"card\". An id names one unique element."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which paragraph turns red?",
+   "choices": [
+    "Only \"Sale\"",
+    "Only \"New\"",
+    "Both paragraphs",
+    "Neither paragraph"
+   ],
+   "explain": ".promo only targets the elements whose class is promo. The second paragraph has no class, so it keeps the default color.",
+   "whyWrong": [
+    "\"New\" has no class, so .promo does not touch it.",
+    ".promo only targets elements with class=\"promo\".",
+    "\"Sale\" has class=\"promo\", so the rule applies to it."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<style>\n  .promo { color: red; }\n</style>\n<p class=\"promo\">Sale</p>\n<p>New</p>"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which line, placed in <head>, loads the file style.css?",
+   "choices": [
+    "<link rel=\"stylesheet\" href=\"style.css\">",
+    "<style src=\"style.css\"></style>",
+    "<css file=\"style.css\"></css>",
+    "<script src=\"style.css\"></script>"
+   ],
+   "explain": "The <link> tag, with rel=\"stylesheet\" and an href giving the file name, loads an external stylesheet.",
+   "whyWrong": [
+    "The <style> tag holds CSS directly; it has no src attribute.",
+    "HTML has no <css> tag.",
+    "<script> loads JavaScript, not CSS."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many headings turn navy?",
+   "choices": [
+    "Two: the h1 and the h2",
+    "One: only the h1",
+    "Three: every heading",
+    "None: the comma breaks it"
+   ],
+   "explain": "A comma groups selectors: h1, h2 { } applies the same declarations to both. h3 is not in the list.",
+   "whyWrong": [
+    "The comma adds h2 to the list, so both are targeted.",
+    "h3 is not in the list, so it keeps its default color.",
+    "The comma is valid: it groups selectors."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<style>\n  h1, h2 { color: navy; }\n</style>\n<h1>Shop</h1>\n<h2>Shoes</h2>\n<h3>Socks</h3>"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What color are the paragraphs?",
+   "choices": [
+    "Blue",
+    "Red",
+    "Purple",
+    "Black"
+   ],
+   "explain": "Same selector, same property: the rule written later wins. This is called source order.",
+   "whyWrong": [
+    "The red rule comes first, so the blue one, written later, replaces it.",
+    "CSS never mixes two colors.",
+    "Both rules set a color, so the default black is replaced."
+   ],
+   "code": {
+    "lang": "css",
+    "src": "p { color: red; }\np { color: blue; }"
+   }
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that gives every element with the class \"card\" a white background.",
+   "lang": "css",
+   "tokens": [
+    ".card",
+    "{",
+    "background-color",
+    ":",
+    "white",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "#card",
+    "color"
+   ],
+   "explain": ".card targets the class, background-color fills the box, white is the value."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The rule has no effect on <h1 class=\"title\">. Which line is wrong?",
+   "lang": "css",
+   "lines": [
+    "title {",
+    "  font-size: 40px;",
+    "  color: navy;",
+    "}"
+   ],
+   "answer": 0,
+   "explain": "A class selector needs a dot: .title. Without it, the browser looks for a <title> element, which is not the heading."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which way of adding CSS styles ONLY this one paragraph?",
+   "choices": [
+    "<p style=\"color: red;\">Hi</p>",
+    "<link rel=\"stylesheet\" href=\"red.css\">",
+    "<style> p { color: red; } </style>",
+    "p { color: red; } in style.css"
+   ],
+   "explain": "The style attribute (inline style) applies to that one element only. Handy for a test, but hard to maintain: prefer classes.",
+   "whyWrong": [
+    "A linked stylesheet can style every page that loads it.",
+    "This rule targets every paragraph of the page.",
+    "This rule targets every paragraph of every page that uses the file."
+   ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that sets the width of the element with id \"logo\" to 120px.",
+   "lang": "css",
+   "tokens": [
+    "#logo",
+    "{",
+    "width",
+    ":",
+    "120px",
+    ";",
+    "}"
+   ],
+   "extra": [
+    ".logo",
+    "120"
+   ],
+   "explain": "#logo { width: 120px; } A hash targets an id; the width needs its unit, px."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that colors both h1 and h2 headings navy.",
+   "lang": "css",
+   "tokens": [
+    "h1",
+    ",",
+    "h2",
+    "{",
+    "color",
+    ":",
+    "navy",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "+",
+    ".h2"
+   ],
+   "explain": "h1, h2 { color: navy; } A comma groups selectors so they share the same declarations."
+  }
+ ]
+}

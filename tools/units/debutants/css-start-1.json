@@ -1,0 +1,242 @@
+{
+ "unit": {
+  "id": "css-start-1",
+  "subjectId": "css",
+  "topic": "css-start",
+  "world": "css-w1",
+  "title": "CSS: your first rule",
+  "description": "What CSS does, and how a rule is written: selector, braces, property, colon, value, semicolon"
+ },
+ "cards": [
+  {
+   "slug": "css-rule",
+   "level": "debutant",
+   "term": "CSS rule",
+   "definition": "The basic building block of a stylesheet: a selector, then braces that hold one or more declarations.",
+   "example": "h1 { color: navy; } turns every main heading navy."
+  },
+  {
+   "slug": "css-property",
+   "level": "debutant",
+   "term": "CSS property",
+   "definition": "The name of the visual feature you want to change, written before the colon: color, font-size, background-color.",
+   "example": "In color: red; the part before the colon names what changes, here the text color."
+  },
+  {
+   "slug": "css-value",
+   "level": "debutant",
+   "term": "CSS value",
+   "definition": "What the feature is set to, written after the colon and closed by a semicolon: red, 18px, center.",
+   "example": "In font-size: 18px; the text size becomes 18px."
+  },
+  {
+   "slug": "declaration",
+   "level": "debutant",
+   "term": "Declaration",
+   "definition": "One property and its value written as a pair, like color: red; Several of them can sit inside the same braces.",
+   "example": "p { color: gray; font-size: 16px; } holds two of them."
+  },
+  {
+   "slug": "type-selector",
+   "level": "debutant",
+   "term": "Type selector",
+   "definition": "Targets every HTML element with a given tag name: p styles all paragraphs, h1 all main headings.",
+   "example": "li { color: green; } colors every list item on the page."
+  },
+  {
+   "slug": "stylesheet",
+   "level": "debutant",
+   "term": "Stylesheet",
+   "definition": "A file, often called style.css, that holds all the CSS rules of a site, kept apart from the HTML.",
+   "example": "Change one line in it and every page that loads it updates at once."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is CSS used for?",
+   "choices": [
+    "Styling a page: colors, sizes, spacing, layout",
+    "Writing the text and the headings of a page",
+    "Making the page react when you click",
+    "Storing the data of the site on a server"
+   ],
+   "explain": "HTML holds the content and its structure, CSS gives it its look, JavaScript gives it behavior.",
+   "whyWrong": [
+    "Writing the content is the job of HTML.",
+    "Reacting to clicks is the job of JavaScript.",
+    "Data lives on the server side, in a database, not in CSS."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "CSS can turn a heading blue without changing a single word of the HTML.",
+   "isTrue": true,
+   "explain": "CSS only describes how things look. The words stay in the HTML; the colors, sizes and spacing come from the CSS."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "This rule makes every paragraph red. Which part is the selector?",
+   "choices": [
+    "p",
+    "color",
+    "red",
+    "{ }"
+   ],
+   "explain": "The selector comes first and says WHICH elements the rule targets. Here, p means every paragraph of the page.",
+   "whyWrong": [
+    "color is the property: the feature that changes.",
+    "red is the value: what the property is set to.",
+    "The braces only wrap the declarations of the rule."
+   ],
+   "code": {
+    "lang": "css",
+    "src": "p {\n  color: red;\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In this rule, what is color?",
+   "choices": [
+    "The property: what you change",
+    "The selector: what you target",
+    "The value: what you set it to",
+    "A comment for other developers"
+   ],
+   "explain": "Inside the braces, each line reads property: value; The property (color) names the feature, the value (blue) says how it looks.",
+   "whyWrong": [
+    "The selector is h1, written before the opening brace.",
+    "The value is blue, written after the colon.",
+    "Comments are written between /* and */."
+   ],
+   "code": {
+    "lang": "css",
+    "src": "h1 {\n  color: blue;\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which character separates a property from its value?",
+   "choices": [
+    ": (colon)",
+    "; (semicolon)",
+    "= (equals)",
+    ", (comma)"
+   ],
+   "explain": "A declaration is written property: value; with a colon in the middle and a semicolon at the end.",
+   "whyWrong": [
+    "The semicolon closes the declaration, at the very end.",
+    "CSS never uses = between a property and its value.",
+    "Commas separate items of a list, such as several selectors."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which character closes each declaration?",
+   "choices": [
+    "; (semicolon)",
+    ": (colon)",
+    ". (period)",
+    "} (closing brace)"
+   ],
+   "explain": "Each declaration ends with a semicolon. The closing brace ends the whole rule, after the last declaration.",
+   "whyWrong": [
+    "The colon sits between the property and its value.",
+    "A period starts a class selector, like .price.",
+    "The brace closes the whole rule, not each declaration."
+   ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that makes every paragraph (p) gray.",
+   "lang": "css",
+   "tokens": [
+    "p",
+    "{",
+    "color",
+    ":",
+    "gray",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "=",
+    "text"
+   ],
+   "explain": "selector { property: value; } Here p is the selector, color the property and gray the value."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this rule do?",
+   "choices": [
+    "It colors the text of every h2 heading green",
+    "It colors only the first h2 heading green",
+    "It gives every h2 heading a green background",
+    "It colors all the text of the page green"
+   ],
+   "explain": "A type selector (h2) targets every element with that tag. color changes the color of the text.",
+   "whyWrong": [
+    "A type selector targets ALL the elements with that tag, not just the first.",
+    "That would be background-color; color is the text color.",
+    "Only h2 elements are targeted, nothing else."
+   ],
+   "code": {
+    "lang": "css",
+    "src": "h2 {\n  color: green;\n}"
+   }
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The heading stays black instead of turning red. Which line has the mistake?",
+   "lang": "css",
+   "lines": [
+    "h1 {",
+    "  color = red;",
+    "}"
+   ],
+   "answer": 1,
+   "explain": "Between a property and its value you need a colon: color: red; With =, the browser does not understand the line and skips it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where is the CSS of a whole website usually written?",
+   "choices": [
+    "In a separate .css file linked from each page",
+    "Inside the text of each paragraph",
+    "In the title of the page",
+    "Inside the image files"
+   ],
+   "explain": "A stylesheet (for example style.css) holds the rules. Every page that links to it gets the same look.",
+   "whyWrong": [
+    "The text is content: styles are not written inside it.",
+    "The title is only the text shown in the browser tab.",
+    "Image files hold pixels, not CSS rules."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "Inside one pair of braces, you can write several declarations, one after another.",
+   "isTrue": true,
+   "explain": "p { color: gray; font-size: 18px; } sets both the color and the size of every paragraph."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a rule that makes every main heading (h1) navy.",
+   "lang": "css",
+   "tokens": [
+    "h1",
+    "{",
+    "color",
+    ":",
+    "navy",
+    ";",
+    "}"
+   ],
+   "extra": [
+    "=",
+    "#h1"
+   ],
+   "explain": "h1 { color: navy; } The selector h1 targets every main heading; color sets the color of its text."
+  }
+ ]
+}
