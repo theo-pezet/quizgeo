@@ -108,7 +108,13 @@ function AskRow({ feedback, exercise, unitTitle, tint }: { feedback: Feedback; e
   const prompt = () => buildAskPrompt({ exercise, unitTitle, correct: feedback.correct, given: feedback.given, whyWrong: feedback.whyWrong, locale: deviceLocale() });
 
   const openClaude = () => {
-    void Linking.openURL(claudeUrl(prompt())).catch(() => undefined);
+    const url = claudeUrl(prompt());
+    // Web : un nouvel onglet, sinon on quitte la leçon en cours.
+    if (Platform.OS === 'web') {
+      (globalThis as { open?: (url: string, target: string, features: string) => unknown }).open?.(url, '_blank', 'noopener');
+      return;
+    }
+    void Linking.openURL(url).catch(() => undefined);
   };
   const share = async () => {
     const text = prompt();
@@ -120,8 +126,11 @@ function AskRow({ feedback, exercise, unitTitle, tint }: { feedback: Feedback; e
     if (nav?.share) {
       await nav.share({ text }).catch(() => undefined);
     } else if (nav?.clipboard) {
-      await nav.clipboard.writeText(text).catch(() => undefined);
-      setCopied(true);
+      const ok = await nav.clipboard.writeText(text).then(
+        () => true,
+        () => false,
+      );
+      setCopied(ok);
     }
   };
 
