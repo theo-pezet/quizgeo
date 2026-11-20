@@ -715,5 +715,17 @@
  [
   "css-x-auto-margins",
   "css-x-margin"
+ ],
+ [
+  "html-x-open-close",
+  "html-x-html-element"
+ ],
+ [
+  "html-x-html-tag",
+  "html-x-html-element"
+ ],
+ [
+  "html-x-html-tag",
+  "html-x-open-close"
  ]
 ]

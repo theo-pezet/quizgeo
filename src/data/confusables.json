@@ -91,6 +91,14 @@
 "web-x-attribut-alt",
 "web-x-attributs-data"
 ],
+"html-x-html-element": [
+"html-x-html-tag",
+"html-x-open-close"
+],
+"html-x-html-tag": [
+"html-x-html-element",
+"html-x-open-close"
+],
 "html-x-image-decorative-alt-vide": [
 "web-x-attribut-alt"
 ],
@@ -120,6 +128,10 @@
 ],
 "html-x-native-validation": [
 "web-x-formulaire"
+],
+"html-x-open-close": [
+"html-x-html-element",
+"html-x-html-tag"
 ],
 "html-x-srcset-sizes-formats": [
 "html-x-balise-picture",

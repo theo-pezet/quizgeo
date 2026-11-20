@@ -1,0 +1,227 @@
+{
+ "unit": {
+  "id": "html-start-2",
+  "subjectId": "html",
+  "topic": "html-start",
+  "world": "html-w1",
+  "title": "HTML: links, images and lists",
+  "description": "Attributes, links with href, images with src and alt, empty elements, bullet and numbered lists"
+ },
+ "cards": [
+  {
+   "slug": "attribute",
+   "level": "debutant",
+   "term": "HTML attribute",
+   "definition": "Extra information written inside an opening tag as name=\"value\", like href or src.",
+   "example": "In <a href=\"shop.html\">, href is followed by the address to open."
+  },
+  {
+   "slug": "link-a",
+   "level": "debutant",
+   "term": "Link <a> and href",
+   "definition": "The a element makes clickable text; its href gives the address to open.",
+   "example": "<a href=\"contact.html\">Contact</a>"
+  },
+  {
+   "slug": "img",
+   "level": "debutant",
+   "term": "Image <img> and src",
+   "definition": "Displays a picture; src gives the path of the image file to load.",
+   "example": "<img src=\"logo.png\" alt=\"Shop logo\">"
+  },
+  {
+   "slug": "void",
+   "level": "debutant",
+   "term": "Empty element",
+   "definition": "An element with no content and no closing tag, such as <img> or <br>.",
+   "example": "<br> moves the text to the next line; </br> is never needed."
+  },
+  {
+   "slug": "li",
+   "level": "debutant",
+   "term": "List item <li>",
+   "definition": "One entry of a list; it always sits inside a <ul> (bullets) or an <ol> (numbers).",
+   "example": "<ul><li>Shoes</li><li>Socks</li></ul>"
+  },
+  {
+   "slug": "relative-path",
+   "level": "debutant",
+   "term": "Relative path",
+   "definition": "A file address given from the current page, without a domain: about.html, images/logo.png.",
+   "example": "href=\"about.html\" opens about.html from the same folder."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which tag creates a link that people can click?",
+   "choices": [
+    "<a>",
+    "<link>",
+    "<href>",
+    "<url>"
+   ],
+   "explain": "The a element (for anchor) creates a link; its href attribute says where it goes.",
+   "whyWrong": [
+    "<link> goes in <head> to load a file such as a stylesheet; it is not clickable.",
+    "href is an attribute, not a tag.",
+    "HTML has no <url> tag."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In this link, which part is the address that opens?",
+   "choices": [
+    "shop.html",
+    "Visit our shop",
+    "href",
+    "a"
+   ],
+   "explain": "The value of href is the address. The text between the tags is what people see and click.",
+   "whyWrong": [
+    "This is the visible text of the link.",
+    "href is the name of the attribute; its value comes after =.",
+    "a is the name of the tag."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<a href=\"shop.html\">Visit our shop</a>"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the alt attribute of an image hold?",
+   "choices": [
+    "A text that describes the image",
+    "The size of the image",
+    "The path of the image file",
+    "The caption shown under it"
+   ],
+   "explain": "alt describes the image for blind users (read aloud by screen readers) and is shown if the image fails to load.",
+   "whyWrong": [
+    "The size is set with width and height, or with CSS.",
+    "The path of the file goes in src.",
+    "alt is not displayed under the image; a caption needs its own element."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which line displays the picture logo.png correctly?",
+   "choices": [
+    "<img src=\"logo.png\" alt=\"Logo\">",
+    "<img href=\"logo.png\" alt=\"Logo\">",
+    "<image src=\"logo.png\">",
+    "<img>logo.png</img>"
+   ],
+   "explain": "An image uses src for the file and alt for its description. <img> has no closing tag.",
+   "whyWrong": [
+    "href is for links; images use src.",
+    "The tag is img, not image.",
+    "<img> is empty: the path goes in src, not between tags."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "<img> needs a closing tag </img>.",
+   "isTrue": false,
+   "explain": "<img> is an empty element: it has no content and no closing tag. Same for <br>."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this list look like in the browser?",
+   "choices": [
+    "Three lines with bullets",
+    "Three numbered lines",
+    "One line of text",
+    "Three headings"
+   ],
+   "explain": "ul (unordered list) shows bullets; each li is one item. With ol, the items would be numbered.",
+   "whyWrong": [
+    "Numbers come from <ol>, not <ul>.",
+    "Each <li> is shown on its own line.",
+    "li items are list entries, not headings."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<ul>\n  <li>Shoes</li>\n  <li>Socks</li>\n  <li>Hats</li>\n</ul>"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You want a numbered list of steps. Which tag wraps the items?",
+   "choices": [
+    "<ol>",
+    "<ul>",
+    "<li>",
+    "<list>"
+   ],
+   "explain": "ol (ordered list) numbers its items: 1, 2, 3. ul shows bullets instead.",
+   "whyWrong": [
+    "<ul> shows bullets, not numbers.",
+    "<li> is one item; it needs a list around it.",
+    "HTML has no <list> tag."
+   ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a link to contact.html with the text Contact.",
+   "lang": "html",
+   "tokens": [
+    "<a",
+    "href=\"contact.html\"",
+    ">",
+    "Contact",
+    "</a>"
+   ],
+   "extra": [
+    "src=\"contact.html\"",
+    "</link>"
+   ],
+   "explain": "<a href=\"contact.html\">Contact</a>: the address in href, the visible text between the tags."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "Clicking the link does nothing. Which line is wrong?",
+   "lang": "html",
+   "lines": [
+    "<p>Our offers:</p>",
+    "<a src=\"offers.html\">See the offers</a>"
+   ],
+   "answer": 1,
+   "explain": "A link takes its address from href, not src: <a href=\"offers.html\">. src is for images."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The page index.html and the file about.html are in the same folder. What goes in href?",
+   "choices": [
+    "about.html",
+    "C:/about.html",
+    "href=about",
+    "www.about.html"
+   ],
+   "explain": "A relative path is given from the current page. Same folder: just the file name.",
+   "whyWrong": [
+    "A path from the hard disk only works on your own computer.",
+    "href=about is not a file name.",
+    "www.about.html is not a real address."
+   ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a bullet list with one item: Shoes.",
+   "lang": "html",
+   "tokens": [
+    "<ul>",
+    "<li>",
+    "Shoes",
+    "</li>",
+    "</ul>"
+   ],
+   "extra": [
+    "<ol>",
+    "<p>"
+   ],
+   "explain": "<ul><li>Shoes</li></ul>: the list wraps its items, each item sits in a li."
+  }
+ ]
+}

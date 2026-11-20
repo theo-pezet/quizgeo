@@ -1,0 +1,248 @@
+{
+ "unit": {
+  "id": "py-start-2",
+  "subjectId": "python",
+  "topic": "py-start",
+  "world": "python-w1",
+  "title": "Python: variables and types",
+  "description": "Giving a name to a value, changing it, naming rules, text and numbers, joining text"
+ },
+ "cards": [
+  {
+   "slug": "assign-py",
+   "level": "debutant",
+   "term": "Assignment (=)",
+   "definition": "Stores the value on its right in the variable named on its left; it does not compare anything.",
+   "example": "price = 20 puts 20 into price."
+  },
+  {
+   "slug": "snake-case",
+   "level": "debutant",
+   "term": "snake_case",
+   "definition": "The usual way to name variables in Python: small letters, words joined by underscores.",
+   "example": "total_price, first_name, is_open."
+  },
+  {
+   "slug": "reassign",
+   "level": "debutant",
+   "term": "Reassignment",
+   "definition": "Giving an existing variable a new value; the old value is replaced.",
+   "example": "score = 5 then score = 8: score now holds 8."
+  },
+  {
+   "slug": "concat-py",
+   "level": "debutant",
+   "term": "Joining text (+)",
+   "definition": "With two strings, the plus sign glues them end to end.",
+   "example": "\"Hello \" + \"Ana\" gives \"Hello Ana\"."
+  },
+  {
+   "slug": "repeat-str",
+   "level": "debutant",
+   "term": "Repeating text (*)",
+   "definition": "A string times a whole number repeats the text that many times.",
+   "example": "\"ha\" * 3 gives \"hahaha\"."
+  },
+  {
+   "slug": "type-mix",
+   "level": "debutant",
+   "term": "Mixing text and numbers",
+   "definition": "Python refuses to add a string and a number with +: the number must be turned into text first.",
+   "example": "\"Age: \" + str(30) works; \"Age: \" + 30 fails."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Paris",
+    "city",
+    "\"city\"",
+    "An error"
+   ],
+   "explain": "print(city) prints the value stored in the variable city, not the word city.",
+   "whyWrong": [
+    "Without quotes, city is the name of the variable: its value is printed.",
+    "print shows the value, without quotes.",
+    "city received a value on the first line."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "city = \"Paris\"\nprint(city)"
+   },
+   "output": "Paris"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "8",
+    "5",
+    "13",
+    "58"
+   ],
+   "explain": "score = 8 replaces the old value 5. The value stored last is the one printed.",
+   "whyWrong": [
+    "The second line replaces 5 with 8.",
+    "= replaces a value; it does not add.",
+    "Numbers are not glued together like text."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "score = 5\nscore = 8\nprint(score)"
+   },
+   "output": "8"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which name follows the usual Python style?",
+   "choices": [
+    "total_price",
+    "total price",
+    "Total-Price",
+    "2total"
+   ],
+   "explain": "Python names use small letters and underscores (snake_case). No spaces, no hyphens, and no digit at the start.",
+   "whyWrong": [
+    "A name cannot contain a space.",
+    "A hyphen is read as a minus sign.",
+    "A name cannot start with a digit."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Hello Ana",
+    "HelloAna",
+    "Hello + Ana",
+    "An error"
+   ],
+   "explain": "With two strings, + joins them. The space inside \"Hello \" is kept.",
+   "whyWrong": [
+    "The space is inside the first text, so it is kept.",
+    "The + is applied, it is not printed.",
+    "Joining two strings is allowed."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "name = \"Ana\"\nprint(\"Hello \" + name)"
+   },
+   "output": "Hello Ana"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What happens with this line?",
+   "choices": [
+    "An error: Python cannot add text and a number",
+    "It prints Age: 30 on one line",
+    "It prints Age: 3 and then 0",
+    "It prints nothing and moves on"
+   ],
+   "explain": "Python never mixes text and numbers with +. Turn the number into text first: \"Age: \" + str(30). The error is a TypeError.",
+   "whyWrong": [
+    "Python refuses: it raises a TypeError.",
+    "Nothing is printed: the line fails before.",
+    "The line fails with an error message."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(\"Age: \" + 30)"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "hahaha",
+    "ha3",
+    "ha ha ha",
+    "An error"
+   ],
+   "explain": "A string times a whole number repeats the text: \"ha\" * 3 gives \"hahaha\", without spaces.",
+   "whyWrong": [
+    "* repeats the text; it does not glue the number to it.",
+    "No space is added between the copies.",
+    "Multiplying a string by a whole number is allowed."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(\"ha\" * 3)"
+   },
+   "output": "hahaha"
+  },
+  {
+   "kind": "vf",
+   "prompt": "total = 0 creates a variable named total that holds the number 0.",
+   "isTrue": true,
+   "explain": "The name goes on the left, the value on the right, and = stores the value under that name."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "20",
+    "price * 2",
+    "10",
+    "1010"
+   ],
+   "explain": "A variable can be used in a calculation: price * 2 uses the value of price, 10.",
+   "whyWrong": [
+    "Without quotes, the expression is computed.",
+    "price is 10, multiplied by 2.",
+    "price is a number, so * multiplies."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "price = 10\ntotal = price * 2\nprint(total)"
+   },
+   "output": "20"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that stores the text \"Lea\" in a variable named first_name.",
+   "lang": "python",
+   "tokens": [
+    "first_name",
+    "=",
+    "\"Lea\""
+   ],
+   "extra": [
+    "==",
+    "first name"
+   ],
+   "explain": "first_name = \"Lea\": the name on the left, = then the value on the right."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This script stops with an error. Which line is wrong?",
+   "lang": "python",
+   "lines": [
+    "age = 30",
+    "message = \"Age: \" + age",
+    "print(message)"
+   ],
+   "answer": 1,
+   "explain": "age is a number and \"Age: \" is text: + cannot mix them. Write \"Age: \" + str(age)."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints \"Hi \" joined with the variable name.",
+   "lang": "python",
+   "tokens": [
+    "print",
+    "(",
+    "\"Hi \"",
+    "+",
+    "name",
+    ")"
+   ],
+   "extra": [
+    "\"name\"",
+    "-"
+   ],
+   "explain": "print(\"Hi \" + name) joins the text and the value of name."
+  }
+ ]
+}
