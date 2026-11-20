@@ -1,0 +1,275 @@
+{
+ "unit": {
+  "id": "py-start-4",
+  "subjectId": "python",
+  "topic": "py-start",
+  "world": "python-w1",
+  "title": "Python: lists and loops",
+  "description": "Lists, positions counted from 0, len, append, repeating code with for and range"
+ },
+ "cards": [
+  {
+   "slug": "list-index",
+   "level": "debutant",
+   "term": "List index",
+   "definition": "The position of an item in a list, counted from 0: the first item is at index 0.",
+   "example": "colors[0] is the first color."
+  },
+  {
+   "slug": "neg-index",
+   "level": "debutant",
+   "term": "Negative index",
+   "definition": "Counts from the end of a list: -1 is the last item, -2 the one before.",
+   "example": "colors[-1] is the last color."
+  },
+  {
+   "slug": "loop-var",
+   "level": "debutant",
+   "term": "Loop variable",
+   "definition": "The name after for: it takes each value of the list in turn, one per turn of the loop.",
+   "example": "In for c in colors:, c holds one color at each turn."
+  },
+  {
+   "slug": "in-op",
+   "level": "debutant",
+   "term": "in (membership test)",
+   "definition": "Checks whether a value is in a list or a text, and gives True or False.",
+   "example": "\"red\" in colors is True if the list holds \"red\"."
+  },
+  {
+   "slug": "counter-py",
+   "level": "debutant",
+   "term": "Counter (+= 1)",
+   "definition": "A variable increased by 1 at each turn, to count things; x += 1 is short for x = x + 1.",
+   "example": "count = 0, then count += 1 inside the loop."
+  },
+  {
+   "slug": "range-stop",
+   "level": "debutant",
+   "term": "range(n)",
+   "definition": "Gives the whole numbers from 0 up to n, n not included: with 3, you get 0, 1 and 2.",
+   "example": "for i in range(3): runs 3 times."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "apple",
+    "pear",
+    "kiwi",
+    "An error"
+   ],
+   "explain": "Indexes start at 0: fruits[0] is the first item, fruits[1] the second.",
+   "whyWrong": [
+    "pear is at index 1: counting starts at 0.",
+    "kiwi is at index 2, the last one.",
+    "Index 0 exists: it is the first item."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "fruits = [\"apple\", \"pear\", \"kiwi\"]\nprint(fruits[0])"
+   },
+   "output": "apple"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "3",
+    "2",
+    "4",
+    "kiwi"
+   ],
+   "explain": "len() gives how many items the list holds. The last index is always len minus 1.",
+   "whyWrong": [
+    "len counts the items from 1; only indexes start at 0.",
+    "There are three items, no more.",
+    "len gives a number, not the last item."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "fruits = [\"apple\", \"pear\", \"kiwi\"]\nprint(len(fruits))"
+   },
+   "output": "3"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "kiwi",
+    "apple",
+    "pear",
+    "An error"
+   ],
+   "explain": "A negative index counts from the end: -1 is the last item.",
+   "whyWrong": [
+    "apple is the first item, at index 0.",
+    "pear is at index -2.",
+    "Negative indexes are allowed in Python."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "fruits = [\"apple\", \"pear\", \"kiwi\"]\nprint(fruits[-1])"
+   },
+   "output": "kiwi"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the list contain after these lines?",
+   "choices": [
+    "\"shoes\", then \"hat\"",
+    "\"hat\", then \"shoes\"",
+    "Only \"hat\"",
+    "Only \"shoes\""
+   ],
+   "explain": "append() adds an item at the END of the list, and changes the list itself.",
+   "whyWrong": [
+    "append adds at the end, not at the start.",
+    "append adds an item; it does not replace the list.",
+    "append changes the list: \"hat\" is now in it."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "cart = [\"shoes\"]\ncart.append(\"hat\")"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "red, then blue",
+    "red only, once",
+    "0, then 1",
+    "the word colors"
+   ],
+   "explain": "for hands each item of the list to the loop variable in turn: first \"red\", then \"blue\".",
+   "whyWrong": [
+    "The loop goes through every item, not just the first.",
+    "for gives the items themselves, not their positions.",
+    "c takes each value of the list in turn."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "colors = [\"red\", \"blue\"]\nfor c in colors:\n    print(c)"
+   },
+   "output": "red\nblue"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many times is Hi printed?",
+   "choices": [
+    "3",
+    "2",
+    "4",
+    "Once"
+   ],
+   "explain": "range(3) gives 0, 1 and 2: three values, so three turns. The stop value 3 is not included.",
+   "whyWrong": [
+    "range(3) gives three values: 0, 1 and 2.",
+    "The stop value 3 is not included.",
+    "The indented line runs at every turn."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "for i in range(3):\n    print(\"Hi\")"
+   },
+   "output": "Hi\nHi\nHi"
+  },
+  {
+   "kind": "vf",
+   "prompt": "In [\"a\", \"b\", \"c\"], the item \"c\" is at index 3.",
+   "isTrue": false,
+   "explain": "Counting starts at 0: \"a\" is at 0, \"b\" at 1 and \"c\" at 2."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "30",
+    "15",
+    "51015",
+    "0"
+   ],
+   "explain": "The loop adds each price to total: 0 + 5, then + 10, then + 15. A classic way to add up a list.",
+   "whyWrong": [
+    "15 is only the last price; the loop adds all three.",
+    "The prices are numbers, so + adds them.",
+    "total changes at every turn of the loop."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "total = 0\nfor price in [5, 10, 15]:\n    total = total + price\nprint(total)"
+   },
+   "output": "30"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that adds \"milk\" at the end of the list shopping.",
+   "lang": "python",
+   "tokens": [
+    "shopping",
+    ".append",
+    "(",
+    "\"milk\"",
+    ")"
+   ],
+   "extra": [
+    ".push",
+    "milk"
+   ],
+   "explain": "shopping.append(\"milk\") adds the item at the end. In JavaScript it would be push."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This script stops with an IndexError. Which line is wrong?",
+   "lang": "python",
+   "lines": [
+    "names = [\"Ana\", \"Luis\", \"Mia\"]",
+    "print(names[0])",
+    "print(names[3])"
+   ],
+   "answer": 2,
+   "explain": "The list has 3 items, at indexes 0, 1 and 2. Index 3 does not exist. The last item is names[2], or names[-1]."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "True",
+    "False",
+    "1",
+    "red"
+   ],
+   "explain": "in checks whether a value is in the list and gives True or False.",
+   "whyWrong": [
+    "\"red\" is in the list, so the answer is True.",
+    "in gives True or False, not a position.",
+    "It prints the answer of the test, not the item."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "colors = [\"red\", \"blue\"]\nprint(\"red\" in colors)"
+   },
+   "output": "True"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the first line of a loop that goes through every item of the list names.",
+   "lang": "python",
+   "tokens": [
+    "for",
+    "name",
+    "in",
+    "names",
+    ":"
+   ],
+   "extra": [
+    "of",
+    "{"
+   ],
+   "explain": "for name in names: then the indented lines run once per item."
+  }
+ ]
+}

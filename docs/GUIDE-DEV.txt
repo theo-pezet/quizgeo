@@ -349,7 +349,7 @@ et fusionne dans code.extra.json ; puis `npm test`.
    Types d'exercice : qcm (code, output et whyWrong facultatifs), vf, order,
    case, compose, bugline. Les exercices écrits à la main sont posés DANS
    L'ORDRE du fichier à la première leçon : du plus simple au plus dur.
-   Les sources des unités « premiers pas » (CSS, JavaScript) sont dans
+   Les sources des unités « premiers pas » (CSS, JavaScript, HTML, Python) sont dans
    tools/units/debutants/ : les modifier puis relancer le script.
 3.     python3 tools/integrate_units.py chemin/unite.json
    Le script valide, dérive les identifiants, fusionne dans

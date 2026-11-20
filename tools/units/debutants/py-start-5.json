@@ -1,0 +1,246 @@
+{
+ "unit": {
+  "id": "py-start-5",
+  "subjectId": "python",
+  "topic": "py-start",
+  "world": "python-w1",
+  "title": "Python: functions",
+  "description": "Writing a function with def, calling it, parameters and arguments, return versus print"
+ },
+ "cards": [
+  {
+   "slug": "call-py",
+   "level": "debutant",
+   "term": "Function call",
+   "definition": "Runs a function: its name followed by parentheses. Without the parentheses, nothing runs.",
+   "example": "greet() runs the code inside greet."
+  },
+  {
+   "slug": "param-py",
+   "level": "debutant",
+   "term": "Parameter",
+   "definition": "A name between the parentheses of def that receives a value each time the function is called.",
+   "example": "In def double(n):, n is filled in at each call."
+  },
+  {
+   "slug": "arg-py",
+   "level": "debutant",
+   "term": "Argument",
+   "definition": "The actual value you pass to a function when you call it, between the parentheses.",
+   "example": "In double(4), 4 is passed in."
+  },
+  {
+   "slug": "print-vs-return",
+   "level": "debutant",
+   "term": "print vs return",
+   "definition": "One only shows a value on the screen; the other sends it back to the code so it can be reused.",
+   "example": "total = add(2, 3) works only if add sends its result back."
+  },
+  {
+   "slug": "func-body",
+   "level": "debutant",
+   "term": "Function body",
+   "definition": "The indented lines under the def line; they run each time the function is called.",
+   "example": "Everything shifted right under def greet(): belongs to greet."
+  },
+  {
+   "slug": "none-return",
+   "level": "debutant",
+   "term": "None (no result)",
+   "definition": "What a function gives back when it has no return line: the special value meaning nothing.",
+   "example": "x = print(\"Hi\") stores None in x."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does this script print?",
+   "choices": [
+    "Hi! twice",
+    "Hi! once",
+    "Nothing",
+    "greet twice"
+   ],
+   "explain": "Defining a function does not run it. Each call, greet(), runs its body once.",
+   "whyWrong": [
+    "The function is called twice, so it runs twice.",
+    "A function runs when called, and here it is called twice.",
+    "The function prints its text, not its name."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "def greet():\n    print(\"Hi!\")\n\ngreet()\ngreet()"
+   },
+   "output": "Hi!\nHi!"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this script print?",
+   "choices": [
+    "Nothing, because it is never called",
+    "Hello, because it runs by itself",
+    "hello, the name of the function",
+    "An error, as nothing is called"
+   ],
+   "explain": "def only defines the function. To run it, call it with its name and parentheses: hello().",
+   "whyWrong": [
+    "A function never runs by itself: it must be called.",
+    "Even when called, it prints its text, not its name.",
+    "Defining a function without calling it is allowed."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "def hello():\n    print(\"Hello\")"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "8",
+    "4",
+    "n * 2",
+    "double"
+   ],
+   "explain": "The argument 4 goes into the parameter n. return sends back 4 * 2, and print shows it.",
+   "whyWrong": [
+    "4 is the value passed in; the function sends it back doubled.",
+    "The expression is computed with n equal to 4.",
+    "print shows the value sent back, not the name."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "def double(n):\n    return n * 2\n\nprint(double(4))"
+   },
+   "output": "8"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In def greet(name):, what is name?",
+   "choices": [
+    "A parameter: it receives a value at each call",
+    "The value sent back by the function",
+    "The text shown on the screen",
+    "A reserved word of Python"
+   ],
+   "explain": "Parameters are listed between the parentheses of def. greet(\"Ana\") fills name with \"Ana\".",
+   "whyWrong": [
+    "The value sent back comes from return.",
+    "name holds whatever is passed in; it is not shown by itself.",
+    "name is an ordinary name chosen by the developer."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Hi Mia",
+    "Hi name",
+    "greet(\"Mia\")",
+    "Mia"
+   ],
+   "explain": "\"Mia\" is the argument: it fills the parameter name, and return sends back \"Hi Mia\".",
+   "whyWrong": [
+    "name is replaced by the value passed in, \"Mia\".",
+    "The call runs the function; its code is not printed.",
+    "The function adds \"Hi \" in front of the name."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "def greet(name):\n    return \"Hi \" + name\n\nprint(greet(\"Mia\"))"
+   },
+   "output": "Hi Mia"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the last line print?",
+   "choices": [
+    "None",
+    "10",
+    "5",
+    "An error"
+   ],
+   "explain": "add prints the sum but does not return it, so it gives back None. To reuse a result, use return.",
+   "whyWrong": [
+    "The function never sends its result back, so total holds None.",
+    "The function adds 2 and 3, and even that result is not returned.",
+    "The code runs: it just stores None."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "def add(a, b):\n    print(a + b)\n\ntotal = add(2, 3)\nprint(total)"
+   }
+  },
+  {
+   "kind": "vf",
+   "prompt": "Lines written after return, inside the same function, still run.",
+   "isTrue": false,
+   "explain": "return sends the value back and ends the function at once. The lines below it never run."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the first line of a function named greet that takes a parameter name.",
+   "lang": "python",
+   "tokens": [
+    "def",
+    "greet",
+    "(",
+    "name",
+    ")",
+    ":"
+   ],
+   "extra": [
+    "function",
+    "{"
+   ],
+   "explain": "def greet(name): the keyword def, the name, the parameters, then a colon. The body is indented below."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The script prints None instead of 10. Which line is wrong?",
+   "lang": "python",
+   "lines": [
+    "def total(a, b):",
+    "    a + b",
+    "",
+    "print(total(4, 6))"
+   ],
+   "answer": 1,
+   "explain": "The sum is computed but never sent back. Without return, a function gives None. Write return a + b."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the line that calls the function add with the numbers 2 and 3.",
+   "lang": "python",
+   "tokens": [
+    "add",
+    "(",
+    "2",
+    ",",
+    "3",
+    ")"
+   ],
+   "extra": [
+    "def",
+    "+"
+   ],
+   "explain": "Call a function with its name, then the arguments in parentheses, separated by commas: add(2, 3)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why put code in a function instead of copying it in three places?",
+   "choices": [
+    "To fix it once and reuse it everywhere",
+    "To make the script run on more computers",
+    "To hide the code from other people",
+    "Because copying lines is forbidden"
+   ],
+   "explain": "One function, many calls: a fix inside the function fixes every place that uses it.",
+   "whyWrong": [
+    "Functions organize code; they do not change where it runs.",
+    "Code inside a function is just as visible.",
+    "Copying is allowed, just much harder to maintain."
+   ]
+  }
+ ]
+}

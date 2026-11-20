@@ -1,0 +1,263 @@
+{
+ "unit": {
+  "id": "py-start-1",
+  "subjectId": "python",
+  "topic": "py-start",
+  "world": "python-w1",
+  "title": "Python: first lines",
+  "description": "What Python does, printing with print(), text in quotes, numbers, comments, running a script"
+ },
+ "cards": [
+  {
+   "slug": "python-lang",
+   "level": "debutant",
+   "term": "Python",
+   "definition": "A programming language that reads almost like English, used for automation, data and websites.",
+   "example": "A 3-line Python script can rename 500 files in a second."
+  },
+  {
+   "slug": "script",
+   "level": "debutant",
+   "term": "Script (.py file)",
+   "definition": "A text file of Python instructions, run from top to bottom with the command python file.py.",
+   "example": "python hello.py runs the file hello.py."
+  },
+  {
+   "slug": "string-py",
+   "level": "debutant",
+   "term": "String (str)",
+   "definition": "A piece of text, written between quotes: \"Hello\" or 'Hello'.",
+   "example": "\"42\" with quotes is text, not a number."
+  },
+  {
+   "slug": "number-py",
+   "level": "debutant",
+   "term": "Integer and float",
+   "definition": "The two kinds of numbers: whole numbers like 42, and decimal numbers like 3.5.",
+   "example": "7 is an integer, 7.0 is a float."
+  },
+  {
+   "slug": "hash-comment",
+   "level": "debutant",
+   "term": "Comment (#)",
+   "definition": "Everything after a # on a line is ignored by Python; it explains the code to humans.",
+   "example": "# Total with tax, above a line, says what it computes."
+  },
+  {
+   "slug": "traceback",
+   "level": "debutant",
+   "term": "Error message (traceback)",
+   "definition": "The report Python prints when a line fails: the line number, then the kind of error and why.",
+   "example": "NameError: name 'prnt' is not defined points to a typo."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is Python used for?",
+   "choices": [
+    "Writing programs: automate tasks, analyze data",
+    "Styling the colors of a web page",
+    "Describing the structure of a web page",
+    "Storing photos on a phone"
+   ],
+   "explain": "Python is a general programming language: scripts that automate, analyze data, call APIs. HTML and CSS only describe web pages.",
+   "whyWrong": [
+    "Styling pages is the job of CSS.",
+    "The structure of a page is the job of HTML.",
+    "Storing photos is the job of the phone, not of a language."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this line print?",
+   "choices": [
+    "Hello",
+    "\"Hello\"",
+    "print",
+    "Nothing: it is an error"
+   ],
+   "explain": "print() displays what is inside the parentheses. The quotes only mark where the text starts and ends.",
+   "whyWrong": [
+    "The quotes are not printed.",
+    "print is the command, not what it prints.",
+    "This line is valid Python."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(\"Hello\")"
+   },
+   "output": "Hello"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "5",
+    "2 + 3",
+    "23",
+    "\"5\""
+   ],
+   "explain": "Without quotes, Python computes 2 + 3 first, then prints the result.",
+   "whyWrong": [
+    "Without quotes, the expression is computed.",
+    "2 and 3 are numbers, so + adds them.",
+    "print shows the value without quotes."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(2 + 3)"
+   },
+   "output": "5"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "2 + 3",
+    "5",
+    "23",
+    "Nothing"
+   ],
+   "explain": "Between quotes it is a string: Python prints it exactly as written, without calculating.",
+   "whyWrong": [
+    "The quotes make it text: nothing is computed.",
+    "Nothing is added: it is one piece of text.",
+    "It prints the text between the quotes."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(\"2 + 3\")"
+   },
+   "output": "2 + 3"
+  },
+  {
+   "kind": "vf",
+   "prompt": "In Python, \"42\" (with quotes) and 42 (without quotes) are the same kind of value.",
+   "isTrue": false,
+   "explain": "\"42\" is a string (text) and 42 is a number (an integer). Only the number can be used in calculations."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What happens with the first line?",
+   "choices": [
+    "Nothing: it is a comment",
+    "It prints Say hello",
+    "It causes an error",
+    "It names the script"
+   ],
+   "explain": "A # starts a comment: Python ignores the rest of the line. Comments explain the code to humans.",
+   "whyWrong": [
+    "Only the second line prints something.",
+    "A comment is valid: it is simply skipped.",
+    "Comments never change how the code runs."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "# Say hello\nprint(\"Hi\")"
+   },
+   "output": "Hi"
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This script stops with an error. Which line is wrong?",
+   "lang": "python",
+   "lines": [
+    "print(\"Start\")",
+    "Print(\"Middle\")",
+    "print(\"End\")"
+   ],
+   "answer": 1,
+   "explain": "Python is case sensitive: Print with a capital P does not exist. It must be print. The error is a NameError."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints the text Welcome.",
+   "lang": "python",
+   "tokens": [
+    "print",
+    "(",
+    "\"Welcome\"",
+    ")"
+   ],
+   "extra": [
+    "echo",
+    "Welcome"
+   ],
+   "explain": "print(\"Welcome\"): the text goes between quotes, inside the parentheses."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you run the script hello.py from the terminal?",
+   "choices": [
+    "python hello.py",
+    "run hello",
+    "open hello.py",
+    "hello.py --start"
+   ],
+   "explain": "The command python followed by the file name runs the script, from the first line to the last.",
+   "whyWrong": [
+    "run is not a terminal command for Python.",
+    "open would open the file, not run it.",
+    "This is not how a script is started."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Python prints this message. What is the problem?",
+   "choices": [
+    "prnt is a typo: Python does not know that name",
+    "The text Hello is missing a quote",
+    "Python cannot print text",
+    "The file name is wrong"
+   ],
+   "explain": "A NameError means Python met a name it does not know. Here prnt is a typo for print. Read the last line of the message first.",
+   "whyWrong": [
+    "The quotes around Hello are fine.",
+    "print prints text without any problem.",
+    "The file was found and run: the error is inside it."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "prnt(\"Hello\")\n\nNameError: name 'prnt' is not defined"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many lines does this script print?",
+   "choices": [
+    "2",
+    "3",
+    "1",
+    "0"
+   ],
+   "explain": "Each print() writes one line, from top to bottom. The line that starts with # is a comment and never runs.",
+   "whyWrong": [
+    "The third line is a comment, so it never runs.",
+    "Both print lines run, one after the other.",
+    "The first two lines are normal instructions."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(\"One\")\nprint(\"Two\")\n# print(\"Three\")"
+   },
+   "output": "One\nTwo"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a line that prints the number 42.",
+   "lang": "python",
+   "tokens": [
+    "print",
+    "(",
+    "42",
+    ")"
+   ],
+   "extra": [
+    "\"",
+    "say"
+   ],
+   "explain": "print(42): a number is written without quotes."
+  }
+ ]
+}

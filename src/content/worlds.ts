@@ -53,14 +53,32 @@ const BASE_WORLDS: World[] = [
   w('ia', 5, '🧰', '#0891B2', 'Everyday AI', 'Tools, images, automations', []),
 
   // ---------------------------------------------------------------- Python
-  w('python', 1, '🐣', '#2563EB', 'Getting started', 'Terminal, variables, loops', ['py-1', 'py-2', 'py-concepts-1', 'py-3']),
+  // Les unités « premiers pas » (units.extra.json) ouvrent le chemin, avant py-1.
+  w('python', 1, '🐣', '#2563EB', 'Getting started', 'First lines, variables, decisions, loops, functions, terminal', [
+    'py-start-1',
+    'py-start-2',
+    'py-start-3',
+    'py-start-4',
+    'py-start-5',
+    'py-1',
+    'py-2',
+    'py-concepts-1',
+    'py-3',
+  ]),
   w('python', 2, '🧱', '#0891B2', 'Structures', 'Lists, dictionaries, text', ['py-4', 'py-concepts-2', 'py-5', 'py-6']),
   w('python', 3, '🛠️', '#A16207', 'Good code', 'Errors, operators, practices', ['py-7', 'py-8', 'py-pratiques-1', 'py-outils-1']),
   w('python', 4, '📈', '#16A34A', 'Data', 'Pandas from A to Z', ['py-9', 'py-10', 'py-11', 'py-data-1']),
   w('python', 5, '🌐', '#7C3AED', 'Python and the web', 'Requests, files, APIs, automation', ['py-12', 'py-13', 'py-web-1', 'py-case-1']),
 
   // ------------------------------------------------------------------ HTML
-  w('html', 1, '🧩', '#C2410C', 'The basics', 'The web and the structure of a page', ['web-1', 'web-2']),
+  // Les unités « premiers pas » (units.extra.json) ouvrent le chemin, avant web-1.
+  w('html', 1, '🧩', '#C2410C', 'The basics', 'First tags, links, images, page skeleton, the web', [
+    'html-start-1',
+    'html-start-2',
+    'html-start-3',
+    'web-1',
+    'web-2',
+  ]),
   w('html', 2, '🔎', '#DB2777', 'Pro HTML', 'Semantics, SEO, tracking', ['web-html-2', 'web-mkt-1']),
 
   // ------------------------------------------------------------------- CSS

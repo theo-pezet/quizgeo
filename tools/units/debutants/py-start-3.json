@@ -1,0 +1,249 @@
+{
+ "unit": {
+  "id": "py-start-3",
+  "subjectId": "python",
+  "topic": "py-start",
+  "world": "python-w1",
+  "title": "Python: making decisions",
+  "description": "True and False, comparing values, if, elif and else, the colon and indentation, and / or"
+ },
+ "cards": [
+  {
+   "slug": "comparison-py",
+   "level": "debutant",
+   "term": "Comparison operators",
+   "definition": "Compare two values and give True or False: > greater, < smaller, >= at least, <= at most, != different.",
+   "example": "18 >= 18 is True."
+  },
+  {
+   "slug": "equality-py",
+   "level": "debutant",
+   "term": "Equality (==)",
+   "definition": "Two equal signs check that two values are the same and give True or False.",
+   "example": "answer == 42 is True when answer holds 42."
+  },
+  {
+   "slug": "elif",
+   "level": "debutant",
+   "term": "elif",
+   "definition": "Short for else if: a second test checked only when the tests above it were false.",
+   "example": "if temp > 25: ... elif temp > 10: ... else: ..."
+  },
+  {
+   "slug": "colon-block",
+   "level": "debutant",
+   "term": "Colon and indented block",
+   "definition": "A line like if ...: ends with a colon; the lines that belong to it are shifted right by 4 spaces.",
+   "example": "The indented lines under if only run when the test is True."
+  },
+  {
+   "slug": "and-or",
+   "level": "debutant",
+   "term": "and / or / not",
+   "definition": "Combine tests: and needs both to be True, or needs one, not flips True and False.",
+   "example": "if age >= 18 and has_ticket: lets adults with a ticket in."
+  },
+  {
+   "slug": "true-false",
+   "level": "debutant",
+   "term": "True and False",
+   "definition": "The two answers to a yes or no question, written with a capital letter in Python.",
+   "example": "is_open = True"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "True",
+    "False",
+    "8",
+    "3"
+   ],
+   "explain": "A comparison answers a yes or no question: True or False, with a capital letter.",
+   "whyWrong": [
+    "8 is greater than 5, so the comparison is True.",
+    "A comparison gives True or False, not a number.",
+    "> compares; it does not subtract."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(8 > 5)"
+   },
+   "output": "True"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which sign checks that two values are equal?",
+   "choices": [
+    "==",
+    "=",
+    "=>",
+    "!="
+   ],
+   "explain": "= stores a value, == compares two values. Mixing them up is the classic beginner mistake.",
+   "whyWrong": [
+    "A single = stores a value in a variable.",
+    "=> is not a Python operator.",
+    "!= checks that two values are DIFFERENT."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Welcome",
+    "Too young",
+    "Welcome, then Too young",
+    "Nothing"
+   ],
+   "explain": "if runs its block when the test is True; else runs when it is False. Exactly one of them runs.",
+   "whyWrong": [
+    "20 is at least 18: the test is True, so the first block runs.",
+    "Only one of the two blocks runs, never both.",
+    "With an else, one of the blocks always runs."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "age = 20\nif age >= 18:\n    print(\"Welcome\")\nelse:\n    print(\"Too young\")"
+   },
+   "output": "Welcome"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Mild",
+    "Hot",
+    "Cold",
+    "Mild, then Cold"
+   ],
+   "explain": "elif adds another test. Python checks them from top to bottom and runs only the first block whose test is True.",
+   "whyWrong": [
+    "15 is not above 25, so the first block is skipped.",
+    "15 is above 10, so else is never reached.",
+    "As soon as one test is True, the rest is skipped."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "temp = 15\nif temp > 25:\n    print(\"Hot\")\nelif temp > 10:\n    print(\"Mild\")\nelse:\n    print(\"Cold\")"
+   },
+   "output": "Mild"
+  },
+  {
+   "kind": "vf",
+   "prompt": "In Python, the lines that belong to an if must be indented (shifted right).",
+   "isTrue": true,
+   "explain": "Python uses indentation, usually 4 spaces, to know which lines are inside the if. No braces like in JavaScript."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This script stops with an error. Which line is wrong?",
+   "lang": "python",
+   "lines": [
+    "stock = 3",
+    "if stock > 0",
+    "    print(\"In stock\")"
+   ],
+   "answer": 1,
+   "explain": "An if line must end with a colon: if stock > 0: Without it, Python raises a SyntaxError."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "False",
+    "True",
+    "25",
+    "None"
+   ],
+   "explain": "and is True only when both tests are True. Here has_ticket is False.",
+   "whyWrong": [
+    "and needs BOTH sides to be True; has_ticket is False.",
+    "The result is True or False, not the age.",
+    "Both variables have values."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "age = 25\nhas_ticket = False\nprint(age >= 18 and has_ticket)"
+   },
+   "output": "False"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "Nothing",
+    "In stock",
+    "0",
+    "An error"
+   ],
+   "explain": "Without else, when the test is False, the indented block is simply skipped.",
+   "whyWrong": [
+    "0 is not greater than 0: the test is False.",
+    "print is inside the if, which does not run.",
+    "An if without else is valid."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "stock = 0\nif stock > 0:\n    print(\"In stock\")"
+   }
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the first line of a test that checks that score is greater than 100.",
+   "lang": "python",
+   "tokens": [
+    "if",
+    "score",
+    ">",
+    "100",
+    ":"
+   ],
+   "extra": [
+    "=",
+    "{"
+   ],
+   "explain": "if score > 100: the test, then a colon. The lines below it are indented."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this print?",
+   "choices": [
+    "True",
+    "False",
+    "red",
+    "An error"
+   ],
+   "explain": "!= means different. \"red\" and \"blue\" are different, so the answer is True.",
+   "whyWrong": [
+    "The two colors are different, so != gives True.",
+    "A comparison gives True or False.",
+    "Comparing two strings is allowed."
+   ],
+   "code": {
+    "lang": "python",
+    "src": "print(\"red\" != \"blue\")"
+   },
+   "output": "True"
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the test that checks that the variable answer equals 42.",
+   "lang": "python",
+   "tokens": [
+    "if",
+    "answer",
+    "==",
+    "42",
+    ":"
+   ],
+   "extra": [
+    "=",
+    "equals"
+   ],
+   "explain": "if answer == 42: two equal signs to compare, then the colon."
+  }
+ ]
+}

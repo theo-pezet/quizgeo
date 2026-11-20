@@ -1,0 +1,225 @@
+{
+ "unit": {
+  "id": "html-start-3",
+  "subjectId": "html",
+  "topic": "html-start",
+  "world": "html-w1",
+  "title": "HTML: the page skeleton",
+  "description": "DOCTYPE, html, head and body, title, comments, bold and italic, div and span"
+ },
+ "cards": [
+  {
+   "slug": "doctype",
+   "level": "debutant",
+   "term": "<!DOCTYPE html>",
+   "definition": "The first line of every page; it tells the browser to use modern HTML rules.",
+   "example": "Without it, browsers fall back to an old, quirky display mode."
+  },
+  {
+   "slug": "head-body",
+   "level": "debutant",
+   "term": "<head> and <body>",
+   "definition": "The two parts of a page: the first holds information about the page (title, styles), the second everything displayed.",
+   "example": "The text of the page goes in body, never in head."
+  },
+  {
+   "slug": "html-comment",
+   "level": "debutant",
+   "term": "HTML comment",
+   "definition": "A note between <!-- and --> that the browser does not display.",
+   "example": "<!-- Main menu --> above a menu says what follows."
+  },
+  {
+   "slug": "strong-em",
+   "level": "debutant",
+   "term": "<strong> and <em>",
+   "definition": "Mark important text (shown in bold) and stressed text (shown in italics).",
+   "example": "<strong>Sale</strong> ends <em>tonight</em>."
+  },
+  {
+   "slug": "div-span",
+   "level": "debutant",
+   "term": "<div> and <span>",
+   "definition": "Generic containers with no meaning of their own: the first is a block, the second sits inside a line of text.",
+   "example": "<div class=\"card\"> groups a product; <span class=\"price\"> marks a price in a sentence."
+  },
+  {
+   "slug": "br",
+   "level": "debutant",
+   "term": "Line break <br>",
+   "definition": "Forces the text to continue on the next line, inside the same paragraph.",
+   "example": "Main street<br>Paris"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which line comes first in an HTML page?",
+   "choices": [
+    "<!DOCTYPE html>",
+    "<html lang=\"en\">",
+    "<head><meta charset=\"utf-8\">",
+    "<body class=\"page\">"
+   ],
+   "explain": "The page starts with <!DOCTYPE html>, then <html>, which contains <head> and <body>.",
+   "whyWrong": [
+    "<html> comes right after the DOCTYPE line.",
+    "<head> sits inside <html>.",
+    "<body> comes after <head>."
+   ]
+  },
+  {
+   "kind": "order",
+   "prompt": "Put the skeleton of a page in order, from top to bottom.",
+   "steps": [
+    "<!DOCTYPE html>",
+    "<html>",
+    "<head> with the <title>",
+    "<body> with the content",
+    "</html>"
+   ],
+   "explain": "DOCTYPE first, then html, which holds head (information about the page) then body (what is displayed)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where does the text of the page go?",
+   "choices": [
+    "In <body>",
+    "In <head>",
+    "In <title>",
+    "After </html>"
+   ],
+   "explain": "Everything people see on the page goes in body. head only holds information about the page.",
+   "whyWrong": [
+    "head holds information about the page, not what is displayed.",
+    "title is only the name in the browser tab.",
+    "Nothing should come after the closing </html>."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where does the text inside <title> appear?",
+   "choices": [
+    "In the browser tab",
+    "At the top of the page, in big letters",
+    "At the bottom of the page",
+    "Nowhere at all"
+   ],
+   "explain": "title gives the name of the page: it shows in the browser tab and in search results. The big visible title is an <h1>.",
+   "whyWrong": [
+    "The big visible title is an <h1>, inside body.",
+    "title is never displayed inside the page.",
+    "It is shown in the tab and in search results."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the browser display for the first line?",
+   "choices": [
+    "Nothing: it is a comment",
+    "The text Main menu",
+    "An error message",
+    "An empty box"
+   ],
+   "explain": "Everything between <!-- and --> is a comment: a note for developers, never displayed.",
+   "whyWrong": [
+    "Comments are never shown on the page.",
+    "Comments are valid HTML, so there is no error.",
+    "A comment adds nothing to the page."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<!-- Main menu -->\n<a href=\"index.html\">Home</a>"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which tag marks important text, shown in bold by default?",
+   "choices": [
+    "<strong>",
+    "<em>",
+    "<big>",
+    "<important>"
+   ],
+   "explain": "strong means important (bold by default); em means stressed (italic by default).",
+   "whyWrong": [
+    "em is for stressed text, shown in italics.",
+    "<big> is an obsolete tag; use CSS for size.",
+    "HTML has no <important> tag."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "A <span> starts on a new line, like a paragraph.",
+   "isTrue": false,
+   "explain": "span is inline: it stays inside the line of text. div is the block container that starts on a new line."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How does the browser display this address?",
+   "choices": [
+    "On two lines: Main street, then Paris",
+    "On one line: Main street Paris",
+    "With the text <br> visible",
+    "As two separate paragraphs"
+   ],
+   "explain": "<br> forces a line break inside the same paragraph. It is an empty element: no closing tag.",
+   "whyWrong": [
+    "<br> breaks the line, so Paris goes to the next line.",
+    "The tag is read by the browser, not displayed.",
+    "It is still one paragraph, split over two lines."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<p>Main street<br>Paris</p>"
+   }
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the title shown in the browser tab: My shop.",
+   "lang": "html",
+   "tokens": [
+    "<title>",
+    "My shop",
+    "</title>"
+   ],
+   "extra": [
+    "<h1>",
+    "<tab>"
+   ],
+   "explain": "<title>My shop</title> goes in <head>; it names the page in the tab."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The heading Welcome does not appear on the page. Which line is wrong?",
+   "lang": "html",
+   "lines": [
+    "<!DOCTYPE html>",
+    "<html>",
+    "<head><h1>Welcome</h1></head>",
+    "<body><p>Our shop</p></body>",
+    "</html>"
+   ],
+   "answer": 2,
+   "explain": "Visible content belongs in body, not head. Move <h1>Welcome</h1> into <body>."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a sentence where only the word sale is important (bold).",
+   "lang": "html",
+   "tokens": [
+    "<p>",
+    "Big",
+    "<strong>",
+    "sale",
+    "</strong>",
+    "</p>"
+   ],
+   "extra": [
+    "<em>",
+    "<b>"
+   ],
+   "explain": "<p>Big <strong>sale</strong></p>: strong marks the important word inside the paragraph."
+  }
+ ]
+}

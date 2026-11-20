@@ -1,0 +1,237 @@
+{
+ "unit": {
+  "id": "html-start-1",
+  "subjectId": "html",
+  "topic": "html-start",
+  "world": "html-w1",
+  "title": "HTML: your first tags",
+  "description": "What HTML does, tags that open and close, paragraphs, headings, nesting, the .html file"
+ },
+ "cards": [
+  {
+   "slug": "html-tag",
+   "level": "debutant",
+   "term": "HTML tag",
+   "definition": "A word between angle brackets, like <p>, that tells the browser what a piece of content is.",
+   "example": "<h1> marks a main heading, <p> a paragraph."
+  },
+  {
+   "slug": "open-close",
+   "level": "debutant",
+   "term": "Opening and closing tags",
+   "definition": "Most content sits between a start marker and an end marker with a slash: <p> then </p>.",
+   "example": "<p>Hello</p>: the text Hello is wrapped by the pair."
+  },
+  {
+   "slug": "html-element",
+   "level": "debutant",
+   "term": "HTML element",
+   "definition": "The whole unit made of the opening tag, the content and the closing tag.",
+   "example": "<h2>Shoes</h2> is one complete element."
+  },
+  {
+   "slug": "paragraph",
+   "level": "debutant",
+   "term": "Paragraph <p>",
+   "definition": "Holds a block of ordinary text; the browser starts each one on a new line, with space around it.",
+   "example": "<p>Free delivery from 50 euros.</p>"
+  },
+  {
+   "slug": "headings",
+   "level": "debutant",
+   "term": "Headings <h1> to <h6>",
+   "definition": "Six levels of titles, from the most important (h1, biggest by default) to the least (h6).",
+   "example": "One <h1> for the page title, <h2> for each section."
+  },
+  {
+   "slug": "nesting",
+   "level": "debutant",
+   "term": "Nesting",
+   "definition": "Putting an element inside another one; the inner element must be closed before the outer one.",
+   "example": "<p>Big <strong>sale</strong> today</p>"
+  },
+  {
+   "slug": "html-file",
+   "level": "debutant",
+   "term": ".html file",
+   "definition": "A plain text file whose name ends in .html; a browser opens it and displays it as a page.",
+   "example": "index.html is usually the home page of a site."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is HTML used for?",
+   "choices": [
+    "Describing the content and structure of a page",
+    "Choosing the colors and the spacing",
+    "Making the page react to clicks",
+    "Storing the data on a server"
+   ],
+   "explain": "HTML says what each piece of content is: a heading, a paragraph, a link, an image. CSS styles it, JavaScript makes it react.",
+   "whyWrong": [
+    "Colors and spacing are the job of CSS.",
+    "Reacting to clicks is the job of JavaScript.",
+    "Data is stored on the server, in a database, not in HTML."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the browser show for this line?",
+   "choices": [
+    "The text Hello, as a paragraph",
+    "The text <p>Hello</p>",
+    "Only the letter p",
+    "Nothing: it is an error"
+   ],
+   "explain": "Tags are instructions for the browser, not text to display. Only what sits between them appears on the page.",
+   "whyWrong": [
+    "The tags are read by the browser, not displayed.",
+    "p is the name of the tag; it is not displayed.",
+    "This line is valid HTML."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<p>Hello</p>"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which tag closes a paragraph?",
+   "choices": [
+    "</p>",
+    "<p>",
+    "<p/>",
+    "<end p>"
+   ],
+   "explain": "A closing tag repeats the name of the opening tag with a slash after the angle bracket: <p> then </p>.",
+   "whyWrong": [
+    "<p> opens a paragraph; it does not close it.",
+    "The slash goes right after the first angle bracket: </p>.",
+    "HTML has no <end> tag."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "<h1> shows a bigger title than <h3> by default.",
+   "isTrue": true,
+   "explain": "Headings go from h1 (most important, biggest) to h6 (least important, smallest)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which tag should hold the main title of the page?",
+   "choices": [
+    "<h1>",
+    "<h6>",
+    "<p>",
+    "<title>"
+   ],
+   "explain": "The main visible title of the page goes in <h1>. Sections then use <h2>, sub-sections <h3>.",
+   "whyWrong": [
+    "h6 is the smallest, least important heading.",
+    "<p> is for ordinary text, not a title.",
+    "<title> is the name shown in the browser tab, not on the page."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many paragraphs does the browser display?",
+   "choices": [
+    "2",
+    "1",
+    "3",
+    "4"
+   ],
+   "explain": "Each <p> element is one paragraph. A heading is not a paragraph.",
+   "whyWrong": [
+    "There are two <p> elements, so two paragraphs.",
+    "The <h1> is a heading, not a paragraph.",
+    "Count the <p> opening tags: there are two."
+   ],
+   "code": {
+    "lang": "html",
+    "src": "<h1>Shop</h1>\n<p>New shoes.</p>\n<p>Free delivery.</p>"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which line is nested correctly?",
+   "choices": [
+    "<p>Big <strong>sale</strong></p>",
+    "<p>Big <strong>sale</p></strong>",
+    "<p>Big <strong>sale<strong></p>",
+    "<strong><p>Big sale</strong></p>"
+   ],
+   "explain": "The inner element must close first: open p, open strong, close strong, close p. Like boxes inside boxes.",
+   "whyWrong": [
+    "strong was opened last, so it must be closed first.",
+    "The second <strong> has no slash: it opens again instead of closing.",
+    "p was opened inside strong, so it must close before strong."
+   ]
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a paragraph that contains the text Welcome.",
+   "lang": "html",
+   "tokens": [
+    "<p>",
+    "Welcome",
+    "</p>"
+   ],
+   "extra": [
+    "<p/>",
+    "</h1>"
+   ],
+   "explain": "<p>Welcome</p>: the opening tag, the content, the closing tag with its slash."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "The second paragraph is displayed in bold too. Which line is wrong?",
+   "lang": "html",
+   "lines": [
+    "<p>Our <strong>new</strong> shop</p>",
+    "<p>Open <strong>every day<strong></p>",
+    "<p>See you soon</p>"
+   ],
+   "answer": 1,
+   "explain": "The second <strong> has no slash, so it opens bold text again instead of closing it. Write </strong>."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What must the name of a page file end with to open as a web page?",
+   "choices": [
+    ".html",
+    ".txt",
+    ".css",
+    ".page"
+   ],
+   "explain": "A page file ends in .html (for example index.html). A browser opens it and displays it as a page.",
+   "whyWrong": [
+    "A .txt file is shown as raw text, tags included.",
+    ".css files hold styles, not pages.",
+    ".page is not a web file type."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "In <p>Hi</p>, the whole thing, tags and text, is called an element.",
+   "isTrue": true,
+   "explain": "An element is the opening tag, the content and the closing tag together."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a main heading (level 1) with the text Shop.",
+   "lang": "html",
+   "tokens": [
+    "<h1>",
+    "Shop",
+    "</h1>"
+   ],
+   "extra": [
+    "<h6>",
+    "</p>"
+   ],
+   "explain": "<h1>Shop</h1>: one main heading per page."
+  }
+ ]
+}
