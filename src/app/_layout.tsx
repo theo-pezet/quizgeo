@@ -71,7 +71,6 @@ export default function RootLayout() {
         <Stack.Screen name="session/free" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="session/blitz" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="deck/review" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
-        <Stack.Screen name="deck/listen" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="sandbox" options={{ presentation: 'fullScreenModal', animation: 'slide_from_bottom' }} />
         <Stack.Screen name="placement/[subjectId]" options={{ presentation: 'fullScreenModal', animation: 'fade' }} />
       </Stack>

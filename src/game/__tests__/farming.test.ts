@@ -186,8 +186,6 @@ describe('Blitz', () => {
     const r = applyAnswerAction(progressWith(), { question: q, correct: false, mode: 'free', chrono: true, now: AT_19H, creditedThisSession: false });
     expect(r.energySpent).toBe(0);
     expect(r.progress.energy.value).toBe(MAX_ENERGY);
-    const lesson = applyAnswerAction(progressWith(), { question: q, correct: false, mode: 'free', chrono: false, now: AT_19H, creditedThisSession: false });
-    expect(lesson.energySpent).toBe(1);
   });
 });
 

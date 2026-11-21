@@ -12,19 +12,7 @@ import { evaluateBadges, awardBadges, isEarlyHour, isNightHour, type BadgeId } f
 import { creditDailyXp, dailyRatio, ensureDaily } from './daily';
 import { daysBetween, localHour, toDayKey } from './dates';
 import { GEMS, SHOP, addGems, spendGems, streakMilestoneGems, xpMultiplier } from './economy';
-import {
-  LESSON_ENERGY_COST,
-  MISTAKE_ENERGY_COST,
-  PERFECT_ENERGY_REFUND,
-  canStartLesson,
-  currentEnergy,
-  maxEnergyFor,
-  modeCostsEnergy,
-  refillEnergy,
-  refundEnergy,
-  settleEnergy,
-  spendEnergy,
-} from './energy';
+import { currentEnergy, maxEnergyFor, modeCostsEnergy, refillEnergy, settleEnergy } from './energy';
 import { addLeagueXp, clearLeagueOutcome, ensureLeague } from './league';
 import { applyQuestEvent, ensureQuests, questsReward, type QuestEvent } from './quests';
 import { PATH_TRAITS, allUnitTraits, applyUnitSessionResult, newlyUnlocked, unitTraits } from './mastery';
@@ -32,6 +20,7 @@ import { MONTHLY_REWARD, ensureMonthly, recordMonthlyLesson } from './monthly';
 import { applyAnswer } from './review';
 import { gradeIsCorrect, reviewCard, type Grade } from './srs';
 import { recordActiveDay, sessionCountsForStreak } from './streak';
+import { creditStudy, settleStudy } from './study';
 import { MIN_SESSION_LENGTH, XP_CORRECT_REVIEW, addXp, isPerfectSession, levelUp, xpForAnswer, xpForSession } from './xp';
 import {
   emptyQuestionProgress,
@@ -55,7 +44,7 @@ import {
  */
 export function applyTick(progress: Progress, now: Date): Progress {
   const today = toDayKey(now);
-  return {
+  const ticked: Progress = {
     ...progress,
     quests: ensureQuests(progress.quests, today),
     league: ensureLeague(progress.league, today),
@@ -63,6 +52,7 @@ export function applyTick(progress: Progress, now: Date): Progress {
     daily: ensureDaily(progress.daily, today),
     monthly: ensureMonthly(progress.monthly, today),
   };
+  return settleStudy(ticked, today);
 }
 
 /** Fait avancer les quêtes et verse les récompenses des quêtes accomplies. */
@@ -81,15 +71,12 @@ function grantQuests(progress: Progress, event: QuestEvent): { progress: Progres
 }
 
 /**
- * Lancement d'une leçon : prélève l'énergie. Null si elle manque — l'écran
- * propose alors d'attendre, de recharger, ou de réviser gratuitement.
+ * Lancement d'une leçon. Depuis la 1.5, l'énergie ne limite plus rien :
+ * l'objectif est du TEMPS d'étude (study.ts), qu'une jauge viderait en
+ * vingt minutes. Le type garde `null` pour les écrans qui le gèrent encore.
  */
-export function applyStartLesson(progress: Progress, mode: SessionMode, now: Date): Progress | null {
-  const p = applyTick(progress, now);
-  if (!modeCostsEnergy(mode)) return p;
-  const max = maxEnergyFor(p.league);
-  if (!canStartLesson(p.energy, now, max)) return null;
-  return { ...p, energy: spendEnergy(p.energy, LESSON_ENERGY_COST, now, max) };
+export function applyStartLesson(progress: Progress, _mode: SessionMode, now: Date): Progress | null {
+  return applyTick(progress, now);
 }
 
 export interface AnswerAction {
@@ -127,6 +114,24 @@ export interface AnswerAction {
    * rattraper rapportait plus que réussir du premier coup.
    */
   retry?: boolean;
+  /** Temps passé sur cette réponse, en secondes (plafonné par study.ts), et sa matière. */
+  studySeconds?: number;
+  subjectId?: string;
+}
+
+/** Ce que le temps crédité a déclenché (voir study.ts). */
+export interface StudyOutcome {
+  halfReached: boolean;
+  goalReached: boolean;
+  gems: number;
+}
+
+const NO_STUDY: StudyOutcome = { halfReached: false, goalReached: false, gems: 0 };
+
+function credit(progress: Progress, subjectId: string | undefined, seconds: number | undefined, now: Date): { progress: Progress; study: StudyOutcome } {
+  if (subjectId === undefined || seconds === undefined) return { progress, study: NO_STUDY };
+  const r = creditStudy(progress, subjectId, seconds, toDayKey(now));
+  return { progress: r.progress, study: { halfReached: r.halfReached, goalReached: r.goalReached, gems: r.gems } };
 }
 
 export interface AnswerResult {
@@ -134,11 +139,12 @@ export interface AnswerResult {
   xpGained: number;
   enteredQueue: boolean;
   leftQueue: boolean;
-  /** L'erreur a coûté un point d'énergie. */
+  /** Toujours 0 depuis la 1.5 (l'énergie ne se dépense plus). */
   energySpent: number;
   questsCompleted: Quest[];
   /** L'objectif du jour vient d'être atteint avec cette réponse. */
   goalReached: boolean;
+  study: StudyOutcome;
 }
 
 /**
@@ -161,10 +167,6 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
     ? 0
     : xpForAnswer({ mode: action.mode, correct: action.correct, chrono: action.chrono }) * xpMultiplier(ticked.boost, action.now);
 
-  // Le Blitz (chrono) coûte ses 5 points au lancement, et rien de plus : en
-  // 60 s de réponses rapides, les erreurs videraient toute la jauge.
-  const energySpent = !action.correct && !action.chrono && modeCostsEnergy(action.mode) ? MISTAKE_ENERGY_COST : 0;
-
   let next: Progress = {
     ...ticked,
     xp: addXp(ticked.xp, xpGained),
@@ -176,7 +178,6 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
       ...ticked.counters,
       reviewRecovered: ticked.counters.reviewRecovered + (outcome.leftQueue ? 1 : 0),
     },
-    energy: energySpent > 0 ? spendEnergy(ticked.energy, energySpent, action.now, maxEnergyFor(ticked.league)) : ticked.energy,
     league: addLeagueXp(ticked.league, xpGained),
   };
 
@@ -196,14 +197,16 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
     questsCompleted = questsCompleted.concat(r.completed);
   }
 
+  const studied = credit(next, action.subjectId, action.studySeconds, action.now);
   return {
-    progress: next,
+    progress: studied.progress,
     xpGained,
     enteredQueue: outcome.enteredQueue,
     leftQueue: outcome.leftQueue,
-    energySpent,
+    energySpent: 0,
     questsCompleted,
     goalReached,
+    study: studied.study,
   };
 }
 
@@ -322,9 +325,8 @@ export function applySessionEnd(
   const ticked = applyTick(progress, now);
   let next: Progress = { ...ticked, xp: addXp(ticked.xp, bonusXp), league: addLeagueXp(ticked.league, bonusXp) };
 
-  // 1b. Énergie et gemmes de la session.
-  const energyRefunded = lesson && perfect ? PERFECT_ENERGY_REFUND : 0;
-  if (energyRefunded > 0) next = { ...next, energy: refundEnergy(next.energy, energyRefunded, now, maxEnergyFor(next.league)) };
+  // 1b. Gemmes de la session (l'énergie ne se rembourse plus : elle ne se dépense plus).
+  const energyRefunded = 0;
   let gemsGained = 0;
   if (counted) {
     if (lesson) gemsGained += GEMS.lesson + (perfect ? GEMS.perfect : 0);
@@ -467,6 +469,9 @@ export interface CardReviewAction {
   now: Date;
   /** Le visage sous lequel la carte a été montrée : retenu pour varier la fois suivante. */
   face?: CardFace;
+  /** Temps passé sur la carte, en secondes, et sa matière (voir study.ts). */
+  studySeconds?: number;
+  subjectId?: string;
 }
 
 export interface CardReviewResult {
@@ -475,6 +480,7 @@ export interface CardReviewResult {
   correct: boolean;
   questsCompleted: Quest[];
   goalReached: boolean;
+  study: StudyOutcome;
 }
 
 /** Jour local de la dernière révision d'une carte au deck ; null si jamais. */
@@ -543,7 +549,8 @@ export function applyCardReview(progress: Progress, action: CardReviewAction): C
     next = d.progress;
     goalReached = d.goalReached;
   }
-  return { progress: next, xpGained, correct, questsCompleted, goalReached };
+  const studied = credit(next, action.subjectId, action.studySeconds, action.now);
+  return { progress: studied.progress, xpGained, correct, questsCompleted, goalReached, study: studied.study };
 }
 
 /**

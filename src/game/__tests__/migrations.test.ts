@@ -1,5 +1,5 @@
 import { unitTraits } from '../mastery';
-import { CODE_KEYS_V1_1, grandfatherNewExercises, migratePersistedProgress, migrateProgress } from '../migrations';
+import { ADDED_KEYS_V1_5, CODE_KEYS_V1_1, grandfatherNewExercises, migratePersistedProgress, migrateProgress } from '../migrations';
 import { emptyProgress, emptyQuestionProgress, emptyUnitProgress, type Progress } from '../types';
 import { makeExercise } from './fixtures';
 
@@ -154,5 +154,15 @@ describe('v3 : exercices « lis le code » ajoutés en 1.1', () => {
     expect(from3.questions['py-1:w:1']).toBeUndefined();
     expect(migratePersistedProgress(undefined, 2)).toEqual(emptyProgress());
   });
-});
 
+  it('v4 : les unités IA acquises gardent leurs couronnes malgré les questions de la 1.4.3', () => {
+    const [added] = ADDED_KEYS_V1_5['ia-1'];
+    const raw = {
+      ...emptyProgress(),
+      units: { 'ia-1': { ...emptyUnitProgress('ia-1'), firstTraitEarned: true } },
+      questions: { 'ia-1:def:ia-hallucination': { ...emptyQuestionProgress('ia-1:def:ia-hallucination'), seen: 2, streak: 2 } },
+    };
+    expect(migratePersistedProgress(raw, 3).questions[added]?.streak).toBe(2);
+    expect(migratePersistedProgress(raw, 4).questions[added]).toBeUndefined();
+  });
+});

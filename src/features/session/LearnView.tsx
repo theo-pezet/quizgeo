@@ -4,7 +4,6 @@ import type { Card } from '@/content';
 import { useT } from '@/i18n';
 import { looksLikeCode } from '@/lib/code';
 import { Text, radius, space, tint, useColors } from '@/ui';
-import { ListenButton } from '@/ui/ListenButton';
 
 /**
  * Fiche « New » : la notion et son exemple, à lire (et écouter) avant les
@@ -14,7 +13,6 @@ import { ListenButton } from '@/ui/ListenButton';
 export function LearnView({ card, color }: { card: Card; color: string }) {
   const colors = useColors();
   const t = useT();
-  const spoken = card.example ? `${card.term}. ${card.definition} ${t('learn.example')}: ${card.example}` : `${card.term}. ${card.definition}`;
   return (
     <View style={styles.wrap}>
       <View style={[styles.pill, { backgroundColor: tint(color, 0.85) }]}>
@@ -36,7 +34,6 @@ export function LearnView({ card, color }: { card: Card; color: string }) {
           </Text>
         </View>
       ) : null}
-      <ListenButton text={spoken} color={color} label={t('listen.play')} />
       <Text variant="small" secondary>
         {t('learn.hint')}
       </Text>

@@ -9,7 +9,7 @@ import { useActiveSubjects } from '@/content/useSubjects';
 import { deckStats, toDayKey } from '@/game';
 import { formatDay, useLang, useT } from '@/i18n';
 import { useProgress } from '@/store/progress';
-import { Button, Card, Icon, Screen, Text, fonts, radius, shade, space, useColors } from '@/ui';
+import { Button, Card, Screen, Text, fonts, radius, shade, space, useColors } from '@/ui';
 
 export default function DeckScreen() {
   const colors = useColors();
@@ -68,12 +68,6 @@ export default function DeckScreen() {
         <Button
           label={stats.dueToday > 0 ? t('deck.reviewDue', { count: stats.dueToday }) : t('deck.learnNew')}
           onPress={() => router.push({ pathname: '/deck/review', params: subjectId ? { subjectId } : {} })}
-        />
-        <Button
-          label={t('listen.title')}
-          tone="outline"
-          icon={<Icon name="headset" size={18} color={colors.text} />}
-          onPress={() => router.push({ pathname: '/deck/listen', params: subjectId ? { subjectId } : {} })}
         />
       </Card>
       <TextInput

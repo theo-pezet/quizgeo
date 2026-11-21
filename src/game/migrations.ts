@@ -5,6 +5,7 @@
  * connus sont conservés tels quels.
  */
 
+import addedKeysV1_5 from './data/added-keys-v1.5.json';
 import codeKeysV1_1 from './data/code-keys-v1.1.json';
 import { emptyProgress, emptyQuestionProgress, type Progress } from './types';
 
@@ -43,6 +44,13 @@ export function migrateProgress(raw: unknown): Progress {
  * sienne. Toute clé d'exercice commence par « <unitId>: ».
  */
 export const CODE_KEYS_V1_1: Readonly<Record<string, readonly string[]>> = codeKeysV1_1;
+
+/**
+ * v4 (1.5) : les exercices écrits ajoutés en 1.4.3 et 1.5 à des unités qui
+ * existaient en 1.4.2 (liste FIGÉE à la sortie). Même traitement que la v3 :
+ * une unité acquise garde ses couronnes.
+ */
+export const ADDED_KEYS_V1_5: Readonly<Record<string, readonly string[]>> = addedKeysV1_5;
 
 /**
  * Hérite le niveau d'une unité sur les exercices qui lui ont été ajoutés.
@@ -96,5 +104,6 @@ export function grandfatherNewExercises(
 export function migratePersistedProgress(raw: unknown, fromVersion: number): Progress {
   let progress = migrateProgress(raw);
   if (fromVersion < 3) progress = grandfatherNewExercises(progress, CODE_KEYS_V1_1);
+  if (fromVersion < 4) progress = grandfatherNewExercises(progress, ADDED_KEYS_V1_5);
   return progress;
 }
