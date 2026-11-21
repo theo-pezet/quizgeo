@@ -4,38 +4,108 @@
 "web-x-cls-et-css"
 ],
 "css-x-auto-margins": [
-"css-x-margin"
+"css-x-margin",
+"css-x-margin-padding-gap"
+],
+"css-x-background-color": [
+"css-x-hex-color",
+"css-x-text-color",
+"web-x-couleurs-css",
+"web-x-mode-sombre-prefers-color-scheme"
+],
+"css-x-block-inline": [
+"css-x-inline-style"
+],
+"css-x-border": [
+"web-x-ombre-et-arrondi"
 ],
 "css-x-cascade-layers": [
 "web-x-specificite"
+],
+"css-x-class-selector": [
+"css-x-has-is-where",
+"css-x-id-selector",
+"css-x-selector-list",
+"css-x-type-selector",
+"web-x-selecteur"
 ],
 "css-x-echelle-typographique": [
 "css-x-aspect-ratio",
 "css-x-transform-translate-scale-rotate"
 ],
+"css-x-font-size": [
+"css-x-font-size-fluide-clamp",
+"css-x-font-weight",
+"web-x-pile-de-polices"
+],
 "css-x-font-size-fluide-clamp": [
+"css-x-font-size",
+"css-x-font-weight",
+"web-x-pile-de-polices"
+],
+"css-x-font-weight": [
+"css-x-font-size",
+"css-x-font-size-fluide-clamp",
 "web-x-pile-de-polices"
 ],
 "css-x-has-is-where": [
+"css-x-class-selector",
+"css-x-id-selector",
+"css-x-selector-list",
+"css-x-type-selector",
+"web-x-selecteur"
+],
+"css-x-hex-color": [
+"css-x-background-color",
+"css-x-text-color",
+"web-x-couleurs-css",
+"web-x-mode-sombre-prefers-color-scheme"
+],
+"css-x-id-selector": [
+"css-x-class-selector",
+"css-x-has-is-where",
+"css-x-selector-list",
+"css-x-type-selector",
 "web-x-selecteur"
 ],
 "css-x-inline-style": [
+"css-x-block-inline",
 "css-x-style-tag"
+],
+"css-x-largeur-de-lecture-ch": [
+"css-x-width-height"
 ],
 "css-x-letter-spacing-text-transform": [
 "css-x-transform-translate-scale-rotate"
+],
+"css-x-line-height-rythme-vertical": [
+"css-x-width-height"
 ],
 "css-x-link-tag": [
 "css-x-stylesheet"
 ],
 "css-x-margin": [
-"css-x-auto-margins"
+"css-x-auto-margins",
+"css-x-margin-padding-gap"
 ],
 "css-x-margin-padding-gap": [
+"css-x-auto-margins",
+"css-x-margin",
+"css-x-padding",
 "web-x-box-model"
+],
+"css-x-padding": [
+"css-x-margin-padding-gap"
 ],
 "css-x-sass-vs-custom-properties": [
 "web-x-variables-css"
+],
+"css-x-selector-list": [
+"css-x-class-selector",
+"css-x-has-is-where",
+"css-x-id-selector",
+"css-x-type-selector",
+"web-x-selecteur"
 ],
 "css-x-style-tag": [
 "css-x-inline-style"
@@ -43,14 +113,41 @@
 "css-x-stylesheet": [
 "css-x-link-tag"
 ],
+"css-x-text-color": [
+"css-x-background-color",
+"css-x-hex-color",
+"web-x-couleurs-css",
+"web-x-mode-sombre-prefers-color-scheme"
+],
 "css-x-transform-translate-scale-rotate": [
 "css-x-echelle-typographique",
 "css-x-letter-spacing-text-transform"
 ],
+"css-x-type-selector": [
+"css-x-class-selector",
+"css-x-has-is-where",
+"css-x-id-selector",
+"css-x-selector-list",
+"web-x-selecteur"
+],
+"css-x-width-height": [
+"css-x-largeur-de-lecture-ch",
+"css-x-line-height-rythme-vertical"
+],
 "html-x-aria-label-role": [
 "html-x-label-for"
 ],
+"html-x-attribute": [
+"html-x-attributs-lang-dir",
+"html-x-form-action-method",
+"html-x-global-attributes-id-class",
+"html-x-label-for",
+"html-x-link-target-rel",
+"web-x-attribut-alt",
+"web-x-attributs-data"
+],
 "html-x-attributs-lang-dir": [
+"html-x-attribute",
 "html-x-form-action-method",
 "html-x-global-attributes-id-class",
 "html-x-label-for",
@@ -60,14 +157,17 @@
 ],
 "html-x-balise-picture": [
 "html-x-button-submit",
+"html-x-html-element",
 "html-x-label-for",
 "html-x-srcset-sizes-formats",
 "html-x-table-structure",
+"html-x-void",
 "web-x-balise-semantique",
 "web-x-balise-title"
 ],
 "html-x-button-submit": [
 "html-x-balise-picture",
+"html-x-html-tag",
 "html-x-label-for",
 "web-x-balise-semantique",
 "web-x-balise-title",
@@ -75,6 +175,7 @@
 "web-x-tag-declencheur-variable"
 ],
 "html-x-form-action-method": [
+"html-x-attribute",
 "html-x-attributs-lang-dir",
 "html-x-global-attributes-id-class",
 "html-x-label-for",
@@ -84,6 +185,7 @@
 "web-x-formulaire"
 ],
 "html-x-global-attributes-id-class": [
+"html-x-attribute",
 "html-x-attributs-lang-dir",
 "html-x-form-action-method",
 "html-x-label-for",
@@ -91,24 +193,42 @@
 "web-x-attribut-alt",
 "web-x-attributs-data"
 ],
+"html-x-headings": [
+"web-x-hierarchie-de-titres"
+],
 "html-x-html-element": [
+"html-x-balise-picture",
 "html-x-html-tag",
-"html-x-open-close"
+"html-x-open-close",
+"html-x-table-structure",
+"html-x-void"
 ],
 "html-x-html-tag": [
+"html-x-button-submit",
 "html-x-html-element",
-"html-x-open-close"
+"html-x-label-for",
+"html-x-open-close",
+"web-x-balise-title",
+"web-x-google-tag-manager",
+"web-x-tag-declencheur-variable"
 ],
 "html-x-image-decorative-alt-vide": [
+"html-x-img",
+"html-x-void",
 "web-x-attribut-alt"
+],
+"html-x-img": [
+"html-x-image-decorative-alt-vide"
 ],
 "html-x-label-for": [
 "html-x-aria-label-role",
+"html-x-attribute",
 "html-x-attributs-lang-dir",
 "html-x-balise-picture",
 "html-x-button-submit",
 "html-x-form-action-method",
 "html-x-global-attributes-id-class",
+"html-x-html-tag",
 "html-x-link-target-rel",
 "web-x-attribut-alt",
 "web-x-attributs-data",
@@ -117,11 +237,17 @@
 "web-x-google-tag-manager",
 "web-x-tag-declencheur-variable"
 ],
+"html-x-link-a": [
+"html-x-link-target-rel",
+"web-x-lien-canonique"
+],
 "html-x-link-target-rel": [
+"html-x-attribute",
 "html-x-attributs-lang-dir",
 "html-x-form-action-method",
 "html-x-global-attributes-id-class",
 "html-x-label-for",
+"html-x-link-a",
 "web-x-attribut-alt",
 "web-x-attributs-data",
 "web-x-lien-canonique"
@@ -131,19 +257,32 @@
 ],
 "html-x-open-close": [
 "html-x-html-element",
-"html-x-html-tag"
+"html-x-html-tag",
+"web-x-balise-semantique"
 ],
 "html-x-srcset-sizes-formats": [
 "html-x-balise-picture",
 "web-x-lazy-loading"
 ],
 "html-x-table-structure": [
-"html-x-balise-picture"
+"html-x-balise-picture",
+"html-x-html-element",
+"html-x-void"
+],
+"html-x-void": [
+"html-x-balise-picture",
+"html-x-html-element",
+"html-x-image-decorative-alt-vide",
+"html-x-table-structure"
 ],
 "ia-agent": [
 "ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
 "ia-x-automatisation-marketing-par-agents",
+"ia-x-coding-agent",
 "ia-x-evaluation-d-agent",
+"ia-x-least-privilege-agent",
 "ia-x-memoire-d-agent",
 "ia-x-multi-agents"
 ],
@@ -156,6 +295,9 @@
 "ia-bias-mitigation",
 "ia-x-biais-algorithmique",
 "ia-x-compromis-biais-variance"
+],
+"ia-api-key": [
+"ia-x-env-api-key"
 ],
 "ia-attention-mechanism": [
 "ia-x-attention-is-all-you-need"
@@ -196,6 +338,8 @@
 ],
 "ia-context-window": [
 "ia-in-context-learning",
+"ia-x-context-engineering",
+"ia-x-context-rot",
 "ia-x-fenetre-de-contexte",
 "ia-x-mcp-model-context-protocol"
 ],
@@ -231,7 +375,21 @@
 ],
 "ia-first-party-data": [
 "ia-third-party-data",
-"ia-zero-party-data"
+"ia-zero-party-data",
+"marketing-api-first-architecture",
+"marketing-api-first-strategy",
+"marketing-first-click-attribution",
+"marketing-first-contentful-paint",
+"marketing-first-mover-advantage",
+"marketing-first-party-cookies",
+"marketing-first-party-data-strategy",
+"marketing-first-price-auction",
+"marketing-first-principles-thinking",
+"marketing-mobile-first-indexing",
+"marketing-third-party-cookies-deprecation",
+"marketing-zero-party-data-enrichment",
+"marketing-zero-party-data-strategy",
+"marketing-zero-party-strategy"
 ],
 "ia-gpu": [
 "ia-compute"
@@ -248,7 +406,11 @@
 "ia-in-context-learning": [
 "ia-context-window",
 "ia-x-apprentissage-par-renforcement",
+"ia-x-context-engineering",
+"ia-x-context-rot",
+"ia-x-deep-learning",
 "ia-x-fenetre-de-contexte",
+"ia-x-machine-learning-plain",
 "ia-x-mcp-model-context-protocol",
 "ia-x-supervise-vs-non-supervise"
 ],
@@ -258,6 +420,7 @@
 "ia-inference-cost": [
 "ia-inference",
 "ia-x-batchs-seeds-et-cout-d-iteration",
+"ia-x-cost-budget",
 "ia-x-cout-d-entrainement",
 "ia-x-cout-par-token"
 ],
@@ -298,7 +461,9 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -329,6 +494,7 @@
 "ia-x-role-persona"
 ],
 "ia-personalized-generative-ai": [
+"ia-x-generative-ai",
 "ia-x-geo-generative-engine-optimization",
 "ia-x-instructions-personnalisees-memoire-projets"
 ],
@@ -348,7 +514,9 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -361,7 +529,9 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -374,7 +544,9 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -387,14 +559,18 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
 ],
 "ia-regression-analysis": [
 "ia-survival-analysis",
+"ia-x-ai-regression",
 "ia-x-classification-vs-regression",
+"ia-x-error-analysis",
 "ia-x-regression-lineaire-logistique"
 ],
 "ia-rlaif": [
@@ -411,13 +587,31 @@
 "ia-x-batchs-seeds-et-cout-d-iteration"
 ],
 "ia-small-language-model-slm": [
-"ia-vision-language-model"
+"ia-vision-language-model",
+"ia-x-llm-plain"
 ],
 "ia-sparsity": [
 "ia-moe"
 ],
 "ia-survival-analysis": [
-"ia-regression-analysis"
+"ia-regression-analysis",
+"marketing-causal-impact-analysis",
+"marketing-churn-analysis",
+"marketing-cohort-analysis",
+"marketing-cohort-analysis-behavioral",
+"marketing-competitive-analysis",
+"marketing-customer-cohort-analysis",
+"marketing-keyword-gap-analysis",
+"marketing-latent-class-analysis",
+"marketing-log-file-analysis",
+"marketing-market-basket-analysis",
+"marketing-order-gap-analysis",
+"marketing-p-e-s-t-e-l-analysis",
+"marketing-pca-principal-component-analysis",
+"marketing-rfm-analysis",
+"marketing-s-w-o-t-analysis",
+"marketing-sentiment-analysis",
+"marketing-swot-analysis"
 ],
 "ia-synthetic-data": [
 "ia-data-leakage-ai",
@@ -436,7 +630,9 @@
 "ia-prompt-sensitivity",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -456,10 +652,18 @@
 ],
 "ia-third-party-data": [
 "ia-first-party-data",
-"ia-zero-party-data"
+"ia-zero-party-data",
+"marketing-first-party-cookies",
+"marketing-first-party-data-strategy",
+"marketing-third-party-cookies-deprecation",
+"marketing-zero-party-data-enrichment",
+"marketing-zero-party-data-strategy",
+"marketing-zero-party-strategy"
 ],
 "ia-token-limit": [
-"ia-x-cout-par-token"
+"ia-x-cout-par-token",
+"ia-x-max-tokens",
+"ia-x-rate-limit-retry"
 ],
 "ia-training-data": [
 "ia-data-leakage-ai",
@@ -495,26 +699,63 @@
 ],
 "ia-vision-language-model": [
 "ia-small-language-model-slm",
+"ia-x-llm-plain",
 "ia-x-vision-par-ordinateur"
 ],
 "ia-x-agent-ia": [
 "ia-agent",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
 "ia-x-automatisation-marketing-par-agents",
 "ia-x-boucle-agentique",
+"ia-x-coding-agent",
 "ia-x-evaluation-d-agent",
+"ia-x-least-privilege-agent",
 "ia-x-memoire-d-agent",
 "ia-x-multi-agents"
+],
+"ia-x-agent-loop-code": [
+"ia-agent",
+"ia-x-agent-ia",
+"ia-x-agent-skill",
+"ia-x-automatisation-marketing-par-agents",
+"ia-x-boucle-agentique",
+"ia-x-coding-agent",
+"ia-x-evaluation-d-agent",
+"ia-x-humain-dans-la-boucle",
+"ia-x-least-privilege-agent",
+"ia-x-memoire-d-agent",
+"ia-x-multi-agents"
+],
+"ia-x-agent-skill": [
+"ia-agent",
+"ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-automatisation-marketing-par-agents",
+"ia-x-coding-agent",
+"ia-x-evaluation-d-agent",
+"ia-x-least-privilege-agent",
+"ia-x-memoire-d-agent",
+"ia-x-multi-agents"
+],
+"ia-x-ai-regression": [
+"ia-regression-analysis",
+"ia-x-classification-vs-regression",
+"ia-x-regression-lineaire-logistique"
 ],
 "ia-x-appel-d-outil-tool-use": [
 "ia-x-computer-use"
 ],
 "ia-x-apprentissage-par-renforcement": [
 "ia-in-context-learning",
+"ia-x-deep-learning",
+"ia-x-machine-learning-plain",
 "ia-x-supervise-vs-non-supervise"
 ],
 "ia-x-assistant-de-code-vibe-coding": [
 "ia-closed-source-ai",
-"ia-x-assistant-ia-generaliste"
+"ia-x-assistant-ia-generaliste",
+"ia-x-coding-agent"
 ],
 "ia-x-assistant-ia-generaliste": [
 "ia-x-assistant-de-code-vibe-coding",
@@ -527,8 +768,12 @@
 "ia-x-automatisation-marketing-par-agents": [
 "ia-agent",
 "ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
 "ia-x-automatisation-no-code-ia",
+"ia-x-coding-agent",
 "ia-x-evaluation-d-agent",
+"ia-x-least-privilege-agent",
 "ia-x-memoire-d-agent",
 "ia-x-multi-agents"
 ],
@@ -549,6 +794,7 @@
 "ia-x-batchs-seeds-et-cout-d-iteration": [
 "ia-inference-cost",
 "ia-seed",
+"ia-x-cost-budget",
 "ia-x-cout-d-entrainement",
 "ia-x-cout-par-token"
 ],
@@ -566,7 +812,9 @@
 "ia-prompt-sensitivity",
 "ia-system-prompt",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -574,6 +822,7 @@
 "ia-x-boucle-agentique": [
 "ia-agentic-workflow",
 "ia-x-agent-ia",
+"ia-x-agent-loop-code",
 "ia-x-humain-dans-la-boucle"
 ],
 "ia-x-cache-de-prompt": [
@@ -584,7 +833,9 @@
 "ia-prompt-sensitivity",
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -611,6 +862,7 @@
 ],
 "ia-x-classification-vs-regression": [
 "ia-regression-analysis",
+"ia-x-ai-regression",
 "ia-x-regression-lineaire-logistique"
 ],
 "ia-x-clonage-de-voix-et-consentement": [
@@ -618,6 +870,18 @@
 ],
 "ia-x-clustering": [
 "ia-k-means-clustering"
+],
+"ia-x-coding-agent": [
+"ia-agent",
+"ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
+"ia-x-assistant-de-code-vibe-coding",
+"ia-x-automatisation-marketing-par-agents",
+"ia-x-evaluation-d-agent",
+"ia-x-least-privilege-agent",
+"ia-x-memoire-d-agent",
+"ia-x-multi-agents"
 ],
 "ia-x-compromis-biais-variance": [
 "ia-algorithmic-bias",
@@ -636,6 +900,20 @@
 "ia-x-droits-d-auteur-des-images-generees",
 "ia-x-mention-genere-par-ia"
 ],
+"ia-x-context-engineering": [
+"ia-context-window",
+"ia-in-context-learning",
+"ia-x-context-rot",
+"ia-x-fenetre-de-contexte",
+"ia-x-mcp-model-context-protocol"
+],
+"ia-x-context-rot": [
+"ia-context-window",
+"ia-in-context-learning",
+"ia-x-context-engineering",
+"ia-x-fenetre-de-contexte",
+"ia-x-mcp-model-context-protocol"
+],
 "ia-x-corpus-d-entrainement": [
 "ia-pre-training",
 "ia-training-data",
@@ -643,12 +921,19 @@
 "ia-x-droit-d-auteur-et-entrainement",
 "ia-x-train-validation-test"
 ],
+"ia-x-cost-budget": [
+"ia-inference-cost",
+"ia-x-batchs-seeds-et-cout-d-iteration",
+"ia-x-cout-d-entrainement",
+"ia-x-cout-par-token"
+],
 "ia-x-cout-d-entrainement": [
 "ia-inference-cost",
 "ia-pre-training",
 "ia-training-data",
 "ia-x-batchs-seeds-et-cout-d-iteration",
 "ia-x-corpus-d-entrainement",
+"ia-x-cost-budget",
 "ia-x-cout-par-token",
 "ia-x-droit-d-auteur-et-entrainement",
 "ia-x-train-validation-test"
@@ -657,13 +942,27 @@
 "ia-inference-cost",
 "ia-token-limit",
 "ia-x-batchs-seeds-et-cout-d-iteration",
-"ia-x-cout-d-entrainement"
+"ia-x-cost-budget",
+"ia-x-cout-d-entrainement",
+"ia-x-max-tokens"
 ],
 "ia-x-deep-blue": [
+"ia-x-deep-learning",
 "ia-x-recherche-approfondie-deep-research"
+],
+"ia-x-deep-learning": [
+"ia-in-context-learning",
+"ia-x-apprentissage-par-renforcement",
+"ia-x-deep-blue",
+"ia-x-machine-learning-plain",
+"ia-x-recherche-approfondie-deep-research",
+"ia-x-supervise-vs-non-supervise"
 ],
 "ia-x-deepfake": [
 "ia-x-detection-de-deepfake"
+],
+"ia-x-definition-of-done": [
+"ia-x-tool-definition"
 ],
 "ia-x-detection-de-deepfake": [
 "ia-x-deepfake"
@@ -691,11 +990,21 @@
 "ia-x-embedding": [
 "ia-embedding"
 ],
+"ia-x-env-api-key": [
+"ia-api-key"
+],
+"ia-x-error-analysis": [
+"ia-regression-analysis"
+],
 "ia-x-evaluation-d-agent": [
 "ia-agent",
 "ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
 "ia-x-automatisation-marketing-par-agents",
+"ia-x-coding-agent",
 "ia-x-jeu-d-evaluation",
+"ia-x-least-privilege-agent",
 "ia-x-memoire-d-agent",
 "ia-x-multi-agents"
 ],
@@ -705,6 +1014,8 @@
 "ia-x-fenetre-de-contexte": [
 "ia-context-window",
 "ia-in-context-learning",
+"ia-x-context-engineering",
+"ia-x-context-rot",
 "ia-x-mcp-model-context-protocol"
 ],
 "ia-x-fine-tuning-supervise-sft": [
@@ -722,11 +1033,21 @@
 "ia-x-generation-video": [
 "ia-text-to-video"
 ],
+"ia-x-generative-ai": [
+"ia-personalized-generative-ai",
+"ia-x-geo-generative-engine-optimization"
+],
 "ia-x-geo-generative-engine-optimization": [
-"ia-personalized-generative-ai"
+"ia-personalized-generative-ai",
+"ia-x-generative-ai"
 ],
 "ia-x-humain-dans-la-boucle": [
-"ia-x-boucle-agentique"
+"ia-x-agent-loop-code",
+"ia-x-boucle-agentique",
+"ia-x-human-checkpoint"
+],
+"ia-x-human-checkpoint": [
+"ia-x-humain-dans-la-boucle"
 ],
 "ia-x-ia-suite-bureautique": [
 "ia-creative-suite-ai",
@@ -738,9 +1059,25 @@
 "ia-x-droits-d-auteur-des-images-generees",
 "ia-x-structure-d-un-prompt-d-image"
 ],
+"ia-x-indirect-injection": [
+"ia-negative-prompt",
+"ia-prompt-chaining",
+"ia-prompt-injection",
+"ia-prompt-library",
+"ia-prompt-sensitivity",
+"ia-system-prompt",
+"ia-x-bibliotheque-de-prompts",
+"ia-x-cache-de-prompt",
+"ia-x-prompt-injection",
+"ia-x-prompt-plain",
+"ia-x-prompt-systeme",
+"ia-x-structure-d-un-prompt-d-image",
+"ia-x-template-de-prompt-equipe"
+],
 "ia-x-instructions-personnalisees-memoire-projets": [
 "ia-personalized-generative-ai",
-"ia-x-memoire-d-agent"
+"ia-x-memoire-d-agent",
+"ia-x-project-instructions"
 ],
 "ia-x-jailbreak": [
 "ia-x-prompt-injection"
@@ -749,17 +1086,53 @@
 "ia-x-evaluation-d-agent",
 "ia-x-train-validation-test"
 ],
+"ia-x-least-privilege-agent": [
+"ia-agent",
+"ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
+"ia-x-automatisation-marketing-par-agents",
+"ia-x-coding-agent",
+"ia-x-evaluation-d-agent",
+"ia-x-memoire-d-agent",
+"ia-x-multi-agents"
+],
+"ia-x-llm-judge": [
+"ia-x-llm-plain"
+],
+"ia-x-llm-plain": [
+"ia-small-language-model-slm",
+"ia-vision-language-model",
+"ia-x-llm-judge"
+],
+"ia-x-machine-learning-plain": [
+"ia-in-context-learning",
+"ia-x-apprentissage-par-renforcement",
+"ia-x-deep-learning",
+"ia-x-supervise-vs-non-supervise"
+],
+"ia-x-max-tokens": [
+"ia-token-limit",
+"ia-x-cout-par-token"
+],
 "ia-x-mcp-model-context-protocol": [
 "ia-context-window",
 "ia-in-context-learning",
-"ia-x-fenetre-de-contexte"
+"ia-x-context-engineering",
+"ia-x-context-rot",
+"ia-x-fenetre-de-contexte",
+"ia-x-untrusted-mcp"
 ],
 "ia-x-memoire-d-agent": [
 "ia-agent",
 "ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
 "ia-x-automatisation-marketing-par-agents",
+"ia-x-coding-agent",
 "ia-x-evaluation-d-agent",
 "ia-x-instructions-personnalisees-memoire-projets",
+"ia-x-least-privilege-agent",
 "ia-x-multi-agents"
 ],
 "ia-x-mention-de-marque": [
@@ -770,6 +1143,9 @@
 "ia-x-droits-d-auteur-des-images-generees",
 "ia-x-features-et-labels",
 "ia-x-mention-de-marque"
+],
+"ia-x-messages-roles": [
+"ia-x-role-persona"
 ],
 "ia-x-modele-a-usage-general-gpai": [
 "ia-x-assistant-ia-generaliste",
@@ -787,8 +1163,12 @@
 "ia-x-multi-agents": [
 "ia-agent",
 "ia-x-agent-ia",
+"ia-x-agent-loop-code",
+"ia-x-agent-skill",
 "ia-x-automatisation-marketing-par-agents",
+"ia-x-coding-agent",
 "ia-x-evaluation-d-agent",
+"ia-x-least-privilege-agent",
 "ia-x-memoire-d-agent"
 ],
 "ia-x-multimodal": [
@@ -803,6 +1183,9 @@
 "ia-x-poids-weights": [
 "ia-x-modele-ferme-vs-poids-ouverts"
 ],
+"ia-x-project-instructions": [
+"ia-x-instructions-personnalisees-memoire-projets"
+],
 "ia-x-prompt-injection": [
 "ia-negative-prompt",
 "ia-prompt-chaining",
@@ -812,7 +1195,24 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-jailbreak",
+"ia-x-prompt-plain",
+"ia-x-prompt-systeme",
+"ia-x-structure-d-un-prompt-d-image",
+"ia-x-template-de-prompt-equipe"
+],
+"ia-x-prompt-plain": [
+"ia-negative-prompt",
+"ia-prompt-chaining",
+"ia-prompt-injection",
+"ia-prompt-library",
+"ia-prompt-sensitivity",
+"ia-system-prompt",
+"ia-x-bibliotheque-de-prompts",
+"ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
+"ia-x-prompt-injection",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
@@ -826,15 +1226,22 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-structure-d-un-prompt-d-image",
 "ia-x-template-de-prompt-equipe"
 ],
+"ia-x-rate-limit-retry": [
+"ia-token-limit"
+],
 "ia-x-recherche-approfondie-deep-research": [
-"ia-x-deep-blue"
+"ia-x-deep-blue",
+"ia-x-deep-learning"
 ],
 "ia-x-regression-lineaire-logistique": [
 "ia-regression-analysis",
+"ia-x-ai-regression",
 "ia-x-classification-vs-regression"
 ],
 "ia-x-reseau-convolutif": [
@@ -842,6 +1249,7 @@
 ],
 "ia-x-role-persona": [
 "ia-persona-ai",
+"ia-x-messages-roles",
 "ia-x-persona-synthetique"
 ],
 "ia-x-speech-to-text": [
@@ -860,14 +1268,18 @@
 "ia-x-choisir-son-generateur-d-image",
 "ia-x-droits-d-auteur-des-images-generees",
 "ia-x-image-de-reference-et-coherence",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-template-de-prompt-equipe"
 ],
 "ia-x-supervise-vs-non-supervise": [
 "ia-in-context-learning",
 "ia-x-apprentissage-par-renforcement",
-"ia-x-fine-tuning-supervise-sft"
+"ia-x-deep-learning",
+"ia-x-fine-tuning-supervise-sft",
+"ia-x-machine-learning-plain"
 ],
 "ia-x-synthese-vocale": [
 "ia-x-clonage-de-voix-et-consentement",
@@ -885,13 +1297,18 @@
 "ia-system-prompt",
 "ia-x-bibliotheque-de-prompts",
 "ia-x-cache-de-prompt",
+"ia-x-indirect-injection",
 "ia-x-prompt-injection",
+"ia-x-prompt-plain",
 "ia-x-prompt-systeme",
 "ia-x-structure-d-un-prompt-d-image"
 ],
 "ia-x-test-de-turing": [
 "ia-turing-completeness",
 "ia-turing-test"
+],
+"ia-x-tool-definition": [
+"ia-x-definition-of-done"
 ],
 "ia-x-train-validation-test": [
 "ia-pre-training",
@@ -900,6 +1317,9 @@
 "ia-x-cout-d-entrainement",
 "ia-x-droit-d-auteur-et-entrainement",
 "ia-x-jeu-d-evaluation"
+],
+"ia-x-untrusted-mcp": [
+"ia-x-mcp-model-context-protocol"
 ],
 "ia-x-upscale-et-export-hd": [
 "ia-upscaling"
@@ -921,7 +1341,13 @@
 ],
 "ia-zero-party-data": [
 "ia-first-party-data",
-"ia-third-party-data"
+"ia-third-party-data",
+"marketing-first-party-cookies",
+"marketing-first-party-data-strategy",
+"marketing-third-party-cookies-deprecation",
+"marketing-zero-party-data-enrichment",
+"marketing-zero-party-data-strategy",
+"marketing-zero-party-strategy"
 ],
 "ia-zero-shot": [
 "ia-few-shot",
@@ -936,6 +1362,23 @@
 "js-x-tableau-d-objets",
 "js-x-template-literals",
 "web-x-objet-et-json"
+],
+"js-x-argument": [
+"js-x-parameter"
+],
+"js-x-arithmetic": [
+"js-x-assignment",
+"js-x-comparison",
+"js-x-logical"
+],
+"js-x-array": [
+"js-x-tableau-d-objets",
+"web-x-methodes-de-tableau"
+],
+"js-x-assignment": [
+"js-x-arithmetic",
+"js-x-comparison",
+"js-x-logical"
 ],
 "js-x-async-await-gestion-erreur": [
 "js-x-promise-then-catch-all",
@@ -952,6 +1395,21 @@
 ],
 "js-x-closure": [
 "js-x-fonction-ordre-superieur"
+],
+"js-x-comparison": [
+"js-x-arithmetic",
+"js-x-assignment",
+"js-x-logical"
+],
+"js-x-console-log": [
+"web-x-console-du-navigateur"
+],
+"js-x-const": [
+"js-x-const-let-portee-de-bloc"
+],
+"js-x-const-let-portee-de-bloc": [
+"js-x-const",
+"js-x-let"
 ],
 "js-x-customevent-delegation": [
 "web-x-evenement"
@@ -988,12 +1446,32 @@
 "js-x-destructuring-et-spread",
 "js-x-reference-vs-valeur"
 ],
+"js-x-for-loop": [
+"js-x-for-of"
+],
+"js-x-for-of": [
+"js-x-for-loop"
+],
+"js-x-function-call": [
+"js-x-this-et-contexte"
+],
+"js-x-let": [
+"js-x-const-let-portee-de-bloc"
+],
+"js-x-logical": [
+"js-x-arithmetic",
+"js-x-assignment",
+"js-x-comparison"
+],
 "js-x-map": [
 "js-x-chainage-methodes",
 "js-x-find-some-every",
 "js-x-reduce",
 "js-x-set-et-map",
 "web-x-methodes-de-tableau"
+],
+"js-x-not-equal": [
+"js-x-strict-equality"
 ],
 "js-x-npm-package-json-semver": [
 "js-x-fetch-avance-post-abort",
@@ -1006,6 +1484,9 @@
 ],
 "js-x-optional-chaining-et-nullish": [
 "js-x-chainage-methodes"
+],
+"js-x-parameter": [
+"js-x-argument"
 ],
 "js-x-promise-then-catch-all": [
 "js-x-async-await-gestion-erreur",
@@ -1031,8 +1512,15 @@
 "js-x-sort": [
 "js-x-fonction-ordre-superieur"
 ],
+"js-x-strict-equality": [
+"js-x-not-equal"
+],
+"js-x-string": [
+"web-query-string"
+],
 "js-x-tableau-d-objets": [
 "js-x-acces-aux-proprietes",
+"js-x-array",
 "web-x-methodes-de-tableau",
 "web-x-objet-et-json"
 ],
@@ -1040,6 +1528,7 @@
 "js-x-acces-aux-proprietes"
 ],
 "js-x-this-et-contexte": [
+"js-x-function-call",
 "web-x-fonction-flechee"
 ],
 "js-x-try-catch-finally-throw": [
@@ -1075,6 +1564,7 @@
 "marketing-aarrr-activation",
 "marketing-aarrr-framework",
 "marketing-aarrr-revenue",
+"marketing-k-factor",
 "marketing-referral",
 "marketing-referral-program-mechanics",
 "marketing-referral-traffic",
@@ -1287,6 +1777,7 @@
 "marketing-call-to-value"
 ],
 "marketing-api-first-architecture": [
+"ia-first-party-data",
 "marketing-api-first-strategy",
 "marketing-cx-architecture",
 "marketing-first-click-attribution",
@@ -1301,6 +1792,7 @@
 "marketing-mobile-first-indexing"
 ],
 "marketing-api-first-strategy": [
+"ia-first-party-data",
 "marketing-api-first-architecture",
 "marketing-composable-cdp",
 "marketing-composable-tech-stack",
@@ -1997,6 +2489,7 @@
 "marketing-blended-cac",
 "marketing-cac-payback-formula",
 "marketing-clv-cac-ratio-target",
+"marketing-cpa",
 "marketing-ltv-cac-ratio",
 "marketing-ltv-cac-ratio-2",
 "marketing-marginal-cac"
@@ -2050,6 +2543,7 @@
 "marketing-touchpoint"
 ],
 "marketing-causal-impact-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-model",
 "marketing-causal-inference",
 "marketing-churn-analysis",
@@ -2127,6 +2621,7 @@
 "marketing-x-flux-google-shopping"
 ],
 "marketing-churn-analysis": [
+"ia-survival-analysis",
 "marketing-anti-churn-campaign",
 "marketing-causal-impact-analysis",
 "marketing-churn-prediction",
@@ -2337,6 +2832,7 @@
 "marketing-cognitive-dissonance"
 ],
 "marketing-cohort-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis-behavioral",
@@ -2357,6 +2853,7 @@
 "marketing-swot-analysis"
 ],
 "marketing-cohort-analysis-behavioral": [
+"ia-survival-analysis",
 "marketing-behavioral-targeting",
 "marketing-behavioral-trigger",
 "marketing-causal-impact-analysis",
@@ -2437,6 +2934,7 @@
 "marketing-first-mover-advantage"
 ],
 "marketing-competitive-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -2705,6 +3203,9 @@
 "marketing-sunk-cost-fallacy",
 "marketing-x-frais-de-port-et-livraison"
 ],
+"marketing-cpa": [
+"marketing-cac"
+],
 "marketing-cpc": [
 "marketing-ppc"
 ],
@@ -2790,6 +3291,7 @@
 "marketing-viral-growth"
 ],
 "marketing-customer-cohort-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -3623,6 +4125,7 @@
 "marketing-device-fingerprinting"
 ],
 "marketing-first-click-attribution": [
+"ia-first-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-attribution-bias",
@@ -3651,6 +4154,7 @@
 "marketing-zero-click-search"
 ],
 "marketing-first-contentful-paint": [
+"ia-first-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-first-click-attribution",
@@ -3663,6 +4167,7 @@
 "marketing-mobile-first-indexing"
 ],
 "marketing-first-mover-advantage": [
+"ia-first-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-competitive-advantage",
@@ -3675,6 +4180,9 @@
 "marketing-mobile-first-indexing"
 ],
 "marketing-first-party-cookies": [
+"ia-first-party-data",
+"ia-third-party-data",
+"ia-zero-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-cookie",
@@ -3693,6 +4201,9 @@
 "marketing-zero-party-strategy"
 ],
 "marketing-first-party-data-strategy": [
+"ia-first-party-data",
+"ia-third-party-data",
+"ia-zero-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-first-click-attribution",
@@ -3708,6 +4219,7 @@
 "marketing-zero-party-strategy"
 ],
 "marketing-first-price-auction": [
+"ia-first-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-charm-pricing",
@@ -3729,6 +4241,7 @@
 "marketing-value-based-pricing"
 ],
 "marketing-first-principles-thinking": [
+"ia-first-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-first-click-attribution",
@@ -4241,6 +4754,7 @@
 "marketing-throttling"
 ],
 "marketing-k-factor": [
+"marketing-aarrr-referral-viral-coefficient",
 "marketing-viral-coefficient",
 "marketing-viral-growth",
 "marketing-virality-coefficient"
@@ -4293,6 +4807,7 @@
 "marketing-x-pages-locales"
 ],
 "marketing-keyword-gap-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -4410,6 +4925,7 @@
 "marketing-zero-click-search"
 ],
 "marketing-latent-class-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -4444,7 +4960,8 @@
 "marketing-lead-routing",
 "marketing-lead-scoring",
 "marketing-lead-velocity",
-"marketing-lead-velocity-rate-lvr"
+"marketing-lead-velocity-rate-lvr",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lead-decay": [
 "marketing-content-decay",
@@ -4459,7 +4976,8 @@
 "marketing-lead-scoring",
 "marketing-lead-velocity",
 "marketing-lead-velocity-rate-lvr",
-"marketing-time-decay-attribution"
+"marketing-time-decay-attribution",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lead-generation": [
 "marketing-demand-generation",
@@ -4472,7 +4990,8 @@
 "marketing-lead-routing",
 "marketing-lead-scoring",
 "marketing-lead-velocity",
-"marketing-lead-velocity-rate-lvr"
+"marketing-lead-velocity-rate-lvr",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lead-magnet": [
 "marketing-gated-content",
@@ -4485,7 +5004,8 @@
 "marketing-lead-routing",
 "marketing-lead-scoring",
 "marketing-lead-velocity",
-"marketing-lead-velocity-rate-lvr"
+"marketing-lead-velocity-rate-lvr",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lead-magnet-advanced": [
 "marketing-gated-content",
@@ -4498,7 +5018,8 @@
 "marketing-lead-routing",
 "marketing-lead-scoring",
 "marketing-lead-velocity",
-"marketing-lead-velocity-rate-lvr"
+"marketing-lead-velocity-rate-lvr",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lead-magnet-conversion-rate": [
 "marketing-assisted-conversion",
@@ -4522,6 +5043,7 @@
 "marketing-micro-conversion",
 "marketing-micro-conversions",
 "marketing-view-through-conversion",
+"marketing-x-scoring-explicite-implicite",
 "marketing-x-store-conversion-rate"
 ],
 "marketing-lead-nurturing": [
@@ -4536,6 +5058,7 @@
 "marketing-lead-scoring",
 "marketing-lead-velocity",
 "marketing-lead-velocity-rate-lvr",
+"marketing-x-scoring-explicite-implicite",
 "marketing-x-sequence-de-nurturing"
 ],
 "marketing-lead-routing": [
@@ -4548,7 +5071,8 @@
 "marketing-lead-nurturing",
 "marketing-lead-scoring",
 "marketing-lead-velocity",
-"marketing-lead-velocity-rate-lvr"
+"marketing-lead-velocity-rate-lvr",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lead-scoring": [
 "marketing-lead",
@@ -4573,7 +5097,8 @@
 "marketing-lead-nurturing",
 "marketing-lead-routing",
 "marketing-lead-scoring",
-"marketing-lead-velocity-rate-lvr"
+"marketing-lead-velocity-rate-lvr",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lead-velocity-rate-lvr": [
 "marketing-lead",
@@ -4586,7 +5111,8 @@
 "marketing-lead-routing",
 "marketing-lead-scoring",
 "marketing-lead-velocity",
-"marketing-mom"
+"marketing-mom",
+"marketing-x-scoring-explicite-implicite"
 ],
 "marketing-lifecycle-marketing": [
 "marketing-closed-loop-attribution",
@@ -4655,6 +5181,7 @@
 "marketing-x-youtube-seo"
 ],
 "marketing-log-file-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -4671,6 +5198,7 @@
 "marketing-robots-txt",
 "marketing-s-w-o-t-analysis",
 "marketing-sentiment-analysis",
+"marketing-sitemap",
 "marketing-swot-analysis"
 ],
 "marketing-logo-churn": [
@@ -4879,6 +5407,7 @@
 "marketing-ltv-cac-ratio-2"
 ],
 "marketing-market-basket-analysis": [
+"ia-survival-analysis",
 "marketing-cart-abandonment-rate",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
@@ -5136,6 +5665,7 @@
 "marketing-programmatic-advertising"
 ],
 "marketing-mobile-first-indexing": [
+"ia-first-party-data",
 "marketing-api-first-architecture",
 "marketing-api-first-strategy",
 "marketing-first-click-attribution",
@@ -5500,6 +6030,7 @@
 "marketing-x-frais-de-port-et-livraison"
 ],
 "marketing-order-gap-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -5557,6 +6088,7 @@
 "marketing-influencer-outreach"
 ],
 "marketing-p-e-s-t-e-l-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -5623,6 +6155,7 @@
 "marketing-payback-period"
 ],
 "marketing-pca-principal-component-analysis": [
+"ia-survival-analysis",
 "marketing-brand-equity-components",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
@@ -6248,6 +6781,7 @@
 "marketing-x-youtube-seo"
 ],
 "marketing-rfm-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -6288,6 +6822,7 @@
 "marketing-target-audience"
 ],
 "marketing-s-w-o-t-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -6438,6 +6973,7 @@
 "marketing-semantic-seo"
 ],
 "marketing-sentiment-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -6592,6 +7128,7 @@
 "marketing-sitemap": [
 "marketing-backlink",
 "marketing-internal-linking",
+"marketing-log-file-analysis",
 "marketing-site-map",
 "marketing-xml-sitemap"
 ],
@@ -6774,6 +7311,7 @@
 "marketing-selection-bias"
 ],
 "marketing-swot-analysis": [
+"ia-survival-analysis",
 "marketing-causal-impact-analysis",
 "marketing-churn-analysis",
 "marketing-cohort-analysis",
@@ -6864,6 +7402,9 @@
 "marketing-x-pages-locales"
 ],
 "marketing-third-party-cookies-deprecation": [
+"ia-first-party-data",
+"ia-third-party-data",
+"ia-zero-party-data",
 "marketing-abm-tiers",
 "marketing-cookie",
 "marketing-cookie-deprecation",
@@ -7569,7 +8110,17 @@
 "marketing-x-score-de-churn"
 ],
 "marketing-x-scoring-explicite-implicite": [
-"marketing-lead-scoring"
+"marketing-lead",
+"marketing-lead-decay",
+"marketing-lead-generation",
+"marketing-lead-magnet",
+"marketing-lead-magnet-advanced",
+"marketing-lead-magnet-conversion-rate",
+"marketing-lead-nurturing",
+"marketing-lead-routing",
+"marketing-lead-scoring",
+"marketing-lead-velocity",
+"marketing-lead-velocity-rate-lvr"
 ],
 "marketing-x-sequence-de-nurturing": [
 "marketing-drip-sequence",
@@ -7678,6 +8229,9 @@
 "marketing-zero-base-budgeting"
 ],
 "marketing-zero-party-data-enrichment": [
+"ia-first-party-data",
+"ia-third-party-data",
+"ia-zero-party-data",
 "marketing-data-enrichment",
 "marketing-first-party-cookies",
 "marketing-first-party-data-strategy",
@@ -7686,6 +8240,9 @@
 "marketing-zero-party-strategy"
 ],
 "marketing-zero-party-data-strategy": [
+"ia-first-party-data",
+"ia-third-party-data",
+"ia-zero-party-data",
 "marketing-first-party-cookies",
 "marketing-first-party-data-strategy",
 "marketing-third-party-cookies-deprecation",
@@ -7693,6 +8250,9 @@
 "marketing-zero-party-strategy"
 ],
 "marketing-zero-party-strategy": [
+"ia-first-party-data",
+"ia-third-party-data",
+"ia-zero-party-data",
 "marketing-first-party-cookies",
 "marketing-first-party-data-strategy",
 "marketing-third-party-cookies-deprecation",
@@ -7760,10 +8320,18 @@
 "python-count"
 ],
 "python-endswith": [
-"python-startswith"
+"python-startswith",
+"python-x-in-op"
+],
+"python-f-strings-f": [
+"python-x-string-py"
+],
+"python-float": [
+"python-x-number-py"
 ],
 "python-for-loop": [
-"python-while-loop"
+"python-while-loop",
+"python-x-loop-var"
 ],
 "python-headers": [
 "python-x-cle-d-api"
@@ -7779,7 +8347,8 @@
 ],
 "python-int": [
 "python-round",
-"python-str"
+"python-str",
+"python-x-number-py"
 ],
 "python-isalpha": [
 "python-isdigit",
@@ -7813,6 +8382,7 @@
 ],
 "python-lower": [
 "python-capitalize",
+"python-title",
 "python-upper"
 ],
 "python-ls": [
@@ -7859,6 +8429,12 @@
 "python-pip-install": [
 "python-x-pip-et-pypi"
 ],
+"python-print": [
+"python-x-print-vs-return"
+],
+"python-range": [
+"python-x-range-stop"
+],
 "python-requests-get": [
 "python-requests-post",
 "python-x-api-rest",
@@ -7876,8 +8452,12 @@
 "python-response-json",
 "python-x-timeout-et-erreurs-http"
 ],
+"python-return": [
+"python-x-print-vs-return"
+],
 "python-round": [
-"python-int"
+"python-int",
+"python-x-number-py"
 ],
 "python-rstrip": [
 "python-lstrip",
@@ -7895,11 +8475,13 @@
 "python-split"
 ],
 "python-startswith": [
-"python-endswith"
+"python-endswith",
+"python-x-in-op"
 ],
 "python-str": [
 "python-int",
-"python-x-str-et-repr"
+"python-x-str-et-repr",
+"python-x-string-py"
 ],
 "python-strip": [
 "python-lstrip",
@@ -7914,6 +8496,7 @@
 ],
 "python-title": [
 "python-capitalize",
+"python-lower",
 "python-upper"
 ],
 "python-type": [
@@ -7929,7 +8512,8 @@
 "python-title"
 ],
 "python-while-loop": [
-"python-for-loop"
+"python-for-loop",
+"python-x-loop-var"
 ],
 "python-with-open-as-f": [
 "python-open"
@@ -7937,12 +8521,24 @@
 "python-write": [
 "python-x-quand-creer-une-classe"
 ],
+"python-x-affectation-multiple": [
+"python-x-assign-py"
+],
 "python-x-api-rest": [
 "python-requests-get",
 "python-x-endpoint"
 ],
+"python-x-arg-py": [
+"python-x-argument-par-defaut",
+"python-x-mutable-default-trap",
+"python-x-param-py"
+],
 "python-x-argument-par-defaut": [
+"python-x-arg-py",
 "python-x-mutable-default-trap"
+],
+"python-x-assign-py": [
+"python-x-affectation-multiple"
 ],
 "python-x-classe-et-instance": [
 "python-x-classes-quantificateurs",
@@ -7958,6 +8554,9 @@
 ],
 "python-x-cle-primaire-etrangere": [
 "python-x-cle-d-api"
+],
+"python-x-commentaire": [
+"python-x-hash-comment"
 ],
 "python-x-commit-git": [
 "python-x-sqlite3-connect-cursor"
@@ -7982,11 +8581,18 @@
 "python-x-environnement-virtuel": [
 "python-x-variables-d-environnement-et-env"
 ],
+"python-x-equality-py": [
+"python-x-in-op"
+],
+"python-x-func-body": [
+"python-x-param-py"
+],
 "python-x-generator-yield": [
 "python-x-iterator-itertools"
 ],
 "python-x-gestion-d-erreurs": [
-"python-x-timeout-et-erreurs-http"
+"python-x-timeout-et-erreurs-http",
+"python-x-traceback"
 ],
 "python-x-group-by-agregats": [
 "python-x-groupes-capture"
@@ -7994,17 +8600,29 @@
 "python-x-groupes-capture": [
 "python-x-group-by-agregats"
 ],
+"python-x-hash-comment": [
+"python-x-commentaire"
+],
 "python-x-heritage-et-super": [
 "python-x-composition-vs-heritage"
 ],
 "python-x-if-name-main": [
 "python-df-column-name"
 ],
+"python-x-in-op": [
+"python-endswith",
+"python-startswith",
+"python-x-equality-py"
+],
 "python-x-index": [
-"python-x-index-sql"
+"python-x-index-sql",
+"python-x-list-index",
+"python-x-neg-index"
 ],
 "python-x-index-sql": [
-"python-x-index"
+"python-x-index",
+"python-x-list-index",
+"python-x-neg-index"
 ],
 "python-x-iterator-itertools": [
 "python-x-generator-yield"
@@ -8028,19 +8646,47 @@
 "python-response-json",
 "python-x-json"
 ],
+"python-x-list-index": [
+"python-x-index",
+"python-x-index-sql",
+"python-x-neg-index"
+],
+"python-x-loop-var": [
+"python-for-loop",
+"python-while-loop",
+"python-x-variable",
+"python-x-variables-d-environnement-et-env"
+],
 "python-x-module": [
 "python-x-package",
 "python-x-re-search-findall-sub"
 ],
 "python-x-mutable-default-trap": [
+"python-x-arg-py",
 "python-x-argument-par-defaut",
 "python-x-mutable-immuable"
 ],
 "python-x-mutable-immuable": [
 "python-x-mutable-default-trap"
 ],
+"python-x-neg-index": [
+"python-x-index",
+"python-x-index-sql",
+"python-x-list-index"
+],
+"python-x-none": [
+"python-x-none-return"
+],
+"python-x-none-return": [
+"python-x-none"
+],
 "python-x-notebook-jupyter": [
 "python-x-script-vs-notebook"
+],
+"python-x-number-py": [
+"python-float",
+"python-int",
+"python-round"
 ],
 "python-x-package": [
 "python-x-module",
@@ -8051,14 +8697,25 @@
 "python-pd-read-excel",
 "python-x-requete-parametree-injection"
 ],
+"python-x-param-py": [
+"python-x-arg-py",
+"python-x-func-body"
+],
 "python-x-pip-et-pypi": [
 "python-pip-install",
 "python-x-package"
+],
+"python-x-print-vs-return": [
+"python-print",
+"python-return"
 ],
 "python-x-quand-creer-une-classe": [
 "python-write",
 "python-x-classe-et-instance",
 "python-x-classes-quantificateurs"
+],
+"python-x-range-stop": [
+"python-range"
 ],
 "python-x-rate-limiting": [
 "python-time-sleep",
@@ -8074,24 +8731,41 @@
 "python-time-sleep",
 "python-x-rate-limiting"
 ],
+"python-x-script": [
+"python-x-script-vs-notebook"
+],
 "python-x-script-vs-notebook": [
-"python-x-notebook-jupyter"
+"python-x-notebook-jupyter",
+"python-x-script"
 ],
 "python-x-sqlite3-connect-cursor": [
 "python-x-commit-git"
 ],
 "python-x-str-et-repr": [
-"python-str"
+"python-str",
+"python-x-string-py"
+],
+"python-x-string-py": [
+"python-f-strings-f",
+"python-str",
+"python-x-str-et-repr"
 ],
 "python-x-timeout-et-erreurs-http": [
 "python-response-status-code",
-"python-x-gestion-d-erreurs"
+"python-x-gestion-d-erreurs",
+"python-x-traceback"
+],
+"python-x-traceback": [
+"python-x-gestion-d-erreurs",
+"python-x-timeout-et-erreurs-http"
 ],
 "python-x-variable": [
+"python-x-loop-var",
 "python-x-variables-d-environnement-et-env"
 ],
 "python-x-variables-d-environnement-et-env": [
 "python-x-environnement-virtuel",
+"python-x-loop-var",
 "python-x-variable"
 ],
 "python-x-y": [
@@ -8109,6 +8783,100 @@
 ],
 "python-x-y-5": [
 "python-x-y-4"
+],
+"secu-x-command-injection": [
+"secu-x-injection",
+"secu-x-sql-injection"
+],
+"secu-x-csp": [
+"secu-x-row-level-security",
+"secu-x-security-checklist",
+"secu-x-security-headers",
+"secu-x-security-misconfiguration",
+"secu-x-security-update"
+],
+"secu-x-csrf": [
+"secu-x-csrf-token"
+],
+"secu-x-csrf-token": [
+"secu-x-csrf"
+],
+"secu-x-dependency-updates": [
+"secu-x-security-update"
+],
+"secu-x-httponly": [
+"secu-x-samesite",
+"secu-x-secure-flag"
+],
+"secu-x-injection": [
+"secu-x-command-injection",
+"secu-x-sql-injection"
+],
+"secu-x-llm-app-risks": [
+"secu-x-owasp-top10"
+],
+"secu-x-owasp-top10": [
+"secu-x-llm-app-risks"
+],
+"secu-x-row-level-security": [
+"secu-x-csp",
+"secu-x-security-checklist",
+"secu-x-security-headers",
+"secu-x-security-misconfiguration",
+"secu-x-security-update"
+],
+"secu-x-samesite": [
+"secu-x-httponly",
+"secu-x-secure-flag"
+],
+"secu-x-secret": [
+"secu-x-secret-scanning"
+],
+"secu-x-secret-scanning": [
+"secu-x-secret"
+],
+"secu-x-secure-flag": [
+"secu-x-httponly",
+"secu-x-samesite"
+],
+"secu-x-security-checklist": [
+"secu-x-csp",
+"secu-x-row-level-security",
+"secu-x-security-headers",
+"secu-x-security-misconfiguration",
+"secu-x-security-update"
+],
+"secu-x-security-headers": [
+"secu-x-csp",
+"secu-x-row-level-security",
+"secu-x-security-checklist",
+"secu-x-security-misconfiguration",
+"secu-x-security-update"
+],
+"secu-x-security-misconfiguration": [
+"secu-x-csp",
+"secu-x-row-level-security",
+"secu-x-security-checklist",
+"secu-x-security-headers",
+"secu-x-security-update"
+],
+"secu-x-security-update": [
+"secu-x-csp",
+"secu-x-dependency-updates",
+"secu-x-row-level-security",
+"secu-x-security-checklist",
+"secu-x-security-headers",
+"secu-x-security-misconfiguration"
+],
+"secu-x-sql-injection": [
+"secu-x-command-injection",
+"secu-x-injection"
+],
+"secu-x-stored-xss": [
+"secu-x-xss"
+],
+"secu-x-xss": [
+"secu-x-stored-xss"
 ],
 "web-back-end": [
 "web-front-end"
@@ -8130,6 +8898,9 @@
 "web-framework",
 "web-sdk"
 ],
+"web-query-string": [
+"js-x-string"
+],
 "web-sdk": [
 "web-framework",
 "web-library"
@@ -8149,6 +8920,7 @@
 "web-x-script-async-defer"
 ],
 "web-x-attribut-alt": [
+"html-x-attribute",
 "html-x-attributs-lang-dir",
 "html-x-form-action-method",
 "html-x-global-attributes-id-class",
@@ -8158,6 +8930,7 @@
 "web-x-attributs-data"
 ],
 "web-x-attributs-data": [
+"html-x-attribute",
 "html-x-attributs-lang-dir",
 "html-x-form-action-method",
 "html-x-global-attributes-id-class",
@@ -8169,6 +8942,7 @@
 "html-x-balise-picture",
 "html-x-button-submit",
 "html-x-label-for",
+"html-x-open-close",
 "web-x-balise-title",
 "web-x-google-tag-manager",
 "web-x-tag-declencheur-variable"
@@ -8176,19 +8950,28 @@
 "web-x-balise-title": [
 "html-x-balise-picture",
 "html-x-button-submit",
+"html-x-html-tag",
 "html-x-label-for",
 "web-x-balise-semantique",
 "web-x-google-tag-manager",
 "web-x-tag-declencheur-variable"
 ],
 "web-x-box-model": [
-"css-x-margin-padding-gap"
+"css-x-margin-padding-gap",
+"web-x-ombre-et-arrondi"
 ],
 "web-x-cls-et-css": [
 "css-x-aspect-ratio"
 ],
 "web-x-console-du-navigateur": [
+"js-x-console-log",
 "js-x-debugger-points-arret-network"
+],
+"web-x-couleurs-css": [
+"css-x-background-color",
+"css-x-hex-color",
+"css-x-text-color",
+"web-x-mode-sombre-prefers-color-scheme"
 ],
 "web-x-evenement": [
 "js-x-customevent-delegation"
@@ -8205,15 +8988,20 @@
 ],
 "web-x-google-tag-manager": [
 "html-x-button-submit",
+"html-x-html-tag",
 "html-x-label-for",
 "web-x-balise-semantique",
 "web-x-balise-title",
 "web-x-tag-declencheur-variable"
 ],
+"web-x-hierarchie-de-titres": [
+"html-x-headings"
+],
 "web-x-lazy-loading": [
 "html-x-srcset-sizes-formats"
 ],
 "web-x-lien-canonique": [
+"html-x-link-a",
 "html-x-link-target-rel"
 ],
 "web-x-localstorage": [
@@ -8235,6 +9023,7 @@
 "web-x-meta-robots"
 ],
 "web-x-methodes-de-tableau": [
+"js-x-array",
 "js-x-chainage-methodes",
 "js-x-find-some-every",
 "js-x-map",
@@ -8242,6 +9031,10 @@
 "js-x-tableau-d-objets"
 ],
 "web-x-mode-sombre-prefers-color-scheme": [
+"css-x-background-color",
+"css-x-hex-color",
+"css-x-text-color",
+"web-x-couleurs-css",
 "web-x-media-query"
 ],
 "web-x-objet-et-json": [
@@ -8250,8 +9043,14 @@
 "js-x-npm-package-json-semver",
 "js-x-tableau-d-objets"
 ],
+"web-x-ombre-et-arrondi": [
+"css-x-border",
+"web-x-box-model"
+],
 "web-x-pile-de-polices": [
-"css-x-font-size-fluide-clamp"
+"css-x-font-size",
+"css-x-font-size-fluide-clamp",
+"css-x-font-weight"
 ],
 "web-x-script-async-defer": [
 "js-x-async-await-gestion-erreur",
@@ -8259,13 +9058,18 @@
 "web-x-asynchrone-async-await"
 ],
 "web-x-selecteur": [
-"css-x-has-is-where"
+"css-x-class-selector",
+"css-x-has-is-where",
+"css-x-id-selector",
+"css-x-selector-list",
+"css-x-type-selector"
 ],
 "web-x-specificite": [
 "css-x-cascade-layers"
 ],
 "web-x-tag-declencheur-variable": [
 "html-x-button-submit",
+"html-x-html-tag",
 "html-x-label-for",
 "web-x-balise-semantique",
 "web-x-balise-title",

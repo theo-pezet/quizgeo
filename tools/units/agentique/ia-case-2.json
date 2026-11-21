@@ -1,0 +1,198 @@
+{
+ "unit": {
+  "id": "ia-case-2",
+  "subjectId": "ia",
+  "topic": "agentique",
+  "world": "ia-w6",
+  "title": "Case studies: agentic engineering",
+  "description": "A support agent, an agent on a client repository, an agent whose costs explode: decide like an engineer"
+ },
+ "cards": [
+  {
+   "slug": "spec",
+   "level": "debutant",
+   "term": "Specification",
+   "definition": "A short written description of what to build: the goal, the inputs, the rules and the cases to handle; agents follow it far better than a vague request.",
+   "example": "Export the orders of a chosen month as CSV, one row per order, amounts in euros."
+  },
+  {
+   "slug": "definition-of-done",
+   "level": "debutant",
+   "term": "Definition of done",
+   "definition": "The checkable conditions that say a task is finished: tests pass, page renders, file produced, reviewed.",
+   "example": "Done = the export test passes, CI is green and the button works on mobile."
+  },
+  {
+   "slug": "human-checkpoint",
+   "level": "debutant",
+   "term": "Human checkpoint",
+   "definition": "A step where the agent stops and waits for a person to approve before an important action.",
+   "example": "Refunds above 50 euros wait for a manager to click approve."
+  },
+  {
+   "slug": "rollback",
+   "level": "debutant",
+   "term": "Rollback",
+   "definition": "Returning quickly to the last version that worked when a change goes wrong in production.",
+   "example": "git revert of the faulty commit, then a new deploy in two minutes."
+  },
+  {
+   "slug": "cost-budget",
+   "level": "debutant",
+   "term": "Cost budget",
+   "definition": "A limit on what one task or one day of an agent may spend in tokens or money, enforced in code.",
+   "example": "Stop the run at 0.50 euros per ticket and hand it to a human."
+  },
+  {
+   "slug": "observability",
+   "level": "debutant",
+   "term": "Observability",
+   "definition": "Being able to see what a system does in production: logs, traces, metrics, alerts.",
+   "example": "A dashboard of success rate, cost per task and tool errors per day."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "case",
+   "title": "A support agent for an online shop",
+   "scenario": "You build an agent that answers customer emails. It can read orders, the help center and the customer history. The boss also wants it to issue refunds on its own.",
+   "steps": [
+    {
+     "prompt": "What access does the agent get to orders?",
+     "choices": [
+      "Read-only, for the customer of the current email only",
+      "Full read and write on the whole database",
+      "The admin password of the shop",
+      "No access at all, it answers from memory"
+     ],
+     "feedback": "Least privilege keeps a hijacked or confused agent from touching other customers or editing data."
+    },
+    {
+     "prompt": "How do you handle refunds?",
+     "choices": [
+      "The agent proposes, a human approves above a set amount",
+      "The agent refunds any amount on its own",
+      "Refunds are refused for every customer",
+      "The customer chooses the amount in the email"
+     ],
+     "feedback": "Money leaving the company is a classic human checkpoint. Small, rule-based cases can be automated later, once the evals prove them."
+    },
+    {
+     "prompt": "How do you know it is ready to launch?",
+     "choices": [
+      "It passes an eval of 100 real emails, cost measured",
+      "It answered your three test emails well",
+      "The model has a high public benchmark score",
+      "The demo deeply impressed the boss"
+     ],
+     "feedback": "Real cases, scored, with a baseline: that is the only proof that holds."
+    }
+   ],
+   "explain": "Restricted rights, human checkpoints on money, and an eval on real data: the backbone of any production agent."
+  },
+  {
+   "kind": "case",
+   "title": "A coding agent on a client repository",
+   "scenario": "A client gives you access to their repository and asks for a new invoice page. You will work with a coding agent.",
+   "steps": [
+    {
+     "prompt": "What do you set up before the first task?",
+     "choices": [
+      "An AGENTS.md with build and test commands and the rules",
+      "Nothing: the agent will figure it out",
+      "Admin access to their production server",
+      "A copy of the client database on your laptop"
+     ],
+     "feedback": "A short project brief saves every session from rediscovering the basics, and keeps the agent inside the rules."
+    },
+    {
+     "prompt": "How do the changes reach the client?",
+     "choices": [
+      "Through a branch and a reviewed pull request with green CI",
+      "Direct pushes to main",
+      "A zip file sent by email",
+      "The agent deploys straight to production"
+     ],
+     "feedback": "The pull request is where the diff is reviewed and the tests are proven, by you and by the client."
+    },
+    {
+     "prompt": "The agent wants to install a package you have never heard of. What do you do?",
+     "choices": [
+      "Check that it exists, is maintained and is really needed",
+      "Accept: the agent knows best",
+      "Install it globally on your machine",
+      "Copy its code into the project unread"
+     ],
+     "feedback": "Agents sometimes invent package names, and attackers register them. A dependency is code you trust: check it."
+    }
+   ],
+   "explain": "On someone else's code, the agent goes faster but you remain responsible for every merged line."
+  },
+  {
+   "kind": "case",
+   "title": "An agent whose costs explode",
+   "scenario": "Your research agent cost 4 euros per day last week. Today it cost 400 euros. Users have not complained yet.",
+   "steps": [
+    {
+     "prompt": "What do you look at first?",
+     "choices": [
+      "The traces of today's most expensive runs",
+      "The price page of the provider",
+      "The number of users this month",
+      "The code style of the project"
+     ],
+     "feedback": "The traces show what the agent did. Here they reveal a loop: a tool fails and the agent retries it hundreds of times."
+    },
+    {
+     "prompt": "What prevents this from happening again?",
+     "choices": [
+      "A step limit and a cost budget per run, enforced in code",
+      "A sentence asking the model to be careful",
+      "A bigger model that loops less",
+      "Checking the bill once a month"
+     ],
+     "feedback": "Limits in code stop a runaway loop whatever the model does. Add a clear error from the failing tool too."
+    },
+    {
+     "prompt": "How do you notice the next problem sooner?",
+     "choices": [
+      "An alert when the daily cost or tool error rate jumps",
+      "Wait for users to complain",
+      "Read every log by hand each morning",
+      "Turn logging off to save money"
+     ],
+     "feedback": "Observability turns a silent failure into an alert within the hour."
+    }
+   ],
+   "explain": "Agents fail in loops and silently. Budgets, limits, traces and alerts are part of the product, not extras."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which is the best definition of done for \"add a CSV export of orders\"?",
+   "choices": [
+    "The export test passes, CI is green, the file opens",
+    "Make it work well for everybody",
+    "Do it nicely and as quickly as you can",
+    "Let the agent decide when it is finished"
+   ],
+   "explain": "A definition of done is checkable by anyone. Vague goals produce vague results, especially with agents."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Before deploying a change made with an agent, you should know how to roll it back quickly.",
+   "isTrue": true,
+   "explain": "True: with a clean git history and small changes, going back is one revert and a deploy. Without it, a bug in production becomes a crisis."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which skill matters most for an agentic engineer, now that agents write much of the code?",
+   "choices": [
+    "Specifying clearly and verifying the result",
+    "Typing code faster than the agent",
+    "Memorizing every library by heart",
+    "Avoiding git and tests to go faster"
+   ],
+   "explain": "Clear specs, decomposition, tests, reviews and evals: the engineer directs the work and proves that it is right."
+  }
+ ]
+}

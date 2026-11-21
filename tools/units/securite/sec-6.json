@@ -1,0 +1,159 @@
+{
+ "unit": {
+  "id": "sec-6",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w2",
+  "title": "Access control, CSRF and CORS",
+  "description": "Authentication vs authorization, IDOR, server-side checks, CSRF and its tokens, what CORS really does"
+ },
+ "cards": [
+  {
+   "slug": "authn-authz",
+   "level": "debutant",
+   "term": "Authentication vs authorization",
+   "definition": "Authentication checks who you are (login); authorization checks what you are allowed to do, on every request.",
+   "example": "Being logged in does not mean you may read the invoice of someone else."
+  },
+  {
+   "slug": "broken-access-control",
+   "level": "debutant",
+   "term": "Broken access control",
+   "definition": "Users can reach data or actions that should be forbidden to them; number one in the OWASP Top 10 2025.",
+   "example": "A regular user opens /admin and it works."
+  },
+  {
+   "slug": "idor",
+   "level": "debutant",
+   "term": "IDOR",
+   "definition": "Insecure direct object reference: changing an ID in a URL or request gives access to the object of another user.",
+   "example": "/invoices/1042 becomes /invoices/1043 and shows a stranger's invoice."
+  },
+  {
+   "slug": "csrf",
+   "level": "debutant",
+   "term": "CSRF",
+   "definition": "Cross-site request forgery: a malicious site makes the browser of a logged-in victim send a request to your site, with the victim's cookies.",
+   "example": "A hidden form on another site posts a password change to your app."
+  },
+  {
+   "slug": "csrf-token",
+   "level": "debutant",
+   "term": "Anti-CSRF token",
+   "definition": "A random value placed in each form and checked by the server; another site cannot know it, so its forged requests fail.",
+   "example": "input type hidden name csrf_token with a value unique to the session."
+  },
+  {
+   "slug": "cors",
+   "level": "debutant",
+   "term": "CORS",
+   "definition": "Rules sent by your server that tell browsers which other origins may read its responses from JavaScript.",
+   "example": "Access-Control-Allow-Origin: https://app.example.com"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is the difference between authentication and authorization?",
+   "choices": [
+    "Who you are vs what you are allowed to do",
+    "Two names for the same check",
+    "The password vs the username",
+    "The server vs the browser"
+   ],
+   "explain": "Most access control bugs come from checking the first and forgetting the second."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Changing /invoices/1042 into /invoices/1043 shows the invoice of another customer. What is this flaw?",
+   "choices": [
+    "IDOR, a case of broken access control",
+    "XSS, through the invoice number",
+    "SQL injection in the address bar",
+    "CSRF from another website"
+   ],
+   "explain": "The server finds the invoice by ID but never checks that it belongs to the logged-in user."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you fix that flaw?",
+   "choices": [
+    "Check on the server that the invoice is the user's",
+    "Hide the invoice number in the page",
+    "Use invoice numbers that look random",
+    "Block the right click in the browser"
+   ],
+   "explain": "Random IDs only make guessing harder. The real fix is an ownership check on the server, every time."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Hiding the admin button in the interface is enough to protect the admin actions.",
+   "isTrue": false,
+   "explain": "False: anyone can send the request directly. Each admin route must check, on the server, that the user is an admin."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is CSRF?",
+   "choices": [
+    "Another site makes your browser send a request to this site",
+    "A script that reads the cookies of the page",
+    "A query that reads your whole database",
+    "A bot that guesses passwords one by one"
+   ],
+   "explain": "The browser adds your site's cookies automatically, so the forged request looks like it came from the logged-in user."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which pair of defenses protects best against CSRF?",
+   "choices": [
+    "Anti-CSRF tokens and SameSite cookies",
+    "CORS open to every origin",
+    "Longer passwords",
+    "A bigger server"
+   ],
+   "explain": "The token proves the request came from your own page; SameSite stops the browser from sending the cookie on most cross-site requests."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does CORS control?",
+   "choices": [
+    "Which origins may read your API responses in a browser",
+    "Who is allowed to log in to your site",
+    "Whether the connection is encrypted",
+    "Which bots may crawl your pages"
+   ],
+   "explain": "CORS is about the browser reading responses across origins. It is not authentication and does not stop requests made by servers or scripts outside a browser."
+  },
+  {
+   "kind": "vf",
+   "prompt": "For a private API, reflecting any Origin back in Access-Control-Allow-Origin while allowing credentials is a safe default.",
+   "isTrue": false,
+   "explain": "False: it lets any website read your users' data with their cookies. List the exact origins you trust."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This Flask route shows an invoice. Which line must also check who owns the invoice?",
+   "lang": "python",
+   "lines": [
+    "@app.route(\"/invoices/<int:invoice_id>\")",
+    "@login_required",
+    "def show_invoice(invoice_id):",
+    "    invoice = Invoice.get(invoice_id)",
+    "    return render(invoice)"
+   ],
+   "answer": 3,
+   "explain": "Fetch it with the owner: Invoice.get(invoice_id, owner=current_user), and return 404 if nothing matches. login_required only checks that someone is logged in."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where is broken access control ranked in the OWASP Top 10 2025?",
+   "choices": [
+    "First",
+    "Tenth",
+    "It is not in the list",
+    "Fifth"
+   ],
+   "explain": "It was already first in 2021 and stays first in 2025: it is the most common serious flaw found in web apps."
+  }
+ ]
+}

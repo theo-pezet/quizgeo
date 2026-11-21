@@ -107,6 +107,16 @@ describe('hydratation robuste', () => {
     await useSettings.persist.rehydrate();
     expect(useSettings.getState().hydrated).toBe(true);
   });
+
+  it('ajoute la sécurité web à qui suivait toutes les matières (v4), pas aux autres', async () => {
+    const all = ['marketing', 'ia', 'python', 'html', 'css', 'js'];
+    await AsyncStorage.setItem('settings.v1', JSON.stringify({ state: { subjects: all }, version: 3 }));
+    await useSettings.persist.rehydrate();
+    expect(useSettings.getState().subjects).toEqual([...all, 'secu']);
+    await AsyncStorage.setItem('settings.v1', JSON.stringify({ state: { subjects: ['python', 'ia'] }, version: 3 }));
+    await useSettings.persist.rehydrate();
+    expect(useSettings.getState().subjects).toEqual(['python', 'ia']);
+  });
 });
 
 describe('réinitialiser', () => {

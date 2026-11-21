@@ -846,7 +846,7 @@
    "topic": "regulation",
    "level": "intermediaire",
    "term": "AI Act",
-   "definition": "European AI regulation, adopted in 2024, that classifies uses by risk level (unacceptable, high, limited, minimal) and imposes increasing obligations. The rules for general-purpose models have applied since August 2025.",
+   "definition": "European AI regulation, adopted in 2024, that classifies uses by risk level (unacceptable, high, limited, minimal). Bans apply since 2025, rules for general-purpose models since August 2025; the 2026 Digital Omnibus pushed most high-risk obligations to December 2027.",
    "example": "A social scoring system is banned; a CV screening tool is high-risk.",
    "tags": [
     "#manual"

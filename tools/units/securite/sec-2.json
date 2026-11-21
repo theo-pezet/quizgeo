@@ -1,0 +1,176 @@
+{
+ "unit": {
+  "id": "sec-2",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w1",
+  "title": "HTTPS and cookies",
+  "description": "HTTP vs HTTPS, TLS certificates, HSTS, cookies, sessions, the HttpOnly, Secure and SameSite flags"
+ },
+ "cards": [
+  {
+   "slug": "https",
+   "level": "debutant",
+   "term": "HTTPS",
+   "definition": "HTTP inside an encrypted TLS connection: nobody on the network can read or change what the browser and the server exchange.",
+   "example": "On a public Wi-Fi, HTTPS keeps your password unreadable for the other users."
+  },
+  {
+   "slug": "tls-certificate",
+   "level": "debutant",
+   "term": "TLS certificate",
+   "definition": "A file signed by a trusted authority that proves the server really owns the domain; free certificates exist (Let's Encrypt).",
+   "example": "The browser checks the certificate before showing the padlock."
+  },
+  {
+   "slug": "hsts",
+   "level": "debutant",
+   "term": "HSTS",
+   "definition": "A response header telling the browser to always use HTTPS for this site, even if someone types or clicks an http link.",
+   "example": "Strict-Transport-Security: max-age=31536000"
+  },
+  {
+   "slug": "cookie",
+   "level": "debutant",
+   "term": "Cookie",
+   "definition": "A small piece of data the server asks the browser to store and send back with every request to the same site.",
+   "example": "session=7f3a9c, sent automatically on each page you open."
+  },
+  {
+   "slug": "session",
+   "level": "debutant",
+   "term": "Session",
+   "definition": "The server-side record of a logged-in user, found again on each request through a random ID stored in a cookie.",
+   "example": "Logging out deletes the session, so the old cookie becomes useless."
+  },
+  {
+   "slug": "httponly",
+   "level": "debutant",
+   "term": "HttpOnly flag",
+   "definition": "A cookie option that hides the cookie from JavaScript on the page, so an injected script cannot read it.",
+   "example": "Set-Cookie: session=7f3a9c; HttpOnly"
+  },
+  {
+   "slug": "secure-flag",
+   "level": "debutant",
+   "term": "Secure flag",
+   "definition": "A cookie option that makes the browser send the cookie only over HTTPS, never over plain HTTP.",
+   "example": "Set-Cookie: session=7f3a9c; Secure"
+  },
+  {
+   "slug": "samesite",
+   "level": "debutant",
+   "term": "SameSite flag",
+   "definition": "A cookie option that controls whether the cookie is sent when another site triggers the request; Lax or Strict block most cross-site attacks.",
+   "example": "Set-Cookie: session=7f3a9c; SameSite=Lax"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does HTTPS protect?",
+   "choices": [
+    "The data traveling between the browser and the server",
+    "The server against every possible attack",
+    "The source code of the site",
+    "The honesty of the company behind the site"
+   ],
+   "explain": "HTTPS encrypts and protects the connection. It says nothing about bugs in the site or the intentions of its owner."
+  },
+  {
+   "kind": "vf",
+   "prompt": "The padlock in the address bar proves that the site is not a scam.",
+   "isTrue": false,
+   "explain": "False: it only proves the connection is encrypted with the owner of that domain. Phishing sites get certificates too."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your login page uses plain HTTP and a customer logs in on a cafe Wi-Fi. What is the risk?",
+   "choices": [
+    "Someone on the same network can read the password",
+    "None, Wi-Fi is always encrypted",
+    "Only a slightly slower page",
+    "Only a lower Google ranking"
+   ],
+   "explain": "Without HTTPS, the password travels in clear text. Anyone on the network path can capture it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the HttpOnly flag do on a session cookie?",
+   "choices": [
+    "Scripts on the page cannot read the cookie",
+    "The cookie is sent only over HTTPS",
+    "The cookie is never sent from other sites",
+    "The cookie expires when the tab closes"
+   ],
+   "explain": "HttpOnly limits the damage of XSS: an injected script cannot steal the session ID. Sending only over HTTPS is the Secure flag."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the Secure flag do?",
+   "choices": [
+    "The cookie is sent only over HTTPS",
+    "The cookie is encrypted with a password",
+    "The cookie cannot be read by scripts",
+    "The cookie is kept for one year"
+   ],
+   "explain": "Secure stops the browser from sending the cookie over plain HTTP, where it could be captured."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "SameSite=Lax on the session cookie mainly protects against…",
+   "choices": [
+    "CSRF: requests forged by another site",
+    "SQL injection",
+    "A flood of requests (DDoS)",
+    "Weak passwords"
+   ],
+   "explain": "With Lax, the cookie is not sent on most requests triggered by other sites, so they cannot act as the logged-in user."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "Which line makes the session cookie readable by any script running on the page?",
+   "lang": "js",
+   "lines": [
+    "app.use(session({",
+    "  secret: process.env.SESSION_SECRET,",
+    "  cookie: {",
+    "    httpOnly: false,",
+    "    secure: true,",
+    "    sameSite: \"lax\",",
+    "  },",
+    "}));"
+   ],
+   "answer": 3,
+   "explain": "httpOnly must be true for a session cookie. With false, a single XSS flaw lets an attacker read and steal the session."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is a session?",
+   "choices": [
+    "A server record of a user, found by a cookie ID",
+    "The password saved in the browser",
+    "The HTTPS certificate of the site",
+    "A tab that stays open in the browser"
+   ],
+   "explain": "The cookie only holds a long random ID; the real data (who you are, your rights) stays on the server."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Free TLS certificates exist, so there is no good reason to run a public site without HTTPS.",
+   "isTrue": true,
+   "explain": "True: Let's Encrypt and most hosts provide them for free and renew them automatically."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the HSTS header tell the browser?",
+   "choices": [
+    "Always use HTTPS for this site, even from an http link",
+    "Store the passwords of this site",
+    "Accept requests from every other site",
+    "Keep this page in cache forever"
+   ],
+   "explain": "HSTS closes the gap of the first http request, which an attacker on the network could otherwise intercept."
+  }
+ ]
+}

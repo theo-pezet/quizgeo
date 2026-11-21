@@ -1,0 +1,163 @@
+{
+ "unit": {
+  "id": "sec-1",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w1",
+  "title": "Security: the basics",
+  "description": "Vulnerabilities, attack surface, confidentiality, integrity, availability, least privilege, defense in depth, updates"
+ },
+ "cards": [
+  {
+   "slug": "vulnerability",
+   "level": "debutant",
+   "term": "Vulnerability",
+   "definition": "A weakness in a site or its setup that an attacker can use to do something they should not be able to do.",
+   "example": "A login form that accepts unlimited password guesses."
+  },
+  {
+   "slug": "attack-surface",
+   "level": "debutant",
+   "term": "Attack surface",
+   "definition": "Everything an attacker can reach and try: pages, forms, APIs, open ports, plugins, admin panels.",
+   "example": "An old, forgotten test page still online widens it."
+  },
+  {
+   "slug": "cia-triad",
+   "level": "debutant",
+   "term": "Confidentiality, integrity, availability",
+   "definition": "The three goals of security: data is seen only by the right people, changed only by the right people, and reachable when needed.",
+   "example": "A leak breaks confidentiality, a tampered price breaks integrity, an outage breaks availability."
+  },
+  {
+   "slug": "least-privilege",
+   "level": "debutant",
+   "term": "Least privilege",
+   "definition": "Every person, program and account gets only the rights it needs for its job, nothing more.",
+   "example": "The newsletter tool can read emails of subscribers, not delete orders."
+  },
+  {
+   "slug": "defense-in-depth",
+   "level": "debutant",
+   "term": "Defense in depth",
+   "definition": "Stacking several independent protections so that when one fails, another still stops the attacker.",
+   "example": "Hashed passwords, plus two-factor login, plus alerts on strange logins."
+  },
+  {
+   "slug": "never-trust-client",
+   "level": "debutant",
+   "term": "Never trust the client",
+   "definition": "Anything coming from the browser can be modified by the user, so every check that matters must be done again on the server.",
+   "example": "A price sent by the page is ignored; the server reads the price from the database."
+  },
+  {
+   "slug": "security-update",
+   "level": "debutant",
+   "term": "Security update (patch)",
+   "definition": "A new version that fixes a known vulnerability; once it is public, attackers scan for sites that have not installed it.",
+   "example": "A WordPress plugin patch is published and bots start testing sites the same week."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is a vulnerability?",
+   "choices": [
+    "A weakness an attacker can use",
+    "A virus that is already on the server",
+    "A tool that blocks attackers",
+    "A very strong password"
+   ],
+   "explain": "A vulnerability is the open door. An exploit is the method that walks through it; a firewall or a strong password are protections."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "An attacker changes the prices in your shop database. Which goal of security is broken?",
+   "choices": [
+    "Integrity",
+    "Confidentiality",
+    "Availability",
+    "Speed"
+   ],
+   "explain": "Integrity means data is only changed by the right people. Nothing leaked and the site is up, but the data can no longer be trusted."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The email addresses of your customers end up on a public forum. Which goal is broken?",
+   "choices": [
+    "Confidentiality",
+    "Integrity",
+    "Availability",
+    "Speed"
+   ],
+   "explain": "Confidentiality means only the right people can see the data. A leak is the textbook breach of it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your site goes down under a flood of fake requests (a DDoS). Which goal is broken?",
+   "choices": [
+    "Availability",
+    "Confidentiality",
+    "Integrity",
+    "Speed"
+   ],
+   "explain": "Availability means the service is reachable when needed. Nothing was stolen or changed, but real users cannot use the site."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Checking a form field only with JavaScript in the browser is enough to protect the server.",
+   "isTrue": false,
+   "explain": "False: the user can switch off JavaScript or send requests directly. Browser checks are for comfort; the server must check again."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A marketing intern needs to read the site statistics. Which access should they get?",
+   "choices": [
+    "Read-only access to the statistics",
+    "Admin access, to avoid asking later",
+    "The password of the founder",
+    "Owner rights on the database"
+   ],
+   "explain": "Least privilege limits the damage of a mistake, a stolen account or a lost laptop."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Passwords are already hashed. Why add two-factor login on top?",
+   "choices": [
+    "If one layer fails, another still stops the attacker",
+    "Hashing is useless without it",
+    "It makes the site load faster",
+    "The law requires two-factor login only"
+   ],
+   "explain": "Defense in depth: a password can be phished or reused; the second factor still blocks the login."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which action reduces the attack surface of your site?",
+   "choices": [
+    "Removing an unused admin page and old plugins",
+    "Opening more ports on the server",
+    "Publishing a debug page for the team",
+    "Keeping the default admin password"
+   ],
+   "explain": "Less code and fewer entry points online means fewer places to attack."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Most attacks on small sites come from automated bots scanning for known flaws, not from a hacker targeting you personally.",
+   "isTrue": true,
+   "explain": "True: bots test millions of sites for known weaknesses. Being small does not protect you; being up to date does."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A security update is released for a plugin your site uses. Best move?",
+   "choices": [
+    "Install it quickly, after a short test",
+    "Wait a year to see if it is stable",
+    "Ignore it while the site still works",
+    "Delete your backups to save space"
+   ],
+   "explain": "Once a fix is public, attackers know where to look. Patch fast, with a backup and a quick check."
+  }
+ ]
+}

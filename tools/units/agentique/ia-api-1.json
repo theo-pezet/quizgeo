@@ -1,0 +1,169 @@
+{
+ "unit": {
+  "id": "ia-api-1",
+  "subjectId": "ia",
+  "topic": "agentique",
+  "world": "ia-w6",
+  "title": "Calling an LLM from code",
+  "description": "API calls, messages and roles, a stateless API, max_tokens, keys in environment variables, rate limits, SDKs, streaming"
+ },
+ "cards": [
+  {
+   "slug": "api-call",
+   "level": "debutant",
+   "term": "API call to a model",
+   "definition": "Your program sends an HTTP request with a model name, a list of messages and settings, and receives the generated answer as JSON.",
+   "example": "A script that sends each new support ticket to a model and stores the suggested reply."
+  },
+  {
+   "slug": "messages-roles",
+   "level": "debutant",
+   "term": "Messages and roles",
+   "definition": "A conversation is sent as a list of messages, each with a role: system (the rules), user (the requests) and assistant (the earlier answers).",
+   "example": "[{\"role\": \"user\", \"content\": \"Translate: good morning\"}]"
+  },
+  {
+   "slug": "stateless-api",
+   "level": "debutant",
+   "term": "Stateless API",
+   "definition": "The model remembers nothing between two calls: your code must resend the useful history every time.",
+   "example": "A chatbot keeps a list of past messages in memory and sends the whole list on each turn."
+  },
+  {
+   "slug": "max-tokens",
+   "level": "debutant",
+   "term": "max_tokens",
+   "definition": "The cap on how many tokens the model may generate in its answer; it bounds length and cost, and an answer cut mid-sentence means the cap was reached.",
+   "example": "max_tokens=300 is enough for a short email, not for a full article."
+  },
+  {
+   "slug": "env-api-key",
+   "level": "debutant",
+   "term": "API key in an environment variable",
+   "definition": "The secret that bills calls to your account is read from the environment (for example a .env file kept out of git), never written in the code.",
+   "example": "os.environ[\"ANTHROPIC_API_KEY\"] reads the key at run time."
+  },
+  {
+   "slug": "rate-limit-retry",
+   "level": "debutant",
+   "term": "Rate limit and retry",
+   "definition": "Providers cap requests per minute; an HTTP 429 error means slow down, so code retries after a growing pause (exponential backoff).",
+   "example": "Wait 1 s, then 2 s, then 4 s before giving up."
+  },
+  {
+   "slug": "llm-sdk",
+   "level": "debutant",
+   "term": "SDK",
+   "definition": "An official library (Python, TypeScript) that wraps the HTTP API: authentication, retries, streaming and types are handled for you.",
+   "example": "pip install anthropic, then one call to client.messages.create"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Where does this script get its API key?",
+   "choices": [
+    "From an environment variable, outside the code",
+    "It is written in clear text in the script",
+    "The model sends it back in its answer",
+    "The user types it in the prompt"
+   ],
+   "explain": "os.environ reads a variable set outside the code (a .env file or the server settings). The code can be shared without leaking the key.",
+   "code": {
+    "lang": "python",
+    "src": "import os\nfrom anthropic import Anthropic\n\nclient = Anthropic(api_key=os.environ[\"ANTHROPIC_API_KEY\"])\nreply = client.messages.create(\n    model=MODEL,\n    max_tokens=300,\n    messages=[{\"role\": \"user\", \"content\": \"3 blog titles about running\"}],\n)\nprint(reply.content[0].text)"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In the same script, what does max_tokens=300 control?",
+   "choices": [
+    "The maximum length of the answer",
+    "The maximum size of the prompt",
+    "The number of calls allowed per minute",
+    "The price paid for each token"
+   ],
+   "explain": "max_tokens caps the generated output. The prompt size is limited by the context window, the number of calls by the rate limit, and the price by the provider."
+  },
+  {
+   "kind": "vf",
+   "prompt": "The API remembers your previous call, so the second call only needs to contain the new question.",
+   "isTrue": false,
+   "explain": "False: the API is stateless. To continue a conversation, your code resends the earlier messages, which is also why long chats cost more and more."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your script receives an HTTP 429 error. What does it mean, and what should the code do?",
+   "choices": [
+    "Too many requests: wait, then retry with a growing delay",
+    "The key is wrong: create a new account right away",
+    "The prompt contains a syntax error to fix",
+    "The model is offline for good: switch provider"
+   ],
+   "explain": "429 is the standard \"too many requests\" code. Retrying with exponential backoff (1 s, 2 s, 4 s) is the normal answer; the SDKs often do it for you."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This file is about to be pushed to a public GitHub repository. Which line is a security problem?",
+   "lang": "python",
+   "lines": [
+    "import os",
+    "API_KEY = \"sk-live-8f3k2a9d71\"",
+    "client = Client(api_key=API_KEY)",
+    "print(client.ask(\"Hello\"))"
+   ],
+   "answer": 1,
+   "explain": "A key written in the code ends up in the git history and on GitHub, where bots scan for keys within minutes. Read it from os.environ instead, and revoke any key that leaked."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which role holds the permanent rules of your app (scope, tone, what is forbidden)?",
+   "choices": [
+    "system",
+    "user",
+    "assistant",
+    "tool"
+   ],
+   "explain": "The system prompt frames the whole conversation. user carries the requests, assistant the earlier answers, and tool results come back as their own messages."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put the steps of one chatbot turn, in code, in order.",
+   "steps": [
+    "Read the new message typed by the user",
+    "Append it to the list of past messages",
+    "Send the whole list to the API",
+    "Display the answer and append it to the list"
+   ],
+   "explain": "Because the API is stateless, your code owns the history: it grows the list, sends it in full, then stores the answer for the next turn."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The answer stops in the middle of a sentence, and the response says the model stopped because of max_tokens. What do you do?",
+   "choices": [
+    "Raise max_tokens, or ask for a shorter answer",
+    "Raise the temperature",
+    "Generate a new API key",
+    "Send the same request twice at once"
+   ],
+   "explain": "The model hit the output cap. Either allow more tokens or ask for a format that fits, such as 5 bullet points."
+  },
+  {
+   "kind": "vf",
+   "prompt": "You need an SDK to use an LLM: without one, the model cannot be called.",
+   "isTrue": false,
+   "explain": "False: the model is behind a plain HTTP API, reachable with curl or any HTTP library. The SDK only makes it easier (types, retries, streaming)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your app shows a blank screen for 15 seconds, then the whole answer at once. What improves the experience most?",
+   "choices": [
+    "Stream the tokens and display them as they arrive",
+    "Raise max_tokens",
+    "Retry the call as soon as it starts",
+    "Set the temperature to 0"
+   ],
+   "explain": "Streaming does not make the model faster, but the first words appear within a second or two, so the wait feels much shorter."
+  }
+ ]
+}

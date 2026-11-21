@@ -1,0 +1,164 @@
+{
+ "unit": {
+  "id": "sec-5",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w2",
+  "title": "XSS and Content Security Policy",
+  "description": "Cross-site scripting, stored XSS, escaping, innerHTML vs textContent, sanitizing, CSP"
+ },
+ "cards": [
+  {
+   "slug": "xss",
+   "level": "debutant",
+   "term": "XSS (cross-site scripting)",
+   "definition": "A flaw that lets an attacker run their own JavaScript in the pages other users see on your site.",
+   "example": "A comment containing a script runs in the browser of every reader."
+  },
+  {
+   "slug": "stored-xss",
+   "level": "debutant",
+   "term": "Stored XSS",
+   "definition": "XSS where the malicious code is saved by the site (a comment, a profile name) and served to every visitor of the page.",
+   "example": "A username that hides a script, shown on the public leaderboard."
+  },
+  {
+   "slug": "output-escaping",
+   "level": "debutant",
+   "term": "Output escaping",
+   "definition": "Converting special characters such as the angle brackets into harmless text when inserting data into a page, so it is shown, not run.",
+   "example": "The text <b> is displayed as is, instead of turning the rest bold."
+  },
+  {
+   "slug": "innerhtml-textcontent",
+   "level": "debutant",
+   "term": "innerHTML vs textContent",
+   "definition": "innerHTML parses a string as HTML, scripts and events included; textContent inserts it as plain text. For user data, use textContent.",
+   "example": "el.textContent = comment shows the comment safely."
+  },
+  {
+   "slug": "html-sanitizer",
+   "level": "debutant",
+   "term": "HTML sanitizer",
+   "definition": "A vetted library (such as DOMPurify) that keeps only an allowlist of safe tags and attributes when you must display user HTML.",
+   "example": "Bold and links are kept; scripts and onerror attributes are removed."
+  },
+  {
+   "slug": "csp",
+   "level": "debutant",
+   "term": "Content Security Policy (CSP)",
+   "definition": "A response header telling the browser which sources of scripts, styles and images are allowed, so injected scripts are blocked.",
+   "example": "Content-Security-Policy: script-src 'self'"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does XSS let an attacker do?",
+   "choices": [
+    "Run their JavaScript in other users' browsers",
+    "Read the database through a crafted query",
+    "Flood the server with fake requests",
+    "Guess the passwords one by one"
+   ],
+   "explain": "The injected script runs with the rights of the page: it can read data shown to the user, act as them or redirect them."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A link points to this page with ?name=<img src=x onerror=alert(1)>. What happens?",
+   "choices": [
+    "The browser runs the code: this is XSS",
+    "The page shows the text exactly as typed",
+    "The page fails to load",
+    "Nothing, URLs cannot hold HTML"
+   ],
+   "explain": "innerHTML turns the string into HTML; the broken image fires onerror, which runs the attacker's code.",
+   "code": {
+    "lang": "js",
+    "src": "const name = new URLSearchParams(location.search).get(\"name\");\ndocument.querySelector(\"#hello\").innerHTML = \"Hello \" + name;"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the simplest fix for that code?",
+   "choices": [
+    "Use textContent instead of innerHTML",
+    "Check that the name is shorter than 50 letters",
+    "Wrap the code in try and catch",
+    "Remove the word script from the name"
+   ],
+   "explain": "textContent shows the text as text. Filters that remove words like script are always bypassed."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "Comments typed by users are displayed like this. Which line opens an XSS flaw?",
+   "lang": "js",
+   "lines": [
+    "const list = document.querySelector(\"#comments\");",
+    "for (const c of comments) {",
+    "  const li = document.createElement(\"li\");",
+    "  li.innerHTML = c.text;",
+    "  list.appendChild(li);",
+    "}"
+   ],
+   "answer": 3,
+   "explain": "User text goes through innerHTML, so any HTML or script inside it runs. li.textContent = c.text fixes it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why is stored XSS usually worse than XSS in a crafted link?",
+   "choices": [
+    "It hits every visitor of the page, with no link to click",
+    "It only works on the server",
+    "It is easier to see on the page",
+    "It needs the password of the victim"
+   ],
+   "explain": "Stored on the site, the payload runs for everyone who opens the page, admins included."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does a Content Security Policy do?",
+   "choices": [
+    "It tells the browser which script sources are allowed",
+    "It encrypts the content of the page",
+    "It blocks bots from crawling the site",
+    "It compresses images and scripts"
+   ],
+   "explain": "A strict CSP blocks inline and foreign scripts, so many XSS payloads simply do not run. It is a second layer, not a replacement for escaping."
+  },
+  {
+   "kind": "vf",
+   "prompt": "React escapes values placed in JSX by default, but dangerouslySetInnerHTML bypasses that protection.",
+   "isTrue": true,
+   "explain": "True: the name is a warning. Use it only with HTML cleaned by a sanitizer."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your forum must display rich comments (bold, links) written by users. Safest approach?",
+   "choices": [
+    "Clean the HTML with a vetted sanitizer and an allowlist of tags",
+    "Remove script tags with a regular expression",
+    "Trust users who are logged in",
+    "Encode the comments in base64"
+   ],
+   "explain": "Attackers have endless variants (onerror, svg, javascript links). A maintained sanitizer knows them; a homemade regex does not."
+  },
+  {
+   "kind": "vf",
+   "prompt": "XSS is dangerous even when the session cookie is HttpOnly.",
+   "isTrue": true,
+   "explain": "True: the script cannot read the cookie, but it can still act as the user inside the page: send requests, read what is displayed, change it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "When should data be escaped?",
+   "choices": [
+    "At output, for where it lands (HTML, attribute, URL)",
+    "Only once, at the moment it is received",
+    "Never, as long as the database is secure",
+    "Only on the pages of the admin area"
+   ],
+   "explain": "The right escaping depends on where the data lands. Templates and frameworks do it automatically, as long as you do not bypass them."
+  }
+ ]
+}

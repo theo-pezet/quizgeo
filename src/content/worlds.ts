@@ -46,11 +46,13 @@ const BASE_WORLDS: World[] = [
   w('marketing', 9, '🎬', '#9333EA', 'Brand and influence', 'Branding, video, creators', []),
 
   // -------------------------------------------------------------------- IA
-  w('ia', 1, '🧠', '#7C3AED', 'Discovering AI', 'The words, the history, the players', ['ia-1', 'ia-hist-1', 'ia-2', 'ia-9']),
+  w('ia', 1, '🧠', '#7C3AED', 'Discovering AI', 'The words, the history, the players', ['ia-start-1', 'ia-1', 'ia-hist-1', 'ia-2', 'ia-9']),
   w('ia', 2, '⚙️', '#2563EB', 'Inside the machine', 'How an LLM reads and answers', ['ia-4', 'ia-llm-2', 'ia-3', 'ia-prompt-2']),
-  w('ia', 3, '🏗️', '#0F766E', 'Building', 'RAG, data, training, agents', ['ia-5', 'ia-data-1', 'ia-6', 'ia-train-2', 'ia-agents-1', 'ia-8']),
+  w('ia', 3, '🏗️', '#0F766E', 'Building', 'RAG, data, training, vision', ['ia-5', 'ia-data-1', 'ia-6', 'ia-train-2', 'ia-8']),
   w('ia', 4, '⚖️', '#DC2626', 'Responsibility', 'Safety, law, marketing uses', ['ia-7', 'ia-reg-1', 'ia-mkt-1', 'ia-case-1']),
   w('ia', 5, '🧰', '#0891B2', 'Everyday AI', 'Tools, images, automations', []),
+  // De vibe coder à ingénieur agentique : API, outils, contexte, agents de code, evals, sécurité.
+  w('ia', 6, '🛠️', '#4338CA', 'Agentic engineering', 'APIs, tools, context, coding agents, evals', ['ia-agents-1']),
 
   // ---------------------------------------------------------------- Python
   // Les unités « premiers pas » (units.extra.json) ouvrent le chemin, avant py-1.
@@ -100,6 +102,11 @@ const BASE_WORLDS: World[] = [
   ]),
   w('js', 2, '🛠️', '#0F766E', 'Tools', 'Git, frameworks, SDKs', ['web-5']),
   w('js', 3, '🚀', '#16A34A', 'In production', 'Performance, architecture, case studies', ['web-6', 'web-7', 'web-case-1']),
+
+  // ------------------------------------------------------- Sécurité web (facultatif)
+  w('secu', 1, '🔐', '#475569', 'The basics', 'Threats, HTTPS, cookies, passwords', []),
+  w('secu', 2, '🕷️', '#B91C1C', 'Classic attacks', 'Injection, XSS, access control, CSRF', []),
+  w('secu', 3, '🧯', '#0F766E', 'Protecting a project', 'Secrets, supply chain, OWASP, AI apps', []),
 ];
 
 // Les unités rédigées en JSON rejoignent le monde qu'elles déclarent, à la suite.

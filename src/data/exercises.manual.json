@@ -748,29 +748,29 @@
    "kind": "qcm",
    "key": "ia-9:x:7",
    "unitId": "ia-9",
-   "prompt": "What is a vector database?",
+   "prompt": "Which company makes the GPUs that most large models are trained on?",
    "choices": [
-    "A database that finds the embeddings closest to a query",
-    "A classic SQL database with an index on every column",
-    "A giant spreadsheet where each row is a document",
-    "A JSON file listing the keywords of each text"
+    "NVIDIA",
+    "Intel",
+    "Apple",
+    "Qualcomm"
    ],
    "answer": 0,
-   "explain": "Pinecone, Weaviate, pgvector, etc.: they are used for RAG. Texts and the question are turned into vectors, the nearest neighbors are retrieved, and those passages are given to the model."
+   "explain": "NVIDIA dominates AI chips with its GPUs and its CUDA software. Google also trains on its own chips (TPUs), and others are catching up."
   },
   {
    "kind": "qcm",
    "key": "ia-9:x:8",
    "unitId": "ia-9",
-   "prompt": "A \"token\" is…",
+   "prompt": "Hugging Face is best described as…",
    "choices": [
-    "A piece of text, often part of a word",
-    "Always a whole word, separated by spaces",
-    "A complete sentence, up to the full stop",
-    "Always a single character, letter or digit"
+    "A platform to share and download models and datasets",
+    "A lab that only builds closed models",
+    "A maker of AI chips",
+    "A search engine powered by AI"
    ],
    "answer": 0,
-   "explain": "In English, 1,000 tokens ≈ 750 words. A model's context, price and speed are all counted in tokens."
+   "explain": "It is the \"GitHub of AI\": Llama, Mistral, Qwen or Whisper can be downloaded from it, and it publishes the Transformers library."
   },
   {
    "kind": "qcm",
@@ -785,18 +785,18 @@
    "explain": "An LLM predicts the next token. It can be extremely useful and completely convincing while being wrong: that is hallucination. Always check important facts."
   },
   {
-   "kind": "order",
+   "kind": "qcm",
    "key": "ia-9:x:10",
    "unitId": "ia-9",
-   "prompt": "Put the main stages of building an LLM in order",
-   "steps": [
-    "Collect and clean a very large text corpus",
-    "Pre-train the model to predict the next token (weeks of GPU time)",
-    "Refine it on examples of instructions and answers (fine-tuning)",
-    "Align it with human or AI feedback (RLHF / RLAIF)",
-    "Evaluate, red-team, then deploy behind an API"
+   "prompt": "A client requires that customer data never leaves its own servers. Which kind of model makes that possible?",
+   "choices": [
+    "An open-weights model run on its own servers",
+    "A closed model used through a free consumer chat",
+    "Any model, through a browser plugin",
+    "None: AI always needs an outside cloud"
    ],
-   "explain": "Data → pre-training → fine-tuning → alignment → evaluation and deployment. Pre-training costs the most; alignment is what makes the model usable."
+   "answer": 0,
+   "explain": "Open weights (Llama, Mistral, Qwen, gpt-oss) can run on your own machines, at the cost of running the infrastructure yourself."
   },
   {
    "kind": "case",
@@ -1402,7 +1402,7 @@
     "False"
    ],
    "answer": 0,
-   "explain": "Technical documentation, a public summary of training data and respect for copyright, with enforcement powers for the AI Office from August 2026."
+   "explain": "Since August 2025: technical documentation, a public summary of training data and respect for copyright. In 2026 the Digital Omnibus postponed most high-risk obligations to December 2027, but not these."
   },
   {
    "kind": "case",
@@ -3087,6 +3087,438 @@
     "lang": "python",
     "src": "stats = {\"cpc\": 0.5}\nprint(stats[\"cpa\"])"
    }
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-1:x:1",
+   "unitId": "ia-1",
+   "prompt": "A chatbot quotes a court ruling that does not exist, with total confidence. This is…",
+   "choices": [
+    "A hallucination",
+    "Fine-tuning",
+    "Multimodality",
+    "Open source AI"
+   ],
+   "answer": 0,
+   "explain": "The model produced plausible text, not a checked fact. Ask for sources, and check them, for anything important."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-1:x:2",
+   "unitId": "ia-1",
+   "prompt": "A model's weights can be downloaded, but its licence restricts some uses and its training data is secret. The most accurate label?",
+   "choices": [
+    "Open weights, not fully open source",
+    "Closed source, usable only by API",
+    "Fully open source, data included",
+    "Public domain, free of any licence"
+   ],
+   "answer": 0,
+   "explain": "Open source in the strict sense also requires an open licence and transparency on data. Most \"open\" models are open weights."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-1:x:3",
+   "unitId": "ia-1",
+   "prompt": "Fine-tuning is the best first step to teach a model a product catalog that changes every week.",
+   "choices": [
+    "False",
+    "True"
+   ],
+   "answer": 0,
+   "explain": "False: facts that change belong in RAG (retrieval from your documents). Fine-tuning suits a stable style, format or task."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-1:x:4",
+   "unitId": "ia-1",
+   "prompt": "A model with many more parameters…",
+   "choices": [
+    "Has more capacity, but costs more and is not always better",
+    "Is always more accurate on every task",
+    "Needs less memory to run",
+    "Needs no training data"
+   ],
+   "answer": 0,
+   "explain": "Size helps, but data quality, training and the task matter as much. A small, well-trained model often beats a big one on a narrow job."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-2:x:1",
+   "unitId": "ia-2",
+   "prompt": "Asked for \"a CEO\", an image model shows only men in suits. This is…",
+   "choices": [
+    "A bias learned from the training data",
+    "A hallucination about what a CEO is",
+    "A negative prompt left in by mistake",
+    "A seed that was set to a fixed value"
+   ],
+   "answer": 0,
+   "explain": "The model reproduces the imbalances of its data. Spell out diversity in the prompt and review outputs before publishing."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-2:x:2",
+   "unitId": "ia-2",
+   "prompt": "Text-to-video tools can make a clip from one sentence, but long scenes with a consistent character remain hard.",
+   "choices": [
+    "True",
+    "False"
+   ],
+   "answer": 0,
+   "explain": "True: short clips are impressive, but keeping faces, objects and logic consistent over time is still the main limit."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-2:x:3",
+   "unitId": "ia-2",
+   "prompt": "What makes an AI system an agent rather than a simple chatbot?",
+   "choices": [
+    "It uses tools in a loop to reach a goal",
+    "It writes longer, more detailed answers",
+    "It speaks to you with a natural voice",
+    "It is free to use for everyone"
+   ],
+   "answer": 0,
+   "explain": "An agent decides on actions, calls tools, looks at the results and continues until the task is done."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-2:x:4",
+   "unitId": "ia-2",
+   "prompt": "Before publishing an AI-generated ad image showing people, which check matters most?",
+   "choices": [
+    "Bias, likeness of real people, rights on logos",
+    "The size of the file, for fast loading",
+    "The temperature used to generate it",
+    "The number of tokens in the prompt"
+   ],
+   "answer": 0,
+   "explain": "Generated people can look like real ones, logos can slip in, and stereotypes hurt the brand. A human review comes before publication."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-4:x:1",
+   "unitId": "ia-4",
+   "prompt": "At temperature 0, an LLM…",
+   "choices": [
+    "Picks the likeliest token: stable answers",
+    "Stops making any factual errors",
+    "Reads the prompt twice as fast",
+    "Uses fewer tokens in every answer"
+   ],
+   "answer": 0,
+   "explain": "Temperature only changes randomness. A stable answer can still be wrong."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-4:x:2",
+   "unitId": "ia-4",
+   "prompt": "Why can a model summarize a 300-page PDF in one go, but not a 3,000-page one?",
+   "choices": [
+    "Its context window caps what it reads at once",
+    "Its temperature is set too high for long files",
+    "Its training data is too old for that book",
+    "Its GPU is too small to open large PDFs"
+   ],
+   "answer": 0,
+   "explain": "Everything the model reads in one request must fit in its context window. Beyond it, split the document or use retrieval."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-4:x:3",
+   "unitId": "ia-4",
+   "prompt": "During inference, the weights of the model change every time you send a message.",
+   "choices": [
+    "False",
+    "True"
+   ],
+   "answer": 0,
+   "explain": "False: weights only change during training. In use, the model reads your context and generates; it learns nothing permanent."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-4:x:4",
+   "unitId": "ia-4",
+   "prompt": "What did the Transformer change compared with older networks?",
+   "choices": [
+    "Attention relates all the tokens at once, in parallel",
+    "It stopped using neural networks",
+    "It stores the whole internet inside it",
+    "It only works on images"
+   ],
+   "answer": 0,
+   "explain": "Older networks read text word by word. Attention made training parallel on GPUs, which allowed today's huge models."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-3:x:1",
+   "unitId": "ia-3",
+   "prompt": "You paste three examples of great product descriptions before asking for a fourth. This is…",
+   "choices": [
+    "Few-shot prompting",
+    "Zero-shot prompting",
+    "Fine-tuning",
+    "RLHF"
+   ],
+   "answer": 0,
+   "explain": "Examples in the prompt show the expected format and tone. The model is not retrained; it imitates."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-3:x:2",
+   "unitId": "ia-3",
+   "prompt": "Outline, then introduction, then full article: each step is a prompt you defined in advance. This is…",
+   "choices": [
+    "Prompt chaining",
+    "An agent choosing its own steps",
+    "Few-shot prompting",
+    "A jailbreak"
+   ],
+   "answer": 0,
+   "explain": "In a chain, a human fixed the steps. An agent decides the next step by itself."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-3:x:3",
+   "unitId": "ia-3",
+   "prompt": "With in-context learning, the examples in the prompt permanently retrain the model.",
+   "choices": [
+    "False",
+    "True"
+   ],
+   "answer": 0,
+   "explain": "False: the effect lasts only for that request. Start a new chat, and the examples are gone."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-3:x:4",
+   "unitId": "ia-3",
+   "prompt": "Where do the lasting rules of a support bot (scope, tone, forbidden topics) belong?",
+   "choices": [
+    "In the system prompt",
+    "Repeated in every user message",
+    "In a negative prompt",
+    "In the name of the model"
+   ],
+   "answer": 0,
+   "explain": "The system prompt frames the whole conversation and is not shown to the user."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-5:x:1",
+   "unitId": "ia-5",
+   "prompt": "Your support bot must answer from help articles updated every day. Best approach?",
+   "choices": [
+    "RAG over the articles",
+    "Fine-tune the model every day",
+    "Rely on the model's memory",
+    "Raise the temperature"
+   ],
+   "answer": 0,
+   "explain": "RAG reads the current articles at question time. Updating a document is instant; retraining a model is not."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-5:x:2",
+   "unitId": "ia-5",
+   "prompt": "Searching \"cheap flights\" also finds a page titled \"budget airfare deals\". This works thanks to…",
+   "choices": [
+    "Semantic search with embeddings",
+    "Exact keyword matching",
+    "Top-p sampling",
+    "An API key"
+   ],
+   "answer": 0,
+   "explain": "The two phrases share no word, but their embeddings are close in meaning."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-5:x:3",
+   "unitId": "ia-5",
+   "prompt": "RAG removes hallucinations completely.",
+   "choices": [
+    "False",
+    "True"
+   ],
+   "answer": 0,
+   "explain": "False: it reduces them, but retrieval can miss the right passage and the model can misread it. Cite sources and test on real questions."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-5:x:4",
+   "unitId": "ia-5",
+   "prompt": "Top-p set to 0.9 means the model…",
+   "choices": [
+    "It samples among the likeliest tokens up to 90%",
+    "It gets 90% of its answers right",
+    "It uses 90% of its context window",
+    "It writes answers that are 90% shorter"
+   ],
+   "answer": 0,
+   "explain": "Top-p trims the unlikely tail of tokens. Like temperature, it shapes randomness, not accuracy."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-6:x:1",
+   "unitId": "ia-6",
+   "prompt": "The training loss keeps falling, but the validation loss starts to rise. What is happening?",
+   "choices": [
+    "Overfitting",
+    "Underfitting",
+    "Quantization",
+    "RLHF"
+   ],
+   "answer": 0,
+   "explain": "The model is memorizing its training data instead of generalizing. Stop earlier, add data or regularize."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-6:x:2",
+   "unitId": "ia-6",
+   "prompt": "Quantizing a model from 16-bit to 4-bit mainly…",
+   "choices": [
+    "Shrinks memory and speeds it up, losing little",
+    "Makes it smarter at reasoning tasks",
+    "Adds new knowledge to its weights",
+    "Enlarges the size of its context window"
+   ],
+   "answer": 0,
+   "explain": "Fewer bits per weight: a model that needed a big GPU can run on a laptop."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-6:x:3",
+   "unitId": "ia-6",
+   "prompt": "LoRA trains only small added matrices while the original weights stay frozen.",
+   "choices": [
+    "True",
+    "False"
+   ],
+   "answer": 0,
+   "explain": "True: that is why it is fast and cheap, and why one base model can carry many small adapters."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-6:x:4",
+   "unitId": "ia-6",
+   "prompt": "What are humans used for in RLHF?",
+   "choices": [
+    "Ranking answers to show the preferred ones",
+    "Writing all of the pre-training text",
+    "Labeling every single token by hand",
+    "Choosing the learning rate of training"
+   ],
+   "answer": 0,
+   "explain": "Their rankings train a reward model, which then guides the model toward helpful, harmless answers."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-8:x:1",
+   "unitId": "ia-8",
+   "prompt": "A Mixture-of-Experts model with 400 billion parameters runs faster than a dense model of the same size because…",
+   "choices": [
+    "Each token activates only a few experts",
+    "Its experts run on smaller GPUs",
+    "It skips part of the context",
+    "It is always quantized"
+   ],
+   "answer": 0,
+   "explain": "Only a fraction of the weights work for each token: the knowledge of a huge model at the compute cost of a smaller one."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-8:x:2",
+   "unitId": "ia-8",
+   "prompt": "Which kind of model fits a note app that must work offline on a phone?",
+   "choices": [
+    "A small language model, quantized",
+    "The largest frontier model",
+    "A diffusion model",
+    "A reward model"
+   ],
+   "answer": 0,
+   "explain": "Small models fit the memory of a phone and keep data on the device, at the cost of capability."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-8:x:3",
+   "unitId": "ia-8",
+   "prompt": "Training models, generation after generation, mostly on AI-generated text can reduce their diversity and quality.",
+   "choices": [
+    "True",
+    "False"
+   ],
+   "answer": 0,
+   "explain": "True: this is model collapse. Fresh human data and filtering keep it in check."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-8:x:4",
+   "unitId": "ia-8",
+   "prompt": "What is debated about the emergent abilities of large models?",
+   "choices": [
+    "Whether the jumps are real or due to how they are measured",
+    "Whether models that large really exist at all",
+    "Whether GPUs are needed to train such models",
+    "Whether text is really split into tokens"
+   ],
+   "answer": 0,
+   "explain": "With smoother metrics, some jumps look gradual. Abilities do grow with scale; how suddenly is the open question."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-7:x:1",
+   "unitId": "ia-7",
+   "prompt": "Before a launch, a company pays experts to make its model give dangerous instructions. This is…",
+   "choices": [
+    "Red teaming",
+    "RLHF",
+    "Fine-tuning",
+    "Prompt chaining"
+   ],
+   "answer": 0,
+   "explain": "Red teamers attack the model on purpose, so weaknesses are fixed before real attackers find them."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-7:x:2",
+   "unitId": "ia-7",
+   "prompt": "A bank's model refuses a loan and the bank must explain why to the customer. Which field matters here?",
+   "choices": [
+    "Explainable AI",
+    "Diffusion models",
+    "Tokenization",
+    "Mixture of Experts"
+   ],
+   "answer": 0,
+   "explain": "Explainability gives reasons a person can check and contest, which the law often requires for such decisions."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-7:x:3",
+   "unitId": "ia-7",
+   "prompt": "A hiring model trained on biased past decisions can stay biased even after gender is removed from the data.",
+   "choices": [
+    "True",
+    "False"
+   ],
+   "answer": 0,
+   "explain": "True: other fields act as proxies (first name, school, gaps in the CV). Bias must be measured on outcomes, not assumed away."
+  },
+  {
+   "kind": "qcm",
+   "key": "ia-7:x:4",
+   "unitId": "ia-7",
+   "prompt": "Constitutional AI trains a model mostly with…",
+   "choices": [
+    "Written principles, applied through AI feedback",
+    "Human labels on every single answer",
+    "Raw internet text, with no filtering",
+    "No training at all, only output filters"
+   ],
+   "answer": 0,
+   "explain": "The model critiques its own drafts against a written constitution, which needs far fewer human labels than classic RLHF."
   }
  ]
 }

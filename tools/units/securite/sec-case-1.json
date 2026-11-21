@@ -1,0 +1,187 @@
+{
+ "unit": {
+  "id": "sec-case-1",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w3",
+  "title": "Case studies: securing a site",
+  "description": "Launching a small shop, a vibe-coded app that leaks, strange traffic on the login page"
+ },
+ "cards": [
+  {
+   "slug": "threat-model",
+   "level": "debutant",
+   "term": "Threat model",
+   "definition": "A short analysis of what you protect, from whom, and how it could be attacked, done before building.",
+   "example": "Assets: customer emails and orders. Threats: bots, account takeover, leaks."
+  },
+  {
+   "slug": "security-checklist",
+   "level": "debutant",
+   "term": "Security checklist",
+   "definition": "A list of checks run before each launch: HTTPS, secrets, access rights, inputs, updates, backups, logs.",
+   "example": "Ten lines reviewed before every release."
+  },
+  {
+   "slug": "pentest",
+   "level": "debutant",
+   "term": "Penetration test",
+   "definition": "An authorized attack by security experts to find flaws before real attackers do.",
+   "example": "A two-day test of the shop finds an IDOR on invoices."
+  },
+  {
+   "slug": "bug-bounty",
+   "level": "debutant",
+   "term": "Bug bounty",
+   "definition": "A program that rewards outside researchers for reporting flaws responsibly.",
+   "example": "A researcher reports a leak and gets 500 euros."
+  },
+  {
+   "slug": "backup",
+   "level": "debutant",
+   "term": "Backup",
+   "definition": "A copy of the data kept apart from the live system, tested by restoring it, so an attack or a mistake is recoverable.",
+   "example": "A nightly copy stored with another provider, restored once a month as a test."
+  },
+  {
+   "slug": "row-level-security",
+   "level": "debutant",
+   "term": "Row-level security",
+   "definition": "Database rules that decide which rows each user may read or write, used by backends such as Supabase when the browser talks to the database.",
+   "example": "A rule: a user only sees the rows where user_id is their own id."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "case",
+   "title": "Launching a small online shop",
+   "scenario": "You are launching a shop with customer accounts and card payments. You have two weeks and no security team.",
+   "steps": [
+    {
+     "prompt": "How do you handle card payments?",
+     "choices": [
+      "Use a hosted checkout from a payment provider",
+      "Store card numbers in your own database",
+      "Ask customers to email their card number",
+      "Store cards encrypted with a key in the code"
+     ],
+     "feedback": "A hosted checkout keeps card data off your servers entirely, which removes the biggest risk and most compliance work."
+    },
+    {
+     "prompt": "How do you handle customer passwords?",
+     "choices": [
+      "A proven auth library or provider, with Argon2 or bcrypt",
+      "Your own homemade hashing function",
+      "Passwords stored in clear text for support",
+      "One shared password for all customers"
+     ],
+     "feedback": "Login is easy to get almost right and dangerous to get wrong. Proven tools handle hashing, resets and rate limits."
+    },
+    {
+     "prompt": "What protects the admin account best?",
+     "choices": [
+      "Two-factor login and a unique, long password",
+      "A secret admin URL only",
+      "The password admin123, easy to remember",
+      "Sharing the account with the whole team"
+     ],
+     "feedback": "A hidden URL is found sooner or later. Two-factor login stops stolen or guessed passwords."
+    }
+   ],
+   "explain": "Hand the hardest parts (payments, login) to proven tools, then protect what remains with layers."
+  },
+  {
+   "kind": "case",
+   "title": "The vibe-coded app that leaks",
+   "scenario": "Your app, built quickly with an AI tool, uses a hosted database called directly from the browser. A user writes: \"I can see other people's data in the network tab.\"",
+   "steps": [
+    {
+     "prompt": "What is the most likely cause?",
+     "choices": [
+      "Row-level security is off: any user reads any row",
+      "The user hacked the database servers",
+      "HTTPS is not enabled on the site",
+      "The browser cache is broken for this user"
+     ],
+     "feedback": "When the browser talks to the database, the database rules are the only barrier. Without row-level security, everything is readable."
+    },
+    {
+     "prompt": "What do you do first?",
+     "choices": [
+      "Turn on row-level rules, test them, rotate keys",
+      "Ask the user to keep it a secret",
+      "Hide the network tab with JavaScript",
+      "Wait for the next planned release"
+     ],
+     "feedback": "Stop the leak now, then verify with a second account that each user only sees their own rows."
+    },
+    {
+     "prompt": "Personal data of customers was exposed. What else is required?",
+     "choices": [
+      "Assess it; notify the authority within 72 hours",
+      "Nothing more, since it is fixed now",
+      "Delete the logs to avoid any questions",
+      "Only post an apology on social media"
+     ],
+     "feedback": "Under the GDPR, a breach with risk for people must be reported within 72 hours, and sometimes to the users too."
+    }
+   ],
+   "explain": "AI tools build fast but rarely set access rules right by default. Test with two accounts before any launch."
+  },
+  {
+   "kind": "case",
+   "title": "Strange traffic on the login page",
+   "scenario": "Your logs show 40,000 failed logins in one night, from thousands of addresses, each trying a different email.",
+   "steps": [
+    {
+     "prompt": "What is happening?",
+     "choices": [
+      "Credential stuffing with leaked email and password pairs",
+      "A normal night of user mistakes",
+      "An SQL injection on the search page",
+      "A broken HTTPS certificate"
+     ],
+     "feedback": "Many emails, one try each, from many addresses: the signature of leaked credentials being replayed."
+    },
+    {
+     "prompt": "What do you add first?",
+     "choices": [
+      "Rate limits and a check against known leaked passwords",
+      "A longer minimum password for new users only",
+      "A message asking bots to stop",
+      "Nothing: the failures prove it works"
+     ],
+     "feedback": "Rate limits slow the bots; leaked-password checks protect the users who reused passwords."
+    },
+    {
+     "prompt": "Some logins succeeded. What do you do for those accounts?",
+     "choices": [
+      "Reset their sessions and passwords, and warn the users",
+      "Nothing, the passwords were correct",
+      "Delete the accounts",
+      "Publish the list of accounts"
+     ],
+     "feedback": "A correct password used by a bot is still a takeover. Cut the sessions, force a reset, offer two-factor login."
+    }
+   ],
+   "explain": "Logging and alerting turned this into a morning task instead of a breach discovered months later."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What should you test before launching any app with user accounts?",
+   "choices": [
+    "That one user cannot see or change another user's data",
+    "That the logo looks good on mobile",
+    "That the site loads in under one second",
+    "That the code has comments"
+   ],
+   "explain": "Create two accounts and try to reach the data of one from the other: it catches the most common serious flaw."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A backup that has never been restored as a test may not work when you need it.",
+   "isTrue": true,
+   "explain": "True: backups fail silently (missing tables, wrong permissions, expired storage). Restore one regularly to prove it works."
+  }
+ ]
+}
