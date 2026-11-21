@@ -1,0 +1,200 @@
+{
+ "unit": {
+  "id": "mkt-market-1",
+  "subjectId": "marketing",
+  "topic": "fondamentaux",
+  "world": "marketing-w1",
+  "title": "Analysing a market",
+  "description": "SWOT, PESTEL, Porter five forces, BCG matrix, Ansoff matrix, product life cycle, market share"
+ },
+ "cards": [
+  {
+   "slug": "porter-five-forces",
+   "level": "debutant",
+   "term": "Porter five forces",
+   "definition": "A model to judge how attractive an industry is: rivalry between competitors, threat of new entrants, threat of substitutes, bargaining power of buyers and bargaining power of suppliers.",
+   "example": "Food delivery apps face strong rivalry, restaurants with growing power and customers who switch for 2 euros: low profits."
+  },
+  {
+   "slug": "bcg-matrix",
+   "level": "debutant",
+   "term": "BCG matrix",
+   "definition": "A portfolio grid crossing market growth and relative market share: Stars (high, high), Cash cows (low growth, high share), Question marks (high growth, low share) and Dogs (low, low).",
+   "example": "A cash cow product funds the marketing of a question mark that might become a star."
+  },
+  {
+   "slug": "ansoff-matrix",
+   "level": "debutant",
+   "term": "Ansoff matrix",
+   "definition": "Four growth paths: market penetration (existing product, existing market), product development (new product, existing market), market development (existing product, new market) and diversification (new product, new market, the riskiest).",
+   "example": "A French meal kit brand launching in Belgium is market development."
+  },
+  {
+   "slug": "product-life-cycle",
+   "level": "debutant",
+   "term": "Product life cycle",
+   "definition": "The stages a product category goes through: introduction, growth, maturity and decline. Marketing priorities change at each stage, from education to differentiation to cost control.",
+   "example": "Streaming video is mature in France: growth slows and services fight on price and exclusive content."
+  },
+  {
+   "slug": "swot-to-action",
+   "level": "debutant",
+   "term": "From SWOT to action",
+   "definition": "A SWOT is only useful when crossed: use strengths to seize opportunities, fix weaknesses that threats would exploit. A list of 40 bullets nobody acts on is not analysis.",
+   "example": "Strength: a loyal community. Opportunity: a rising trend for repair. Action: launch a repair service promoted by the community."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "In a SWOT, which items are internal to the company?",
+   "choices": [
+    "Strengths and weaknesses",
+    "Opportunities and threats",
+    "Strengths and opportunities",
+    "Weaknesses and threats"
+   ],
+   "explain": "Strengths and weaknesses are inside (team, product, budget). Opportunities and threats come from the outside (market, law, competitors)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A new EU law restricts the use of personal data for ads. In a PESTEL, where does it go?",
+   "choices": [
+    "Legal",
+    "Social",
+    "Economic",
+    "Technological"
+   ],
+   "explain": "PESTEL: Political, Economic, Social, Technological, Environmental, Legal. A new regulation is Legal; a government policy change would be Political."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which of these is NOT one of Porter five forces?",
+   "choices": [
+    "The size of your marketing budget",
+    "The threat of substitutes",
+    "The bargaining power of buyers",
+    "The threat of new entrants"
+   ],
+   "explain": "The five forces describe the industry, not your own resources: rivalry, entrants, substitutes, buyers and suppliers."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "For a cinema, video streaming at home is which force?",
+   "choices": [
+    "Threat of substitutes",
+    "Threat of new entrants",
+    "Rivalry between competitors",
+    "Bargaining power of suppliers"
+   ],
+   "explain": "A substitute meets the same need in a different way. Another cinema would be a rival; streaming is a substitute."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In the BCG matrix, what is a product with low market growth but a high relative share?",
+   "choices": [
+    "Cash cow",
+    "Star",
+    "Question mark",
+    "Dog"
+   ],
+   "explain": "Cash cows dominate a mature market: they need little investment and generate cash that funds stars and question marks."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A sneaker brand starts selling the same sneakers in Japan. Which Ansoff quadrant?",
+   "choices": [
+    "Market development",
+    "Market penetration",
+    "Product development",
+    "Diversification"
+   ],
+   "explain": "Existing product, new market: market development. Diversification would be a new product in a new market, the riskiest move."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A bank launches its own phone plans for new customers. Which Ansoff quadrant?",
+   "choices": [
+    "Diversification",
+    "Market development",
+    "Product development",
+    "Market penetration"
+   ],
+   "explain": "New product and new market at once: diversification. It can work, but it uses few of the existing strengths."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A category is in maturity: sales plateau and everyone knows the product. What usually becomes the priority?",
+   "choices": [
+    "Differentiation, loyalty and cost control",
+    "Explaining what the product is used for",
+    "Opening many distributors as fast as possible",
+    "Stopping all communication to save money"
+   ],
+   "explain": "In maturity growth comes from stealing share or keeping customers. Education was the priority at introduction."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A long SWOT with 40 bullets is a better analysis than a short one with 8.",
+   "isTrue": false,
+   "explain": "False. The value is in crossing the four boxes and deciding. A short SWOT that leads to three clear actions beats an exhaustive list."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your brand sells 2 million euros in a 10 million euro market. What is your market share in value?",
+   "choices": [
+    "20 percent",
+    "2 percent",
+    "10 percent",
+    "50 percent"
+   ],
+   "explain": "2 divided by 10. Market share can be measured in value (euros) or in volume (units); always say which one."
+  },
+  {
+   "kind": "case",
+   "title": "Should we enter this market?",
+   "scenario": "Your organic baby food brand sells in French supermarkets. The board wants to launch an organic pet food range sold in pet shops.",
+   "steps": [
+    {
+     "prompt": "Which Ansoff quadrant is this move?",
+     "choices": [
+      "Diversification: new product, new market",
+      "Market penetration: more of the same",
+      "Market development: same product abroad",
+      "Product development: new product, same buyers"
+     ],
+     "feedback": "Pet food is a new product, sold to pet owners through pet shops: a new market. It is the riskiest quadrant."
+    },
+    {
+     "prompt": "A Porter analysis shows three giants own 80 percent of pet food and pet shops ask for big margins. Which forces are strong?",
+     "choices": [
+      "Rivalry and the power of distributors",
+      "Substitutes and new entrants",
+      "Supplier power and substitutes",
+      "None: the market is attractive"
+     ],
+     "feedback": "Powerful incumbents and demanding retailers squeeze newcomers. Your strength (organic baby food know-how) helps little against them."
+    },
+    {
+     "prompt": "What do you recommend to the board?",
+     "choices": [
+      "First test a small range online to measure demand",
+      "Launch 40 products in all pet shops at once",
+      "Drop baby food to fund the new range",
+      "Copy the price and packs of the market leader"
+     ],
+     "feedback": "A cheap test reduces the risk of a diversification. The decision comes after data, not before."
+    }
+   ],
+   "explain": "Name the move, weigh the market forces, then reduce risk with a test before committing."
+  }
+ ],
+ "deckCards": [
+  "marketing-s-w-o-t-analysis",
+  "marketing-p-e-s-t-e-l-analysis",
+  "marketing-market-share",
+  "marketing-benchmarking",
+  "marketing-competitive-advantage",
+  "marketing-market-maturity"
+ ]
+}

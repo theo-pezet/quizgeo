@@ -1,0 +1,159 @@
+{
+ "unit": {
+  "id": "mkt-copy-1",
+  "subjectId": "marketing",
+  "topic": "copywriting",
+  "world": "marketing-w9",
+  "title": "Copywriting",
+  "description": "AIDA, PAS, features and benefits, headlines, microcopy, objections, curiosity, specificity, voice of customer words"
+ },
+ "cards": [
+  {
+   "slug": "feature-advantage-benefit",
+   "level": "debutant",
+   "term": "Feature, advantage, benefit",
+   "definition": "A feature is what the product has, an advantage what it does, a benefit what the customer gains. Copy that sells leads with the benefit and proves it with the feature.",
+   "example": "Feature: 5,000 mAh battery. Advantage: lasts two days. Benefit: no more searching for a socket at 6 pm."
+  },
+  {
+   "slug": "specificity",
+   "level": "debutant",
+   "term": "Specificity",
+   "definition": "Precise claims beat vague ones: numbers, names, timeframes and concrete details make copy believable.",
+   "example": "Cut your reporting time from 4 hours to 20 minutes beats Save a lot of time."
+  },
+  {
+   "slug": "customer-language",
+   "level": "debutant",
+   "term": "Customer language",
+   "definition": "The best copy reuses the exact words customers use in interviews, reviews and support tickets, not the jargon of the company.",
+   "example": "Customers say I never know what to cook tonight; the page headline becomes No more what do we eat tonight."
+  },
+  {
+   "slug": "one-reader",
+   "level": "debutant",
+   "term": "Writing for one reader",
+   "definition": "Good copy speaks to a single, precise person with one main idea and one call to action per piece.",
+   "example": "An email to restaurant owners about one problem (empty tables on Tuesday) with one button."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does AIDA stand for?",
+   "choices": [
+    "Attention, Interest, Desire, Action",
+    "Audience, Idea, Design, Ad",
+    "Awareness, Intent, Decision, Approval",
+    "Attention, Information, Discount, Action"
+   ],
+   "explain": "A classic structure from the advertising of the early 20th century, still used for pages, emails and videos."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "PAS is a copywriting framework. What does it stand for?",
+   "choices": [
+    "Problem, Agitate, Solution",
+    "Price, Audience, Sale",
+    "Promise, Action, Signature",
+    "Plan, Attract, Sell"
+   ],
+   "explain": "Name the pain, make it felt, then offer the way out. Use it with care: agitation must stay honest."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which line is a benefit rather than a feature?",
+   "choices": [
+    "Leave work on time every evening",
+    "Automated reports in PDF and Excel",
+    "An AI engine with 40 connectors",
+    "Data refreshed every 15 minutes"
+   ],
+   "explain": "Benefits describe the result in the life of the customer. Features are proof that come after."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which headline is most specific?",
+   "choices": [
+    "How a 12-room hotel filled 30 percent more rooms in winter",
+    "Boost your hotel business with our solution",
+    "The best tool for hotels on the market",
+    "Hotels love our innovative platform"
+   ],
+   "explain": "Numbers, a precise target and a timeframe make the claim concrete and believable."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A button says Submit. Which microcopy usually works better?",
+   "choices": [
+    "Get my free guide",
+    "Click here to submit now",
+    "Send the form",
+    "OK"
+   ],
+   "explain": "Buttons that state what the user gets reduce doubt. Microcopy is small text with a big impact on conversion."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where should you look for the words of your next landing page?",
+   "choices": [
+    "Customer interviews, reviews and support tickets",
+    "The internal glossary of the product team",
+    "The homepage of the market leader",
+    "A list of trendy marketing buzzwords"
+   ],
+   "explain": "Voice of customer copy: when visitors read their own words, they feel understood."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A curiosity gap headline is fine even if the article never delivers on its promise.",
+   "isTrue": false,
+   "explain": "False. That is clickbait: it may win the click but loses trust, raises bounce and hurts the brand. Curiosity must be paid back."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your offer is expensive and visitors hesitate. Which block do you add near the call to action?",
+   "choices": [
+    "Answers to objections: price, risk, results, time",
+    "A longer history of the company since 1998",
+    "A list of every feature of the product",
+    "Links to the social profiles of the brand"
+   ],
+   "explain": "Objection handling removes the last doubts: guarantee, ROI, testimonials, what happens after the purchase."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In the inverted pyramid style, where does the most important information go?",
+   "choices": [
+    "At the very beginning",
+    "At the very end",
+    "In the middle",
+    "In a footnote"
+   ],
+   "explain": "Readers skim. Lead with the key point, then details. It also helps search engines and AI answers quote you."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a PAS email in order.",
+   "steps": [
+    "Subject line naming the pain: Empty tables on Tuesday?",
+    "Problem: quiet weekdays cost you 2,000 euros a month",
+    "Agitate: staff paid, food wasted, rent due anyway",
+    "Solution: a midweek offer sent to your past diners",
+    "Call to action: Try it free for 14 days"
+   ],
+   "explain": "Problem, agitation, solution, then one clear action. The subject line already speaks to the problem."
+  }
+ ],
+ "deckCards": [
+  "marketing-aida-model",
+  "marketing-pas-framework",
+  "marketing-benefit-driven-copy",
+  "marketing-headline-formula",
+  "marketing-micro-copy",
+  "marketing-objection-handling",
+  "marketing-curiosity-gap",
+  "marketing-inverted-pyramid",
+  "marketing-storytelling"
+ ]
+}

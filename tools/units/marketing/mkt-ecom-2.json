@@ -1,0 +1,180 @@
+{
+ "unit": {
+  "id": "mkt-ecom-2",
+  "subjectId": "marketing",
+  "topic": "ecommerce",
+  "world": "marketing-w8",
+  "title": "E-commerce: margins, baskets and feeds",
+  "description": "AOV, conversion rate, cart abandonment, repeat purchase, RFM, product feeds, Merchant Center, contribution margin"
+ },
+ "cards": [
+  {
+   "slug": "ecom-revenue-equation",
+   "level": "debutant",
+   "term": "The e-commerce revenue equation",
+   "definition": "Revenue = sessions x conversion rate x average order value. Each lever has its own tactics: traffic (SEO, ads), conversion (UX, trust, offer) and basket (bundles, thresholds, cross-sell).",
+   "example": "100,000 sessions x 2 percent x 60 euros = 120,000 euros. Raising AOV to 66 euros adds 12,000 euros with the same traffic."
+  },
+  {
+   "slug": "free-shipping-threshold",
+   "level": "debutant",
+   "term": "Free shipping threshold",
+   "definition": "Offering free delivery above an amount set slightly above the current average order value, to push buyers to add one more item.",
+   "example": "AOV is 42 euros: free shipping from 50 euros encourages a small extra item."
+  },
+  {
+   "slug": "cross-sell-upsell",
+   "level": "debutant",
+   "term": "Cross-sell and upsell",
+   "definition": "Cross-sell suggests a complementary product (a case with a phone); upsell suggests a better, pricier version of the same product (the 256 GB model).",
+   "example": "Frequently bought together blocks are cross-sell; upgrade for 50 euros more is upsell."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A shop has 50,000 sessions, a 2 percent conversion rate and an AOV of 80 euros. What is its revenue?",
+   "choices": [
+    "80,000 euros",
+    "100,000 euros",
+    "40,000 euros",
+    "160,000 euros"
+   ],
+   "explain": "50,000 x 0.02 = 1,000 orders, x 80 euros = 80,000 euros. Every lever of the equation multiplies the others."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You took 20,000 euros from 400 orders today. What is the AOV?",
+   "choices": [
+    "50 euros",
+    "20 euros",
+    "400 euros",
+    "80 euros"
+   ],
+   "explain": "Average order value = revenue divided by orders. Track it with the margin: a bigger basket full of discounts is not always better."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your AOV is 45 euros. Where do you set the free shipping threshold?",
+   "choices": [
+    "Slightly above, around 55 euros",
+    "Far below, at 20 euros",
+    "Exactly at 45 euros",
+    "Very high, at 200 euros"
+   ],
+   "explain": "Just above the AOV nudges many buyers to add one item. Too low gives margin away; too high motivates nobody."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A buyer adds a camera to the cart and is offered a memory card. What is it?",
+   "choices": [
+    "Cross-sell",
+    "Upsell",
+    "Downsell",
+    "Retargeting"
+   ],
+   "explain": "Cross-sell adds a complementary product. Upsell would offer a better camera."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Out of 1,000 carts created, 300 become orders. What is the cart abandonment rate?",
+   "choices": [
+    "70 percent",
+    "30 percent",
+    "3 percent",
+    "100 percent"
+   ],
+   "explain": "700 abandoned divided by 1,000. Typical causes: surprise shipping costs, forced account creation, slow checkout."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In an RFM analysis, what do the three letters stand for?",
+   "choices": [
+    "Recency, Frequency, Monetary value",
+    "Reach, Frequency, Media",
+    "Revenue, Funnel, Margin",
+    "Retention, Feedback, Marketing"
+   ],
+   "explain": "RFM ranks customers on how recently, how often and how much they buy, to target champions, loyal buyers and those at risk."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What do you need to run Google Shopping ads?",
+   "choices": [
+    "A product feed sent to Google Merchant Center",
+    "A YouTube channel with product videos",
+    "An Instagram account with 10,000 followers",
+    "A physical shop open to the public"
+   ],
+   "explain": "Shopping ads are built from the feed: titles, prices, images and stock. Feed quality drives ad performance."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A sale with a high revenue can lose money once product cost, shipping, fees and ad cost are deducted.",
+   "isTrue": true,
+   "explain": "True. Contribution margin per order is what pays the bills. ROAS alone can hide unprofitable sales."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A marketplace announces a GMV of 50 million euros. What does it measure?",
+   "choices": [
+    "The total value of goods sold through it",
+    "The commission revenue it keeps for itself",
+    "Its net profit after all its costs",
+    "The money invested by its shareholders"
+   ],
+   "explain": "GMV counts what buyers paid sellers. The platform revenue is only the commission on it."
+  },
+  {
+   "kind": "case",
+   "title": "A fashion shop with thin margins",
+   "scenario": "An online clothing shop: 3 percent conversion, AOV 38 euros, shipping costs 6 euros per order, ROAS on ads at 4.",
+   "steps": [
+    {
+     "prompt": "ROAS is 4, but the shop barely makes money. Why?",
+     "choices": [
+      "After product cost, shipping, returns and fees, little margin is left",
+      "A ROAS of 4 always means a strong profit",
+      "The conversion rate of 3 percent is too high",
+      "Ads never influence clothing purchases"
+     ],
+     "feedback": "With a 50 percent gross margin, 4 euros of revenue per euro of ads leaves 2 euros, before shipping, returns and fees. Check the break-even ROAS."
+    },
+    {
+     "prompt": "Which move raises profit without buying more traffic?",
+     "choices": [
+      "Free shipping from 50 euros plus outfit bundles",
+      "A permanent minus 40 percent on everything",
+      "Doubling the ad budget at the same ROAS",
+      "Removing all product photos to load faster"
+     ],
+     "feedback": "Raising the AOV spreads the fixed shipping cost over a bigger basket. Permanent discounts would destroy the margin."
+    },
+    {
+     "prompt": "Returns are at 35 percent. What do you try first?",
+     "choices": [
+      "Better size guides, fit reviews and real photos on models",
+      "Charging every customer 20 euros per return",
+      "Hiding the returns policy deep in the site",
+      "Stopping all sales of trousers and dresses"
+     ],
+     "feedback": "Most fashion returns come from fit and expectation gaps. Fix the information before adding friction."
+    }
+   ],
+   "explain": "Look past revenue: margin per order, basket size and returns decide whether e-commerce makes money."
+  }
+ ],
+ "deckCards": [
+  "marketing-aov",
+  "marketing-cart-abandonment-rate",
+  "marketing-repeat-purchase-rate",
+  "marketing-gmv",
+  "marketing-product-feed",
+  "marketing-merchant-center",
+  "marketing-sku",
+  "marketing-rfm-analysis",
+  "marketing-market-basket-analysis",
+  "marketing-customer-win-back-campaign",
+  "marketing-contribution-margin"
+ ]
+}

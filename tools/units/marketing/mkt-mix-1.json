@@ -1,0 +1,235 @@
+{
+ "unit": {
+  "id": "mkt-mix-1",
+  "subjectId": "marketing",
+  "topic": "fondamentaux",
+  "world": "marketing-w1",
+  "title": "The marketing mix: 4Ps, 7Ps, 4Cs",
+  "description": "Product, price, place, promotion, the services mix, the customer view, value proposition, needs and demand"
+ },
+ "cards": [
+  {
+   "slug": "product-lever",
+   "level": "debutant",
+   "term": "Product (the first P)",
+   "definition": "Everything the customer actually gets: features, quality, design, range, packaging, brand name, warranty and after-sales service.",
+   "example": "Dacia keeps its cars simple and robust instead of loading them with options: a product choice that serves its low-price promise."
+  },
+  {
+   "slug": "price-lever",
+   "level": "debutant",
+   "term": "Price (the second P)",
+   "definition": "What the customer pays and how: list price, discounts, payment terms, subscription or one-off. It is the only P that brings money in; the three others cost money.",
+   "example": "A gym charging 39 euros a month without commitment, or 29 euros a month on a one-year plan."
+  },
+  {
+   "slug": "place-lever",
+   "level": "debutant",
+   "term": "Place (the third P)",
+   "definition": "Distribution: where and how the offer reaches the customer (own website, shops, marketplaces, resellers), with stock, delivery and opening hours.",
+   "example": "A cosmetics brand selling on its own site, in Sephora stores and on Amazon."
+  },
+  {
+   "slug": "promotion-lever",
+   "level": "debutant",
+   "term": "Promotion (the fourth P)",
+   "definition": "Communication: everything that makes the offer known and wanted, such as ads, SEO, social media, PR, sales teams and price promotions. Most of digital marketing lives here.",
+   "example": "A Google Ads campaign, a newsletter and an Instagram partnership all belong to Promotion."
+  },
+  {
+   "slug": "seven-ps",
+   "level": "debutant",
+   "term": "The 7Ps (services mix)",
+   "definition": "For services, three Ps are added to the four: People (the staff who deliver the service), Process (how the service runs, step by step) and Physical evidence (tangible proof such as premises, website, reviews, invoices).",
+   "example": "A hotel works on staff training (People), check-in speed (Process) and clean rooms plus good reviews (Physical evidence)."
+  },
+  {
+   "slug": "four-cs",
+   "level": "debutant",
+   "term": "The 4Cs (customer view)",
+   "definition": "Lauterborn rewrote the 4Ps from the buyer side in 1990: Customer needs instead of Product, Cost instead of Price, Convenience instead of Place, Communication instead of Promotion.",
+   "example": "The real cost of an online order includes delivery fees, waiting time and the hassle of a return, not just the price tag."
+  },
+  {
+   "slug": "value-proposition",
+   "level": "debutant",
+   "term": "Value proposition",
+   "definition": "A clear promise of the benefit a target customer gets, why it matters to them and why you rather than the alternatives. It is a promise of value, not a slogan.",
+   "example": "Doctolib: book a doctor in a few clicks, day or night, without calling the practice."
+  },
+  {
+   "slug": "needs-wants-demand",
+   "level": "debutant",
+   "term": "Needs, wants and demand",
+   "definition": "A need is a basic lack (eat, move, belong). A want is the specific form culture gives it (a burger, an SUV). Demand is a want backed by the ability and the willingness to pay.",
+   "example": "Need: getting around. Want: an electric car. Demand: a buyer who can and will pay 30,000 euros for one."
+  },
+  {
+   "slug": "mix-coherence",
+   "level": "debutant",
+   "term": "Coherence of the mix",
+   "definition": "The four levers must tell the same story. A premium price, a bargain distribution channel and discount ads send contradictory signals and destroy the positioning.",
+   "example": "A luxury watch dumped on a flash-sale site at minus 70 percent hurts the brand far more than it helps sales."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What are the 4Ps of the marketing mix?",
+   "choices": [
+    "Product, Price, Place, Promotion",
+    "Product, Price, People, Profit",
+    "Plan, Price, Place, Publicity",
+    "Product, Process, Partners, Press"
+   ],
+   "explain": "Jerome McCarthy, 1960. Place means distribution and Promotion means communication: the two words most often misunderstood."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your SEO, your Google Ads and your Instagram posts belong to which P?",
+   "choices": [
+    "Promotion",
+    "Place",
+    "Product",
+    "Price"
+   ],
+   "explain": "Promotion covers all communication. A big share of digital marketing is one P out of four: a great marketer works on the other three too."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A brand stops selling in supermarkets and sells only on its own website. Which P changes?",
+   "choices": [
+    "Place",
+    "Promotion",
+    "Product",
+    "Price"
+   ],
+   "explain": "Place is where and how the customer can buy. Going direct to consumer (D2C) is a distribution decision."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which P is the only one that brings money in?",
+   "choices": [
+    "Price",
+    "Promotion",
+    "Place",
+    "Product"
+   ],
+   "explain": "Product, Place and Promotion cost money. Price captures the value you create, which is why a small price change often moves profit more than a big ad budget."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "For services, which three Ps are added to make the 7Ps?",
+   "choices": [
+    "People, Process, Physical evidence",
+    "Profit, Partners, Positioning",
+    "Packaging, Planning, Press",
+    "Pricing, Placement, Publicity"
+   ],
+   "explain": "A service is produced while it is consumed: the staff, the way it runs and the tangible clues around it shape what the customer buys."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The online reviews of a restaurant, its menu card and the look of the room are which of the 7Ps?",
+   "choices": [
+    "Physical evidence",
+    "Process (the service flow)",
+    "People (the staff)",
+    "Place (distribution)"
+   ],
+   "explain": "A service cannot be touched before purchase, so customers judge it from tangible clues. Reviews are physical evidence in the digital age."
+  },
+  {
+   "kind": "vf",
+   "prompt": "The 4Cs rewrite the 4Ps from the customer side: needs, cost, convenience and communication.",
+   "isTrue": true,
+   "explain": "True. Lauterborn (1990) wanted marketers to start from the buyer: what they need, what it really costs them, how easy it is to get, and a two-way conversation."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In the 4Cs, why is Cost wider than Price?",
+   "choices": [
+    "It adds delivery, time, effort and risk for the buyer",
+    "It only counts what the product costs to make",
+    "It is simply the price before VAT is added",
+    "It means the advertising cost per customer"
+   ],
+   "explain": "The buyer compares total effort: a cheaper product with a 10-day delivery and a painful return can cost more than a dearer one."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A premium skincare brand sells a 90 euro cream. Which move breaks the coherence of its mix?",
+   "choices": [
+    "Selling it in discount stores with permanent minus 50 percent stickers",
+    "Opening a counter in a high-end department store",
+    "Adding a free sample to every online order",
+    "Training beauty advisors on its ingredients"
+   ],
+   "explain": "The price says premium; a discount channel and endless promotions say cheap. Customers believe the cheapest signal."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which sentence is a real value proposition?",
+   "choices": [
+    "Book a doctor in two clicks, day or night, without calling",
+    "Innovation at the heart of your health since 2013",
+    "A cloud platform with 99.9 percent uptime and APIs",
+    "The number one choice of French patients"
+   ],
+   "explain": "A value proposition names a target, a concrete benefit and an edge over the alternative (calling the practice). The others are a slogan, a feature list and an unproven claim."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A student wants a 1,500 euro laptop but can spend 300 euros at most. For demand to exist, what is missing?",
+   "choices": [
+    "The ability to pay",
+    "The need",
+    "The want",
+    "Brand awareness"
+   ],
+   "explain": "Demand is a want backed by purchasing power. Marketers either target people who can pay, or change the offer (cheaper model, payment in instalments)."
+  },
+  {
+   "kind": "case",
+   "title": "Reviving a bakery chain",
+   "scenario": "Five bakeries in Lyon, sales flat for two years. The owner says: we need to do Instagram. Nearby, many offices open at 8 am.",
+   "steps": [
+    {
+     "prompt": "Before choosing any channel, what do you look at first?",
+     "choices": [
+      "The whole mix: range, prices, locations and opening hours",
+      "How often the competitors post on Instagram",
+      "The colour of the logo and the shop signs",
+      "The budget for an influencer campaign"
+     ],
+     "feedback": "Promotion is one lever out of four. Posts will not save a weak product, a bad location or the wrong opening hours."
+    },
+    {
+     "prompt": "Office workers say the shops open at 7:30, too late for a breakfast on the way. Which lever is this?",
+     "choices": [
+      "Place: when and where the offer is available",
+      "Promotion: they simply do not know the shops",
+      "Price: the breakfast is too expensive for them",
+      "Product: the bread is not good enough"
+     ],
+     "feedback": "Availability is part of Place. Opening at 6:30 changes who can buy, before any ad is shown."
+    },
+    {
+     "prompt": "You open at 6:30 and launch a coffee plus pastry formula at 3.50 euros. How do you announce it?",
+     "choices": [
+      "Local ads and Google Business Profile posts within 1 km",
+      "A national TV spot during the evening news",
+      "A press release to business newspapers",
+      "Nothing at all: a good offer sells itself"
+     ],
+     "feedback": "The target lives or works within walking distance: geo-targeted ads, the Google Business Profile and a sign in the shop window reach them cheaply."
+    }
+   ],
+   "explain": "Start from the four levers, fix the one that blocks sales, then communicate to the people who can actually come."
+  }
+ ],
+ "deckCards": [
+  "marketing-marketing-mix",
+  "marketing-pain-point"
+ ]
+}

@@ -1,0 +1,155 @@
+{
+ "unit": {
+  "id": "mkt-auto-1",
+  "subjectId": "marketing",
+  "topic": "automation",
+  "world": "marketing-w8",
+  "title": "Marketing automation and deliverability",
+  "description": "Drip and trigger emails, lifecycle, preference center, list hygiene, SPF, DKIM, DMARC, BIMI, IP warming, sender reputation"
+ },
+ "cards": [
+  {
+   "slug": "welcome-sequence",
+   "level": "debutant",
+   "term": "Welcome sequence",
+   "definition": "The first automated emails after a sign-up. They get the best open rates of all emails: deliver what was promised, set expectations, then guide toward a first action.",
+   "example": "Day 0: the guide. Day 2: the best article. Day 5: a case study. Day 8: a demo offer."
+  },
+  {
+   "slug": "bulk-sender-rules",
+   "level": "debutant",
+   "term": "Gmail and Yahoo bulk sender rules",
+   "definition": "Since 2024, senders of more than 5,000 emails a day to Gmail or Yahoo must authenticate with SPF, DKIM and DMARC, offer one-click unsubscribe and keep spam complaints below 0.3 percent.",
+   "example": "A newsletter without DMARC starts landing in spam at Gmail."
+  },
+  {
+   "slug": "re-engagement",
+   "level": "debutant",
+   "term": "Re-engagement campaign",
+   "definition": "A short sequence sent to inactive subscribers to win them back or let them go. Those who do not react are removed, which protects deliverability.",
+   "example": "Still interested? Click here to keep receiving our tips, or we will stop writing to you."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A visitor leaves a cart and receives an email two hours later. What kind of email is it?",
+   "choices": [
+    "A behavioural trigger email",
+    "A newsletter",
+    "A drip campaign by date",
+    "A transactional receipt"
+   ],
+   "explain": "Trigger emails react to an action (or a missing one). They usually convert far better than scheduled broadcasts."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which DNS record lists the servers allowed to send email for your domain?",
+   "choices": [
+    "SPF",
+    "DKIM",
+    "DMARC",
+    "BIMI"
+   ],
+   "explain": "SPF lists authorized senders. DKIM signs each message, DMARC says what to do when checks fail, BIMI shows your logo."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which record tells mailbox providers what to do when SPF and DKIM fail, and sends you reports?",
+   "choices": [
+    "DMARC",
+    "SPF",
+    "DKIM",
+    "MX"
+   ],
+   "explain": "DMARC policies go from none (monitor) to quarantine and reject. Start with none, read the reports, then tighten."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You move to a new dedicated IP for your emails. What do you do?",
+   "choices": [
+    "Warm it up: raise volumes gradually over a few weeks",
+    "Send to the whole list on day one",
+    "Send only to inactive subscribers first",
+    "Turn off authentication during the move"
+   ],
+   "explain": "A new IP has no reputation. Start with your most engaged contacts and grow volumes step by step."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Since 2024, bulk senders to Gmail must offer one-click unsubscribe and keep spam complaints under 0.3 percent.",
+   "isTrue": true,
+   "explain": "True. Gmail and Yahoo also require SPF, DKIM and DMARC. Above the threshold, emails go to spam or get rejected."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why remove subscribers who have not opened anything for a year?",
+   "choices": [
+    "They hurt sender reputation and inflate costs",
+    "The law requires deleting them after 6 months",
+    "They always mark every email as spam",
+    "They make the newsletter load slower"
+   ],
+   "explain": "Inactive addresses lower engagement signals, can turn into spam traps and cost money on volume-based tools."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is a preference center for?",
+   "choices": [
+    "Letting subscribers choose topics and frequency",
+    "Storing the passwords of your subscribers",
+    "Ranking subscribers by their purchases",
+    "Hiding the unsubscribe link from users"
+   ],
+   "explain": "Giving a choice (weekly digest instead of daily, only promotions) turns unsubscribes into downgrades."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which email of a welcome sequence usually gets the highest open rate?",
+   "choices": [
+    "The first one, sent right after sign-up",
+    "The fifth one, sent after two weeks",
+    "A promotional email after one month",
+    "They all get the same open rate"
+   ],
+   "explain": "Interest peaks at sign-up. Send the promised content at once, then build the habit."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does progressive profiling mean?",
+   "choices": [
+    "Asking one or two new questions at each form",
+    "Asking every question on the very first form",
+    "Buying extra data about leads from brokers",
+    "Guessing the job of a lead from their email"
+   ],
+   "explain": "Short forms convert better. Known fields are hidden and replaced by new questions on the next visit."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a basic lifecycle in order for a subscription app.",
+   "steps": [
+    "Welcome and onboarding after sign-up",
+    "Activation nudges until the first key action",
+    "Regular value emails to build the habit",
+    "Upsell when usage shows a need",
+    "Win-back sequence after cancellation"
+   ],
+   "explain": "Lifecycle marketing sends the right message at each stage instead of the same newsletter to everyone."
+  }
+ ],
+ "deckCards": [
+  "marketing-drip-campaign",
+  "marketing-behavioral-trigger",
+  "marketing-preference-center",
+  "marketing-list-hygiene",
+  "marketing-ip-warming",
+  "marketing-dmarc",
+  "marketing-dkim",
+  "marketing-spf",
+  "marketing-bimi",
+  "marketing-sender-reputation",
+  "marketing-progressive-profiling",
+  "marketing-lifecycle-marketing"
+ ]
+}

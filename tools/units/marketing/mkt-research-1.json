@@ -1,0 +1,175 @@
+{
+ "unit": {
+  "id": "mkt-research-1",
+  "subjectId": "marketing",
+  "topic": "fondamentaux",
+  "world": "marketing-w1",
+  "title": "Market research and customer insight",
+  "description": "Qualitative and quantitative, primary and secondary data, sampling, survey bias, interviews, NPS, CSAT, CES"
+ },
+ "cards": [
+  {
+   "slug": "sample",
+   "level": "debutant",
+   "term": "Sample and representativeness",
+   "definition": "Surveying a subset of the population instead of everyone. To generalize, the sample must look like the population (quota or random sampling) and be big enough; 1,000 well chosen people can describe a country.",
+   "example": "A poll of 1,000 French adults built on quotas of age, sex, region and job."
+  },
+  {
+   "slug": "survey-bias",
+   "level": "debutant",
+   "term": "Survey bias",
+   "definition": "Ways a survey misleads: leading questions, people saying what is socially expected, only motivated people answering, or asking about future behaviour, which people predict badly.",
+   "example": "Would you buy an eco-friendly product? gets 80 percent yes; actual sales are far lower."
+  },
+  {
+   "slug": "focus-group",
+   "level": "debutant",
+   "term": "Focus group",
+   "definition": "A moderated discussion with 6 to 10 people to explore perceptions and words. Rich for ideas, but small and influenced by the loudest participants: never use it to measure.",
+   "example": "Testing three packaging concepts with young parents before a quantitative test."
+  },
+  {
+   "slug": "customer-interview",
+   "level": "debutant",
+   "term": "Customer interview",
+   "definition": "A one to one conversation about real past behaviour (the last time you bought, what you tried before) rather than opinions about the future. Five to ten good interviews reveal most of the recurring problems.",
+   "example": "Tell me about the last time you looked for a plumber: where did you search first?"
+  },
+  {
+   "slug": "nps",
+   "level": "debutant",
+   "term": "NPS (Net Promoter Score)",
+   "definition": "How likely are you to recommend us, from 0 to 10? Promoters answer 9 or 10, passives 7 or 8, detractors 0 to 6. NPS = percentage of promoters minus percentage of detractors, from minus 100 to plus 100.",
+   "example": "50 percent promoters, 30 percent passives and 20 percent detractors give an NPS of 30."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "You want to know WHY customers cancel their subscription. Which method first?",
+   "choices": [
+    "Qualitative interviews with people who cancelled",
+    "A survey of 5,000 random French adults",
+    "Counting cancellations per month in a chart",
+    "Reading the annual report of a competitor"
+   ],
+   "explain": "Why questions need qualitative research. Once you know the reasons, a quantitative survey can measure how common each one is."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A report from an industry association that you reuse is which kind of data?",
+   "choices": [
+    "Secondary data",
+    "Primary data",
+    "First-party data",
+    "Qualitative data"
+   ],
+   "explain": "Secondary data was collected by someone else for another purpose. It is cheap and fast; check its date and method."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which survey question is biased?",
+   "choices": [
+    "Do you agree that our great new app is easier?",
+    "How often did you use the app last week?",
+    "Which feature did you use most recently?",
+    "What did you do before using the app?"
+   ],
+   "explain": "A leading question suggests the answer. Neutral questions about facts and past behaviour give more reliable data."
+  },
+  {
+   "kind": "vf",
+   "prompt": "When people say they would buy a product, sales will match their answers closely.",
+   "isTrue": false,
+   "explain": "False. Stated intentions overestimate real behaviour, especially for virtuous products. Prefer observed behaviour: pre-orders, tests, real sales."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A focus group of 8 people loves your concept. What can you conclude?",
+   "choices": [
+    "The concept is worth testing on a larger sample",
+    "80 percent of the market will buy the product",
+    "The launch is certain to be a success",
+    "There is no need for further research"
+   ],
+   "explain": "A focus group explores; it does not measure. Eight people cannot represent a market."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your NPS survey gets 60 percent promoters, 25 percent passives and 15 percent detractors. What is the NPS?",
+   "choices": [
+    "45",
+    "60",
+    "85",
+    "75"
+   ],
+   "explain": "NPS = promoters minus detractors = 60 minus 15 = 45. Passives count in the total but not in the subtraction."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A customer gives 7 out of 10 to the recommendation question. Which group is it in?",
+   "choices": [
+    "Passive",
+    "Promoter",
+    "Detractor",
+    "Neutral promoter"
+   ],
+   "explain": "Only 9 and 10 are promoters, 0 to 6 are detractors, 7 and 8 are passives."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "After a support chat, you ask: how easy was it to solve your issue? Which metric is it?",
+   "choices": [
+    "CES",
+    "NPS",
+    "CSAT",
+    "ROAS"
+   ],
+   "explain": "Customer Effort Score measures effort. Low effort predicts loyalty well after service interactions."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which interview question gives the most reliable insight?",
+   "choices": [
+    "Tell me about the last time you bought running shoes",
+    "Would you pay 150 euros for smart shoes?",
+    "Do you like our new shoe design?",
+    "What features should the perfect shoe have?"
+   ],
+   "explain": "Past behaviour is fact; predictions and opinions are guesses. The Mom Test principle: ask about their life, not your idea."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why can 1,000 well chosen people describe the opinion of a whole country?",
+   "choices": [
+    "A representative sample mirrors the population structure",
+    "Every French adult answered in the past",
+    "The law requires polls to be accurate",
+    "People in big cities speak for the rest"
+   ],
+   "explain": "Representativeness matters more than size. A biased sample of 100,000 can be wrong where 1,000 quota-based answers are right."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a research project in order.",
+   "steps": [
+    "Write the business decision the research must inform",
+    "Read existing secondary data on the subject",
+    "Run a few qualitative interviews to find the themes",
+    "Measure the themes with a quantitative survey",
+    "Decide and share the findings with the team"
+   ],
+   "explain": "Start from the decision, use what exists, explore, measure, then act. Research with no decision attached ends up in a drawer."
+  }
+ ],
+ "deckCards": [
+  "marketing-qualitative-research",
+  "marketing-quantitative-research",
+  "marketing-primary-data",
+  "marketing-secondary-data",
+  "marketing-csat",
+  "marketing-ces",
+  "marketing-voice-of-the-customer-voc"
+ ]
+}

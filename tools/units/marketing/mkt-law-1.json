@@ -1,0 +1,229 @@
+{
+ "unit": {
+  "id": "mkt-law-1",
+  "subjectId": "marketing",
+  "topic": "droit",
+  "world": "marketing-w10",
+  "title": "Data, consent and prospecting in France",
+  "description": "CNIL, legal bases, cookie banners, exempt trackers, B2C and B2B email rules, soft opt-in, phone prospecting since August 2026, rights of people"
+ },
+ "cards": [
+  {
+   "slug": "cnil",
+   "level": "debutant",
+   "term": "CNIL",
+   "definition": "The French data protection authority. It enforces the GDPR and the French rules on cookies and trackers, publishes guidelines and regularly fines companies, big sites included, for cookie and prospecting breaches.",
+   "example": "The CNIL has fined several large websites for making it harder to refuse cookies than to accept them."
+  },
+  {
+   "slug": "legal-bases",
+   "level": "debutant",
+   "term": "GDPR legal bases",
+   "definition": "Every use of personal data needs one of six legal bases: consent, contract, legal obligation, vital interests, public task or legitimate interest. Marketing mostly relies on consent and legitimate interest.",
+   "example": "Sending an order confirmation relies on the contract; a promotional email to a prospect relies on consent."
+  },
+  {
+   "slug": "cookie-consent-france",
+   "level": "debutant",
+   "term": "Cookie consent rules in France",
+   "definition": "No advertising or other non-exempt tracker before consent; simply continuing to browse is not consent; refusing must be as easy as accepting (a Refuse all button next to Accept all); the CNIL recommends keeping the choice about 6 months before asking again; trackers live 13 months at most.",
+   "example": "A banner with a big Accept button and Refuse hidden in a second screen is not compliant."
+  },
+  {
+   "slug": "exempt-trackers",
+   "level": "debutant",
+   "term": "Exempt trackers",
+   "definition": "Trackers strictly needed for the service do not need consent: cart, login session, security, load balancing, storing the consent choice itself, and some audience measurement set up under strict CNIL conditions.",
+   "example": "The cookie that keeps items in a shopping cart can be set before any choice."
+  },
+  {
+   "slug": "email-b2c",
+   "level": "debutant",
+   "term": "Email prospecting to consumers",
+   "definition": "In France, promotional emails and SMS to private individuals need prior consent (opt-in), with one exception: existing customers can receive offers for similar products if they were told and could object when their address was collected (soft opt-in). Every message needs an easy unsubscribe.",
+   "example": "A pre-ticked box does not count as consent; an unticked box the visitor ticks does."
+  },
+  {
+   "slug": "email-b2b",
+   "level": "debutant",
+   "term": "Email prospecting to professionals",
+   "definition": "Emails to professionals at their work address are allowed without prior consent if the message relates to their job, they were informed when the address was collected and they can object easily.",
+   "example": "Offering accounting software to the finance director of a company at her work address is allowed; selling her holidays is not."
+  },
+  {
+   "slug": "phone-prospecting-2026",
+   "level": "debutant",
+   "term": "Phone prospecting since 11 August 2026",
+   "definition": "Since 11 August 2026 (law of 30 June 2025), calling a consumer to sell is forbidden without prior consent: a clear positive act that names the caller and the purpose, valid one year at most, with no tacit renewal. Bloctel, the old opt-out list, has closed.",
+   "example": "A form with an unticked box: I agree to be called by Company X about solar panels for 12 months."
+  },
+  {
+   "slug": "data-rights",
+   "level": "debutant",
+   "term": "Rights of the people",
+   "definition": "People can ask to access, correct or erase their data, object to marketing at any time, and get their data back (portability). The company must answer within one month.",
+   "example": "A customer asks what data you hold on them: you send a full export within a month."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which authority enforces the GDPR and the cookie rules in France?",
+   "choices": [
+    "The CNIL",
+    "The DGCCRF",
+    "The ARCOM",
+    "The ARPP"
+   ],
+   "explain": "The CNIL handles personal data. The DGCCRF handles consumer protection (prices, misleading practices), the ARCOM audiovisual media, the ARPP advertising self-regulation."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A visitor lands on your site and scrolls without clicking the banner. Can you set advertising cookies?",
+   "choices": [
+    "No: continuing to browse is not consent",
+    "Yes: scrolling counts as accepting",
+    "Yes, if the banner says so clearly",
+    "Yes, but only for 13 months"
+   ],
+   "explain": "Consent must be a clear positive act. Silence, scrolling or inaction mean refusal."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your banner has a big Accept all button. What must sit next to it?",
+   "choices": [
+    "A Refuse all option as easy to use",
+    "A link to the full privacy policy only",
+    "A timer before the page unlocks",
+    "Nothing: accepting is enough"
+   ],
+   "explain": "Refusing must be as easy as accepting. The CNIL has fined large sites that hid refusal in a second layer."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which cookie can be set without asking for consent?",
+   "choices": [
+    "The one that keeps the shopping cart",
+    "The Meta advertising pixel",
+    "A retargeting cookie for Google Ads",
+    "A cookie that shares data with a partner"
+   ],
+   "explain": "Strictly necessary trackers are exempt. Advertising and data sharing always need consent."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A visitor refused cookies. When does the CNIL recommend asking again?",
+   "choices": [
+    "After about 6 months",
+    "On every new page view",
+    "The next morning",
+    "Never, the choice is final"
+   ],
+   "explain": "Asking again too soon pressures people into accepting. Around 6 months is the recommended practice."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You want to send promotional emails to private individuals who never bought from you. What do you need?",
+   "choices": [
+    "Their prior consent (opt-in)",
+    "Nothing, if you include an unsubscribe link",
+    "A purchase of their address from a broker",
+    "Their phone number as well"
+   ],
+   "explain": "B2C email prospecting needs opt-in in France. Buying lists does not create consent."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A customer bought shoes on your site and did not object to marketing then. Can you email them about socks?",
+   "choices": [
+    "Yes: soft opt-in for similar products",
+    "No: you must ask for consent again",
+    "Only by SMS, never by email",
+    "Only after 13 months"
+   ],
+   "explain": "Soft opt-in covers existing customers and similar products, if they were informed and could object at collection."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You email the HR director of a company, at her work address, about HR software. Is prior consent required?",
+   "choices": [
+    "No, if it relates to her job and she can object",
+    "Yes, always, as for private individuals",
+    "No, any message can be sent to a pro",
+    "Yes, unless you call her first"
+   ],
+   "explain": "B2B prospecting is opt-out, provided the offer relates to the person role and an easy objection is offered."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Since 11 August 2026, a company can call a consumer to sell only if the consumer gave prior consent, valid one year at most.",
+   "isTrue": true,
+   "explain": "True. The law of 30 June 2025 switched phone prospecting from opt-out (Bloctel) to opt-in. Consent must name the caller and purpose and is not renewed tacitly."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which consent to phone prospecting is valid?",
+   "choices": [
+    "An unticked box the person ticks, naming the company and topic",
+    "A pre-ticked box at the bottom of a form",
+    "Accepting the general terms of a contest",
+    "Not being registered on a do not call list"
+   ],
+   "explain": "Consent must be specific, informed and given by a positive act. Pre-ticked boxes and bundled terms do not count."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A customer asks you to erase their data. How long do you have to answer?",
+   "choices": [
+    "One month",
+    "One year",
+    "One week",
+    "There is no deadline"
+   ],
+   "explain": "GDPR rights must be handled within one month (extendable in complex cases, with an explanation)."
+  },
+  {
+   "kind": "case",
+   "title": "A lead generation campaign in France",
+   "scenario": "You run a campaign for a home insulation company: a quiz on the site collects name, email and phone, then a call centre calls leads.",
+   "steps": [
+    {
+     "prompt": "What must the form include for the calls?",
+     "choices": [
+      "A separate unticked box for calls naming the company",
+      "Nothing more: leaving a number means agreeing",
+      "A pre-ticked box to save visitors time",
+      "A link to Bloctel so people can opt out"
+     ],
+     "feedback": "Since August 2026, phone prospecting needs prior, specific consent. Bloctel no longer exists."
+    },
+    {
+     "prompt": "The partner wants to resell the leads to three other installers. Can it?",
+     "choices": [
+      "Only if each recipient was named and accepted by the person",
+      "Yes, leads belong to whoever collects them",
+      "Yes, if the price of each lead is low",
+      "Yes, if the leads are older than a month"
+     ],
+     "feedback": "Consent is given to identified companies for a purpose. Sharing beyond that needs new, specific consent."
+    },
+    {
+     "prompt": "The tracking pixel of the ad platform fires as soon as the quiz page loads. Problem?",
+     "choices": [
+      "Yes: it must wait for consent on the banner",
+      "No: ad pixels are exempt trackers",
+      "No, if the pixel is from a big platform",
+      "Only if the visitor is under 18"
+     ],
+     "feedback": "Advertising trackers need consent first. Tie the pixel to the CMP, with Consent Mode or server-side setups that respect the choice."
+    }
+   ],
+   "explain": "Consent is specific, prior and provable: for cookies, for emails and, since 2026, for phone calls."
+  }
+ ],
+ "deckCards": [
+  "marketing-cmp",
+  "marketing-consent-mode-v2",
+  "marketing-double-opt-in"
+ ]
+}

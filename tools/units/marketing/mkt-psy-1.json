@@ -1,0 +1,153 @@
+{
+ "unit": {
+  "id": "mkt-psy-1",
+  "subjectId": "marketing",
+  "topic": "psychologie",
+  "world": "marketing-w9",
+  "title": "Persuasion and consumer psychology",
+  "description": "Cialdini principles, loss aversion, anchoring, framing, peak-end rule, choice overload, social proof, ethics of persuasion"
+ },
+ "cards": [
+  {
+   "slug": "cialdini-principles",
+   "level": "debutant",
+   "term": "Cialdini principles of influence",
+   "definition": "Seven levers from Robert Cialdini: reciprocity, commitment and consistency, social proof, authority, liking, scarcity, and unity (shared identity, added in 2016).",
+   "example": "A free audit (reciprocity), 2,000 clients served (social proof), places left this month (scarcity)."
+  },
+  {
+   "slug": "social-proof-principle",
+   "level": "debutant",
+   "term": "Social proof",
+   "definition": "People look at what others like them do to decide, especially when they are unsure. Reviews, customer counts and testimonials work best when the others look similar to the buyer.",
+   "example": "Rated 4.7 by 3,200 parents converts parents better than a quote from a celebrity."
+  },
+  {
+   "slug": "dark-patterns",
+   "level": "debutant",
+   "term": "Dark patterns",
+   "definition": "Interface tricks that push users against their interest: fake countdowns, hidden costs, hard-to-find cancellation, pre-ticked boxes. Banned by the EU Digital Services Act and consumer law, and they destroy trust.",
+   "example": "A timer that restarts at 10 minutes each time the page reloads."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A consultant offers a free audit, then proposes a paid plan. Which principle does the free audit use?",
+   "choices": [
+    "Reciprocity",
+    "Scarcity",
+    "Authority",
+    "Liking"
+   ],
+   "explain": "People feel the need to return a favour. The gift must be genuinely useful, or it backfires."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Stop losing 200 euros a month works better than Save 200 euros a month. Why?",
+   "choices": [
+    "Loss aversion: losses weigh more than equal gains",
+    "The anchoring effect of the 200 euro figure",
+    "The decoy effect between two offers",
+    "People prefer negative words in general"
+   ],
+   "explain": "Kahneman and Tversky showed losses weigh roughly twice as much as gains of the same size."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A crossed-out 120 euros next to 79 euros makes the price look smaller. Which bias?",
+   "choices": [
+    "Anchoring",
+    "Framing",
+    "Reciprocity",
+    "Peak-end rule"
+   ],
+   "explain": "The first number seen becomes the reference. In France the crossed-out price must be a real former price."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Yoghurt sold as 95 percent fat-free instead of 5 percent fat uses which effect?",
+   "choices": [
+    "Framing",
+    "Anchoring",
+    "Scarcity",
+    "Authority"
+   ],
+   "explain": "Same fact, different frame, different choice. Framing is everywhere in copywriting."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Showing 3 plans instead of 12 often raises sales. Why?",
+   "choices": [
+    "Choice overload makes people delay or give up",
+    "Fewer plans always lower the price paid",
+    "The law caps the number of plans",
+    "Customers only read the first three"
+   ],
+   "explain": "Too many options increase effort and fear of choosing wrong. Simplify and highlight a recommended choice."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A course ends with a strong final session and a certificate ceremony. Which principle does it use?",
+   "choices": [
+    "Peak-end rule",
+    "Loss aversion",
+    "Decoy effect",
+    "Bandwagon effect"
+   ],
+   "explain": "People judge an experience by its best moment and its end, not by the average."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which testimonial convinces small bakery owners best?",
+   "choices": [
+    "A bakery owner from a similar town with real numbers",
+    "A famous chef who never ran a small shop",
+    "An anonymous quote with no name or photo",
+    "The founder praising their own product"
+   ],
+   "explain": "Social proof works best when the others look like the buyer. Specific numbers add credibility."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A countdown timer that restarts each time the page is reloaded is an acceptable growth tactic.",
+   "isTrue": false,
+   "explain": "False. A fake urgency is a dark pattern and a misleading commercial practice. It can bring fines and destroys trust once noticed."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Asking for a small yes (a free trial) before a big yes (a yearly plan) uses which principle?",
+   "choices": [
+    "Commitment and consistency",
+    "Reciprocity (returning a favour)",
+    "Authority (trusting experts)",
+    "Unity (shared identity)"
+   ],
+   "explain": "People like to act in line with what they already did. Small first steps raise later conversion."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which use of scarcity is honest?",
+   "choices": [
+    "Only 20 seats because the workshop is run live by one trainer",
+    "Only 3 left shown on every product, whatever the stock",
+    "A price that ends tonight, every night of the year",
+    "Limited edition on a product made in endless runs"
+   ],
+   "explain": "Scarcity is ethical when it is true. Fake scarcity is illegal in France and burns the brand once spotted."
+  }
+ ],
+ "deckCards": [
+  "marketing-loss-aversion",
+  "marketing-anchoring-bias",
+  "marketing-framing-effect",
+  "marketing-reciprocity",
+  "marketing-scarcity",
+  "marketing-authority",
+  "marketing-commitment-and-consistency",
+  "marketing-liking",
+  "marketing-peak-end-rule",
+  "marketing-choice-overload",
+  "marketing-bandwagon-effect"
+ ]
+}
