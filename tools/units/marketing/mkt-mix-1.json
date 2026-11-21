@@ -51,11 +51,11 @@
    "example": "The real cost of an online order includes delivery fees, waiting time and the hassle of a return, not just the price tag."
   },
   {
-   "slug": "value-proposition",
+   "slug": "product-levels",
    "level": "debutant",
-   "term": "Value proposition",
-   "definition": "A clear promise of the benefit a target customer gets, why it matters to them and why you rather than the alternatives. It is a promise of value, not a slogan.",
-   "example": "Doctolib: book a doctor in a few clicks, day or night, without calling the practice."
+   "term": "Product levels (Kotler)",
+   "definition": "A product has layers: the core benefit (what the buyer really wants), the actual product (features, design, brand, packaging) and the augmented product (delivery, warranty, support, community). Competition often plays out on the augmented layer.",
+   "example": "Core: listening to music anywhere. Actual: the headphones. Augmented: two-year warranty, app, free returns."
   },
   {
    "slug": "needs-wants-demand",

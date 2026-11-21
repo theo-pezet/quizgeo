@@ -83,7 +83,7 @@ const BASE_WORLDS: World[] = [
   w('python', 2, '🧱', '#0891B2', 'Structures', 'Lists, dictionaries, text', ['py-4', 'py-concepts-2', 'py-5', 'py-6']),
   w('python', 3, '🛠️', '#A16207', 'Good code', 'Errors, operators, practices', ['py-7', 'py-8', 'py-pratiques-1', 'py-outils-1']),
   w('python', 4, '📈', '#16A34A', 'Data', 'Pandas from A to Z', ['py-9', 'py-10', 'py-11', 'py-data-1']),
-  w('python', 5, '🌐', '#7C3AED', 'Python and the web', 'Requests, files, APIs, automation', ['py-12', 'py-13', 'py-web-1', 'py-case-1']),
+  w('python', 5, '🌐', '#7C3AED', 'Python and the web', 'Requests, files, APIs, automation', ['py-12', 'py-13', 'py-web-1', 'py-http-1', 'py-case-1']),
 
   // ------------------------------------------------------------------ HTML
   // Les unités « premiers pas » (units.extra.json) ouvrent le chemin, avant web-1.
@@ -113,8 +113,8 @@ const BASE_WORLDS: World[] = [
     'web-4',
     'web-js-2',
   ]),
-  w('js', 2, '🛠️', '#0F766E', 'Tools', 'Git, frameworks, SDKs', ['web-5']),
-  w('js', 3, '🚀', '#16A34A', 'In production', 'Performance, architecture, case studies', ['web-6', 'web-7', 'web-case-1']),
+  w('js', 2, '🛠️', '#0F766E', 'Tools', 'Git, Node, TypeScript, HTTP APIs', ['web-5']),
+  w('js', 3, '🚀', '#16A34A', 'In production', 'Performance, deployment, case studies', ['web-6', 'web-7', 'js-deploy-1', 'web-case-1']),
 
   // ------------------------------------------------------- Sécurité web (facultatif)
   w('secu', 1, '🔐', '#475569', 'The basics', 'Threats, HTTPS, cookies, passwords', []),

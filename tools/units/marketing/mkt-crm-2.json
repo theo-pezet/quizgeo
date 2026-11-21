@@ -9,16 +9,9 @@
  },
  "cards": [
   {
-   "slug": "crm-system",
+   "slug": "fit-intent-scoring",
    "level": "debutant",
-   "term": "CRM",
-   "definition": "Customer Relationship Management: the software (HubSpot, Salesforce, Pipedrive) that stores every contact, company, interaction and deal, so marketing and sales share one view of each customer.",
-   "example": "A salesperson sees that a prospect downloaded two guides and opened the pricing page before calling."
-  },
-  {
-   "slug": "lead-scoring",
-   "level": "debutant",
-   "term": "Lead scoring",
+   "term": "Fit and intent scoring",
    "definition": "Giving each lead points for who they are (fit: job, company size, sector) and what they do (engagement: visits, downloads, demo request). Above a threshold, the lead goes to sales.",
    "example": "Plus 20 for a marketing director, plus 30 for a pricing page visit, minus 50 for a student email."
   },
@@ -174,6 +167,7 @@
   }
  ],
  "deckCards": [
+  "marketing-crm",
   "marketing-mql",
   "marketing-sql",
   "marketing-sal",

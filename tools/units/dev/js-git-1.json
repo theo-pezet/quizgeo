@@ -1,0 +1,204 @@
+{
+ "unit": {
+  "id": "js-git-1",
+  "subjectId": "js",
+  "topic": "git",
+  "world": "js-w2",
+  "title": "Git in depth",
+  "description": "Commits and the staging area, branches, merge and rebase, conflicts, pull requests and review, revert versus reset, stash, tags, good commit messages, history"
+ },
+ "cards": [
+  {
+   "slug": "git-three-areas",
+   "level": "debutant",
+   "term": "Working tree, staging area, repository",
+   "definition": "Git has three places: your files (working tree), the changes chosen for the next commit (staging area, filled by git add) and the history (repository, written by git commit).",
+   "example": "Edit two files, git add only one, commit: the other stays modified but not committed."
+  },
+  {
+   "slug": "git-branch",
+   "level": "debutant",
+   "term": "Branch",
+   "definition": "A movable pointer to a commit, used to work on a feature without touching main. Creating one is instant; you switch with git switch.",
+   "example": "git switch -c feature/pricing-page"
+  },
+  {
+   "slug": "git-merge-rebase",
+   "level": "debutant",
+   "term": "Merge and rebase",
+   "definition": "Both bring the commits of one branch into another. Merge keeps both histories and adds a merge commit; rebase replays your commits on top of the target, giving a straight history. Never rebase commits others already pulled.",
+   "example": "git rebase main on your own feature branch before opening a pull request."
+  },
+  {
+   "slug": "git-conflict",
+   "level": "debutant",
+   "term": "Merge conflict",
+   "definition": "When two branches changed the same lines, Git cannot choose and marks the file with <<<<<<<, ======= and >>>>>>>. You edit the file to the right version, then git add and continue.",
+   "example": "Two people changed the same headline in index.html."
+  },
+  {
+   "slug": "pull-request",
+   "level": "debutant",
+   "term": "Pull request",
+   "definition": "A request to merge a branch, on GitHub or GitLab, where teammates review the diff, comment and automated checks (tests, lint) run before merging.",
+   "example": "A PR titled Add pricing page with screenshots and a green CI."
+  },
+  {
+   "slug": "revert-reset",
+   "level": "debutant",
+   "term": "revert versus reset",
+   "definition": "git revert creates a new commit that undoes an old one: safe on shared branches. git reset moves the branch pointer back and can drop commits: only for local, unshared work.",
+   "example": "A bad commit is on main: git revert <sha>, then push."
+  },
+  {
+   "slug": "git-stash",
+   "level": "debutant",
+   "term": "git stash",
+   "definition": "Puts your uncommitted changes aside so you can switch branches with a clean tree, then git stash pop brings them back.",
+   "example": "An urgent fix on main while your feature is half done."
+  },
+  {
+   "slug": "commit-message",
+   "level": "debutant",
+   "term": "Good commit messages",
+   "definition": "A short summary line in the imperative (Add, Fix, Remove) under about 50 characters, then a blank line and the why if needed. Small commits that each do one thing.",
+   "example": "Fix the tax rounding on invoices over 1,000 euros"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "You edited three files and want to commit only one. Which command comes first?",
+   "choices": [
+    "git add that-file.js",
+    "git commit -a",
+    "git push origin main",
+    "git reset --hard"
+   ],
+   "explain": "git add puts chosen changes in the staging area; git commit records only what is staged."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does git switch -c landing do?",
+   "choices": [
+    "Creates the landing branch and moves onto it",
+    "Deletes the landing branch everywhere",
+    "Merges landing into the current branch",
+    "Renames the current branch to landing"
+   ],
+   "explain": "It is the modern form of git checkout -b. git branch landing would only create it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A bad commit was pushed to main and colleagues pulled it. How do you undo it?",
+   "choices": [
+    "git revert with the commit id, then push",
+    "git reset --hard to before it, then force push",
+    "Delete the repository and clone it again",
+    "Edit the files by hand without committing"
+   ],
+   "explain": "revert adds a new commit that cancels the old one, so nobody history is rewritten. Force pushing a reset on shared work breaks others."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What do these markers in a file mean?",
+   "choices": [
+    "A merge conflict to resolve by hand",
+    "A comment syntax used by Git",
+    "A file that Git ignores",
+    "A tag marking a release"
+   ],
+   "explain": "Keep the right version (or a mix), remove the markers, then git add the file and finish the merge.",
+   "code": {
+    "lang": "text",
+    "src": "<<<<<<< HEAD\n<h1>Start free</h1>\n=======\n<h1>Try it for 14 days</h1>\n>>>>>>> feature/hero"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which statement about rebase is true?",
+   "choices": [
+    "Never rebase commits that others already pulled",
+    "Rebase is always safer than merge",
+    "Rebase deletes the branch you rebase onto",
+    "Rebase only works on the main branch"
+   ],
+   "explain": "Rebase rewrites commits. On your own unpushed branch it gives a clean history; on shared history it creates chaos."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You must fix a bug on main but your feature branch has unfinished changes. What is the quickest clean move?",
+   "choices": [
+    "git stash, switch to main, fix, come back, git stash pop",
+    "Commit the broken work directly on main",
+    "Delete your changes and rewrite them later",
+    "Copy the files to the desktop as a backup"
+   ],
+   "explain": "stash keeps work aside without polluting the history."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which commit message is best?",
+   "choices": [
+    "Fix tax rounding on invoices over 1,000 euros",
+    "fix",
+    "changes",
+    "Updated stuff and fixed things and more"
+   ],
+   "explain": "Imperative, specific, short. Future you will search the history with these words."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A pull request lets teammates review the changes and lets automated tests run before merging.",
+   "isTrue": true,
+   "explain": "True. Review plus CI catches bugs and shares knowledge. Many teams protect main so that only reviewed, green PRs can merge."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does git log --oneline show?",
+   "choices": [
+    "The commit history, one short line per commit",
+    "Only the files changed since yesterday",
+    "The list of all remote branches",
+    "The password used for GitHub"
+   ],
+   "explain": "Each line shows the short commit id and the summary. Add --graph to see branches and merges."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does git tag v1.5.0 do?",
+   "choices": [
+    "Gives a permanent name to the current commit, for a release",
+    "Creates a new branch called v1.5.0",
+    "Uploads the code to the app store",
+    "Changes the version number in package.json"
+   ],
+   "explain": "Tags mark releases. Push them with git push origin v1.5.0; CI pipelines often build on tags."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a typical feature workflow in order.",
+   "steps": [
+    "git switch -c feature/pricing",
+    "Commit small changes as you work",
+    "git push -u origin feature/pricing",
+    "Open a pull request and get a review",
+    "Merge once CI is green, then delete the branch"
+   ],
+   "explain": "Branch, commit, push, review, merge. Short-lived branches mean fewer conflicts."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "One command fails. Which one?",
+   "lang": "text",
+   "lines": [
+    "git switch -c feature/pricing",
+    "git add pricing.html",
+    "git commit -m \"Add pricing page\"",
+    "git push -u origin pricing"
+   ],
+   "answer": 3,
+   "explain": "The local branch is feature/pricing, not pricing: Git answers that the src refspec pricing does not match any. Push the real branch name."
+  }
+ ]
+}

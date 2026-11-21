@@ -1,0 +1,207 @@
+{
+ "unit": {
+  "id": "js-http-1",
+  "subjectId": "js",
+  "topic": "http",
+  "world": "js-w2",
+  "title": "HTTP and REST APIs",
+  "description": "Requests and responses, methods, status codes, headers, JSON bodies, REST resources, idempotency, API keys and bearer tokens, CORS, 429, pagination, webhooks"
+ },
+ "cards": [
+  {
+   "slug": "http-request",
+   "level": "debutant",
+   "term": "HTTP request and response",
+   "definition": "A request has a method, a URL, headers and sometimes a body. The response has a status code, headers and a body. Every API call, page load and image is one of these exchanges.",
+   "example": "POST /api/leads with a JSON body; the server answers 201 Created with the new lead."
+  },
+  {
+   "slug": "http-methods",
+   "level": "debutant",
+   "term": "HTTP methods",
+   "definition": "GET reads, POST creates, PUT replaces, PATCH changes part of a resource, DELETE removes. GET must never change data.",
+   "example": "GET /orders lists orders; PATCH /orders/42 updates the status of order 42."
+  },
+  {
+   "slug": "status-codes",
+   "level": "debutant",
+   "term": "Status codes",
+   "definition": "2xx success (200 OK, 201 Created, 204 No Content), 3xx redirection, 4xx client error (400 bad request, 401 not authenticated, 403 forbidden, 404 not found, 422 invalid data, 429 too many requests), 5xx server error.",
+   "example": "A form with an invalid email gets 422; the API being down gets 503."
+  },
+  {
+   "slug": "rest",
+   "level": "debutant",
+   "term": "REST",
+   "definition": "A style of API built around resources named by URLs (/customers, /customers/42) and manipulated with the HTTP methods, usually in JSON, with no session state kept on the server between requests.",
+   "example": "GET /customers/42/orders lists the orders of customer 42."
+  },
+  {
+   "slug": "idempotent",
+   "level": "debutant",
+   "term": "Idempotent",
+   "definition": "An operation that gives the same result whether it runs once or several times. GET, PUT and DELETE are idempotent; POST is not, which is why a double click can create two orders.",
+   "example": "Payment APIs accept an idempotency key so a retried POST does not charge twice."
+  },
+  {
+   "slug": "api-auth",
+   "level": "debutant",
+   "term": "API keys and bearer tokens",
+   "definition": "APIs identify callers with a key or a token sent in a header, usually Authorization: Bearer <token>. Keys are secrets: they stay on the server, never in front-end code or in a URL.",
+   "example": "fetch(url, { headers: { Authorization: \"Bearer \" + process.env.API_TOKEN } })"
+  },
+  {
+   "slug": "cors",
+   "level": "debutant",
+   "term": "CORS",
+   "definition": "A browser rule: a page can only read responses from another origin if that server allows it with Access-Control-Allow-Origin headers. It protects users; servers and scripts are not limited by it.",
+   "example": "Your front end on app.example.com calls api.example.com: the API must allow that origin."
+  },
+  {
+   "slug": "pagination-rate-limit",
+   "level": "debutant",
+   "term": "Pagination and rate limits",
+   "definition": "APIs return large lists page by page (page and limit, or a cursor) and limit how many calls you can make; over the limit they answer 429, often with a Retry-After header.",
+   "example": "Fetching 10,000 contacts 100 at a time, waiting when a 429 arrives."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which method should create a new lead?",
+   "choices": [
+    "POST",
+    "GET",
+    "DELETE",
+    "HEAD"
+   ],
+   "explain": "POST creates. GET only reads and must never change data, because browsers, crawlers and caches call it freely."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The API answers 401. What does it mean?",
+   "choices": [
+    "You are not authenticated: missing or invalid credentials",
+    "The resource does not exist on the server",
+    "The server crashed while handling it",
+    "The request worked and returned nothing"
+   ],
+   "explain": "401 means who are you? 403 means I know you, but you may not do this."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A form sends an email without @. Which status should a good API return?",
+   "choices": [
+    "422",
+    "200",
+    "500",
+    "301"
+   ],
+   "explain": "422 (or 400) tells the client its data is invalid, ideally with a message per field. 500 would blame the server."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which URL follows REST conventions to get the orders of customer 42?",
+   "choices": [
+    "GET /customers/42/orders",
+    "GET /getOrdersOfCustomer?id=42",
+    "POST /customers/orders/get/42",
+    "GET /orders.php?action=list&c=42"
+   ],
+   "explain": "REST names resources with nouns and nests them; the method carries the action."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Sending the same POST twice can create two orders, while sending the same PUT twice leaves the same result.",
+   "isTrue": true,
+   "explain": "True. PUT is idempotent, POST is not. Payment APIs accept idempotency keys to make retries safe."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this code print when the API answers 404?",
+   "choices": [
+    "HTTP 404",
+    "ok",
+    "A TypeError: Failed to fetch",
+    "undefined"
+   ],
+   "explain": "fetch only rejects on network errors. A 404 is a valid response: you must check response.ok yourself.",
+   "code": {
+    "lang": "javascript",
+    "src": "const res = await fetch(\"/api/leads/999\");\nif (!res.ok) console.log(\"HTTP \" + res.status);\nelse console.log(\"ok\");"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where should an API key for a paid service be sent from?",
+   "choices": [
+    "From your server, in an Authorization header",
+    "From the browser, in the URL query string",
+    "From the HTML, in a hidden input field",
+    "From a cookie readable by any script"
+   ],
+   "explain": "Anything sent from the browser can be read by users. Keys stay server-side; URLs end up in logs and history."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your page on shop.example.com calls api.partner.com and the browser blocks the response with a CORS error. Who fixes it?",
+   "choices": [
+    "The API server, by allowing your origin in its headers",
+    "You, by adding mode: \"no-cors\" and reading the body",
+    "Nobody: CORS errors are browser bugs",
+    "You, by retrying the request ten times"
+   ],
+   "explain": "CORS is decided by the server you call. Alternatively, call the API from your own server, where CORS does not apply."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The API answers 429 with Retry-After: 30. What should your script do?",
+   "choices": [
+    "Wait 30 seconds, then retry",
+    "Retry at once in a tight loop",
+    "Switch to another API key at random",
+    "Stop and delete the data received"
+   ],
+   "explain": "429 means too many requests. Respect Retry-After, and use exponential backoff when it is absent."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is a webhook?",
+   "choices": [
+    "A URL of yours that a service calls when an event happens",
+    "A library that hooks into the browser fetch",
+    "A cookie used to track API calls",
+    "A paid plan with more API calls"
+   ],
+   "explain": "Instead of polling Stripe every minute, you receive a POST on /webhooks/stripe when a payment succeeds. Verify its signature."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put the steps of calling an API from a server in order.",
+   "steps": [
+    "Read the token from process.env",
+    "Send the request with an Authorization header",
+    "Check response.ok and the status code",
+    "Parse the JSON body",
+    "Handle the next page if a cursor is returned"
+   ],
+   "explain": "Credentials, request, status check, parsing, pagination. Skipping the status check is the most common bug."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the header line that sends a bearer token.",
+   "lang": "text",
+   "tokens": [
+    "Authorization:",
+    "Bearer",
+    "TOKEN"
+   ],
+   "extra": [
+    "Cookie:",
+    "Basic",
+    "Token:"
+   ],
+   "explain": "Authorization: Bearer TOKEN is the standard form for OAuth access tokens and most API keys."
+  }
+ ]
+}

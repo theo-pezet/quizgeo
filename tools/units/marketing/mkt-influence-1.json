@@ -9,11 +9,11 @@
  },
  "cards": [
   {
-   "slug": "influencer-brief",
+   "slug": "usage-rights",
    "level": "debutant",
-   "term": "Influencer brief",
-   "definition": "The document that frames a collaboration: goal, key message, mandatory mentions, dos and donts, deliverables, dates, usage rights and how results are measured. It leaves room for the creator voice.",
-   "example": "Two Reels and three stories, one promo code, the Collaboration commerciale mention, rights to reuse in ads for 3 months."
+   "term": "Content usage rights",
+   "definition": "The clause of an influencer contract that says whether the brand may reuse the content (ads, website, newsletters), for how long and in which countries. Without it, boosting a creator video as an ad can breach their rights.",
+   "example": "Rights to use two Reels in paid social ads in France for 3 months, against an extra fee."
   },
   {
    "slug": "creator-fit",

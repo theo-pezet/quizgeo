@@ -1,0 +1,226 @@
+{
+ "unit": {
+  "id": "js-ts-1",
+  "subjectId": "js",
+  "topic": "typescript",
+  "world": "js-w2",
+  "title": "TypeScript in practice",
+  "description": "Type annotations, interfaces and type aliases, unions and narrowing, optional fields, any versus unknown, generics, strict mode, tsconfig, the TypeScript 7 compiler"
+ },
+ "cards": [
+  {
+   "slug": "ts-what",
+   "level": "debutant",
+   "term": "TypeScript",
+   "definition": "JavaScript with types added. The compiler checks the code before it runs and then removes the types: the browser or Node runs plain JavaScript. Errors show up in the editor instead of in production.",
+   "example": "function total(price: number, qty: number): number catches total(\"10\", 2) before anyone runs it."
+  },
+  {
+   "slug": "ts-interface-type",
+   "level": "debutant",
+   "term": "Interface and type alias",
+   "definition": "Two ways to name the shape of an object. interface Lead { email: string } and type Lead = { email: string } are close; type can also name unions such as type Status = \"new\" | \"won\" | \"lost\".",
+   "example": "type Channel = \"seo\" | \"ads\" | \"email\" refuses any other string."
+  },
+  {
+   "slug": "ts-union-narrowing",
+   "level": "debutant",
+   "term": "Union types and narrowing",
+   "definition": "A union says a value can be one of several types (string | number). Before using it, the code narrows it with a check such as typeof, in or a comparison, and TypeScript follows that check.",
+   "example": "if (typeof id === \"string\") { id.toUpperCase() } compiles; without the if, it does not."
+  },
+  {
+   "slug": "ts-optional",
+   "level": "debutant",
+   "term": "Optional properties",
+   "definition": "A question mark marks a property that may be missing: phone?: string. Its type becomes string | undefined, so the code must handle the missing case.",
+   "example": "lead.phone?.trim() ?? \"no phone\""
+  },
+  {
+   "slug": "ts-any-unknown",
+   "level": "debutant",
+   "term": "any versus unknown",
+   "definition": "any switches type checking off for a value: anything goes, bugs included. unknown also accepts any value but forces a check before use. Prefer unknown for data coming from outside (JSON, APIs).",
+   "example": "const data: unknown = await res.json(); then check it before reading data.email."
+  },
+  {
+   "slug": "ts-generics",
+   "level": "debutant",
+   "term": "Generics",
+   "definition": "Type parameters that let a function or type work with many types while keeping them linked: function first<T>(items: T[]): T returns a string for a string array and a Lead for a Lead array.",
+   "example": "type ApiResponse<T> = { data: T; error?: string }"
+  },
+  {
+   "slug": "ts-strict",
+   "level": "debutant",
+   "term": "Strict mode and tsconfig",
+   "definition": "tsconfig.json configures the compiler. \"strict\": true turns on the checks that matter, such as null checks and no implicit any. New projects should always start strict.",
+   "example": "With strict on, let name: string = null is an error."
+  },
+  {
+   "slug": "ts-7",
+   "level": "debutant",
+   "term": "Go compiler (tsgo)",
+   "definition": "The compiler of TypeScript 7, released in July 2026: rewritten in Go, with builds and editor checks around ten times faster on large projects. The language itself stays the same.",
+   "example": "A monorepo that took 60 seconds to type-check now takes about 6."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What happens to TypeScript types when the code runs in the browser?",
+   "choices": [
+    "They are removed: the browser runs plain JavaScript",
+    "The browser checks them on every function call",
+    "They slow the page down by 30 percent",
+    "They are converted into HTML attributes"
+   ],
+   "explain": "Types exist only at compile time. That is why data from an API still needs a runtime check."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which line does the compiler reject?",
+   "choices": [
+    "let count: number = \"12\";",
+    "let count: number = 12;",
+    "let label: string = \"12\";",
+    "let ok: boolean = true;"
+   ],
+   "explain": "A string cannot go into a number variable. JavaScript would accept it silently and break later."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which value is accepted by this type?",
+   "choices": [
+    "\"email\"",
+    "\"tiktok\"",
+    "\"Email\"",
+    "3"
+   ],
+   "explain": "A union of literal strings accepts exactly those values, case included. It is a cheap way to avoid typos in channel names.",
+   "code": {
+    "lang": "typescript",
+    "src": "type Channel = \"seo\" | \"ads\" | \"email\";\nconst c: Channel = ???;"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why does the compiler complain about the second line?",
+   "choices": [
+    "id may be a number, and numbers have no toUpperCase",
+    "toUpperCase does not exist in TypeScript",
+    "Unions are forbidden in function parameters",
+    "The function must return a string type"
+   ],
+   "explain": "With a union, you narrow first: if (typeof id === \"string\") { ... }. TypeScript then knows it is a string inside the if.",
+   "code": {
+    "lang": "typescript",
+    "src": "function show(id: string | number) {\n  return id.toUpperCase();\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the question mark mean in phone?: string?",
+   "choices": [
+    "The property may be missing, so its type is string or undefined",
+    "The phone number must be checked by a regex",
+    "The value is private and hidden from logs",
+    "The field is computed by the database"
+   ],
+   "explain": "Optional properties force you to handle the missing case, for example with ?. and ??."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Data comes from an external API. Which type should you give it before checking it?",
+   "choices": [
+    "unknown",
+    "any",
+    "string",
+    "never"
+   ],
+   "explain": "unknown forces a check before use. any would let a wrong field name or a missing value go through unnoticed."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the return type of first([\"seo\", \"ads\"])?",
+   "choices": [
+    "string",
+    "string[]",
+    "any",
+    "number"
+   ],
+   "explain": "The generic T is inferred as string from the array, so the function returns a string.",
+   "code": {
+    "lang": "typescript",
+    "src": "function first<T>(items: T[]): T {\n  return items[0];\n}"
+   }
+  },
+  {
+   "kind": "vf",
+   "prompt": "With \"strict\": true in tsconfig.json, assigning null to a variable typed string is an error.",
+   "isTrue": true,
+   "explain": "True. strictNullChecks is part of strict mode: null and undefined must be declared explicitly, which removes a huge class of bugs."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this code print once compiled and run?",
+   "choices": [
+    "3.0 SEO",
+    "3 seo",
+    "3.0 seo",
+    "A compile error"
+   ],
+   "explain": "typeof narrows the union: numbers go through toFixed(1), strings through toUpperCase. Both branches type-check.",
+   "code": {
+    "lang": "typescript",
+    "src": "function label(x: string | number): string {\n  return typeof x === \"number\" ? x.toFixed(1) : x.toUpperCase();\n}\nconsole.log(label(3), label(\"seo\"));"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What did TypeScript 7 change in July 2026?",
+   "choices": [
+    "A compiler rewritten in Go, about ten times faster",
+    "A new syntax that replaces JavaScript",
+    "Types now checked by browsers at runtime",
+    "The end of support for interfaces"
+   ],
+   "explain": "Same language, much faster tooling. Large projects gain the most."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "One line is rejected by the TypeScript compiler. Which one?",
+   "lang": "typescript",
+   "lines": [
+    "interface Lead { email: string; score: number }",
+    "const lead: Lead = { email: \"ana@site.com\", score: 42 };",
+    "lead.score = lead.score + 8;",
+    "lead.email = lead.score;",
+    "console.log(lead);"
+   ],
+   "answer": 3,
+   "explain": "email is a string; assigning a number to it is a type error, even though JavaScript would allow it."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build the type of a status that can only be \"new\", \"won\" or \"lost\".",
+   "lang": "typescript",
+   "tokens": [
+    "type",
+    "Status",
+    "=",
+    "\"new\"",
+    "|",
+    "\"won\"",
+    "|",
+    "\"lost\""
+   ],
+   "extra": [
+    "interface",
+    "&",
+    "\"open\""
+   ],
+   "explain": "A union of string literals: any other value is rejected at compile time."
+  }
+ ]
+}
