@@ -430,7 +430,7 @@ export const en = {
   'subject.marketing.title': 'Digital marketing',
   'subject.marketing.tagline': 'SEO, GEO, ads, analytics, growth',
   'subject.ia.title': 'Artificial intelligence',
-  'subject.ia.tagline': 'LLMs, prompting, training, AI culture',
+  'subject.ia.tagline': 'Basics, LLMs, prompting, agents, agentic engineering',
   'subject.python.title': 'Python',
   'subject.python.tagline': 'Terminal, basics, text, pandas, requests',
   'subject.html.title': 'HTML',
@@ -439,6 +439,8 @@ export const en = {
   'subject.css.tagline': 'Style and layout',
   'subject.js.title': 'JavaScript',
   'subject.js.tagline': 'Interactivity in the browser',
+  'subject.secu.title': 'Web security',
+  'subject.secu.tagline': 'Optional: HTTPS, passwords, attacks, OWASP',
 
   'gen.whatMeans': 'What does “{term}” mean?',
   'gen.whichTerm': 'Which term matches this definition?',

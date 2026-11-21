@@ -1,0 +1,158 @@
+{
+ "unit": {
+  "id": "ia-context-1",
+  "subjectId": "ia",
+  "topic": "agentique",
+  "world": "ia-w6",
+  "title": "Context engineering",
+  "description": "What goes in the context, context rot, compaction, CLAUDE.md and AGENTS.md, subagents, skills, just-in-time retrieval"
+ },
+ "cards": [
+  {
+   "slug": "context-engineering",
+   "level": "debutant",
+   "term": "Context engineering",
+   "definition": "Choosing what enters the model's context at each step (instructions, files, tool results, history) so it has what it needs and nothing that distracts it.",
+   "example": "Giving a coding agent the two files involved and the test command, not the whole repository."
+  },
+  {
+   "slug": "context-rot",
+   "level": "debutant",
+   "term": "Context rot",
+   "definition": "The drop in quality when the context gets very long or cluttered: details get missed and old noise misleads the model.",
+   "example": "After three hours in one chat, the agent repeats old mistakes it had already fixed."
+  },
+  {
+   "slug": "compaction",
+   "level": "debutant",
+   "term": "Compaction",
+   "definition": "Summarizing a long conversation or agent history into a short note, then continuing from that summary to free the context.",
+   "example": "Done: login page. Next: tests for the reset email. Known issue: the CI cache."
+  },
+  {
+   "slug": "project-instructions",
+   "level": "debutant",
+   "term": "Project instruction file",
+   "definition": "A file such as CLAUDE.md or AGENTS.md at the root of a repository, read by coding agents at the start: commands, conventions, what not to touch.",
+   "example": "Run npm test before each commit. Never edit the generated folder."
+  },
+  {
+   "slug": "subagent",
+   "level": "debutant",
+   "term": "Subagent",
+   "definition": "A separate agent given one focused task with its own fresh context, which returns only a short result to the main agent.",
+   "example": "One subagent reads 200 files and reports the 3 that handle payments."
+  },
+  {
+   "slug": "agent-skill",
+   "level": "debutant",
+   "term": "Agent skill",
+   "definition": "A folder of instructions and scripts that an agent loads only when a task needs it, instead of carrying everything in every prompt.",
+   "example": "A release skill with the exact steps to publish a new version."
+  },
+  {
+   "slug": "just-in-time",
+   "level": "debutant",
+   "term": "Just-in-time retrieval",
+   "definition": "Letting the agent fetch files or data with tools when it needs them (search, read a file) instead of pasting everything at the start.",
+   "example": "The agent greps for the function name, then opens only that file."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A coding agent works worse and worse after three hours in the same session. Most likely cause?",
+   "choices": [
+    "Old, noisy history fills the context: compact or restart",
+    "The model gets tired after a few hours",
+    "The API key expires after three hours",
+    "The temperature rises on its own over time"
+   ],
+   "explain": "Long, cluttered contexts degrade answers (context rot). Summarize what matters, then continue in a fresh session from that summary."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What belongs in a CLAUDE.md or AGENTS.md file?",
+   "choices": [
+    "Build and test commands, conventions, folders not to edit",
+    "The full source code of the project",
+    "The API keys, so the agent can deploy",
+    "The history of every past chat session"
+   ],
+   "explain": "It is a short brief read at the start of every session. Keep it concrete: commands, rules, traps. Never put secrets in it."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Pasting the whole codebase into the prompt always works better than letting the agent search the files it needs.",
+   "isTrue": false,
+   "explain": "False: a huge context costs more, is slower and buries the relevant lines. Searching and opening the right files keeps the context focused."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why hand the exploration of 200 files to a subagent?",
+   "choices": [
+    "Only its short conclusion comes back, so the main context stays clean",
+    "Subagents never make mistakes",
+    "It is the only way to read files",
+    "It lets the model skip reading the files at all"
+   ],
+   "explain": "The subagent burns its own context on the search and returns a summary. The main agent keeps room for the actual work."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a good way to start a coding task with an agent in order.",
+   "steps": [
+    "Ask it to read the relevant files and explain them",
+    "Agree on a short plan before any edit",
+    "Let it implement in small steps",
+    "Run the tests and review the diff"
+   ],
+   "explain": "Explore, plan, implement, verify. Skipping the first two steps is the most common reason for big, wrong changes."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your team has 30 detailed procedures (release, refunds, reporting). Best way to give them to an agent?",
+   "choices": [
+    "As skills it loads only when a task needs one",
+    "All 30, pasted into every system prompt",
+    "Fine-tune a model on the procedures",
+    "Tell the agent once to remember them"
+   ],
+   "explain": "Skills keep the context light: the agent sees a short list of names and descriptions, and opens the full procedure only when relevant."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Writing a precise task, with its constraints and a clear definition of done, is part of context engineering.",
+   "isTrue": true,
+   "explain": "True: the task description is the most important piece of context. What done means (tests pass, page renders, file exported) guides the whole run."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the main risk of compaction?",
+   "choices": [
+    "A detail left out of the summary is lost",
+    "It deletes some files in the project",
+    "It reveals the API key to the model",
+    "It doubles the cost of every later call"
+   ],
+   "explain": "A summary is lossy. Good compaction keeps decisions, open problems and next steps, and important facts can also be written to a notes file."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A tool returns 5,000 lines of raw JSON when the agent only needs 3 fields. What should change?",
+   "choices": [
+    "The tool: return only the useful fields, in short form",
+    "Nothing: more data is always better",
+    "Raise max_tokens",
+    "Ask the model to read faster"
+   ],
+   "explain": "Tool results also fill the context. Lean tools (filtered, paginated, summarized) give cheaper and better runs."
+  },
+  {
+   "kind": "vf",
+   "prompt": "With very long documents, placing the documents first and the question at the end of the prompt often gives better answers.",
+   "isTrue": true,
+   "explain": "True: model providers recommend this layout for long context. The instructions and the question, read last, stay fresh."
+  }
+ ]
+}

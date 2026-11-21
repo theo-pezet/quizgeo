@@ -1,0 +1,175 @@
+{
+ "unit": {
+  "id": "sec-3",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w1",
+  "title": "Passwords and login",
+  "description": "Hashing, salts, bcrypt and Argon2, brute force, credential stuffing, rate limiting, two-factor login, passkeys"
+ },
+ "cards": [
+  {
+   "slug": "password-hashing",
+   "level": "debutant",
+   "term": "Password hashing",
+   "definition": "Turning a password into a fixed fingerprint that cannot be reversed; the site stores the fingerprint and compares fingerprints at login.",
+   "example": "The database holds a long hash, never the password itself."
+  },
+  {
+   "slug": "salt",
+   "level": "debutant",
+   "term": "Salt",
+   "definition": "A random value added to each password before hashing, so two identical passwords give two different hashes.",
+   "example": "Two users with the password sunshine get unrelated hashes."
+  },
+  {
+   "slug": "slow-hash",
+   "level": "debutant",
+   "term": "Slow hash (Argon2, bcrypt)",
+   "definition": "Hash functions designed to be slow and memory-hungry, so testing billions of guesses becomes too expensive.",
+   "example": "Each login takes 0.1 s to check: nothing for a user, a wall for an attacker."
+  },
+  {
+   "slug": "brute-force",
+   "level": "debutant",
+   "term": "Brute force",
+   "definition": "Trying passwords one after another, often from lists of the most common ones, until one works.",
+   "example": "A bot tries 10,000 common passwords on the admin account."
+  },
+  {
+   "slug": "credential-stuffing",
+   "level": "debutant",
+   "term": "Credential stuffing",
+   "definition": "Trying email and password pairs leaked from another site, betting that people reuse their passwords.",
+   "example": "A leak from a game forum is replayed against your shop login."
+  },
+  {
+   "slug": "rate-limiting",
+   "level": "debutant",
+   "term": "Rate limiting",
+   "definition": "Capping how many attempts an account or an address may make in a given time.",
+   "example": "Five failed logins, then a pause of fifteen minutes."
+  },
+  {
+   "slug": "mfa",
+   "level": "debutant",
+   "term": "Two-factor login (MFA)",
+   "definition": "Asking for a second proof besides the password: a code from an app, a passkey or a security key.",
+   "example": "Even with your password, the attacker lacks your phone."
+  },
+  {
+   "slug": "passkey",
+   "level": "debutant",
+   "term": "Passkey",
+   "definition": "A login based on a key stored on your device and unlocked by your fingerprint or PIN; it cannot be phished or reused.",
+   "example": "Sign in with your face on the phone, no password typed."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "How should a site store user passwords?",
+   "choices": [
+    "Hashed with Argon2 or bcrypt, with a salt",
+    "Encrypted with a key kept on the same server",
+    "In clear text, in a protected table",
+    "Encoded in base64"
+   ],
+   "explain": "A slow, salted hash cannot be reversed. Encryption can be undone with the key, and base64 is just an encoding anyone can decode."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A password hash can be reversed with the right key, like encryption.",
+   "isTrue": false,
+   "explain": "False: hashing is one-way. The only attack is guessing passwords and hashing each guess, which slow hashes make very expensive."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why add a salt to each password?",
+   "choices": [
+    "Same passwords get different hashes, so tables fail",
+    "It makes passwords shorter to store",
+    "It speeds up the check at each login",
+    "It encrypts the connection to the site"
+   ],
+   "explain": "Without a salt, one cracked hash reveals every user with the same password, and huge precomputed tables work."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why is a single SHA-256 not enough to store passwords?",
+   "choices": [
+    "It is too fast: billions of guesses a second",
+    "It can be reversed with a little effort",
+    "Its output is far too long to store",
+    "Browsers are not able to compute it"
+   ],
+   "explain": "SHA-256 is great for files and signatures, but its speed helps attackers. Password hashes are slow on purpose."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Attackers try email and password pairs leaked from another site on your login page. This is…",
+   "choices": [
+    "Credential stuffing",
+    "Brute force on one account",
+    "XSS",
+    "SQL injection"
+   ],
+   "explain": "It works because many people reuse passwords. Your site was not breached, but accounts can still be taken over."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which set of measures works best against credential stuffing?",
+   "choices": [
+    "Two-factor login, rate limits, leaked-password checks",
+    "Forcing a new password every month",
+    "Longer usernames for every account",
+    "A CAPTCHA on the home page only"
+   ],
+   "explain": "Rate limits slow the bots, leaked-password checks remove the easy wins, and a second factor stops the rest."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "Which line shows that this site stores passwords in clear text?",
+   "lang": "python",
+   "lines": [
+    "def login(email, password):",
+    "    user = db.find_user(email)",
+    "    if user is None:",
+    "        return \"Wrong email or password\"",
+    "    if user.password == password:",
+    "        return \"Welcome\"",
+    "    return \"Wrong email or password\""
+   ],
+   "answer": 4,
+   "explain": "Comparing directly means the database holds the real password. The fix: store a hash and use a verify function such as argon2 verify(hash, password)."
+  },
+  {
+   "kind": "vf",
+   "prompt": "An error message such as \"no account with this email\" helps attackers find valid accounts.",
+   "isTrue": true,
+   "explain": "True: it confirms which emails exist. Use one neutral message for every failed login."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does rate limiting on a login page mean?",
+   "choices": [
+    "Limiting the attempts per account or address per minute",
+    "Limiting how long a password can be",
+    "Limiting the number of users of the site",
+    "Limiting how fast HTTPS can go"
+   ],
+   "explain": "Without a limit, a bot can try thousands of passwords per minute. With one, brute force becomes too slow to work."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which second factor resists phishing best?",
+   "choices": [
+    "A passkey or a hardware security key",
+    "A six-digit code sent by SMS",
+    "A security question, like a pet name",
+    "A code sent to your email address"
+   ],
+   "explain": "A passkey is bound to the real domain, so a fake site cannot use it. Codes can be typed into a fake page and replayed."
+  }
+ ]
+}

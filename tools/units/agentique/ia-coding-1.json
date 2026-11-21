@@ -1,0 +1,191 @@
+{
+ "unit": {
+  "id": "ia-coding-1",
+  "subjectId": "ia",
+  "topic": "agentique",
+  "world": "ia-w6",
+  "title": "Working with a coding agent",
+  "description": "From vibe coding to engineering: branches, commits, diff review, tests, CI, pull requests, permissions"
+ },
+ "cards": [
+  {
+   "slug": "coding-agent",
+   "level": "debutant",
+   "term": "Coding agent",
+   "definition": "An agent that reads a codebase, edits files and runs commands (tests, builds) in a loop, such as Claude Code, Codex or the agent mode of Cursor.",
+   "example": "Add a CSV export to the orders page and make the tests pass."
+  },
+  {
+   "slug": "git-branch",
+   "level": "debutant",
+   "term": "Branch",
+   "definition": "A separate line of work in git: the agent changes things on a branch, and main stays safe until you merge.",
+   "example": "git switch -c csv-export creates and opens a new branch."
+  },
+  {
+   "slug": "git-commit",
+   "level": "debutant",
+   "term": "Commit",
+   "definition": "A saved snapshot of changes with a message; small commits make it easy to see, and undo, what the agent did.",
+   "example": "Add CSV export button, then a separate commit: tests for the export."
+  },
+  {
+   "slug": "diff-review",
+   "level": "debutant",
+   "term": "Diff review",
+   "definition": "Reading the exact lines added and removed before accepting a change: the core habit that separates engineering from vibe coding.",
+   "example": "git diff shows every line the agent changed."
+  },
+  {
+   "slug": "automated-tests",
+   "level": "debutant",
+   "term": "Automated tests",
+   "definition": "Code that checks other code; tests let an agent verify its own work and catch regressions in seconds.",
+   "example": "A test checks that the export file has one row per order."
+  },
+  {
+   "slug": "ci",
+   "level": "debutant",
+   "term": "Continuous integration (CI)",
+   "definition": "A server that runs the tests and checks on every push or pull request, so broken code cannot be merged unnoticed.",
+   "example": "GitHub Actions runs the tests and shows a red cross on the pull request."
+  },
+  {
+   "slug": "pull-request",
+   "level": "debutant",
+   "term": "Pull request",
+   "definition": "A request to merge a branch into main, where the diff is reviewed and the CI results are shown.",
+   "example": "The agent opens a pull request; you read it and click merge."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What best separates an agentic engineer from a vibe coder?",
+   "choices": [
+    "The engineer specifies, verifies with tests and reviews the diffs",
+    "The engineer types all the code by hand",
+    "The engineer never uses AI tools",
+    "The engineer always uses the biggest model"
+   ],
+   "explain": "Both use agents. The engineer turns intent into clear specs, checks the result with tests and reviews, and stays able to understand the code."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a safe workflow for an agent change in order.",
+   "steps": [
+    "Create a branch",
+    "Let the agent make changes and commit them",
+    "Push and open a pull request",
+    "CI runs the tests, you review the diff",
+    "Merge into main"
+   ],
+   "explain": "main is never touched directly: every change goes through a branch, tests and a review."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The agent says \"Done, all the tests pass\". What do you do?",
+   "choices": [
+    "Check it: CI or a test run, then review the diff",
+    "Merge right away, since it said so",
+    "Ask another agent whether it is true",
+    "Delete the tests to save some time"
+   ],
+   "explain": "Agents can be wrong or overconfident. Trust the evidence (green CI, a passing test run, a diff you read), not the summary."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Asking the agent to first write a test that reproduces the bug, and only then fix it, is a strong practice.",
+   "isTrue": true,
+   "explain": "True: the failing test proves the bug exists, and the same test proves the fix works and keeps it fixed later."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "To get CI green, the agent deleted the test that was failing. What is this?",
+   "choices": [
+    "Cheating the check: the bug is hidden",
+    "A legitimate fix of the failing code",
+    "A merge conflict between two branches",
+    "A flaky test that fails at random"
+   ],
+   "explain": "Removing or weakening a test makes the signal lie. Reviewing the diff catches it, and you can tell the agent explicitly never to edit tests to make them pass."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which git command shows what changed before you commit?",
+   "choices": [
+    "git diff",
+    "git push",
+    "git clone",
+    "git init"
+   ],
+   "explain": "git diff lists every added and removed line. push sends commits to the remote, clone copies a repository, init creates a new one."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You need a big new feature. What is the best way to hand it to an agent?",
+   "choices": [
+    "Split it into small tasks, each with a test and a commit",
+    "One giant prompt with everything at once",
+    "Let it run all night with no checks",
+    "Write it directly on main to go faster"
+   ],
+   "explain": "Small steps keep each diff readable and each mistake cheap to undo."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Letting an agent run any command on your laptop without confirmation is risk-free if the model is good.",
+   "isTrue": false,
+   "explain": "False: a good model can still misread a task or follow injected instructions. Use permission prompts, allowlists or a sandbox for anything risky."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "CI is red on your pull request, but the app works on your laptop. What do you do first?",
+   "choices": [
+    "Read the CI log to see which check failed and why",
+    "Merge anyway: it works on my machine",
+    "Rerun the CI until it turns green",
+    "Turn CI off for this repository"
+   ],
+   "explain": "The log names the failing step (a type error, a missing file, a different version). It is often a real bug your laptop hides."
+  },
+  {
+   "kind": "case",
+   "title": "From prototype to product",
+   "scenario": "You vibe-coded a booking app with an agent. It works on your laptop, with no git history and no tests. A client now wants it online for real customers.",
+   "steps": [
+    {
+     "prompt": "What do you do first?",
+     "choices": [
+      "Put it in git and add tests for the main flows",
+      "Deploy it right away, it works",
+      "Rewrite everything by hand from scratch",
+      "Add the next features the client asked for"
+     ],
+     "feedback": "Version control and tests are the safety net for every later change, human or agent."
+    },
+    {
+     "prompt": "The agent proposes one 2,000-line change. What do you do?",
+     "choices": [
+      "Ask it to split the work into small, reviewable pull requests",
+      "Accept it: reading it would take too long",
+      "Ban agents from the project",
+      "Merge it and fix problems later"
+     ],
+     "feedback": "Nobody reviews 2,000 lines well. Small pull requests get real reviews and clean rollbacks."
+    },
+    {
+     "prompt": "Just before launch, what is the priority?",
+     "choices": [
+      "A security pass (secrets, login, inputs, rights), CI green",
+      "A brand new logo for the home page",
+      "Launching on a Friday night, when it is calm",
+      "Removing the tests to speed up the build"
+     ],
+     "feedback": "Real customers mean real data. The security units of this app cover exactly this checklist."
+    }
+   ],
+   "explain": "Agents make producing code cheap; your value moves to specifying, checking and owning the result."
+  }
+ ]
+}

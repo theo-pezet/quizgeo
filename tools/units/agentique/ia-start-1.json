@@ -1,0 +1,184 @@
+{
+ "unit": {
+  "id": "ia-start-1",
+  "subjectId": "ia",
+  "topic": "ia-start",
+  "world": "ia-w1",
+  "title": "AI in plain words",
+  "description": "AI, machine learning, deep learning, LLM, generative AI, model vs app, prompt: the words before everything else"
+ },
+ "cards": [
+  {
+   "slug": "ai-umbrella",
+   "level": "debutant",
+   "term": "Artificial intelligence (AI)",
+   "definition": "The broad field of making computers do tasks that normally need human intelligence: understanding language, recognizing images, deciding.",
+   "example": "A spam filter, a chess engine and a chat assistant are all AI, built in very different ways."
+  },
+  {
+   "slug": "machine-learning-plain",
+   "level": "debutant",
+   "term": "Machine learning",
+   "definition": "A way to build AI where the program learns its rules from examples, instead of a human writing every rule by hand.",
+   "example": "Show a model 10,000 emails marked spam or not spam, and it learns to sort new ones."
+  },
+  {
+   "slug": "deep-learning",
+   "level": "debutant",
+   "term": "Deep learning",
+   "definition": "Machine learning with neural networks made of many layers; it powers modern image, voice and language AI.",
+   "example": "Face unlock on a phone relies on a deep neural network."
+  },
+  {
+   "slug": "llm-plain",
+   "level": "debutant",
+   "term": "Large language model (LLM)",
+   "definition": "A deep learning model trained on huge amounts of text to predict the next piece of text; chat assistants are built on it.",
+   "example": "Claude, GPT and Gemini are families of LLMs."
+  },
+  {
+   "slug": "generative-ai",
+   "level": "debutant",
+   "term": "Generative AI",
+   "definition": "AI that produces new content (text, images, audio, code) instead of only sorting things or predicting a number.",
+   "example": "Drafting a product description or a logo sketch from one sentence."
+  },
+  {
+   "slug": "model-vs-app",
+   "level": "debutant",
+   "term": "Model vs app",
+   "definition": "The model is the trained engine; the app is the product around it, with its interface, memory, files and tools.",
+   "example": "ChatGPT is an app; the GPT models are the engines behind it."
+  },
+  {
+   "slug": "prompt-plain",
+   "level": "debutant",
+   "term": "Prompt",
+   "definition": "The instructions and data you send to a model; the quality of the answer depends heavily on how clear and complete it is.",
+   "example": "Summarize this email in 3 bullet points for my manager, in a neutral tone."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which of these terms is the broadest?",
+   "choices": [
+    "Artificial intelligence",
+    "Machine learning",
+    "Deep learning",
+    "Large language model"
+   ],
+   "explain": "They fit inside each other: AI contains machine learning, which contains deep learning, which contains LLMs.",
+   "whyWrong": [
+    "Machine learning is one way to build AI, not all of it.",
+    "Deep learning is one family of machine learning methods.",
+    "An LLM is one kind of deep learning model, the most specific of the four."
+   ]
+  },
+  {
+   "kind": "order",
+   "prompt": "Put these terms in order, from the broadest to the most specific.",
+   "steps": [
+    "Artificial intelligence",
+    "Machine learning",
+    "Deep learning",
+    "Large language model"
+   ],
+   "explain": "Each term is a smaller circle inside the previous one: every LLM is deep learning, every deep learning model is machine learning, and all of it is AI."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A filter learned to spot spam after seeing 10,000 emails labeled spam or not spam. This is an example of…",
+   "choices": [
+    "Machine learning",
+    "Rules written by hand for every email",
+    "Generative AI",
+    "A search engine"
+   ],
+   "explain": "The rules were not written by a human: the program found them in labeled examples. That is the definition of machine learning.",
+   "whyWrong": [
+    "Nobody wrote the rules here: they were learned from examples.",
+    "It sorts emails, it does not create new content.",
+    "A search engine finds pages; this filter classifies emails."
+   ]
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does an LLM actually do, one step at a time, when it writes an answer?",
+   "choices": [
+    "It predicts the next token, again and again",
+    "It searches Google and copies the best page",
+    "It copies a sentence stored in a database",
+    "It runs a program written for each question"
+   ],
+   "explain": "An LLM generates text one token (a piece of a word) at a time, each time choosing a likely continuation of everything before it.",
+   "whyWrong": [
+    "A plain LLM does not browse; search is a tool that an app can add.",
+    "There is no table of stored answers: the text is generated.",
+    "Nobody writes code for each question: the same model handles them all."
+   ]
+  },
+  {
+   "kind": "vf",
+   "prompt": "An LLM looks up the right answer in a database of facts every time you ask a question.",
+   "isTrue": false,
+   "explain": "False: it generates text from patterns stored in its weights. Apps can add lookups (web search, your documents), but the model itself does not query a fact database."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the relationship between ChatGPT and GPT?",
+   "choices": [
+    "ChatGPT is an app; GPT is the family of models inside it",
+    "They are two competing companies",
+    "GPT is the app; ChatGPT is the model inside it",
+    "They are two names for exactly the same thing"
+   ],
+   "explain": "The app adds the interface, memory, files and tools; the model is the engine. The same split exists for Claude (app) and the Claude models."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which of these tasks is generative AI?",
+   "choices": [
+    "Drafting five headlines for an ad",
+    "Sorting incoming emails into spam",
+    "Predicting the sales figure for next month",
+    "Detecting a face in a photo"
+   ],
+   "explain": "Generative AI creates new content. Sorting, predicting a number and detecting a face are classic machine learning tasks."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Asking an assistant the same question twice can give two different answers.",
+   "isTrue": true,
+   "explain": "True: the model samples among likely tokens, so wording and sometimes content change. For stable results, apps lower the temperature and check the output."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which prompt will give the most useful answer?",
+   "choices": [
+    "3 subject lines under 50 characters for our spring sale, playful",
+    "Write something about our product, please",
+    "Email ideas for us?",
+    "Be very creative and do your best work"
+   ],
+   "explain": "A good prompt says the task, the context, the audience or tone, and the format. The model cannot guess what you did not write."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why can an assistant fail to know about yesterday's news?",
+   "choices": [
+    "Its training data ends at a cutoff date, unless it can search",
+    "News is forbidden by law for every AI model",
+    "It forgets everything it learned every night",
+    "News articles are far too long for it to read"
+   ],
+   "explain": "A model only knows what was in its training data, which ends at a cutoff date. Recent facts must come from a tool, such as web search or your documents."
+  },
+  {
+   "kind": "vf",
+   "prompt": "An answer that sounds confident and fluent is very likely to be correct.",
+   "isTrue": false,
+   "explain": "False: fluency and accuracy are separate. Models can state invented facts with total confidence (hallucination), so important facts must be checked."
+  }
+ ]
+}

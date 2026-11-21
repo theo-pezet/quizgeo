@@ -1,0 +1,173 @@
+{
+ "unit": {
+  "id": "ia-toolcall-1",
+  "subjectId": "ia",
+  "topic": "agentique",
+  "world": "ia-w6",
+  "title": "Tool calling in code",
+  "description": "Tool definitions, JSON Schema, tool results, stop reasons, the agent loop, step limits, risky actions"
+ },
+ "cards": [
+  {
+   "slug": "tool-definition",
+   "level": "debutant",
+   "term": "Tool definition",
+   "definition": "A name, a description and a JSON schema of parameters that you send to the model, so it knows what it may ask your code to do.",
+   "example": "get_weather(city: string): current weather for a city."
+  },
+  {
+   "slug": "json-schema",
+   "level": "debutant",
+   "term": "JSON Schema",
+   "definition": "A standard way to describe the shape of JSON data: field names, types and which fields are required. Models use it to produce valid arguments.",
+   "example": "{\"type\": \"object\", \"properties\": {\"city\": {\"type\": \"string\"}}, \"required\": [\"city\"]}"
+  },
+  {
+   "slug": "tool-result",
+   "level": "debutant",
+   "term": "Tool result",
+   "definition": "The output of the function your code ran, sent back to the model in the next message so it can continue its work.",
+   "example": "The weather function returns 18 C and cloudy; the model then writes its answer."
+  },
+  {
+   "slug": "stop-reason",
+   "level": "debutant",
+   "term": "Stop reason",
+   "definition": "A field of the API answer saying why the model stopped: it finished, it hit max_tokens, or it is waiting for a tool to be run.",
+   "example": "A stop reason of tool use means: run the tool, then call the model again."
+  },
+  {
+   "slug": "tool-description",
+   "level": "debutant",
+   "term": "Tool description",
+   "definition": "The plain-language text telling the model when and how to use a tool; vague descriptions are the first cause of wrong tool calls.",
+   "example": "Search the internal help center. Use it for product questions, never for orders."
+  },
+  {
+   "slug": "idempotent-action",
+   "level": "debutant",
+   "term": "Idempotent action",
+   "definition": "An action that gives the same result if it runs twice, like reading a file. Sending an email is not idempotent, so retries need care.",
+   "example": "Retrying a failed read is safe; retrying a payment may charge twice."
+  },
+  {
+   "slug": "agent-loop-code",
+   "level": "debutant",
+   "term": "Agent loop in code",
+   "definition": "A loop that calls the model, runs any tool it asks for, appends the result and calls again, until it answers without a tool or a step limit is hit.",
+   "example": "for step in range(10) stops the loop after 10 steps at most."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "You declared this tool. A user asks \"Is it raining in Lyon?\". What does the model produce?",
+   "choices": [
+    "A request to call get_weather with city set to Lyon",
+    "It goes online and reads the weather itself",
+    "A new JSON schema for another tool",
+    "Nothing: tools only work in weather apps"
+   ],
+   "explain": "The model only asks: it outputs the tool name and its arguments. Your code decides whether to run it and sends the result back.",
+   "code": {
+    "lang": "js",
+    "src": "{\n  \"name\": \"get_weather\",\n  \"description\": \"Current weather for a city\",\n  \"input_schema\": {\n    \"type\": \"object\",\n    \"properties\": {\"city\": {\"type\": \"string\"}},\n    \"required\": [\"city\"]\n  }\n}"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Who actually runs get_weather?",
+   "choices": [
+    "Your code, on your side",
+    "The model, on its own servers",
+    "The user, by hand",
+    "The browser of the provider"
+   ],
+   "explain": "This is the key point of tool calling: the model proposes, your code executes. That is also where you put checks, limits and approvals."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a tool call round trip in order.",
+   "steps": [
+    "Send the question and the list of tools",
+    "The model answers with a tool request",
+    "Your code runs the function",
+    "Your code sends the tool result back",
+    "The model writes the final answer"
+   ],
+   "explain": "This round trip can repeat several times in one task: that repetition is the agent loop."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The model keeps calling search_docs when users ask about their order status. What should you fix first?",
+   "choices": [
+    "The tool descriptions: say clearly when to use each tool",
+    "Raise the temperature so it tries other tools",
+    "Remove every tool except one",
+    "Pay for a larger context window"
+   ],
+   "explain": "Models choose tools from their names and descriptions. A precise description (when to use it, when not to) fixes most wrong choices."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This agent loop can run forever and burn the whole budget. Which line should change?",
+   "lang": "python",
+   "lines": [
+    "messages = [question]",
+    "while True:",
+    "    reply = call_model(messages, tools)",
+    "    if reply.tool_call:",
+    "        messages.append(run_tool(reply.tool_call))",
+    "    else:",
+    "        break"
+   ],
+   "answer": 1,
+   "explain": "Replace while True with a bounded loop such as for step in range(10), and stop with a clear message when the limit is hit. Add a cost budget too."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Even with a JSON schema, your code should validate the arguments the model sends before running a tool.",
+   "isTrue": true,
+   "explain": "True: the schema guides the model but does not prove the values are sensible or allowed. Check ranges, rights and formats like any user input."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which tool should wait for a human confirmation before it runs?",
+   "choices": [
+    "send_invoice_email",
+    "read_calendar",
+    "search_docs",
+    "get_weather"
+   ],
+   "explain": "Actions that are visible to others, cost money or cannot be undone go through a human checkpoint. Reading data does not need one."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A tool fails because the city does not exist. What should your code send back to the model?",
+   "choices": [
+    "A clear error message as the tool result, so it can recover",
+    "Nothing: stop the program without a word",
+    "Made-up weather, so the answer looks complete",
+    "The full Python traceback, shown to the user"
+   ],
+   "explain": "A readable error (city not found, try another spelling) lets the model ask the user or retry correctly. Silent failures and fake data cause wrong answers."
+  },
+  {
+   "kind": "vf",
+   "prompt": "MCP lets the same tool server be used by several AI apps, instead of rewriting each tool for each app.",
+   "isTrue": true,
+   "explain": "True: an MCP server exposes tools and data through one standard protocol, and any compatible client (Claude, ChatGPT, IDE agents) can use it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The network failed right after send_email was called. Is it safe to retry automatically?",
+   "choices": [
+    "Not blindly: check first, or use an idempotency key",
+    "Yes, retrying a call is always safe",
+    "No, no action can ever be retried",
+    "Only if the temperature is set to 0"
+   ],
+   "explain": "Sending is not idempotent. Check the sent status, or give each action a unique key so the service ignores duplicates."
+  }
+ ]
+}

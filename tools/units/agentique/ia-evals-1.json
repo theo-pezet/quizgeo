@@ -1,0 +1,164 @@
+{
+ "unit": {
+  "id": "ia-evals-1",
+  "subjectId": "ia",
+  "topic": "agentique",
+  "world": "ia-w6",
+  "title": "Evals: proving that it works",
+  "description": "Eval sets, golden datasets, code graders, LLM as a judge, regressions, tracing, error analysis"
+ },
+ "cards": [
+  {
+   "slug": "eval",
+   "level": "debutant",
+   "term": "Eval",
+   "definition": "A repeatable test of an AI feature: a set of inputs, the expected behavior and a scoring method, run after every change.",
+   "example": "200 real support questions, scored after each prompt change."
+  },
+  {
+   "slug": "golden-dataset",
+   "level": "debutant",
+   "term": "Golden dataset",
+   "definition": "A curated list of real cases with known good answers: the reference that every new prompt or model is scored against.",
+   "example": "Fifty invoices with the amounts a human checked by hand."
+  },
+  {
+   "slug": "code-grader",
+   "level": "debutant",
+   "term": "Code-based grader",
+   "definition": "A check written in code: valid JSON, a test that passes, a number in range. Cheap, fast and fully reliable when it applies.",
+   "example": "json.loads(output) must succeed and contain the field total."
+  },
+  {
+   "slug": "llm-judge",
+   "level": "debutant",
+   "term": "LLM as a judge",
+   "definition": "Using a model with a precise rubric to grade answers that exact matching cannot check; its grades must themselves be compared with human grades.",
+   "example": "Score 1 to 5: is the reply polite, correct and under 80 words?"
+  },
+  {
+   "slug": "ai-regression",
+   "level": "debutant",
+   "term": "Regression",
+   "definition": "A case that used to work and breaks after a change; evals exist to catch it before users do.",
+   "example": "The new prompt is better at refunds but now fails on delivery questions."
+  },
+  {
+   "slug": "tracing",
+   "level": "debutant",
+   "term": "Tracing",
+   "definition": "Recording each step of an AI run (prompts, tool calls, outputs, cost, time) so you can see exactly where it went wrong.",
+   "example": "The trace shows the agent searched the wrong folder at step 3."
+  },
+  {
+   "slug": "error-analysis",
+   "level": "debutant",
+   "term": "Error analysis",
+   "definition": "Reading failed cases one by one and grouping them by cause, to know what to fix first.",
+   "example": "22 of the 40 failures come from dates written in American format."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "You changed a prompt and it \"feels better\" on three tries. What is missing?",
+   "choices": [
+    "Running the eval set and comparing the scores",
+    "Nothing: three tries are enough",
+    "A higher temperature",
+    "A bigger model"
+   ],
+   "explain": "Three tries prove little: answers vary and a change can break other cases. Compare scores on the same set, before and after."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The output must be valid JSON with the fields name and price. Which grader fits best?",
+   "choices": [
+    "A check written in code",
+    "An LLM judge",
+    "A human reading every answer",
+    "Asking the model whether its JSON is valid"
+   ],
+   "explain": "When a rule can be checked by code, use code: it is free, instant and never wrong about what it checks."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You must check that replies are polite and match the brand voice. Which grader fits best?",
+   "choices": [
+    "An LLM judge with a rubric, checked against human grades",
+    "An exact match with one reference answer",
+    "A count of the words",
+    "A regular expression"
+   ],
+   "explain": "Tone cannot be matched exactly. A judge model with a clear rubric scales, as long as you verify that it agrees with humans on a sample."
+  },
+  {
+   "kind": "vf",
+   "prompt": "An LLM judge never needs to be checked, since it is a model too.",
+   "isTrue": false,
+   "explain": "False: judges have biases (they favor long answers, or their own style). Compare their grades with human grades on a sample before trusting them."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put the steps for building an eval in order.",
+   "steps": [
+    "Collect real cases, failures included",
+    "Write the expected behavior for each",
+    "Choose the graders",
+    "Run it on the current version as a baseline",
+    "Rerun it after each change and compare"
+   ],
+   "explain": "Without a baseline, a score means nothing. With one, every change becomes a measured decision."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "An agent gave a wrong answer after 12 steps. How do you find where it went wrong?",
+   "choices": [
+    "Read the trace of the run, step by step",
+    "Rerun it until the answer is right",
+    "Switch to another model right away",
+    "Raise max_tokens"
+   ],
+   "explain": "The trace shows every prompt, tool call and result. You usually spot the bad step (wrong file, bad search, ignored error) in minutes."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your eval has 40 failures. What is the first step?",
+   "choices": [
+    "Read them and group them by cause",
+    "Fix the first one you see",
+    "Fine-tune the model on the 40 cases",
+    "Add rules in capital letters to the prompt"
+   ],
+   "explain": "Error analysis shows which cause is the biggest. Fixing it first gives the largest gain for the effort."
+  },
+  {
+   "kind": "vf",
+   "prompt": "An agent eval should also measure the cost and the number of steps, not only success.",
+   "isTrue": true,
+   "explain": "True: an agent that succeeds for 4 euros per task may be useless. Success, cost, time and steps together decide."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your eval scores 100% on 10 easy cases. What is the problem?",
+   "choices": [
+    "It is too small and too easy: add hard and edge cases",
+    "None: the feature is ready to ship",
+    "The grader is too strict",
+    "The temperature is too low"
+   ],
+   "explain": "A useful eval contains the hard cases, the strange inputs and the past failures. A perfect score usually means the test is too easy."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A new model is released. What is the safe way to adopt it?",
+   "choices": [
+    "Run your evals on both: quality, cost, speed",
+    "Switch production to it right away",
+    "Trust its public benchmark scores",
+    "Ask a few users if they like it better"
+   ],
+   "explain": "Public benchmarks are generic. Only your own cases tell you whether the new model is better for your task."
+  }
+ ]
+}

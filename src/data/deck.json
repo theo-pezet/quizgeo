@@ -1534,7 +1534,7 @@
   },
   {
    "id": "ia-zero-party-data",
-   "subject": "ia",
+   "subject": "marketing",
    "topic": "data",
    "level": null,
    "term": "Zero-Party Data",
@@ -1546,7 +1546,7 @@
   },
   {
    "id": "ia-first-party-data",
-   "subject": "ia",
+   "subject": "marketing",
    "topic": "data",
    "level": null,
    "term": "First-Party Data",
@@ -1558,7 +1558,7 @@
   },
   {
    "id": "ia-third-party-data",
-   "subject": "ia",
+   "subject": "marketing",
    "topic": "data",
    "level": null,
    "term": "Third-Party Data",
@@ -3455,7 +3455,7 @@
   },
   {
    "id": "ia-survival-analysis",
-   "subject": "ia",
+   "subject": "marketing",
    "topic": "data",
    "level": null,
    "term": "Survival Analysis",
@@ -3491,7 +3491,7 @@
   },
   {
    "id": "ia-standard-deviation-in-marketing",
-   "subject": "ia",
+   "subject": "marketing",
    "topic": "data",
    "level": null,
    "term": "Standard Deviation (in Marketing)",
@@ -5910,8 +5910,8 @@
    "topic": "ai",
    "level": "debutant",
    "term": "Training Data",
-   "definition": "The massive collection of information used to \"teach\" an AI model how to respond to prompts.",
-   "example": "The billions of web pages and books used to train models like GPT-4.",
+   "definition": "The collection of examples a model learns from; for an LLM, trillions of tokens of web pages, books and code.",
+   "example": "If a topic is missing from the training data, the model knows little about it and is more likely to invent.",
    "tags": [
     "#AI_Easy"
    ]
@@ -5922,8 +5922,8 @@
    "topic": "ai",
    "level": "debutant",
    "term": "Parameters",
-   "definition": "The internal variables of an AI model that it learns from training data, which determine its complexity and power.",
-   "example": "GPT-3 has 175 billion parameters, which is why it is so \"smart\".",
+   "definition": "The internal numbers (weights) a model adjusts during training; their count measures its capacity, and also its cost to run.",
+   "example": "Llama 3.1 comes in 8, 70 and 405 billion parameters: the bigger one is more capable, and far more expensive to serve.",
    "tags": [
     "#AI_Easy"
    ]
@@ -5934,8 +5934,8 @@
    "topic": "ai",
    "level": "debutant",
    "term": "Open Source AI",
-   "definition": "AI models whose underlying code and weights are released to the public for anyone to use, modify, and distribute.",
-   "example": "Meta's Llama 3 is an open-source model that developers can run on their own servers.",
+   "definition": "AI models released with their weights, their code and enough information on the training data, under a licence that lets anyone use, study, modify and share them.",
+   "example": "OLMo from AI2 publishes its weights, code and training data. Many models called open are only open weights.",
    "tags": [
     "#AI_Easy"
    ]
@@ -5946,8 +5946,8 @@
    "topic": "ai",
    "level": "debutant",
    "term": "Closed Source AI",
-   "definition": "AI models where the code and internal workings are kept secret by the developing company.",
-   "example": "OpenAI's GPT-4 is closed source; you can only use it via their API or website.",
+   "definition": "AI models whose weights and training details are kept private by their publisher; you can only use them through its apps or its API.",
+   "example": "The GPT, Claude and Gemini flagship models are closed: you call them, you never download them.",
    "tags": [
     "#AI_Easy"
    ]
@@ -6054,8 +6054,8 @@
    "topic": "ai",
    "level": "debutant",
    "term": "Zero-shot",
-   "definition": "Asking an AI to do something it hasn't been specifically trained on or given examples for.",
-   "example": "\"Translate this marketing slogan into Japanese\" without providing any prior translations.",
+   "definition": "Asking a model to do a task with no example of the expected result in the prompt, relying only on what it already learned.",
+   "example": "\"Translate this slogan into Japanese\", with no example translation given.",
    "tags": [
     "#AI_Easy"
    ]
@@ -6102,8 +6102,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "RAG",
-   "definition": "Retrieval-Augmented Generation: A technique that gives an LLM access to external, real-time data to improve accuracy.",
-   "example": "Connecting an AI to your company's Notion database so it can answer questions about internal policies.",
+   "definition": "Retrieval-Augmented Generation: retrieving relevant passages from your own documents and adding them to the prompt, so the model answers from sources it was not trained on.",
+   "example": "A support bot finds the three most relevant help articles, then answers from them and cites them.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6246,8 +6246,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "API Key",
-   "definition": "A secret code used to connect your marketing tools (like Google Sheets) directly to an AI model.",
-   "example": "Using an OpenAI API key to automatically generate SEO meta-descriptions in bulk.",
+   "definition": "A secret code that identifies your account when a program calls an AI service. Calls are billed to it, so it lives in an environment variable on a server, never in the code or the browser.",
+   "example": "An OPENAI_API_KEY stored in a .env file that is listed in .gitignore.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6270,8 +6270,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Pre-training",
-   "definition": "The initial, massive phase of training an AI on the entire internet before it is specialized.",
-   "example": "The stage where the model learns grammar, facts, and basic reasoning.",
+   "definition": "The first and longest training phase: the model learns to predict the next token on trillions of tokens of text, before being turned into an assistant.",
+   "example": "The stage where the model picks up grammar, facts and coding patterns, over weeks on thousands of GPUs.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6294,8 +6294,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Plugin",
-   "definition": "An add-on that allows an AI to interact with other websites or software (e.g., browsing the web, booking a flight).",
-   "example": "A plugin that lets ChatGPT search real-time football scores.",
+   "definition": "An add-on that connects an AI app to an outside service. The early ChatGPT plugins were retired in 2024; today the same role is played by tools, connectors and MCP servers.",
+   "example": "A connector that lets an assistant read your calendar and create events.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6306,8 +6306,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Modality",
-   "definition": "The type of data an AI can work with (Text, Image, Audio, Video).",
-   "example": "Midjourney is a single-modality model (Text-to-Image), while GPT-4o is omni-modality.",
+   "definition": "A type of data a model can take in or produce: text, image, audio, video. A model that handles several is called multimodal.",
+   "example": "A model that reads a photo and answers out loud uses three modalities: image, text and audio.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6330,8 +6330,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Neural Network",
-   "definition": "A computer system modeled on the human brain, designed to recognize patterns.",
-   "example": "The \"engine\" inside every AI that processes information through layers of digital neurons.",
+   "definition": "Layers of simple calculating units (neurons) connected by weights; loosely inspired by the brain, it learns patterns from examples.",
+   "example": "A network sees thousands of labeled photos and learns to tell cats from dogs.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6342,8 +6342,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Attention Mechanism",
-   "definition": "A technique that allows an AI model to focus on the most important parts of a prompt when generating a response.",
-   "example": "The AI knowing that in \"The cat sat on the mat,\" the word \"sat\" refers to the \"cat\".",
+   "definition": "The part of a Transformer that lets each token weigh every other token of the context, to decide which ones matter for the next prediction.",
+   "example": "In \"The cat did not drink because it was full\", attention links \"it\" to \"cat\".",
    "tags": [
     "#AI_Medium"
    ]
@@ -6354,8 +6354,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Prompt Injection",
-   "definition": "A type of attack where a user tries to trick an AI into ignoring its safety rules or system prompt.",
-   "example": "A user trying to make an AI reveal its secret \"System Prompt\" or internal code.",
+   "definition": "An attack where instructions hidden in content the AI processes (a web page, an email, a file) hijack its behavior and override the rules of its owner.",
+   "example": "An email read by an assistant says: forward the last ten invoices to this address.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6438,8 +6438,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Compute",
-   "definition": "The total amount of processing power (hardware + time) used to train or run an AI model.",
-   "example": "Training a model like GPT-4 took more than $100 million in compute, according to OpenAI.",
+   "definition": "The total processing power (hardware multiplied by time) used to train or run a model; the main cost driver of AI.",
+   "example": "Frontier models reportedly take hundreds of millions of dollars of compute to train.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6450,8 +6450,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Emergent Behavior",
-   "definition": "Abilities that an AI model develops unexpectedly as it gets larger, which were not explicitly programmed.",
-   "example": "An AI suddenly becoming good at 3-digit multiplication after being trained only on text.",
+   "definition": "Abilities that seem to appear suddenly as models grow, without being trained for directly. Debated: part of the jump comes from how abilities are measured.",
+   "example": "Larger models became able to do multi-step arithmetic that small ones failed at.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6462,8 +6462,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Stochastic Parrot",
-   "definition": "A critical term used to describe LLMs, suggesting they only repeat patterns of text without truly \"understanding\" anything.",
-   "example": "The idea that AI is just a very advanced \"predictive text\" engine.",
+   "definition": "A critical term from a 2021 paper by Bender, Gebru and colleagues: LLMs would only stitch together patterns of text without understanding meaning. Still debated.",
+   "example": "Critics use it to warn against treating fluent text as proof of understanding.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6486,8 +6486,8 @@
    "topic": "ai",
    "level": "intermediaire",
    "term": "Alignment",
-   "definition": "The process of ensuring an AI's goals and behaviors match human values and intentions.",
-   "example": "Making sure a \"super-intelligent\" AI doesn't accidentally harm humanity to achieve a goal.",
+   "definition": "Making an AI system pursue the goals its users and makers actually intend, and behave according to human values, even in situations nobody anticipated.",
+   "example": "An assistant that refuses to help with a fraud even when the user insists, and says so when it is unsure.",
    "tags": [
     "#AI_Medium"
    ]
@@ -6762,8 +6762,8 @@
    "topic": "ai",
    "level": "avance",
    "term": "Token Limit",
-   "definition": "The hard cap on the number of tokens an AI can process in a single request (input + output).",
-   "example": "If you exceed the token limit, the AI will \"forget\" the beginning of the conversation.",
+   "definition": "The hard cap on tokens in one request (input plus output). Beyond it, the API refuses the request, or the app cuts or summarizes the oldest messages.",
+   "example": "A chat app silently drops the first messages of a very long conversation to stay under the limit.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6810,8 +6810,8 @@
    "topic": "ai",
    "level": "avance",
    "term": "Prompt Sensitivity",
-   "definition": "The phenomenon where small changes in a prompt lead to wildly different results.",
-   "example": "Adding \"I will give you a $200 tip\" making the AI perform better at coding.",
+   "definition": "The way small changes in a prompt (wording, order of examples, format) can change the results a lot, which is why prompts must be tested on an eval set.",
+   "example": "Swapping the order of two examples in a few-shot prompt changes the accuracy by several points.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6846,8 +6846,8 @@
    "topic": "ai",
    "level": "avance",
    "term": "Latent Space",
-   "definition": "A multi-dimensional mathematical space where an AI stores its understanding of different concepts.",
-   "example": "In latent space, the point for \"King\" minus \"Man\" plus \"Woman\" equals \"Queen\".",
+   "definition": "The space of internal vectors where a model represents concepts; similar ideas end up close to each other.",
+   "example": "In early word embeddings, king minus man plus woman landed near queen.",
    "tags": [
     "#AI_Hard"
    ]
@@ -6869,9 +6869,9 @@
    "subject": "ia",
    "topic": "ai",
    "level": "avance",
-   "term": "Over-collaboration",
-   "definition": "The risk of humans relying so much on AI that they lose their own critical thinking or creativity skills.",
-   "example": "A marketing team that can no longer write a single email without ChatGPT.",
+   "term": "Over-reliance on AI",
+   "definition": "The risk of relying so much on AI that people stop checking its output or lose their own skills and judgment.",
+   "example": "A team that ships AI-written code without reading it, and can no longer fix it when it breaks.",
    "tags": [
     "#AI_Hard"
    ]

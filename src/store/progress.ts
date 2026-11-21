@@ -143,13 +143,16 @@ export const useSettings = create<SettingsStore>()(
     }),
     {
       name: 'settings.v1',
-      version: 3,
+      version: 4,
       // v2 : la matière « web » est devenue html / css / js.
       // v3 : l'application est en anglais uniquement, le réglage de langue disparaît.
+      // v4 : la matière « secu » arrive ; qui suivait déjà toutes les matières la reçoit aussi.
       migrate: (persisted) => {
         const { lang: _lang, ...raw } = (persisted ?? {}) as Record<string, unknown>;
         const favorite = raw.favoriteSubject === 'web' ? 'html' : raw.favoriteSubject;
-        const subjects = Array.isArray(raw.subjects) ? raw.subjects.flatMap((s) => (s === 'web' ? ['html', 'css', 'js'] : [s])) : null;
+        let subjects = Array.isArray(raw.subjects) ? raw.subjects.flatMap((s) => (s === 'web' ? ['html', 'css', 'js'] : [s])) : null;
+        const before = ['marketing', 'ia', 'python', 'html', 'css', 'js'];
+        if (subjects && before.every((id) => subjects?.includes(id)) && !subjects.includes('secu')) subjects = [...subjects, 'secu'];
         return { ...raw, favoriteSubject: favorite ?? null, subjects } as unknown as SettingsStore;
       },
       storage: createJSONStorage(() => AsyncStorage),

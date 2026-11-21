@@ -24,11 +24,12 @@ describe('le contenu', () => {
     for (const card of c.CARDS) expect(known.has(card.subject)).toBe(true);
   });
 
-  it('garde, unité par unité, exactement les clés d’exercice de la 1.2 (la progression et les couronnes y sont rattachées)', () => {
+  // Depuis la 1.4.3, une unité peut gagner des exercices ; elle ne doit jamais en perdre.
+  it('garde, unité par unité, toutes les clés d’exercice de la 1.2 (la progression et les couronnes y sont rattachées)', () => {
     const frozen = keysV12 as Record<string, string[]>;
     for (const [unitId, keys] of Object.entries(frozen)) {
-      const now = c.exercisesOfUnit(unitId).map((e) => e.key);
-      expect({ unitId, keys: [...now].sort() }).toEqual({ unitId, keys: [...keys].sort() });
+      const now = new Set(c.exercisesOfUnit(unitId).map((e) => e.key));
+      expect({ unitId, missing: keys.filter((k) => !now.has(k)) }).toEqual({ unitId, missing: [] });
     }
   });
 

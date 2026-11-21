@@ -1,0 +1,173 @@
+{
+ "unit": {
+  "id": "sec-7",
+  "subjectId": "secu",
+  "topic": "secu",
+  "world": "secu-w3",
+  "title": "Secrets and dependencies",
+  "description": "API keys, .env files, secret scanning, key rotation, supply chain, lockfiles, automated updates, typosquatting"
+ },
+ "cards": [
+  {
+   "slug": "secret",
+   "level": "debutant",
+   "term": "Secret",
+   "definition": "Any value that grants access: API keys, database passwords, tokens, private keys. It must never sit in the code or reach the browser.",
+   "example": "The Stripe secret key lives on the server only."
+  },
+  {
+   "slug": "env-file",
+   "level": "debutant",
+   "term": ".env file",
+   "definition": "A local file of environment variables (secrets, settings) loaded at start, listed in .gitignore so it never reaches git.",
+   "example": "DATABASE_URL=postgres://app:pw@db.internal/shop stays on your machine and the server."
+  },
+  {
+   "slug": "secret-scanning",
+   "level": "debutant",
+   "term": "Secret scanning",
+   "definition": "Automatic detection of keys and tokens in commits; GitHub and others block or flag them, and attackers run the same scans.",
+   "example": "A push is refused because it contains an AWS key."
+  },
+  {
+   "slug": "key-rotation",
+   "level": "debutant",
+   "term": "Key rotation",
+   "definition": "Replacing a secret with a new one and revoking the old one, routinely or right after a possible leak.",
+   "example": "Revoke the leaked key, create a new one, update the server."
+  },
+  {
+   "slug": "supply-chain",
+   "level": "debutant",
+   "term": "Software supply chain",
+   "definition": "All the code you did not write but run: packages, build tools, actions, images. An attack on any link reaches you.",
+   "example": "A popular npm package is hijacked and ships a password stealer."
+  },
+  {
+   "slug": "lockfile",
+   "level": "debutant",
+   "term": "Lockfile",
+   "definition": "A file (package-lock.json, poetry.lock) that pins the exact version of every dependency, so each install gets the same reviewed code.",
+   "example": "npm ci installs exactly what package-lock.json lists."
+  },
+  {
+   "slug": "dependency-updates",
+   "level": "debutant",
+   "term": "Automated dependency updates",
+   "definition": "Tools such as Dependabot or Renovate that open pull requests when a dependency has a fix, with CI to test them.",
+   "example": "A pull request bumps a library from 4.1.2 to 4.1.3 for a security fix."
+  },
+  {
+   "slug": "typosquatting",
+   "level": "debutant",
+   "term": "Typosquatting and slopsquatting",
+   "definition": "Malicious packages named like popular ones (a typo away), or like names that AI assistants tend to invent.",
+   "example": "pip install reqeusts instead of requests."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "You pushed an API key to a public GitHub repository, then deleted it in the next commit. Is that enough?",
+   "choices": [
+    "No: revoke and replace the key now, it stays in the history",
+    "Yes, the key is gone now",
+    "Making the repository private is enough",
+    "Renaming the file is enough"
+   ],
+   "explain": "Bots scan public repositories within minutes, and the old commit still holds the key. A leaked key is burned: rotate it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where can a React app running in the browser keep a secret API key safely?",
+   "choices": [
+    "Nowhere: go through your own server",
+    "In the .env file of the frontend build",
+    "Inside the minified JavaScript",
+    "In the localStorage of the browser"
+   ],
+   "explain": "Everything shipped to the browser can be read by the user. Secrets stay on a server, which calls the API for the app."
+  },
+  {
+   "kind": "vf",
+   "prompt": "The .env file should be listed in .gitignore.",
+   "isTrue": true,
+   "explain": "True: it holds secrets and machine settings. Commit an .env.example with empty values instead, to document the variables."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is a software supply chain attack?",
+   "choices": [
+    "Malicious code arriving through a trusted dependency",
+    "A fake email asking for a password",
+    "A flood of requests on the server",
+    "A query injected into the database"
+   ],
+   "explain": "You can write perfect code and still ship malware through a hijacked package, build action or image."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You typed npm install reqeusts by mistake, and it installed. What is the risk?",
+   "choices": [
+    "A look-alike package that may contain malware",
+    "None: npm fixes typos itself",
+    "Only a slower install",
+    "Only a duplicate of the real package"
+   ],
+   "explain": "Attackers register names one typo away from popular packages. Always check the exact name, its author and its downloads."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is a lockfile for?",
+   "choices": [
+    "Pinning exact versions, so every install gets the same code",
+    "Locking the repository against pushes",
+    "Encrypting the dependencies",
+    "Making the build use less memory"
+   ],
+   "explain": "Without it, a new install may pull a new, possibly compromised, version. With it, changes come only through reviewed updates."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Dependabot opens a pull request with a security fix for a library you use. Best move?",
+   "choices": [
+    "Let CI run, read the changelog, merge soon",
+    "Ignore it while nothing is broken",
+    "Remove the library without checking",
+    "Turn the alerts off"
+   ],
+   "explain": "Security fixes are the updates attackers watch most. Tests plus a quick look make merging them low-risk."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "Which line leaks the secret into the logs?",
+   "lang": "python",
+   "lines": [
+    "import os",
+    "import requests",
+    "TOKEN = os.environ[\"STRIPE_KEY\"]",
+    "print(\"Using token\", TOKEN)",
+    "requests.post(URL, headers={\"Authorization\": TOKEN})"
+   ],
+   "answer": 3,
+   "explain": "Logs are copied, shared and stored for months. Never print secrets; log at most the last four characters."
+  },
+  {
+   "kind": "vf",
+   "prompt": "An AI coding assistant can suggest a package that does not exist, and attackers register such names to trap developers.",
+   "isTrue": true,
+   "explain": "True: this is called slopsquatting. Check that a suggested package is real, maintained and widely used before installing it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does key rotation mean?",
+   "choices": [
+    "Replacing a secret with a new one and revoking the old",
+    "Making a backup copy of the key",
+    "Sharing the key with the whole team",
+    "Making the key longer"
+   ],
+   "explain": "Rotation limits how long a leaked key stays useful. Do it right after any doubt, and on a schedule for important keys."
+  }
+ ]
+}
