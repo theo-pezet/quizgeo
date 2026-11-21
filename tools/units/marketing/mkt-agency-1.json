@@ -1,0 +1,177 @@
+{
+ "unit": {
+  "id": "mkt-agency-1",
+  "subjectId": "marketing",
+  "topic": "agences",
+  "world": "marketing-w11",
+  "title": "Working with agencies",
+  "description": "Types of agencies, briefs, requests for proposals, pitches, retainer, project and performance fees, Loi Sapin, evaluating an agency"
+ },
+ "cards": [
+  {
+   "slug": "agency-types",
+   "level": "debutant",
+   "term": "Types of agencies",
+   "definition": "Creative agencies make campaigns, media agencies plan and buy space, digital and performance agencies run SEO, ads and data, PR agencies handle press and influence; full-service groups do all of it.",
+   "example": "A brand works with a creative agency for its TV spot and a media agency to buy the airtime."
+  },
+  {
+   "slug": "agency-brief",
+   "level": "debutant",
+   "term": "Agency brief",
+   "definition": "The document the advertiser gives the agency: context, business goal, target, key message, deliverables, budget, timing, constraints and how success will be measured. A vague brief gets vague work.",
+   "example": "One page that says: grow trial among 25 to 34 year olds by 20 percent in 6 months, budget 400,000 euros."
+  },
+  {
+   "slug": "rfp",
+   "level": "debutant",
+   "term": "Request for proposals (RFP)",
+   "definition": "A formal call to several agencies to propose an approach and a price on the same brief, followed by pitches and a choice on clear criteria. Agencies spend real time on it.",
+   "example": "Three agencies shortlisted, one month to answer, presentations, then a scoring grid."
+  },
+  {
+   "slug": "agency-fees",
+   "level": "debutant",
+   "term": "Agency fee models",
+   "definition": "Retainer (a monthly fee for ongoing work), project fee (a price per deliverable), time and materials (days worked) and performance fees (bonus on results). Media agencies may also earn a fee on spend.",
+   "example": "A monthly retainer for social media management plus a bonus if leads grow 30 percent."
+  },
+  {
+   "slug": "loi-sapin",
+   "level": "debutant",
+   "term": "Loi Sapin (1993)",
+   "definition": "French law on media buying transparency: the agency buys space as an agent of the advertiser, the media invoice the advertiser directly, and the agency cannot be paid by the media without the advertiser knowing. It also applies to digital advertising.",
+   "example": "The advertiser receives the invoices of the media and sees every rebate."
+  },
+  {
+   "slug": "agency-evaluation",
+   "level": "debutant",
+   "term": "Evaluating an agency",
+   "definition": "A regular review on agreed KPIs and on the relationship both ways: results, quality, responsiveness, proactivity, and the quality of briefs and feedback from the client side.",
+   "example": "A quarterly review with a shared scorecard instead of a sudden contract end."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which agency plans and buys advertising space?",
+   "choices": [
+    "A media agency",
+    "A creative agency",
+    "A PR agency",
+    "A web design studio"
+   ],
+   "explain": "Media agencies choose channels and buy space; creative agencies design the message."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the most important part of an agency brief?",
+   "choices": [
+    "A clear business goal and how success will be measured",
+    "The logo files and the brand colours",
+    "The names of all the agency staff",
+    "A long history of the brand since 1950"
+   ],
+   "explain": "Agencies can only aim at a target they can see. Goal, target, message and KPIs come first."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is a monthly fixed fee for ongoing work called?",
+   "choices": [
+    "Retainer",
+    "Project fee",
+    "Performance bonus",
+    "Commission on sales"
+   ],
+   "explain": "Retainers suit continuous work (social, SEO). Projects suit one-off deliverables."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does the Loi Sapin require for media buying in France?",
+   "choices": [
+    "The agency acts as agent; media invoice the advertiser directly",
+    "Agencies must buy space in their own name",
+    "Media must give every agency the same price",
+    "Advertisers cannot use an agency"
+   ],
+   "explain": "The law ensures transparency: the advertiser sees invoices and rebates."
+  },
+  {
+   "kind": "vf",
+   "prompt": "The Loi Sapin only applies to print and TV, not to digital advertising.",
+   "isTrue": false,
+   "explain": "False. Its transparency rules were extended to digital advertising."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Before launching an RFP, what should you prepare?",
+   "choices": [
+    "The same written brief and a scoring grid for all agencies",
+    "A promise of the contract to the first agency met",
+    "A request for free full campaigns from ten agencies",
+    "Nothing: agencies will define the goal"
+   ],
+   "explain": "Comparing proposals requires the same brief and clear criteria. Limit the shortlist: pitching costs agencies a lot."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your agency results are disappointing. What do you do first?",
+   "choices": [
+    "Review KPIs, briefs and feedback together, both ways",
+    "End the contract by email the same day",
+    "Stop answering their questions",
+    "Cut the budget without telling them"
+   ],
+   "explain": "Bad results often come from both sides: unclear briefs, slow approvals. A structured review fixes most issues."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which fee model ties pay to results?",
+   "choices": [
+    "A performance fee",
+    "A retainer",
+    "Time and materials",
+    "A fixed project fee"
+   ],
+   "explain": "Performance fees align interests but need fair, measurable KPIs the agency can influence."
+  },
+  {
+   "kind": "case",
+   "title": "Choosing a performance agency",
+   "scenario": "Your e-commerce brand wants an agency for Google Ads and Meta ads. Monthly spend: 50,000 euros.",
+   "steps": [
+    {
+     "prompt": "How do you compare agencies?",
+     "choices": [
+      "Same brief, case studies in your sector, a clear test plan",
+      "Pick the one with the nicest office",
+      "Pick the cheapest fee, nothing else",
+      "Pick the agency that promises the highest ROAS"
+     ],
+     "feedback": "Promises are easy. Comparable proposals, references and a concrete plan are not."
+    },
+    {
+     "prompt": "Who should own the ad accounts?",
+     "choices": [
+      "Your company, with access given to the agency",
+      "The agency, to keep things simple",
+      "Nobody, accounts are shared freely",
+      "The platform account manager"
+     ],
+     "feedback": "Owning the accounts keeps your data and history if you change agency."
+    },
+    {
+     "prompt": "Which fee structure do you choose?",
+     "choices": [
+      "A fixed fee plus a bonus on profitable growth",
+      "A percentage of spend with no other criteria",
+      "A bonus on clicks only",
+      "No fee: the agency is paid by the platforms"
+     ],
+     "feedback": "A percentage of spend rewards spending more. Tie the bonus to profitable results you both measure."
+    }
+   ],
+   "explain": "Clear brief, ownership of your assets, incentives aligned with your business."
+  }
+ ]
+}

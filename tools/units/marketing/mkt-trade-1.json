@@ -1,0 +1,202 @@
+{
+ "unit": {
+  "id": "mkt-trade-1",
+  "subjectId": "marketing",
+  "topic": "trade",
+  "world": "marketing-w12",
+  "title": "Trade marketing and French retail",
+  "description": "Category management, shelf share, planograms, end caps, private labels, annual negotiations, EGalim, SRP+10, promotion caps"
+ },
+ "cards": [
+  {
+   "slug": "trade-marketing",
+   "level": "debutant",
+   "term": "Trade marketing",
+   "definition": "Marketing aimed at retailers and at the shopper in store: listing products, shelf space, displays, promotions, joint plans with each retailer. It turns brand demand into sales at the shelf.",
+   "example": "A yoghurt brand negotiates an end cap display and a coupon in the Carrefour app for the summer."
+  },
+  {
+   "slug": "category-management",
+   "level": "debutant",
+   "term": "Category management",
+   "definition": "Managing a whole category (all yoghurts, all shampoos) as a business unit with the retailer: range, prices, shelf layout and promotions are set to grow the category, not just one brand.",
+   "example": "The category captain analyses data for the retailer and proposes the new yoghurt shelf, competitors included."
+  },
+  {
+   "slug": "planogram",
+   "level": "debutant",
+   "term": "Planogram and facings",
+   "definition": "The plan showing where each product sits on the shelf. Facings are the number of product fronts visible; shelf share is the space a brand gets in the category. Eye level sells more than the bottom shelf.",
+   "example": "Going from 2 to 4 facings at eye level often lifts sales more than an ad."
+  },
+  {
+   "slug": "end-cap",
+   "level": "debutant",
+   "term": "End cap and POS displays",
+   "definition": "An end cap (tete de gondole) is the display at the end of an aisle, the most visible spot of a store; brands pay for it, usually with a promotion. POS materials (PLV in French) are the signs, stands and stickers around products.",
+   "example": "A two-week end cap for a new chocolate bar, with a stand and a price promotion."
+  },
+  {
+   "slug": "private-label",
+   "level": "debutant",
+   "term": "Private labels",
+   "definition": "Brands owned by the retailer (Reflets de France, Marque Repere, U) sold next to national brands, usually cheaper. They are both a competitor and a customer for many manufacturers.",
+   "example": "A dairy makes yoghurts under its own brand and under a retailer private label."
+  },
+  {
+   "slug": "annual-negotiations",
+   "level": "debutant",
+   "term": "Annual negotiations",
+   "definition": "In France, suppliers and big retailers negotiate a yearly agreement on prices and conditions, between 1 December and 1 March. Since a law of August 2026, suppliers under 350 million euros of turnover sign by 31 January, as a trial until the end of 2029. The general terms of sale (CGV) of the supplier are the basis of the talks.",
+   "example": "A cheese maker sends its new tariffs in the autumn and signs with each retailer before the deadline."
+  },
+  {
+   "slug": "srp-plus-10",
+   "level": "debutant",
+   "term": "SRP+10",
+   "definition": "Under EGalim, retailers must resell food at least 10 percent above the price they paid (the loss threshold raised by 10 percent). Extended until 15 April 2028.",
+   "example": "A product bought 1 euro by the retailer cannot be sold under 1.10 euros."
+  },
+  {
+   "slug": "promotion-caps",
+   "level": "debutant",
+   "term": "Promotion caps",
+   "definition": "Promotions on food and on hygiene, cleaning and beauty products in French retail are capped at 34 percent of the price and 25 percent of the yearly volume of the product, until 15 April 2028.",
+   "example": "Buy two, get the third free (33 percent) is allowed; buy one, get one free (50 percent) is not."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is trade marketing about?",
+   "choices": [
+    "Winning the retailer and the shopper at the point of sale",
+    "Buying TV ads to build the brand over years",
+    "Writing posts for the social accounts of the brand",
+    "Setting the salaries of the sales team"
+   ],
+   "explain": "Brand marketing creates demand; trade marketing makes sure the product is listed, visible and chosen in store."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A brand goes from 2 to 4 facings at eye level. What changes?",
+   "choices": [
+    "Its visible shelf space, often a strong lever on sales",
+    "Its price, which rises automatically",
+    "Its legal status as a national brand",
+    "Nothing, shoppers ignore the shelf"
+   ],
+   "explain": "Physical availability: more visible fronts in the best spot get more attention at the moment of choice."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is an end cap?",
+   "choices": [
+    "The display at the end of an aisle, the most visible spot",
+    "The cheapest shelf, down at floor level",
+    "The checkout area at the front of the store",
+    "The back room where the stock is kept"
+   ],
+   "explain": "End caps (tetes de gondole) are paid for and usually come with a promotion. They can multiply weekly sales."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What are Reflets de France and Marque Repere?",
+   "choices": [
+    "Private labels owned by retailers",
+    "National brands of food groups",
+    "Labels certifying organic food",
+    "Brands sold only online"
+   ],
+   "explain": "Private labels are retailer brands. Manufacturers often compete with them and produce them at the same time."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Between which dates do the annual negotiations with French retail usually run?",
+   "choices": [
+    "1 December to 1 March",
+    "1 January to 30 June",
+    "1 September to 31 December",
+    "All year, with no deadline"
+   ],
+   "explain": "The agreement must be signed by 1 March, or by 31 January for suppliers under 350 million euros since the law of August 2026, as a trial."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A retailer pays 2 euros for a pack of pasta. What is the lowest resale price allowed by SRP+10?",
+   "choices": [
+    "2.20 euros",
+    "2.00 euros",
+    "2.10 euros",
+    "1.80 euros"
+   ],
+   "explain": "Food must be resold at least 10 percent above the purchase price, until April 2028."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which promotion is allowed on a food product in a French supermarket?",
+   "choices": [
+    "Buy two, get the third free",
+    "Buy one, get one free",
+    "Minus 60 percent on the whole range",
+    "Free product for every customer"
+   ],
+   "explain": "Promotions are capped at 34 percent of the price: the third free is about 33 percent, one free for one bought is 50 percent."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Promotion caps in France apply only to food, never to shampoo or detergent.",
+   "isTrue": false,
+   "explain": "False. Since March 2024 they also cover hygiene, cleaning and beauty products, and they were extended to April 2028."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In category management, what does the category captain do?",
+   "choices": [
+    "Proposes the layout and range of the whole category to the retailer",
+    "Decides the retail prices of all its competitors",
+    "Removes every rival brand from the shelves",
+    "Buys and manages the stock for each store"
+   ],
+   "explain": "The captain works for the growth of the category; a self-serving plan quickly loses the trust of the retailer."
+  },
+  {
+   "kind": "case",
+   "title": "Launching a snack in French supermarkets",
+   "scenario": "Your healthy snack brand sells online. A national retailer agrees to list it in 300 stores from March.",
+   "steps": [
+    {
+     "prompt": "What must you secure first in the agreement?",
+     "choices": [
+      "Listing, shelf position and the joint promotion calendar",
+      "The colour of the shelf labels in each store",
+      "A ban on private labels in the category",
+      "The right to set the retail price yourself"
+     ],
+     "feedback": "Listing alone is not enough: position, facings and a launch plan decide whether the product sells. The retailer sets its retail prices."
+    },
+    {
+     "prompt": "For the launch, marketing wants buy one get one free. What do you answer?",
+     "choices": [
+      "Not allowed: cap at 34 percent, for example the third free",
+      "Fine, launches are exempt from the caps",
+      "Fine, if the promotion lasts only one week",
+      "Fine, if the price is shown before VAT"
+     ],
+     "feedback": "Promotion caps apply to launches too. A sampling operation or a coupon within the cap works better."
+    },
+    {
+     "prompt": "After 8 weeks, sales per store are half of the target. What do you check first?",
+     "choices": [
+      "Shelf execution: position, facings, stock and signs",
+      "The number of likes on your Instagram posts",
+      "The font used on the website",
+      "The price of competitors abroad"
+     ],
+     "feedback": "Many launches fail at the shelf: out of stock, wrong spot, no signs. Field checks come before new ads."
+    }
+   ],
+   "explain": "In retail, winning the shelf is as important as winning minds, and French law frames prices and promotions tightly."
+  }
+ ]
+}

@@ -1,0 +1,195 @@
+{
+ "unit": {
+  "id": "mkt-a11y-1",
+  "subjectId": "marketing",
+  "topic": "accessibilite",
+  "world": "marketing-w10",
+  "title": "Digital accessibility in France",
+  "description": "European Accessibility Act since June 2025, who is covered, RGAA and WCAG, alt text, contrast, keyboard, forms, captions, controls and sanctions"
+ },
+ "cards": [
+  {
+   "slug": "eaa",
+   "level": "debutant",
+   "term": "European Accessibility Act",
+   "definition": "EU directive 2019/882, applied since 28 June 2025: e-commerce sites and apps, banking, transport ticketing, e-books, audiovisual media and some devices sold to consumers must be accessible to people with disabilities. Existing e-commerce sites are covered too.",
+   "example": "An online shop must let a blind customer find a product, add it to the cart and pay with a screen reader."
+  },
+  {
+   "slug": "eaa-exemption",
+   "level": "debutant",
+   "term": "Micro-enterprise exemption",
+   "definition": "Service providers with fewer than 10 employees and no more than 2 million euros of turnover or balance sheet are exempt for services. Others can invoke a disproportionate burden only with a documented assessment.",
+   "example": "A 4-person online shop is exempt; a 30-person one is not."
+  },
+  {
+   "slug": "rgaa-wcag",
+   "level": "debutant",
+   "term": "RGAA and WCAG",
+   "definition": "WCAG are the international accessibility guidelines (level AA is the usual target). The RGAA is the French reference framework based on them, with criteria and tests.",
+   "example": "An audit against the RGAA checks 106 criteria such as alternative texts, contrast and keyboard navigation."
+  },
+  {
+   "slug": "alt-text-a11y",
+   "level": "debutant",
+   "term": "Alternative text",
+   "definition": "Text describing an informative image for screen readers, in the alt attribute. Decorative images get an empty alt so they are skipped. A product photo needs a useful description.",
+   "example": "alt=\"Navy wool coat, knee length, with a hood\" instead of alt=\"image1\"."
+  },
+  {
+   "slug": "contrast",
+   "level": "debutant",
+   "term": "Colour contrast",
+   "definition": "Text must stand out from its background: at least 4.5 to 1 for normal text under WCAG AA (3 to 1 for large text). Light grey on white often fails.",
+   "example": "A pale grey promo price on a white page is hard to read for many people."
+  },
+  {
+   "slug": "keyboard-access",
+   "level": "debutant",
+   "term": "Keyboard access",
+   "definition": "Everything must work without a mouse: tab through links, buttons and fields in a logical order, with a visible focus. Many users of assistive tools navigate by keyboard.",
+   "example": "A cookie banner that cannot be closed with the keyboard blocks the whole site."
+  },
+  {
+   "slug": "a11y-enforcement",
+   "level": "debutant",
+   "term": "Controls and sanctions",
+   "definition": "In France the DGCCRF checks e-commerce accessibility, with other regulators for their sectors, and courts can order fixes: in June 2026 a court ordered Carrefour to make its site and app accessible within six months.",
+   "example": "Associations of disabled people can also take legal action."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Since when does the European Accessibility Act apply to e-commerce?",
+   "choices": [
+    "28 June 2025",
+    "1 January 2020",
+    "27 September 2026",
+    "It applies only to public sites"
+   ],
+   "explain": "Since 28 June 2025, consumer e-commerce services must meet accessibility requirements, existing sites included."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which online shop is exempt for its services?",
+   "choices": [
+    "One with 6 employees and 1.5 million euros of turnover",
+    "One with 40 employees and 8 million euros",
+    "Any shop founded before 2025",
+    "Any shop selling only clothes"
+   ],
+   "explain": "Micro-enterprises (under 10 staff and up to 2 million euros) are exempt for services."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the RGAA?",
+   "choices": [
+    "The French accessibility reference framework based on WCAG",
+    "A French law about cookie banners on sites",
+    "A label given to low-carbon websites",
+    "The French rules for prices shown online"
+   ],
+   "explain": "The RGAA turns WCAG into testable criteria used in French audits."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which alt text is best for a product photo?",
+   "choices": [
+    "Navy wool coat, knee length, with a hood",
+    "image1.jpg, the original file name",
+    "Photo of a product",
+    "Best coat ever, buy it now"
+   ],
+   "explain": "Describe what a sighted user learns from the image. Keywords stuffing and file names do not help."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What alt should a purely decorative background image have?",
+   "choices": [
+    "An empty alt, alt=\"\"",
+    "A long description of the pattern",
+    "The name of the brand",
+    "No alt attribute and a title instead"
+   ],
+   "explain": "Empty alt tells screen readers to skip it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What minimum contrast does WCAG AA require for normal text?",
+   "choices": [
+    "4.5 to 1",
+    "1.5 to 1",
+    "2 to 1",
+    "10 to 1"
+   ],
+   "explain": "Large text needs 3 to 1. Check with a contrast tool before validating a design."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A site is accessible if it looks fine with a mouse on a big screen.",
+   "isTrue": false,
+   "explain": "False. Keyboard use, screen readers, zoom and captions must all work. Test with the keyboard only."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your cookie banner cannot be closed with the keyboard. Why is it serious?",
+   "choices": [
+    "It blocks keyboard users from the whole site",
+    "It only changes the colour of the banner",
+    "It improves conversion for everyone",
+    "It is a minor SEO detail"
+   ],
+   "explain": "One blocking element can make the entire service unusable, which is exactly what controls look for."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which video practice helps deaf and hard of hearing users?",
+   "choices": [
+    "Captions synchronised with the sound",
+    "Autoplay with the sound turned on",
+    "Background music only, no voice",
+    "A smaller video player on mobile"
+   ],
+   "explain": "Captions also help everyone watching without sound, which is most social video viewing."
+  },
+  {
+   "kind": "case",
+   "title": "An accessibility check on a fashion site",
+   "scenario": "A 60-person fashion e-commerce company asks whether it must act on accessibility.",
+   "steps": [
+    {
+     "prompt": "Is it covered by the European Accessibility Act?",
+     "choices": [
+      "Yes: consumer e-commerce, and it is not a micro-enterprise",
+      "No: only public websites are covered",
+      "No: fashion is exempt from the rules",
+      "Only for its physical shops, not online"
+     ],
+     "feedback": "E-commerce services to consumers are covered since June 2025; the micro-enterprise exemption does not apply."
+    },
+    {
+     "prompt": "Where do you start?",
+     "choices": [
+      "An audit against RGAA criteria on key journeys: search, cart, payment",
+      "Installing an overlay widget that promises compliance",
+      "Rewriting the brand guidelines",
+      "Waiting for a control to see what fails"
+     ],
+     "feedback": "Overlay widgets do not make a site compliant. Audit the real journeys and fix the code."
+    },
+    {
+     "prompt": "Which fixes usually bring the biggest gains fast?",
+     "choices": [
+      "Form labels, alt texts, contrast and keyboard access",
+      "New product photos in higher resolution",
+      "A faster homepage carousel",
+      "More pop-ups with offers"
+     ],
+     "feedback": "These basics block the most users and are often cheap to fix."
+    }
+   ],
+   "explain": "Accessibility is now a legal duty for most e-commerce, and a better experience for everyone."
+  }
+ ]
+}
