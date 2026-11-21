@@ -55,8 +55,10 @@ const BASE_WORLDS: World[] = [
   w('marketing', 8, '💌', '#DB2777', 'Customer relationship', 'CRM, automation, e-commerce', []),
   w('marketing', 9, '🎬', '#9333EA', 'Brand and influence', 'Brand, psychology, copy, creators', []),
   // 1.5 : le droit français du marketing, puis le pilotage (média, budget, go-to-market).
-  w('marketing', 10, '⚖️', '#475569', 'Marketing law in France', 'Consent, prospecting, advertising rules', []),
-  w('marketing', 11, '🧭', '#0F766E', 'Leading marketing', 'Media plans, budgets, go-to-market', []),
+  w('marketing', 10, '⚖️', '#475569', 'Marketing law in France', 'Consent, advertising rules, accessibility', []),
+  w('marketing', 11, '🧭', '#0F766E', 'Leading marketing', 'Media, budgets, finance, agencies, go-to-market', []),
+  // 1.6 : la grande distribution, le retail media et le social commerce, les relations presse.
+  w('marketing', 12, '🛒', '#B45309', 'Retail, commerce and press', 'Trade marketing, retail media, PR and crisis', []),
 
   // -------------------------------------------------------------------- IA
   w('ia', 1, '🧠', '#7C3AED', 'Discovering AI', 'The words, the history, the players', ['ia-start-1', 'ia-1', 'ia-hist-1', 'ia-2', 'ia-9']),

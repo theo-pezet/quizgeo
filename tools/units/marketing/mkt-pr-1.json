@@ -1,0 +1,172 @@
+{
+ "unit": {
+  "id": "mkt-pr-1",
+  "subjectId": "marketing",
+  "topic": "relations-presse",
+  "world": "marketing-w12",
+  "title": "Press relations and crisis communication",
+  "description": "Earned media, press release, press kit, embargo, pitching journalists, spokesperson, holding statement, crisis response, right of reply"
+ },
+ "cards": [
+  {
+   "slug": "earned-media",
+   "level": "debutant",
+   "term": "Paid, owned, earned",
+   "definition": "Paid media is bought (ads), owned media belongs to you (site, newsletter, social accounts), earned media is gained (press articles, reviews, word of mouth). PR works on earned media, which carries more trust.",
+   "example": "An article in Les Echos about your funding round is earned media."
+  },
+  {
+   "slug": "press-release",
+   "level": "debutant",
+   "term": "Press release",
+   "definition": "A short news text for journalists: a factual headline, the key facts in the first paragraph (who, what, when, where, why), a quote, proof and contact details. One news item per release.",
+   "example": "Headline: Lyon start-up raises 5 million euros to cut food waste in canteens."
+  },
+  {
+   "slug": "embargo",
+   "level": "debutant",
+   "term": "Embargo",
+   "definition": "An agreement that journalists receive the news early but publish only after a set date and time, to prepare their articles.",
+   "example": "Under embargo until Tuesday 8 am: results of our study on remote work."
+  },
+  {
+   "slug": "pitch",
+   "level": "debutant",
+   "term": "Pitching a journalist",
+   "definition": "A short personal email to a journalist who covers the topic, with the angle, why it matters to their readers now, and what you can offer (data, interview, exclusive).",
+   "example": "A data journalist gets the study figures as an exclusive two days before the release."
+  },
+  {
+   "slug": "holding-statement",
+   "level": "debutant",
+   "term": "Holding statement",
+   "definition": "A short first public statement in a crisis, ready in under an hour: we know, we take it seriously, here is what we are doing, next update at a given time. It buys time without lying or guessing.",
+   "example": "We are aware of the outage affecting payments and are working to restore it. Next update at 3 pm."
+  },
+  {
+   "slug": "crisis-principles",
+   "level": "debutant",
+   "term": "Crisis communication principles",
+   "definition": "Speak fast, tell the truth, show empathy for people affected, act before you talk about yourself, use one spokesperson and one message, and update regularly. Silence lets others write the story.",
+   "example": "A food recall announced by the company itself, with clear instructions and refunds, limits the damage."
+  },
+  {
+   "slug": "right-of-reply",
+   "level": "debutant",
+   "term": "Right of reply",
+   "definition": "Under the French press law of 1881, a person or company named in a publication can demand that a reply be published in the same medium.",
+   "example": "A company accused in an article sends its reply to the newspaper, which must print it under the legal conditions."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A positive review of your product in a national newspaper is which kind of media?",
+   "choices": [
+    "Earned",
+    "Paid",
+    "Owned",
+    "Programmatic"
+   ],
+   "explain": "Earned media is gained, not bought. It is why PR carries more credibility than ads."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What goes in the first paragraph of a press release?",
+   "choices": [
+    "The key facts: who, what, when, where, why",
+    "The history of the company since its founding",
+    "A long quote from the CEO",
+    "The list of all the products"
+   ],
+   "explain": "Journalists read the top and decide. Inverted pyramid: the news first, details after."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which press release headline is best?",
+   "choices": [
+    "Lyon start-up raises 5 million euros to cut canteen food waste",
+    "A great new step in our wonderful history",
+    "Innovation and passion at the heart of our project",
+    "We are proud to share some exciting news"
+   ],
+   "explain": "Factual, specific, newsworthy. Adjectives and pride do not make news."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does under embargo until Tuesday 8 am mean?",
+   "choices": [
+    "Journalists can prepare the story but publish only from Tuesday 8 am",
+    "The news is cancelled after Tuesday morning",
+    "Only media that pay may publish the story",
+    "The release must stay secret forever"
+   ],
+   "explain": "Embargoes let media prepare quality coverage. Breaking one damages the relationship."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you pitch a journalist?",
+   "choices": [
+    "A short personal email with an angle for their readers",
+    "The same release sent to 2,000 addresses",
+    "Several calls a day until they answer",
+    "A gift with no news attached"
+   ],
+   "explain": "Target the right person, explain why it matters now for their audience, offer something useful."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A bug leaks customer emails. When should the first statement come out?",
+   "choices": [
+    "Within the hour, as a holding statement",
+    "After the full investigation, weeks later",
+    "Never, to avoid drawing attention",
+    "Only if a journalist calls"
+   ],
+   "explain": "A fast, honest holding statement keeps control of the story. Data breaches also have legal duties: the CNIL within 72 hours, and sometimes the people affected."
+  },
+  {
+   "kind": "vf",
+   "prompt": "In a crisis, several managers giving different answers to the press shows transparency.",
+   "isTrue": false,
+   "explain": "False. One spokesperson and one message avoid contradictions that turn into a second story."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What should a holding statement do?",
+   "choices": [
+    "Acknowledge, show concern, say what is done, set the next update",
+    "Explain in detail which employee is to blame",
+    "Deny everything until it is proven otherwise",
+    "Promote a big discount to change the subject"
+   ],
+   "explain": "It buys time without lying or guessing, and sets when you will speak again."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A newspaper names your company in an inaccurate article. What French legal tool exists?",
+   "choices": [
+    "The right of reply under the 1881 press law",
+    "Asking the CNIL to delete the article",
+    "A cookie banner complaint",
+    "Nothing, the press is free"
+   ],
+   "explain": "The right of reply lets a named person or company have an answer published in the same medium."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a crisis response in order.",
+   "steps": [
+    "Check the facts and assess the impact quickly",
+    "Publish a holding statement",
+    "Act to protect the people affected",
+    "Give regular updates through one spokesperson",
+    "Review what happened and fix the cause"
+   ],
+   "explain": "Facts, first word, action, regular updates, then learning. Acting matters more than talking."
+  }
+ ],
+ "deckCards": [
+  "marketing-press-kit"
+ ]
+}

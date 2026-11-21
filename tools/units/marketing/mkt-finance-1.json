@@ -1,0 +1,206 @@
+{
+ "unit": {
+  "id": "mkt-finance-1",
+  "subjectId": "marketing",
+  "topic": "finance",
+  "world": "marketing-w11",
+  "title": "Finance for marketers",
+  "description": "P&L, revenue, COGS, gross margin, operating expenses, EBITDA, cash versus profit, prices with and without VAT, budget versus actual, business case, payback, ROI"
+ },
+ "cards": [
+  {
+   "slug": "p-and-l",
+   "level": "debutant",
+   "term": "P&L (income statement)",
+   "definition": "The summary of a period: revenue, minus cost of goods sold gives the gross margin, minus operating expenses (marketing, salaries, rent) gives the operating result. It shows whether the business makes money.",
+   "example": "Revenue 1,000,000; COGS 400,000; gross margin 600,000; operating expenses 500,000; operating result 100,000."
+  },
+  {
+   "slug": "cogs",
+   "level": "debutant",
+   "term": "COGS",
+   "definition": "Cost of goods sold: the direct costs of what was sold (products bought or made, packaging, sometimes shipping). Marketing is not part of COGS; it is an operating expense.",
+   "example": "A shop selling a 50 euro jacket bought 20 euros has 20 euros of COGS on that sale."
+  },
+  {
+   "slug": "ebitda",
+   "level": "debutant",
+   "term": "EBITDA",
+   "definition": "Earnings before interest, taxes, depreciation and amortization: a common view of operating profitability before financing and accounting choices. In French: EBE is close to it.",
+   "example": "Investors compare the EBITDA margin of two e-commerce companies."
+  },
+  {
+   "slug": "opex-capex",
+   "level": "debutant",
+   "term": "Opex and capex",
+   "definition": "Operating expenses (opex) are recurring costs of the period, such as ads, salaries, software subscriptions. Capital expenditure (capex) buys assets used for years, such as machines or a custom platform, and is spread over time.",
+   "example": "A yearly SaaS licence is opex; building a warehouse is capex."
+  },
+  {
+   "slug": "cash-vs-profit",
+   "level": "debutant",
+   "term": "Cash versus profit",
+   "definition": "A profitable company can run out of cash: customers pay late, stock is paid upfront, growth needs cash before it brings any. Cash flow decides survival.",
+   "example": "Big orders in November, paid by customers in January, while suppliers want payment in October."
+  },
+  {
+   "slug": "ht-ttc",
+   "level": "debutant",
+   "term": "HT and TTC",
+   "definition": "In France, prices are quoted excluding VAT (HT, hors taxes) in B2B and including VAT (TTC) for consumers. The standard VAT rate is 20 percent: 100 euros HT become 120 euros TTC. Revenue is counted HT.",
+   "example": "A product sold 60 euros TTC brings 50 euros of revenue HT."
+  },
+  {
+   "slug": "budget-vs-actual",
+   "level": "debutant",
+   "term": "Budget versus actual",
+   "definition": "Comparing what was planned with what was really spent and earned, line by line, to explain gaps and reallocate. Finance teams expect marketing to explain variances, not only to spend.",
+   "example": "Ads were 15 percent over budget in March because of a test; results justify keeping it."
+  },
+  {
+   "slug": "business-case",
+   "level": "debutant",
+   "term": "Business case",
+   "definition": "A short document to win a budget: the problem, the proposal, costs, expected gains with assumptions, payback period, risks and how success will be measured.",
+   "example": "Invest 60,000 euros in a CRM, expected to save 40,000 euros a year: payback in 18 months."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Revenue 500,000 euros, COGS 200,000 euros. What is the gross margin?",
+   "choices": [
+    "300,000 euros, or 60 percent",
+    "200,000 euros, or 40 percent",
+    "700,000 euros, or 140 percent",
+    "500,000 euros, or 100 percent"
+   ],
+   "explain": "Gross margin = revenue minus COGS. Divided by revenue: 60 percent."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where does the advertising budget appear in a P&L?",
+   "choices": [
+    "In operating expenses",
+    "In cost of goods sold",
+    "In revenue",
+    "Nowhere, it is off the books"
+   ],
+   "explain": "Marketing spend is an operating expense, below the gross margin line."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A product costs 60 euros TTC for a consumer in France, with 20 percent VAT. What revenue does the shop book?",
+   "choices": [
+    "50 euros",
+    "60 euros",
+    "48 euros",
+    "72 euros"
+   ],
+   "explain": "60 divided by 1.2 = 50 euros HT. VAT is collected for the State; it is not revenue."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A company is profitable but cannot pay its suppliers. How is it possible?",
+   "choices": [
+    "Cash comes in later than costs go out",
+    "Profitable companies always have cash",
+    "Its EBITDA is too high",
+    "It has too many customers paying upfront"
+   ],
+   "explain": "Profit is not cash. Payment delays, stock and fast growth can drain cash in a profitable business."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which is capex rather than opex?",
+   "choices": [
+    "Building a custom e-commerce platform used for years",
+    "The monthly Google Ads budget",
+    "Freelance copywriting paid this month",
+    "A yearly software subscription fee"
+   ],
+   "explain": "Capex creates an asset spread over several years; opex is consumed in the period."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You invest 60,000 euros and expect a gain of 3,000 euros of margin per month. What is the payback period?",
+   "choices": [
+    "20 months",
+    "6 months",
+    "3 months",
+    "60 months"
+   ],
+   "explain": "60,000 divided by 3,000. Payback is easy to explain to a finance team; add risks and assumptions."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A campaign cost 20,000 euros and generated 50,000 euros of gross margin. What is the ROI?",
+   "choices": [
+    "150 percent",
+    "250 percent",
+    "40 percent",
+    "30 percent"
+   ],
+   "explain": "ROI = (gain minus cost) divided by cost = 30,000 divided by 20,000. Compute it on margin, not on revenue."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A business case should state its assumptions and how success will be measured.",
+   "isTrue": true,
+   "explain": "True. Finance trusts numbers it can check. Assumptions, risks and a measurement plan make a case credible."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Ads are 15 percent over budget this month. What does finance expect from you?",
+   "choices": [
+    "An explanation of the gap and a decision on the next months",
+    "Nothing, budgets are only indications",
+    "A new budget twice as large",
+    "Hiding the gap in another line"
+   ],
+   "explain": "Budget versus actual reviews are routine. Explain, show the results, and adjust."
+  },
+  {
+   "kind": "case",
+   "title": "Defending the marketing budget",
+   "scenario": "The CFO wants to cut marketing by 30 percent. Marketing is 18 percent of revenue; the CEO asks you for a recommendation.",
+   "steps": [
+    {
+     "prompt": "What do you bring to the meeting first?",
+     "choices": [
+      "Results per channel in margin, with incrementality where measured",
+      "The number of followers gained this year",
+      "The awards won by the last brand campaign",
+      "A list of every tool the marketing team uses"
+     ],
+     "feedback": "Speak the language of finance: margin, payback, incremental impact."
+    },
+    {
+     "prompt": "Some spend has no measurable effect. What do you propose?",
+     "choices": [
+      "Cut it yourself and move part of it to proven channels",
+      "Defend every euro equally",
+      "Ask for more budget on those lines",
+      "Hide those lines in a single total"
+     ],
+     "feedback": "Proposing your own cuts earns credibility and protects what works."
+    },
+    {
+     "prompt": "How do you present the brand spend that is hard to measure?",
+     "choices": [
+      "As a test plan: geo holdouts and MMM over the year",
+      "As a matter of faith in creativity",
+      "As free advertising from the media",
+      "You do not present it at all"
+     ],
+     "feedback": "Turn uncertainty into a measurement plan with dates and decisions."
+    }
+   ],
+   "explain": "A marketer who masters the P&L, margin and payback gets budgets; one who talks only about clicks loses them."
+  }
+ ],
+ "deckCards": [
+  "marketing-net-profit",
+  "marketing-p-l-management"
+ ]
+}

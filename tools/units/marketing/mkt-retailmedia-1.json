@@ -1,0 +1,195 @@
+{
+ "unit": {
+  "id": "mkt-retailmedia-1",
+  "subjectId": "marketing",
+  "topic": "commerce",
+  "world": "marketing-w12",
+  "title": "Retail media and social commerce",
+  "description": "Retail media networks, onsite, offsite and in-store ads, closed-loop measurement, sponsored products, TikTok Shop, live shopping, affiliate creators"
+ },
+ "cards": [
+  {
+   "slug": "retail-media-types",
+   "level": "debutant",
+   "term": "Onsite, offsite, in-store",
+   "definition": "Retail media comes in three forms: onsite (sponsored products and banners on the retailer site or app), offsite (ads elsewhere targeted with retailer data) and in-store (screens and displays in shops).",
+   "example": "A brand buys sponsored results on carrefour.fr, a YouTube campaign targeted on Carrefour shoppers, and screens in the stores."
+  },
+  {
+   "slug": "closed-loop",
+   "level": "debutant",
+   "term": "Closed-loop measurement",
+   "definition": "Linking ad exposure to real purchases, because the retailer knows what was bought, online and with loyalty cards. It is the main promise of retail media, as long as the data stays aggregated and consented.",
+   "example": "The report shows sales uplift among shoppers exposed to the campaign versus a control group."
+  },
+  {
+   "slug": "unlimitail",
+   "level": "debutant",
+   "term": "Unlimitail",
+   "definition": "The retail media company created by Carrefour and Publicis in 2023, which sells advertising on the Carrefour ecosystem and on partner retailers in Europe and Latin America.",
+   "example": "A brand plans one campaign across several retailers through Unlimitail."
+  },
+  {
+   "slug": "sponsored-products",
+   "level": "debutant",
+   "term": "Sponsored products",
+   "definition": "Paid placements of a product in the search results of a retailer or marketplace, usually sold per click. In France they make most of e-retail media revenue.",
+   "example": "Your coffee pods appear first when someone types capsules on a retailer site."
+  },
+  {
+   "slug": "tiktok-shop",
+   "level": "debutant",
+   "term": "TikTok Shop",
+   "definition": "The shopping feature of TikTok, launched in France on 31 March 2025: products can be bought without leaving the app, from videos, lives or the shop tab, often promoted by affiliate creators paid on commission.",
+   "example": "A creator films her skincare routine; viewers tap the product tag and buy in the app."
+  },
+  {
+   "slug": "shoppable-content",
+   "level": "debutant",
+   "term": "Shoppable content",
+   "definition": "Videos, posts or lives where products are tagged and can be bought in a few taps without leaving the platform. It shortens the path from discovery to purchase, which is why it favours impulse and visual products.",
+   "example": "A product tag on an Instagram Reel opens the checkout directly in the app."
+  },
+  {
+   "slug": "affiliate-creators",
+   "level": "debutant",
+   "term": "Affiliate creators",
+   "definition": "Creators paid a commission on the sales they generate through their links or product tags, rather than a fixed fee. They are still subject to the French influencer law and its mentions.",
+   "example": "A creator earns 15 percent of each sale made through her TikTok Shop videos."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is retail media?",
+   "choices": [
+    "Advertising sold by retailers using their shopper data",
+    "Ads for retailers on national TV only",
+    "The newsletter a shop sends to its staff",
+    "The price tags printed on the shelves"
+   ],
+   "explain": "Retailers have become media owners: their sites, apps, stores and data reach shoppers close to purchase."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A brand targets YouTube ads at people who bought baby products at a retailer. Which type of retail media?",
+   "choices": [
+    "Offsite",
+    "Onsite",
+    "In-store",
+    "Organic"
+   ],
+   "explain": "Offsite uses retailer data to target ads on other media. Onsite runs on the retailer properties."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the main promise of retail media for brands?",
+   "choices": [
+    "Measuring real sales linked to the ads (closed loop)",
+    "Reaching people who never shop anywhere",
+    "Avoiding any need for creative work",
+    "Free ads in exchange for stock"
+   ],
+   "explain": "Retailers see the purchases. The measurement must stay aggregated and respect consent."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Who created Unlimitail?",
+   "choices": [
+    "Carrefour and Publicis",
+    "Amazon and Google",
+    "Leclerc and TF1",
+    "TikTok and Meta"
+   ],
+   "explain": "A joint venture from 2023 combining Carrefour Links and Publicis technology, with partner retailers."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In French e-retail media, which format brings most of the revenue?",
+   "choices": [
+    "Sponsored products in search results",
+    "Video ads played before films",
+    "Printed catalogues sent by post",
+    "Radio spots played inside stores"
+   ],
+   "explain": "Sponsored search dominates because it reaches people typing what they want to buy."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "When did TikTok Shop launch in France?",
+   "choices": [
+    "31 March 2025",
+    "January 2022",
+    "September 2026",
+    "It is not available in France"
+   ],
+   "explain": "It launched in France, Germany and Italy on the same day, after Spain and Ireland in late 2024."
+  },
+  {
+   "kind": "vf",
+   "prompt": "An affiliate creator paid only by commission does not need the Collaboration commerciale mention.",
+   "isTrue": false,
+   "explain": "False. Any commercial influence, whatever the form of payment, falls under the 2023 law and needs a clear mention."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which product suits live shopping best?",
+   "choices": [
+    "A beauty product that needs to be shown and explained",
+    "A tax return service with long forms",
+    "Industrial pipes sold to engineers",
+    "A funeral insurance contract"
+   ],
+   "explain": "Live shopping works for visual, demonstrable, impulse-friendly products, with a host the audience trusts."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How should you judge a retail media campaign?",
+   "choices": [
+    "Incremental sales versus a control group, and margin",
+    "The number of impressions it bought",
+    "The ROAS shown, with no comparison",
+    "How much the retailer liked it"
+   ],
+   "explain": "Retail media ROAS can credit sales that would have happened anyway. Ask for incrementality and look at margin."
+  },
+  {
+   "kind": "case",
+   "title": "A cosmetics brand on TikTok Shop",
+   "scenario": "Your vegan cosmetics brand opens a TikTok Shop. Budget: 10,000 euros for the first quarter.",
+   "steps": [
+    {
+     "prompt": "How do you start?",
+     "choices": [
+      "Recruit affiliate creators on commission and test products",
+      "Spend everything on one celebrity post",
+      "List all 120 products at once with no content",
+      "Wait for buyers to find the shop by themselves"
+     ],
+     "feedback": "Social commerce runs on content: creators paid on results let you test which products and angles sell."
+    },
+    {
+     "prompt": "One video goes viral and stock runs out in two days. What did you miss?",
+     "choices": [
+      "A stock and logistics plan for spikes",
+      "More hashtags in the caption",
+      "A longer video description",
+      "A higher price on the product"
+     ],
+     "feedback": "Viral sales are spiky. Out of stock wastes the moment and annoys buyers."
+    },
+    {
+     "prompt": "Some creators retouch their skin with filters. What do you require?",
+     "choices": [
+      "The commercial mention plus the retouched image mention",
+      "Nothing, filters are normal on TikTok",
+      "Only a link to your website",
+      "A ban on any comment under the video"
+     ],
+     "feedback": "Both mentions apply, and the brand shares liability with the creators it pays."
+    }
+   ],
+   "explain": "Content and creators drive social commerce; operations and French law decide whether it lasts."
+  }
+ ]
+}
