@@ -1,0 +1,176 @@
+{
+ "unit": {
+  "id": "py-http-1",
+  "subjectId": "python",
+  "topic": "api",
+  "world": "python-w5",
+  "title": "Python and HTTP APIs",
+  "description": "requests, GET and POST with JSON, status codes and raise_for_status, timeouts, headers and tokens, pagination loops, retries and backoff, a FastAPI endpoint"
+ },
+ "cards": [
+  {
+   "slug": "requests-lib",
+   "level": "debutant",
+   "term": "requests",
+   "definition": "The classic Python library for HTTP: requests.get(url), requests.post(url, json=data). The response has status_code, headers and .json() to decode the body.",
+   "example": "r = requests.get(\"https://api.example.com/leads\", timeout=10); leads = r.json()"
+  },
+  {
+   "slug": "raise-for-status",
+   "level": "debutant",
+   "term": "raise_for_status()",
+   "definition": "A response method that raises an HTTPError when the status is 4xx or 5xx. Without it, a 404 or a 500 goes unnoticed and the script carries on with an error body.",
+   "example": "r = requests.get(url, timeout=10); r.raise_for_status()"
+  },
+  {
+   "slug": "timeout",
+   "level": "debutant",
+   "term": "Timeout",
+   "definition": "requests waits forever by default. Always pass timeout=(seconds) so a slow API cannot freeze your script or your server.",
+   "example": "requests.get(url, timeout=10)"
+  },
+  {
+   "slug": "py-api-token",
+   "level": "debutant",
+   "term": "Tokens in headers",
+   "definition": "API credentials go in headers, read from environment variables with os.environ, never hard-coded in the script or committed.",
+   "example": "headers = {\"Authorization\": f\"Bearer {os.environ['API_TOKEN']}\"}"
+  },
+  {
+   "slug": "backoff",
+   "level": "debutant",
+   "term": "Retries with exponential backoff",
+   "definition": "Retrying a failed call after waiting longer each time (1 s, 2 s, 4 s, 8 s), for temporary errors such as 429, 502 or 503, never for 400 or 401.",
+   "example": "for attempt in range(5): try the call, else time.sleep(2 ** attempt)"
+  },
+  {
+   "slug": "fastapi",
+   "level": "debutant",
+   "term": "FastAPI",
+   "definition": "A modern Python framework to build APIs from type hints: it validates the input, converts JSON and generates interactive documentation automatically.",
+   "example": "@app.get(\"/health\") def health(): return {\"status\": \"ok\"}"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which call sends a JSON body to create a lead?",
+   "choices": [
+    "requests.post(url, json={\"email\": \"ana@shop.com\"}, timeout=10)",
+    "requests.get(url, body=\"ana@shop.com\")",
+    "requests.send(url, \"ana@shop.com\")",
+    "requests.post(url, email=\"ana@shop.com\")"
+   ],
+   "explain": "json= serializes the dict and sets the Content-Type header. data= would send a form instead."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "The API answers 500 and the script keeps going with an error page as data. What was missing?",
+   "choices": [
+    "r.raise_for_status() right after the call",
+    "A bigger timeout value",
+    "A print of the URL before the call",
+    "Converting the response to a string"
+   ],
+   "explain": "raise_for_status turns 4xx and 5xx into exceptions, so the script stops or handles the error explicitly."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the risk of requests.get(url) with no timeout?",
+   "choices": [
+    "The script can hang forever if the server never answers",
+    "The request is sent twice",
+    "The response is never decoded as JSON",
+    "Python refuses to run the line"
+   ],
+   "explain": "requests has no default timeout. Production code always sets one."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this code print if the API returns {\"items\": [1, 2, 3], \"next\": null}?",
+   "choices": [
+    "3",
+    "1",
+    "None",
+    "An error"
+   ],
+   "explain": ".json() decodes the body into a dict; data[\"items\"] is a list of 3 items.",
+   "code": {
+    "lang": "python",
+    "src": "r = requests.get(url, timeout=10)\nr.raise_for_status()\ndata = r.json()\nprint(len(data[\"items\"]))"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where should the API token come from?",
+   "choices": [
+    "os.environ, set outside the code",
+    "A constant at the top of the script",
+    "A comment in the script header",
+    "The URL, as ?token=abc123"
+   ],
+   "explain": "Environment variables keep secrets out of Git. URLs end up in logs and browser history."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which errors are worth retrying with backoff?",
+   "choices": [
+    "429, 502 and 503",
+    "400 and 422",
+    "401 and 403",
+    "404 only"
+   ],
+   "explain": "Temporary overload or gateway errors may pass. A bad request or bad credentials will fail again the same way."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many requests does this loop send for 250 contacts and a limit of 100 per page?",
+   "choices": [
+    "3",
+    "2",
+    "250",
+    "1"
+   ],
+   "explain": "Pages of 100, 100 and 50, then next is empty and the loop stops.",
+   "code": {
+    "lang": "python",
+    "src": "url = \"https://api.example.com/contacts?limit=100\"\nwhile url:\n    r = requests.get(url, timeout=10)\n    r.raise_for_status()\n    page = r.json()\n    save(page[\"results\"])\n    url = page[\"next\"]"
+   }
+  },
+  {
+   "kind": "vf",
+   "prompt": "With FastAPI, a parameter typed int in the function signature is validated automatically, and a text value gets a 422 error.",
+   "isTrue": true,
+   "explain": "True. FastAPI uses type hints for validation and documentation. Wrong input never reaches your code."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does GET /items/7 return with this FastAPI app?",
+   "choices": [
+    "{\"id\": 7, \"double\": 14}",
+    "{\"id\": \"7\", \"double\": \"77\"}",
+    "A 404 because 7 is a number",
+    "The text id=7"
+   ],
+   "explain": "item_id is converted to an int from the URL, so the double is 14.",
+   "code": {
+    "lang": "python",
+    "src": "from fastapi import FastAPI\napp = FastAPI()\n\n@app.get(\"/items/{item_id}\")\ndef read(item_id: int):\n    return {\"id\": item_id, \"double\": item_id * 2}"
+   }
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This script crashes when the API is slow, and sometimes hangs. Which line needs fixing?",
+   "lang": "python",
+   "lines": [
+    "import os, requests",
+    "headers = {\"Authorization\": \"Bearer \" + os.environ[\"API_TOKEN\"]}",
+    "r = requests.get(\"https://api.example.com/stats\", headers=headers)",
+    "r.raise_for_status()",
+    "print(r.json()[\"visits\"])"
+   ],
+   "answer": 2,
+   "explain": "No timeout: add timeout=10 (and retries for 503). The rest is sound."
+  }
+ ]
+}

@@ -1,16 +1,19 @@
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useState } from 'react';
-import { Alert, Linking, Platform, StyleSheet, Switch, View } from 'react-native';
+import { Alert, Linking, Platform, Share, StyleSheet, Switch, View } from 'react-native';
 
 import { CATALOG } from '@/content';
 import { useContent } from '@/content/useContent';
 import { useActiveSubjects } from '@/content/useSubjects';
-import { BADGES, DAILY_GOALS, MAX_FREEZES, MONTHLY_TARGET, SHOP, allUnitTraits, applyBuyRefill, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, currentEnergy, deckStats, maxEnergyFor, displayedStreak, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
+import { BADGES, DAILY_GOALS, MAX_FREEZES, MONTHLY_TARGET, SHOP, STUDY_GOAL_CHOICES, allUnitTraits, applySetDailyGoal, boostMinutesLeft, buyBoost, buyFreeze, deckStats, displayedStreak, lastWeekMinutes, setStudyGoal, isActiveToday, levelProgress, reviewQueueSize, streakIsAtRisk, toDayKey } from '@/game';
 import { monthLabel, useLang, useT, type Key } from '@/i18n';
 import { confirm } from '@/lib/confirm';
 import { requestReminderPermission } from '@/lib/notifications';
+import { claudeUrl } from '@/lib/askClaude';
+import { buildReport } from '@/lib/reports';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, Card, EnergyBadge, Icon, ProgressBar, Screen, Text, radius, space, useColors, type IconName } from '@/ui';
+import { useReports } from '@/store/reports';
+import { Button, Card, Icon, ProgressBar, Screen, Text, radius, space, useColors, type IconName } from '@/ui';
 
 const HOURS = [8, 12, 19, 21];
 
@@ -35,6 +38,21 @@ export default function ProfileScreen() {
   const soundOn = useSettings((s) => s.sound);
   const setSound = useSettings((s) => s.setSound);
   const tick = useProgress((s) => s.tick);
+  const reports = useReports((s) => s.items);
+  const clearReports = useReports((s) => s.clear);
+  const reportList = Object.values(reports);
+  const reportText = () => buildReport(reportList, EXERCISE_BY_KEY);
+  const sendReports = () => {
+    // Une URL trop longue est refusée : au-delà, on passe par le partage.
+    const text = reportText();
+    if (text.length > 6000) {
+      void Share.share({ message: text }).catch(() => undefined);
+      return;
+    }
+    const url = claudeUrl(text);
+    if (Platform.OS === 'web') (globalThis as { open?: (u: string, t: string, f: string) => unknown }).open?.(url, '_blank', 'noopener');
+    else void Linking.openURL(url).catch(() => undefined);
+  };
   // Au retour sur l'onglet : nouvelle journée, énergie, boost à jour. Puis
   // toutes les 30 s tant qu'il reste affiché (minutes de boost, énergie).
   const [, setClock] = useState(0);
@@ -56,8 +74,7 @@ export default function ProfileScreen() {
   const today = toDayKey(now);
   const level = levelProgress(progress.xp);
   const traits = allUnitTraits(progress, EXERCISES, CATALOG, today);
-  const maxEnergy = maxEnergyFor(progress.league);
-  const energyValue = currentEnergy(progress.energy, now, maxEnergy);
+  const week = lastWeekMinutes(progress.study, today);
   const boostLeft = boostMinutesLeft(progress.boost, now);
   // Achats : toujours une confirmation, puis on relit l'état le plus récent.
   const buy = (item: string, cost: number, apply: (p: typeof progress) => typeof progress | null) =>
@@ -102,6 +119,20 @@ export default function ProfileScreen() {
         </Card>
       )}
 
+      <Card color={reportList.length > 0 ? colors.danger : undefined}>
+        <Text variant="h2">{t('profile.reports.title')}</Text>
+        <Text variant="small" secondary>
+          {reportList.length > 0 ? t('profile.reports.body', { count: reportList.length }) : t('profile.reports.empty')}
+        </Text>
+        {reportList.length > 0 && (
+          <>
+            <Button label={t('profile.reports.send')} onPress={sendReports} />
+            <Button label={t('profile.reports.share')} tone="secondary" onPress={() => void Share.share({ message: reportText() }).catch(() => undefined)} />
+            <Button label={t('profile.reports.clear')} tone="ghost" onPress={() => confirm(t('profile.reports.clear'), t('profile.reports.body', { count: reportList.length }), clearReports)} />
+          </>
+        )}
+      </Card>
+
       <Card>
         <View style={styles.row}>
           <Text variant="h2">{t('profile.shop')}</Text>
@@ -110,13 +141,6 @@ export default function ProfileScreen() {
             <Text variant="h2">{progress.gems}</Text>
           </View>
         </View>
-        <EnergyBadge energy={progress.energy} now={now} max={maxEnergy} />
-        <Button
-          label={t('profile.shop.refill', { cost: gems(SHOP.refill.cost) })}
-          tone="secondary"
-          disabled={progress.gems < SHOP.refill.cost || energyValue >= maxEnergy}
-          onPress={() => buy(t('profile.shop.item.refill'), SHOP.refill.cost, (p) => applyBuyRefill(p, new Date()))}
-        />
         <Button
           label={t('profile.shop.freeze', { have: progress.streak.freezes, max: MAX_FREEZES, cost: gems(SHOP.freeze.cost) })}
           tone="secondary"
@@ -245,6 +269,26 @@ export default function ProfileScreen() {
           {t('profile.subjects.hint')}
         </Text>
 
+        <Text variant="bodyBold">{t('profile.study.title')}</Text>
+        <View style={styles.choices}>
+          {STUDY_GOAL_CHOICES.map((m) => (
+            <Button key={m} label={t('profile.study.minutes', { n: m })} size="sm" tone={m === progress.study.goalMinutes ? 'primary' : 'secondary'} style={styles.choice} onPress={() => setProgress(setStudyGoal(useProgress.getState().progress, m))} />
+          ))}
+        </View>
+        <View style={styles.week}>
+          {week.map((d) => (
+            <View key={d.day} style={styles.weekDay}>
+              <View style={[styles.weekBar, { height: 4 + Math.min(60, (d.minutes / Math.max(1, progress.study.goalMinutes)) * 60), backgroundColor: d.minutes >= progress.study.goalMinutes ? colors.success : colors.primary }]} />
+              <Text variant="small" secondary>
+                {d.minutes}
+              </Text>
+            </View>
+          ))}
+        </View>
+        <Text variant="small" secondary>
+          {t('profile.study.body')}
+        </Text>
+
         <Text variant="bodyBold">{t('profile.settings.goal')}</Text>
         <View style={styles.choices}>
           {DAILY_GOALS.map((g) => (
@@ -334,6 +378,9 @@ function Tile({ icon, color, value, label }: { icon: IconName; color: string; va
 }
 
 const styles = StyleSheet.create({
+  week: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', height: 84 },
+  weekDay: { alignItems: 'center', gap: 2, flex: 1 },
+  weekBar: { width: 18, borderRadius: 6 },
   grid: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },
   tile: { width: '48%', flexGrow: 1, borderWidth: 2, borderRadius: radius.md, padding: space.md, gap: 2 },
   badges: { flexDirection: 'row', flexWrap: 'wrap', gap: space.sm },

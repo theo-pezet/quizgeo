@@ -1,0 +1,215 @@
+{
+ "unit": {
+  "id": "mkt-price-1",
+  "subjectId": "marketing",
+  "topic": "fondamentaux",
+  "world": "marketing-w1",
+  "title": "Pricing",
+  "description": "Cost-plus, value-based, skimming, penetration, psychological prices, elasticity, decoy, good-better-best, margin and break-even"
+ },
+ "cards": [
+  {
+   "slug": "cost-plus-pricing",
+   "level": "debutant",
+   "term": "Cost-plus pricing",
+   "definition": "Setting the price by adding a margin to the unit cost. Simple and safe for costs, but it ignores what customers are willing to pay and what competitors charge.",
+   "example": "A craftsman who adds 40 percent to the cost of materials and labour."
+  },
+  {
+   "slug": "willingness-to-pay",
+   "level": "debutant",
+   "term": "Willingness to pay",
+   "definition": "The maximum price a customer would pay for an offer. It depends on perceived value and on alternatives, not on your costs; it is measured with surveys, tests and sales data.",
+   "example": "Asking at which price a product becomes too expensive and at which it looks suspiciously cheap (Van Westendorp method)."
+  },
+  {
+   "slug": "good-better-best",
+   "level": "debutant",
+   "term": "Good, better, best tiers",
+   "definition": "Offering several versions at rising prices (Basic, Pro, Business) so each customer picks the level that fits; the middle tier is often the target and the top tier makes it look reasonable.",
+   "example": "A software sold 9, 29 and 99 euros per month, with most customers choosing 29."
+  },
+  {
+   "slug": "price-promotion-risk",
+   "level": "debutant",
+   "term": "The risk of constant promotions",
+   "definition": "Frequent discounts train customers to wait for the next sale, lower the reference price in their minds and erode margins. Promotions should have a clear goal and an end.",
+   "example": "A clothing brand always at minus 30 percent: nobody buys at full price any more."
+  },
+  {
+   "slug": "margin-vs-markup",
+   "level": "debutant",
+   "term": "Margin versus markup",
+   "definition": "Margin is profit divided by the selling price; markup is profit divided by the cost. Buying at 60 and selling at 100 gives a 40 percent margin but a 67 percent markup.",
+   "example": "Confusing the two in a negotiation can make you sell at a loss without noticing."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which pricing method starts from what customers are ready to pay?",
+   "choices": [
+    "Value-based pricing",
+    "Cost-plus pricing",
+    "Copying the competitor price",
+    "Penetration pricing"
+   ],
+   "explain": "Value-based pricing captures the value perceived by the customer. Costs set the floor, not the price."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A new console launches at 549 euros, then drops in price each year. Which strategy?",
+   "choices": [
+    "Price skimming",
+    "Penetration pricing",
+    "Charm pricing",
+    "Cost-plus pricing"
+   ],
+   "explain": "Skimming takes the high-willingness buyers first (fans, early adopters), then lowers the price to reach the mass market."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A new streaming service launches at 1 euro a month to win users fast. Which strategy?",
+   "choices": [
+    "Penetration pricing",
+    "Price skimming",
+    "Prestige pricing",
+    "Value-based pricing"
+   ],
+   "explain": "Penetration pricing buys market share fast. It works when scale lowers costs or when customers stay after the price rises."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why is 19.99 euros often used instead of 20 euros?",
+   "choices": [
+    "Buyers read the first digit and feel it is in the tens",
+    "The law forbids round prices in shops",
+    "It lowers the VAT paid by the shop",
+    "Card terminals process it faster"
+   ],
+   "explain": "Charm pricing plays on left-digit reading. Luxury brands do the opposite: round prices signal quality."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You raise a price by 10 percent and sales fall by 30 percent. What does it say about demand?",
+   "choices": [
+    "It is very elastic: buyers are sensitive to price",
+    "It is inelastic: buyers do not care about price",
+    "Elasticity cannot be computed from these figures",
+    "Revenue went up because the price went up"
+   ],
+   "explain": "Elasticity = minus 30 divided by plus 10 = minus 3. Revenue falls: 1.10 times 0.70 = 0.77 of the original."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Popcorn: small 5 euros, medium 7.50 euros, large 8 euros. What is the medium for?",
+   "choices": [
+    "It is a decoy that makes the large look like a bargain",
+    "It is the most profitable option for the cinema",
+    "The law requires three sizes in a cinema",
+    "It is there for people who cannot choose"
+   ],
+   "explain": "The decoy effect: a poor option placed near the target pushes buyers toward it. Who would take the medium for only 50 cents less?"
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A software sells three plans: 9, 29 and 99 euros. What is the main role of the 99 euro plan?",
+   "choices": [
+    "Serve big accounts and make 29 euros look reasonable",
+    "Be the plan most customers choose in the end",
+    "Lower the average price paid per customer",
+    "Replace the need for a free trial"
+   ],
+   "explain": "Good, better, best: the top tier captures customers with high willingness to pay and anchors the middle tier, usually the target."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You buy a product 60 euros and sell it 100 euros. What is your margin rate?",
+   "choices": [
+    "40 percent",
+    "67 percent",
+    "60 percent",
+    "100 percent"
+   ],
+   "explain": "Margin = 40 divided by the selling price 100. The markup, 40 divided by the cost 60, is 67 percent: do not confuse them."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Fixed costs: 20,000 euros. Each unit sold leaves 40 euros after variable costs. How many units to break even?",
+   "choices": [
+    "500",
+    "200",
+    "800",
+    "50"
+   ],
+   "explain": "Break-even = fixed costs divided by unit contribution: 20,000 divided by 40 = 500 units. Beyond that, each sale is profit."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Running a promotion every month is a reliable way to grow a brand over the long term.",
+   "isTrue": false,
+   "explain": "False. Constant discounts lower the reference price, train customers to wait and squeeze margins. Promotions need a goal and an end date."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which method sets a price without knowing the willingness to pay of customers?",
+   "choices": [
+    "Cost-plus pricing",
+    "Value-based pricing",
+    "A Van Westendorp survey",
+    "A price test on two groups"
+   ],
+   "explain": "Cost-plus looks only inward. It protects the margin on paper but can leave money on the table or price you out of the market."
+  },
+  {
+   "kind": "case",
+   "title": "Pricing a new online course",
+   "scenario": "You launch an online course on digital marketing for freelancers. Production cost: 6,000 euros. Competitors sell between 99 and 499 euros.",
+   "steps": [
+    {
+     "prompt": "How do you start setting the price?",
+     "choices": [
+      "Interview freelancers about value and alternatives",
+      "Divide 6,000 euros by the sales you hope for",
+      "Take the cheapest competitor price minus 10 percent",
+      "Pick 497 euros because it ends with a 7"
+     ],
+     "feedback": "Willingness to pay comes first. Costs tell you the minimum, competitors tell you the frame, customers tell you the value."
+    },
+    {
+     "prompt": "Interviews show freelancers want a result: their first two clients. How do you structure the offer?",
+     "choices": [
+      "Three tiers: course only, course plus group calls, course plus 1 to 1 review",
+      "One single price for everyone, to keep things simple",
+      "A free course and paid ads inside the videos",
+      "The course only, with a permanent 50 percent discount"
+     ],
+     "feedback": "Good, better, best tiers let each buyer pick the level of help they value; the coaching tiers carry most of the margin."
+    },
+    {
+     "prompt": "Launch week: how do you use a promotion without damaging the price?",
+     "choices": [
+      "A launch price for 7 days, clearly dated, then the normal price",
+      "A discount that renews every Monday with a timer",
+      "A fake crossed-out price that never existed",
+      "No price shown at all: contact us for a quote"
+     ],
+     "feedback": "A real, dated launch offer rewards early buyers. A fake reference price is a misleading commercial practice in France."
+    }
+   ],
+   "explain": "Value first, tiers to capture different willingness to pay, honest promotions with a clear end."
+  }
+ ],
+ "deckCards": [
+  "marketing-value-based-pricing",
+  "marketing-psychological-pricing",
+  "marketing-prestige-pricing",
+  "marketing-price-skimming",
+  "marketing-penetration-pricing",
+  "marketing-price-elasticity",
+  "marketing-dynamic-pricing",
+  "marketing-decoy-effect",
+  "marketing-gross-margin",
+  "marketing-break-even-point"
+ ]
+}

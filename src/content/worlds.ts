@@ -35,7 +35,17 @@ const w = (
 
 const BASE_WORLDS: World[] = [
   // ------------------------------------------------------------- Marketing
-  w('marketing', 1, '🌱', '#E8562B', 'First steps', 'Vocabulary and the funnel', ['mkt-bases-1', 'mkt-bases-2']),
+  // Les fondamentaux (1.5, units.extra.json) ouvrent le chemin : mix, STP, marché, prix, distribution, études.
+  w('marketing', 1, '🌱', '#E8562B', 'First steps', 'The mix, targeting, pricing and the funnel', [
+    'mkt-mix-1',
+    'mkt-stp-1',
+    'mkt-market-1',
+    'mkt-price-1',
+    'mkt-dist-1',
+    'mkt-research-1',
+    'mkt-bases-1',
+    'mkt-bases-2',
+  ]),
   w('marketing', 2, '🔍', '#D9480F', 'SEO', 'Getting found on Google', ['mkt-seo-1', 'mkt-seo-2', 'mkt-seo-3', 'mkt-seo-4', 'mkt-seo-5', 'mkt-seo-6']),
   w('marketing', 3, '🤖', '#B5179E', 'GEO', 'Getting cited by AI', ['mkt-geo-1', 'mkt-case-2']),
   w('marketing', 4, '📣', '#B45309', 'Advertising', 'Buying traffic without wasting it', ['mkt-paid-1', 'mkt-paid-2', 'mkt-paid-3', 'mkt-paid-4']),
@@ -43,7 +53,10 @@ const BASE_WORLDS: World[] = [
   w('marketing', 6, '✍️', '#16A34A', 'Conversion and content', 'Pages, emails, social', ['mkt-cro-1', 'mkt-cro-2', 'mkt-content-1', 'mkt-email-1', 'mkt-social-1']),
   w('marketing', 7, '🚀', '#7C3AED', 'Growth and strategy', 'From product to market', ['mkt-growth-1', 'mkt-growth-2', 'mkt-growth-3', 'mkt-strategy-1', 'mkt-strategy-2', 'mkt-strategy-3', 'mkt-case-1']),
   w('marketing', 8, '💌', '#DB2777', 'Customer relationship', 'CRM, automation, e-commerce', []),
-  w('marketing', 9, '🎬', '#9333EA', 'Brand and influence', 'Branding, video, creators', []),
+  w('marketing', 9, '🎬', '#9333EA', 'Brand and influence', 'Brand, psychology, copy, creators', []),
+  // 1.5 : le droit français du marketing, puis le pilotage (média, budget, go-to-market).
+  w('marketing', 10, '⚖️', '#475569', 'Marketing law in France', 'Consent, prospecting, advertising rules', []),
+  w('marketing', 11, '🧭', '#0F766E', 'Leading marketing', 'Media plans, budgets, go-to-market', []),
 
   // -------------------------------------------------------------------- IA
   w('ia', 1, '🧠', '#7C3AED', 'Discovering AI', 'The words, the history, the players', ['ia-start-1', 'ia-1', 'ia-hist-1', 'ia-2', 'ia-9']),
@@ -70,7 +83,7 @@ const BASE_WORLDS: World[] = [
   w('python', 2, '🧱', '#0891B2', 'Structures', 'Lists, dictionaries, text', ['py-4', 'py-concepts-2', 'py-5', 'py-6']),
   w('python', 3, '🛠️', '#A16207', 'Good code', 'Errors, operators, practices', ['py-7', 'py-8', 'py-pratiques-1', 'py-outils-1']),
   w('python', 4, '📈', '#16A34A', 'Data', 'Pandas from A to Z', ['py-9', 'py-10', 'py-11', 'py-data-1']),
-  w('python', 5, '🌐', '#7C3AED', 'Python and the web', 'Requests, files, APIs, automation', ['py-12', 'py-13', 'py-web-1', 'py-case-1']),
+  w('python', 5, '🌐', '#7C3AED', 'Python and the web', 'Requests, files, APIs, automation', ['py-12', 'py-13', 'py-web-1', 'py-http-1', 'py-case-1']),
 
   // ------------------------------------------------------------------ HTML
   // Les unités « premiers pas » (units.extra.json) ouvrent le chemin, avant web-1.
@@ -100,8 +113,8 @@ const BASE_WORLDS: World[] = [
     'web-4',
     'web-js-2',
   ]),
-  w('js', 2, '🛠️', '#0F766E', 'Tools', 'Git, frameworks, SDKs', ['web-5']),
-  w('js', 3, '🚀', '#16A34A', 'In production', 'Performance, architecture, case studies', ['web-6', 'web-7', 'web-case-1']),
+  w('js', 2, '🛠️', '#0F766E', 'Tools', 'Git, Node, TypeScript, HTTP APIs', ['web-5']),
+  w('js', 3, '🚀', '#16A34A', 'In production', 'Performance, deployment, case studies', ['web-6', 'web-7', 'js-deploy-1', 'web-case-1']),
 
   // ------------------------------------------------------- Sécurité web (facultatif)
   w('secu', 1, '🔐', '#475569', 'The basics', 'Threats, HTTPS, cookies, passwords', []),

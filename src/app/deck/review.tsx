@@ -13,7 +13,6 @@ import { confirm } from '@/lib/confirm';
 import { haptics } from '@/lib/haptics';
 import { useProgress } from '@/store/progress';
 import { Button, Card, FadeUp, Icon, ProgressBar, Screen, Text, radius, shade, space, tint, useColors } from '@/ui';
-import { ListenButton } from '@/ui/ListenButton';
 
 function intervalLabel(t: T, days: number): string {
   if (days === 0) return t('deck.interval.today');
@@ -40,6 +39,7 @@ export default function DeckReviewRoute() {
   });
   // « Encore » : la carte revient en fin de séance, jusqu'à être retrouvée (au plus RELEARN_MAX fois).
   const lapses = useRef(new Map<string, number>());
+  const lastMark = useRef(Date.now());
 
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
@@ -79,7 +79,9 @@ export default function DeckReviewRoute() {
   const grade = (g: Grade) => {
     if (!cardId) return;
     const store = useProgress.getState();
-    const r = applyCardReview(store.progress, { cardId, grade: g, now: new Date(), face });
+    const now = new Date();
+    const r = applyCardReview(store.progress, { cardId, grade: g, now, face, studySeconds: (now.getTime() - lastMark.current) / 1000, subjectId: CARD_BY_ID.get(cardId)?.subject });
+    lastMark.current = now.getTime();
     store.setProgress(r.progress);
     void (r.correct ? haptics.tap() : haptics.wrong());
     const nextCounts = { ...counts, [g]: counts[g] + 1 };
@@ -249,11 +251,6 @@ export default function DeckReviewRoute() {
               {face === 'term' ? t('deck.review.tap') : t('deck.face.think')}
             </Text>
           )}
-          {(face === 'term' || flipped) && (
-            <View style={styles.listen}>
-              <ListenButton key={`${cardId}-${flipped ? 'b' : 'f'}`} text={flipped ? `${card.term}. ${card.definition}` : card.term} color={accent} center />
-            </View>
-          )}
         </View>
 
         {flipped && (
@@ -372,7 +369,6 @@ const styles = StyleSheet.create({
   pillText: { fontWeight: '800', fontSize: 12, letterSpacing: 0.3 },
   face: { flexGrow: 1, justifyContent: 'center', gap: space.sm, paddingVertical: space.md },
   term: { textAlign: 'center' },
-  listen: { alignItems: 'center' },
   duel: { flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'center', gap: space.sm },
   back: { gap: space.md },
   rule: { height: 2, borderRadius: 1 },

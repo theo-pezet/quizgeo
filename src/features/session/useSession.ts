@@ -188,6 +188,8 @@ export function useSession(spec: SessionSpec) {
   // Lancement : une leçon finie après minuit compte pour la veille.
   const startedAt = useRef(new Date());
   const credited = useRef(new Set<string>());
+  // Temps d'étude : crédité à chaque réponse, depuis la précédente (plafonné par study.ts).
+  const lastMark = useRef(Date.now());
   const retryQueue = useRef<Exercise[]>([]);
   // Erreurs par exercice dans la séance : réapprentissage jusqu'au critère.
   const fails = useRef(new Map<string, number>());
@@ -256,7 +258,10 @@ export function useSession(spec: SessionSpec) {
         retry: current.retry,
         // « Sûr » ne compte que là où il est proposé (voir sureAllowed).
         confident: confident && canBeSure,
+        studySeconds: (now.getTime() - lastMark.current) / 1000,
+        subjectId: SUBJECT_OF_UNIT.get(current.exercise.unitId),
       });
+      lastMark.current = now.getTime();
       let progress = r.progress;
       answerQuests.current = answerQuests.current.concat(r.questsCompleted);
       if (r.goalReached) answerGoal.current = true;

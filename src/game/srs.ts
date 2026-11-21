@@ -229,25 +229,3 @@ export function composeDeckSession(
 export function gradeIsCorrect(grade: Grade): boolean {
   return grade !== 'again';
 }
-
-/** Nombre de cartes d'une séance d'écoute. */
-export const LISTEN_LIMIT = 20;
-
-/**
- * Les cartes d'une séance d'écoute (mode mains libres, sans note) : les
- * cartes déjà commencées, dues d'abord (la plus en retard en tête), puis les
- * autres par échéance. Sans carte commencée, les premières cartes de la liste.
- */
-export function pickListenCards(cards: Record<string, CardState>, ids: readonly string[], today: DayKey, limit: number = LISTEN_LIMIT): string[] {
-  const started = ids.filter((id) => cards[id] !== undefined && cards[id].phase !== 'new');
-  if (started.length === 0) return ids.slice(0, limit);
-  const key = (id: string) => cards[id].due ?? '';
-  return [...started]
-    .sort((a, b) => {
-      const da = isDue(cards[a], today);
-      const db = isDue(cards[b], today);
-      if (da !== db) return da ? -1 : 1;
-      return key(a) < key(b) ? -1 : key(a) > key(b) ? 1 : 0;
-    })
-    .slice(0, limit);
-}

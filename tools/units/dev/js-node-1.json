@@ -1,0 +1,186 @@
+{
+ "unit": {
+  "id": "js-node-1",
+  "subjectId": "js",
+  "topic": "node",
+  "world": "js-w2",
+  "title": "Node.js: scripts and servers",
+  "description": "The Node runtime, ES modules and CommonJS, fs/promises, process.env and --env-file, the event loop, a minimal HTTP server, Express, built-in fetch"
+ },
+ "cards": [
+  {
+   "slug": "esm-cjs",
+   "level": "debutant",
+   "term": "ES modules and CommonJS",
+   "definition": "Two module systems. ES modules use import and export (the modern standard, \"type\": \"module\" in package.json). CommonJS uses require and module.exports (older Node code).",
+   "example": "import { readFile } from \"node:fs/promises\"; versus const fs = require(\"fs\");"
+  },
+  {
+   "slug": "fs-promises",
+   "level": "debutant",
+   "term": "fs/promises",
+   "definition": "The Node module to read and write files with promises, so you can await them without blocking the server.",
+   "example": "const text = await readFile(\"leads.csv\", \"utf8\");"
+  },
+  {
+   "slug": "env-file",
+   "level": "debutant",
+   "term": "process.env and --env-file",
+   "definition": "Configuration and secrets are read from environment variables in process.env, always as strings. Recent Node versions can load a .env file with node --env-file=.env, and .env is never committed.",
+   "example": "const key = process.env.STRIPE_KEY; if (!key) throw new Error(\"STRIPE_KEY missing\");"
+  },
+  {
+   "slug": "event-loop",
+   "level": "debutant",
+   "term": "Event loop and non-blocking I/O",
+   "definition": "Node runs your JavaScript on one thread. Slow operations (network, files) are handed off and their callbacks run later, so one server can handle thousands of connections. A long CPU loop, however, blocks everyone.",
+   "example": "A synchronous loop of 5 seconds in a request handler freezes every other request for 5 seconds."
+  },
+  {
+   "slug": "express",
+   "level": "debutant",
+   "term": "Express",
+   "definition": "The most common minimal web framework for Node: routes (app.get, app.post), middleware for parsing JSON, auth or logs, and responses with res.json. Fastify and Hono are faster modern alternatives.",
+   "example": "app.get(\"/api/leads\", (req, res) => res.json(leads));"
+  },
+  {
+   "slug": "node-fetch",
+   "level": "debutant",
+   "term": "Built-in fetch",
+   "definition": "Since Node 18, fetch exists in Node as in the browser, so calling an API from a script needs no extra package.",
+   "example": "const res = await fetch(\"https://api.example.com/stats\"); const data = await res.json();"
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Why does document.querySelector fail in a Node script?",
+   "choices": [
+    "Node has no DOM: there is no page to query",
+    "querySelector needs to be imported from npm first",
+    "Node only runs TypeScript files",
+    "The function was renamed in Node 22"
+   ],
+   "explain": "The DOM belongs to browsers. Node gives you files, network and processes instead."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which line uses ES modules?",
+   "choices": [
+    "import { readFile } from \"node:fs/promises\";",
+    "const fs = require(\"fs\");",
+    "module.exports = { readFile };",
+    "exports.readFile = readFile;"
+   ],
+   "explain": "import and export are the standard. require and module.exports are CommonJS, still found in older code."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "This script runs with no MAX_LEADS variable set. What does it print?",
+   "choices": [
+    "string 50",
+    "number 50",
+    "undefined 50",
+    "string undefined"
+   ],
+   "explain": "Environment variables are strings or undefined. ?? gives the fallback; convert with Number() if you need a number.",
+   "code": {
+    "lang": "javascript",
+    "src": "const limit = process.env.MAX_LEADS ?? \"50\";\nconsole.log(typeof limit, limit);"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "In which order are the lines printed?",
+   "choices": [
+    "start, end, file read",
+    "start, file read, end",
+    "file read, start, end",
+    "end, start, file read"
+   ],
+   "explain": "readFile is asynchronous: Node starts it, keeps running the code, and runs the callback when the file is ready.",
+   "code": {
+    "lang": "javascript",
+    "src": "const fs = require(\"fs\");\nconsole.log(\"start\");\nfs.readFile(__filename, () => console.log(\"file read\"));\nconsole.log(\"end\");"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A request handler runs a CPU-heavy loop for 3 seconds. What happens to other users?",
+   "choices": [
+    "They all wait: the single JavaScript thread is busy",
+    "Nothing: each request has its own thread",
+    "Node restarts the server automatically",
+    "The loop is moved to the browser"
+   ],
+   "explain": "Non-blocking I/O does not help with CPU work. Move heavy work to a worker thread, a queue or another service."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Where should the API key of your payment provider live?",
+   "choices": [
+    "In an environment variable, never committed",
+    "In a constant at the top of server.js",
+    "In the README so the team can find it",
+    "In the front-end code, minified"
+   ],
+   "explain": "Secrets go in the environment (or a secrets manager). A .env file is fine locally if it is listed in .gitignore."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this Express route return to a GET /api/health request?",
+   "choices": [
+    "A JSON body {\"status\":\"ok\"} with status 200",
+    "An HTML page with the word ok",
+    "Nothing until the server restarts",
+    "A 404, because routes need a database"
+   ],
+   "explain": "res.json serializes the object, sets Content-Type: application/json and sends status 200 by default.",
+   "code": {
+    "lang": "javascript",
+    "src": "app.get(\"/api/health\", (req, res) => {\n  res.json({ status: \"ok\" });\n});"
+   }
+  },
+  {
+   "kind": "vf",
+   "prompt": "Since Node 18, fetch can be used in Node without installing any package.",
+   "isTrue": true,
+   "explain": "True. The same fetch API as in the browser, handy for scripts that call APIs."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does express.json() do in app.use(express.json())?",
+   "choices": [
+    "Parses JSON request bodies into req.body",
+    "Converts every response to JSON text",
+    "Validates the JSON against a schema",
+    "Compresses the responses with gzip"
+   ],
+   "explain": "It is a middleware: it runs before your routes and fills req.body for requests sent as JSON."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you load a local .env file with recent Node, without a package?",
+   "choices": [
+    "node --env-file=.env server.js",
+    "node --load .env server.js",
+    "npm install env && node server.js",
+    "import \".env\" at the top of the file"
+   ],
+   "explain": "Node 20.6 added --env-file. The dotenv package remains common in older projects."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This script must print the number of leads in leads.json. Which line is wrong?",
+   "lang": "javascript",
+   "lines": [
+    "import { readFile } from \"node:fs/promises\";",
+    "const text = readFile(\"leads.json\", \"utf8\");",
+    "const leads = JSON.parse(text);",
+    "console.log(leads.length);"
+   ],
+   "answer": 1,
+   "explain": "readFile from fs/promises returns a promise: without await, text is a Promise and JSON.parse fails. Write const text = await readFile(...)."
+  }
+ ]
+}

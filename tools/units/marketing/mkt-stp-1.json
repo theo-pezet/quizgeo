@@ -1,0 +1,186 @@
+{
+ "unit": {
+  "id": "mkt-stp-1",
+  "subjectId": "marketing",
+  "topic": "fondamentaux",
+  "world": "marketing-w1",
+  "title": "Segmentation, targeting, positioning",
+  "description": "STP, segmentation criteria, targeting strategies, positioning statement, perceptual map, jobs to be done"
+ },
+ "cards": [
+  {
+   "slug": "stp",
+   "level": "debutant",
+   "term": "STP (segment, target, position)",
+   "definition": "The core method of strategic marketing: split the market into groups with similar needs (Segmentation), choose the groups you will serve (Targeting), then decide the place you want in their mind (Positioning).",
+   "example": "A running brand splits runners into beginners, marathoners and trail runners, targets trail runners, and positions itself as the grip specialist."
+  },
+  {
+   "slug": "segmentation-criteria",
+   "level": "debutant",
+   "term": "Segmentation criteria",
+   "definition": "The four families: geographic (country, city, climate), demographic (age, income, job, company size in B2B), psychographic (values, lifestyle) and behavioural (usage, loyalty, benefit sought, purchase moment).",
+   "example": "Behavioural: heavy users who order every week versus occasional buyers who order twice a year."
+  },
+  {
+   "slug": "good-segment",
+   "level": "debutant",
+   "term": "What makes a good segment",
+   "definition": "A useful segment is measurable, large enough to be profitable, reachable through your channels, and it reacts differently from other segments to your offer.",
+   "example": "Left-handed golfers are measurable, reachable through clubs and forums, and need different equipment: a good segment."
+  },
+  {
+   "slug": "targeting-strategies",
+   "level": "debutant",
+   "term": "Targeting strategies",
+   "definition": "Undifferentiated (one offer for everyone), differentiated (a specific offer per segment), concentrated (one niche, served very well) and micro-marketing (offers tailored to small groups or individuals).",
+   "example": "A small brand of gluten-free pasta chooses a concentrated strategy instead of fighting Barilla on every shelf."
+  },
+  {
+   "slug": "positioning-statement",
+   "level": "debutant",
+   "term": "Positioning statement",
+   "definition": "An internal sentence that fixes the strategy: For (target) who (need), our (brand) is the (category) that (main benefit), unlike (alternative), because (proof).",
+   "example": "For busy parents who hate meal planning, Quitoque is the meal kit that removes the daily what do we eat question, unlike supermarkets, because recipes and exact quantities arrive at your door."
+  },
+  {
+   "slug": "perceptual-map",
+   "level": "debutant",
+   "term": "Perceptual map",
+   "definition": "A chart placing brands on two axes that matter to buyers (for example price and modernity) as customers perceive them. Empty zones can reveal an opportunity, or a place nobody wants.",
+   "example": "Placing car brands on cheap to premium and practical to sporty, to see where a new model could stand out."
+  },
+  {
+   "slug": "jobs-to-be-done",
+   "level": "debutant",
+   "term": "Jobs to be done",
+   "definition": "Clayton Christensen idea: customers hire a product to get a job done in a given situation. Understanding the job explains choices better than demographics do.",
+   "example": "People buy a morning milkshake to make a boring commute more bearable and to stay full until lunch: its real competitors are bananas and bagels."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "In what order does the STP method go?",
+   "choices": [
+    "Segment, then target, then position",
+    "Position, then segment, then target",
+    "Target, then position, then segment",
+    "Segment, then position, then target"
+   ],
+   "explain": "You cannot choose a target before splitting the market, and you cannot position yourself without knowing whose mind you want to win."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Splitting customers into heavy users and occasional buyers uses which type of criterion?",
+   "choices": [
+    "Behavioural",
+    "Demographic",
+    "Geographic",
+    "Psychographic"
+   ],
+   "explain": "Behavioural criteria describe what people do with the product: usage rate, loyalty, benefit sought, moment of purchase. They often predict buying better than age."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Targeting people who value ecology and slow living uses which type of criterion?",
+   "choices": [
+    "Psychographic",
+    "Behavioural",
+    "Demographic",
+    "Geographic"
+   ],
+   "explain": "Values, attitudes and lifestyles are psychographic. Two 35-year-old Parisians with the same income can be very different on these."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which of these is NOT a condition of a good segment?",
+   "choices": [
+    "Every member must be the same age",
+    "It can be measured",
+    "It is large enough to be profitable",
+    "You can reach it with your channels"
+   ],
+   "explain": "A segment groups people who react the same way to the offer. They do not need identical demographics."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A small brand serves only climbers, with a narrow but expert range. Which targeting strategy is it?",
+   "choices": [
+    "Concentrated",
+    "Undifferentiated",
+    "Differentiated",
+    "Mass marketing"
+   ],
+   "explain": "Concentrated marketing (niche) lets a small player be the best for one group instead of average for everyone. The risk: depending on a single segment."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A carmaker sells a city car, a family SUV and a sports coupe, each with its own ads. Which strategy?",
+   "choices": [
+    "Differentiated",
+    "Concentrated",
+    "Undifferentiated",
+    "Micro-marketing"
+   ],
+   "explain": "Several segments, a specific offer and message for each: differentiated targeting. It reaches more people but costs more."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Positioning is what you put in your ads; it exists as soon as the brand says it.",
+   "isTrue": false,
+   "explain": "False. Positioning is the place the brand occupies in the mind of the target. You can aim for it, but customers decide whether you got it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which element is missing from this statement? For busy parents, Quitoque is the meal kit that removes daily menu planning.",
+   "choices": [
+    "The alternative and the proof that make it credible",
+    "The founding date of the company",
+    "The list of all the recipes on offer",
+    "The colours of the brand logo"
+   ],
+   "explain": "A full positioning statement says unlike what, and why we can be believed. Without them, any competitor could write the same sentence."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "On a perceptual map, you find an empty zone: very cheap and very luxurious. What should you conclude?",
+   "choices": [
+    "It may be empty because no real demand exists there",
+    "It is always a goldmine to occupy at once",
+    "The map was drawn the wrong way round",
+    "Competitors are hiding products in that zone"
+   ],
+   "explain": "A gap is a question, not an answer. Check that buyers actually want that combination before launching into it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Jobs to be done says people buy a morning milkshake to survive a boring commute. What does it change for the marketer?",
+   "choices": [
+    "The real competitors become bananas, bagels and coffee",
+    "The target must be redefined by age and income",
+    "The price must be cut to match other drinks",
+    "Nothing: it only applies to software products"
+   ],
+   "explain": "The job reveals the real competition and the real benefits to improve: thicker, longer to drink, easy with one hand."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put the STP steps in order for a new vegan cheese brand.",
+   "steps": [
+    "Split the market: flexitarians, vegans, lactose intolerant people",
+    "Assess each group: size, growth, reachability, fit with the brand",
+    "Choose flexitarians who want taste first as the main target",
+    "Define the place to win: the vegan cheese you serve to guests",
+    "Build the mix and the messages that prove this positioning"
+   ],
+   "explain": "Segment, evaluate, target, position, then execute. Most failed launches skip the evaluation and target everyone."
+  }
+ ],
+ "deckCards": [
+  "marketing-segment",
+  "marketing-psychographic-segmentation",
+  "marketing-niche-market",
+  "marketing-brand-positioning"
+ ]
+}

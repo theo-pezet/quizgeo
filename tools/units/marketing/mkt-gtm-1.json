@@ -1,0 +1,191 @@
+{
+ "unit": {
+  "id": "mkt-gtm-1",
+  "subjectId": "marketing",
+  "topic": "gtm",
+  "world": "marketing-w11",
+  "title": "Go-to-market, B2B and objectives",
+  "description": "GTM strategy, ICP, PLG versus SLG, ABM, demand generation and capture, dark funnel, north star metric, OKR, crossing the chasm"
+ },
+ "cards": [
+  {
+   "slug": "icp",
+   "level": "debutant",
+   "term": "ICP (ideal customer profile)",
+   "definition": "The description of the companies that get the most value from your product and are the most profitable to serve: sector, size, region, tech stack, triggers. A persona describes people; the ICP describes accounts.",
+   "example": "ICP: French logistics companies of 50 to 500 employees using Excel for planning and growing fast."
+  },
+  {
+   "slug": "buying-committee",
+   "level": "debutant",
+   "term": "Buying committee",
+   "definition": "In B2B, several people decide together: user, manager, finance, IT, purchasing, sometimes legal. Content and sales must convince each of them with their own arguments.",
+   "example": "IT checks security, finance checks ROI, the users check ease of use."
+  },
+  {
+   "slug": "launch-tiers",
+   "level": "debutant",
+   "term": "Launch tiers",
+   "definition": "Classifying launches by impact: tier 1 for big moves (new product, full campaign), tier 2 for notable features (blog, email, sales training), tier 3 for small updates (changelog).",
+   "example": "A new pricing model is tier 1; a new export format is tier 3."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What is the difference between an ICP and a persona?",
+   "choices": [
+    "The ICP describes target companies, the persona describes people",
+    "They are two names for the very same thing",
+    "The persona is used only in B2B marketing",
+    "The ICP lists your current customers only"
+   ],
+   "explain": "In B2B you first choose accounts (ICP), then the people inside them (personas of the buying committee)."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Users sign up for free, invite colleagues and upgrade as they use the tool. Which motion is it?",
+   "choices": [
+    "Product-led growth",
+    "Sales-led growth",
+    "Account-based marketing",
+    "Outbound prospecting"
+   ],
+   "explain": "PLG lets the product drive acquisition and expansion. It suits tools with a fast time to value."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A software sold 200,000 euros a year to banks relies on account executives and long cycles. Which motion?",
+   "choices": [
+    "Sales-led growth",
+    "Product-led growth",
+    "Viral growth",
+    "Self-serve only"
+   ],
+   "explain": "High price, complex buying committee and integration needs call for a sales-led motion, often with ABM."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You pick 30 target companies and build campaigns and content for each. What is it?",
+   "choices": [
+    "Account-based marketing",
+    "Mass marketing",
+    "Programmatic buying",
+    "Affiliate marketing"
+   ],
+   "explain": "ABM treats each account as a market of one (or a few). Marketing and sales work the same list together."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A podcast and LinkedIn posts that teach your market without asking for anything: what is it?",
+   "choices": [
+    "Demand generation",
+    "Demand capture",
+    "Lead scoring",
+    "Retargeting"
+   ],
+   "explain": "Demand generation creates future buyers. Search ads on solution keywords capture demand that already exists."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A prospect hears about you in a private Slack group, then types your name in Google: attribution will credit organic search.",
+   "isTrue": true,
+   "explain": "True. That is the dark funnel. Ask how did you hear about us on forms to see what tools cannot track."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which is a good north star metric for a meal kit service?",
+   "choices": [
+    "Number of meals delivered and cooked per week",
+    "Number of followers on Instagram",
+    "Number of visits to the homepage",
+    "Number of people in the marketing team"
+   ],
+   "explain": "A north star reflects the value customers get and predicts revenue. Vanity metrics do neither."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which key result is well written?",
+   "choices": [
+    "Trial to paid conversion from 8 to 12 percent by June",
+    "Do a lot more marketing during this quarter",
+    "Launch many campaigns on every channel",
+    "Become the best brand in our whole market"
+   ],
+   "explain": "A key result is measurable, with a baseline, a target and a date. The objective can be inspiring; the KR must be checkable."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your tool is loved by early adopters but mainstream companies do not buy. What is this gap called?",
+   "choices": [
+    "The chasm",
+    "The dark funnel",
+    "The long tail",
+    "The flywheel"
+   ],
+   "explain": "Geoffrey Moore: the early majority wants proof, references and a complete solution for one niche first."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A buying committee includes IT, finance and the end users. What should content do?",
+   "choices": [
+    "Answer the specific concerns of each role",
+    "Speak only to the person who filled the form",
+    "Focus only on the lowest price",
+    "Avoid any technical detail"
+   ],
+   "explain": "IT wants security, finance wants ROI, users want simplicity. Missing one can kill the deal."
+  },
+  {
+   "kind": "case",
+   "title": "Launching a B2B tool in France",
+   "scenario": "You launch a scheduling tool for home care agencies. 4,000 agencies in France, from 5 to 300 employees. Budget: 150,000 euros for year one.",
+   "steps": [
+    {
+     "prompt": "What do you define first?",
+     "choices": [
+      "The ICP: which agencies gain most and pay best",
+      "The colour palette and the logo of the tool",
+      "The number of LinkedIn posts per week",
+      "The price of the enterprise plan only"
+     ],
+     "feedback": "Every other choice (channels, messages, price, sales motion) depends on which accounts you serve first."
+    },
+    {
+     "prompt": "Small agencies decide fast online; large networks need demos and IT checks. Which motion?",
+     "choices": [
+      "Self-serve trial for small ones, sales-assisted for large ones",
+      "Only cold calls to every agency in France",
+      "Only a free plan, with no sales team",
+      "Only trade fairs, twice a year"
+     ],
+     "feedback": "A hybrid motion matches the buying process of each segment."
+    },
+    {
+     "prompt": "How do you set the yearly objective?",
+     "choices": [
+      "One OKR: 120 paying agencies, with activation and churn as KRs",
+      "As many leads as possible, whatever the source",
+      "One million impressions on social media",
+      "A new feature shipped every week"
+     ],
+     "feedback": "Tie the objective to customers and value, with measurable KRs, instead of activity or vanity metrics."
+    }
+   ],
+   "explain": "ICP first, motion matched to how each segment buys, objectives tied to customer value."
+  }
+ ],
+ "deckCards": [
+  "marketing-gtm-strategy",
+  "marketing-plg",
+  "marketing-slg",
+  "marketing-abm",
+  "marketing-abm-tiers",
+  "marketing-demand-generation",
+  "marketing-demand-capture",
+  "marketing-dark-funnel",
+  "marketing-north-star-metric",
+  "marketing-okr",
+  "marketing-crossing-the-chasm"
+ ]
+}

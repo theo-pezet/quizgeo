@@ -13,7 +13,7 @@ import {
   applyTick,
 } from '../apply';
 import { GEMS, SHOP } from '../economy';
-import { LESSON_ENERGY_COST, MAX_ENERGY } from '../energy';
+import { MAX_ENERGY } from '../energy';
 import type { Progress, Quest, QuestKind, SessionMode } from '../types';
 import { CATALOG, makeUnit, progressWith } from './fixtures';
 
@@ -59,29 +59,22 @@ describe('applyTick', () => {
 });
 
 describe('applyStartLesson', () => {
-  it('prélève 5 points pour une leçon, rien pour une révision', () => {
+  // 1.5 : l'objectif est du temps d'étude ; l'énergie ne limite plus les leçons.
+  it('ne prélève plus d’énergie et ne refuse jamais une leçon', () => {
     const lesson = applyStartLesson(progressWith(), 'unit', AT_19H);
-    expect(lesson?.energy.value).toBe(MAX_ENERGY - LESSON_ENERGY_COST);
-    const review = applyStartLesson(progressWith(), 'review', AT_19H);
-    expect(review?.energy.value).toBe(MAX_ENERGY);
-  });
-
-  it('refuse quand l’énergie manque', () => {
+    expect(lesson?.energy.value).toBe(MAX_ENERGY);
     const p = progressWith();
     p.energy = { value: 4, updatedAt: AT_19H.toISOString() };
-    expect(applyStartLesson(p, 'free', AT_19H)).toBeNull();
+    expect(applyStartLesson(p, 'free', AT_19H)).not.toBeNull();
   });
 });
 
 describe('applyAnswerAction — énergie, ligue, boost, quêtes', () => {
-  it('fait payer une erreur en leçon, pas en révision', () => {
+  it('ne fait plus payer les erreurs en énergie', () => {
     const p = applyStartLesson(progressWith(), 'unit', AT_19H) as Progress;
     const wrong = answer(p, false);
-    expect(wrong.energySpent).toBe(1);
-    expect(wrong.progress.energy.value).toBe(MAX_ENERGY - LESSON_ENERGY_COST - 1);
-    const right = answer(p, true);
-    expect(right.energySpent).toBe(0);
-    expect(answer(progressWith(), false, 'review').energySpent).toBe(0);
+    expect(wrong.energySpent).toBe(0);
+    expect(wrong.progress.energy.value).toBe(MAX_ENERGY);
   });
 
   it('verse les XP à la ligue de la semaine', () => {
@@ -115,13 +108,12 @@ describe('applyAnswerAction — énergie, ligue, boost, quêtes', () => {
 });
 
 describe('applySessionEnd — gemmes, énergie, quêtes, ligue', () => {
-  it('paie une leçon comptée, davantage si sans faute, et rembourse 2 points', () => {
+  it('paie une leçon comptée, davantage si sans faute', () => {
     const p = withQuests(applyStartLesson(progressWith(), 'unit', AT_19H) as Progress, []);
     const perfect = end(p);
     expect(perfect.gemsGained).toBe(GEMS.lesson + GEMS.perfect);
     expect(perfect.progress.gems).toBe(GEMS.lesson + GEMS.perfect);
-    expect(perfect.energyRefunded).toBe(2);
-    expect(perfect.progress.energy.value).toBe(MAX_ENERGY - LESSON_ENERGY_COST + 2);
+    expect(perfect.energyRefunded).toBe(0);
 
     const ordinary = end(p, { correctCount: 7 });
     expect(ordinary.gemsGained).toBe(GEMS.lesson);

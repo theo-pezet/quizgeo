@@ -1,0 +1,180 @@
+{
+ "unit": {
+  "id": "mkt-crm-2",
+  "subjectId": "marketing",
+  "topic": "crm",
+  "world": "marketing-w8",
+  "title": "Leads and the sales pipeline",
+  "description": "CRM, lead scoring, MQL, SAL, SQL, BANT, lead routing, pipeline, win rate, sales cycle, marketing and sales alignment"
+ },
+ "cards": [
+  {
+   "slug": "fit-intent-scoring",
+   "level": "debutant",
+   "term": "Fit and intent scoring",
+   "definition": "Giving each lead points for who they are (fit: job, company size, sector) and what they do (engagement: visits, downloads, demo request). Above a threshold, the lead goes to sales.",
+   "example": "Plus 20 for a marketing director, plus 30 for a pricing page visit, minus 50 for a student email."
+  },
+  {
+   "slug": "sla-marketing-sales",
+   "level": "debutant",
+   "term": "Marketing and sales SLA",
+   "definition": "An agreement between marketing and sales: marketing commits to a number of qualified leads, sales commits to follow each one up within a set time. It ends the blame game.",
+   "example": "Marketing delivers 200 MQLs a month; sales calls every MQL within 24 hours."
+  },
+  {
+   "slug": "opportunity",
+   "level": "debutant",
+   "term": "Opportunity (deal)",
+   "definition": "A qualified prospect with an identified need, budget and timing, tracked in the CRM with an amount, a stage and an expected close date.",
+   "example": "Deal: 24,000 euros per year, stage proposal sent, closing expected in March."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "order",
+   "prompt": "Put the classic B2B lead stages in order.",
+   "steps": [
+    "Visitor",
+    "Lead (contact details known)",
+    "MQL",
+    "SQL",
+    "Opportunity",
+    "Customer"
+   ],
+   "explain": "Each stage is a filter: marketing qualifies with behaviour and fit, sales qualifies with a conversation, then a deal is opened."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A lead downloaded three guides and attended a webinar, but sales has not talked to them yet. What is it?",
+   "choices": [
+    "An MQL",
+    "An SQL",
+    "A customer",
+    "An opportunity"
+   ],
+   "explain": "Marketing Qualified: the signals come from marketing engagement. It becomes an SQL once sales confirms a real buying project."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does BANT check?",
+   "choices": [
+    "Budget, Authority, Need, Timeline",
+    "Brand, Audience, Network, Traffic",
+    "Budget, Ads, Newsletter, Targeting",
+    "Benefit, Action, Need, Trust"
+   ],
+   "explain": "BANT is a classic qualification grid: can they pay, can they decide, do they need it, and when."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which signal should add the most points in lead scoring for a B2B software?",
+   "choices": [
+    "A request for a demo from a target company",
+    "A like on a post on LinkedIn",
+    "Opening one newsletter",
+    "Reading a single blog article"
+   ],
+   "explain": "A demo request shows buying intent; light engagement shows interest at most. Scoring weighs intent and fit."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Marketing says sales ignores its leads; sales says the leads are bad. What fixes it first?",
+   "choices": [
+    "A shared lead definition and a marketing and sales SLA",
+    "More leads, whatever their quality",
+    "Removing the CRM to talk face to face",
+    "Paying sales only on the number of calls"
+   ],
+   "explain": "Agree on what a qualified lead is and on follow-up times, then measure both sides against it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "You had 50 deals this quarter: 10 won, 30 lost, 10 still open. What is the win rate on closed deals?",
+   "choices": [
+    "25 percent",
+    "20 percent",
+    "10 percent",
+    "50 percent"
+   ],
+   "explain": "Win rate on closed deals = 10 won divided by 40 closed. Including open deals would understate it."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A lead from a company of 5,000 people arrives. What should lead routing do?",
+   "choices": [
+    "Send it at once to the enterprise sales team",
+    "Wait one week before anyone looks at it",
+    "Put it in the same queue as every student",
+    "Delete it if no phone number is filled in"
+   ],
+   "explain": "Routing assigns leads by rules (size, region, product) and speed matters: contact rates drop fast after the first hours."
+  },
+  {
+   "kind": "vf",
+   "prompt": "The sales cycle is the time from the first contact with a prospect to the signed deal.",
+   "isTrue": true,
+   "explain": "True. Long B2B cycles (6 to 12 months) mean marketing must nurture leads for a long time and judge results with patience."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why should marketing look at revenue from the pipeline, not only at the number of leads?",
+   "choices": [
+    "Cheap leads that never buy cost more than they bring",
+    "Leads are always worth the same amount",
+    "Sales prefers to receive fewer leads",
+    "Revenue cannot be measured in a CRM"
+   ],
+   "explain": "A campaign with 500 leads and no deals loses to one with 50 leads and 5 deals. Track pipeline and revenue by source."
+  },
+  {
+   "kind": "case",
+   "title": "Fixing a leaking pipeline",
+   "scenario": "A SaaS for restaurants generates 800 leads a month. Only 2 percent become customers. Sales calls leads after 4 days on average.",
+   "steps": [
+    {
+     "prompt": "What do you check first?",
+     "choices": [
+      "Lead quality by source and the speed of follow-up",
+      "The colour of the call to action buttons",
+      "The number of posts on Instagram per week",
+      "The price of the cheapest plan"
+     ],
+     "feedback": "Two suspects: bad leads (fit) and late calls. Both are in the CRM data, by source and by delay."
+    },
+    {
+     "prompt": "Leads called within 1 hour convert 4 times better. What do you set up?",
+     "choices": [
+      "Instant routing plus a 1 hour follow-up rule for hot leads",
+      "A weekly meeting to share the lead list",
+      "A rule to call every lead on Fridays",
+      "Extra forms fields to slow down sign-ups"
+     ],
+     "feedback": "Speed to lead: route hot leads instantly and agree on a short SLA. Warm leads can go to nurturing emails."
+    },
+    {
+     "prompt": "Leads from a cheap giveaway campaign never buy. What do you do?",
+     "choices": [
+      "Cut it or score those leads low, and fund the sources that sell",
+      "Keep it: it brings the most leads of all",
+      "Send all those leads straight to sales",
+      "Ask sales to call each of them twice"
+     ],
+     "feedback": "Judge sources on deals and revenue, not volume. Volume without fit wastes sales time."
+    }
+   ],
+   "explain": "Measure by source, respond fast, and score leads on fit plus intent."
+  }
+ ],
+ "deckCards": [
+  "marketing-crm",
+  "marketing-mql",
+  "marketing-sql",
+  "marketing-sal",
+  "marketing-bant",
+  "marketing-lead-routing",
+  "marketing-pipeline",
+  "marketing-win-rate",
+  "marketing-sales-cycle"
+ ]
+}

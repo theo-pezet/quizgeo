@@ -14,3 +14,4 @@ export { Text } from './Text';
 export { font, fonts, ink, palette, radius, shade, space, tint, useColors, useIsDark } from './tokens';
 export { Tutorial } from './Tutorial';
 export { MonthlyCard } from './MonthlyCard';
+export { StudyPlanCard, StudyReportCard } from './StudyPlanCard';

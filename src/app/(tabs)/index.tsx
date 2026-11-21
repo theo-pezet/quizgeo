@@ -9,13 +9,10 @@ import {
   displayedStreak,
   PATH_TRAITS,
   allUnitTraits,
+  acknowledgeStudyReport,
   applyUnlockAnimationPlayed,
-  canStartLesson,
-  maxEnergyFor,
   currentUnit,
-  dailyRatio,
   isActiveToday,
-  isGoalMet,
   isUnitUnlocked,
   levelProgress,
   reviewQueueSize,
@@ -24,7 +21,7 @@ import {
 } from '@/game';
 import { useLang, useT } from '@/i18n';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, Card, Crowns, EnergyBadge, Icon, MonthlyCard, NoEnergySheet, Pop, Pulse, QuestsCard, Ring, Screen, Stat, Text, Tutorial, ink, palette, radius, shade, space, tint, useColors, useIsDark, type IconName } from '@/ui';
+import { Button, Card, Crowns, Icon, MonthlyCard, NoEnergySheet, Pop, Pulse, QuestsCard, Screen, Stat, StudyPlanCard, StudyReportCard, Text, Tutorial, ink, palette, radius, shade, space, tint, useColors, useIsDark, type IconName } from '@/ui';
 
 export default function PathScreen() {
   const colors = useColors();
@@ -69,8 +66,6 @@ export default function PathScreen() {
   const level = levelProgress(progress.xp);
   const queue = reviewQueueSize(progress, EXERCISE_BY_KEY, today);
   const flame = isActiveToday(progress.streak, today);
-  const goalRatio = dailyRatio(progress.daily, today);
-  const goalMet = isGoalMet(progress.daily, today);
 
   // Animation de déverrouillage : une fois par unité, quand le parcours
   // redevient visible (retour de leçon, changement de matière), une fois la
@@ -128,12 +123,15 @@ export default function PathScreen() {
   // Tant que les réglages ne sont pas lus, on ne sait pas s'il faut l'intro : rien plutôt qu'un flash.
   if (!settingsHydrated) return null;
 
+  const pickSubject = (id: string) => {
+    setSubjectId(id);
+    // Retenue pour le prochain démarrage.
+    setFavoriteSubject(id);
+    setPicked(null);
+    setNoEnergy(false);
+  };
+
   const startUnit = (unit: Unit, skipTest = false) => {
-    if (!canStartLesson(progress.energy, new Date(), maxEnergyFor(progress.league))) {
-      setPicked(null);
-      setNoEnergy(true);
-      return;
-    }
     setPicked(null);
     router.push({ pathname: '/session/[unitId]', params: skipTest ? { unitId: unit.id, skip: '1' } : { unitId: unit.id } });
   };
@@ -183,7 +181,7 @@ export default function PathScreen() {
                 : pickedTraits >= PATH_TRAITS
                   ? t('path.unit.nextCrown', { n: pickedTraits + 1 })
                   : t('path.unit.continue')
-          } · ${t('path.unit.energyCost')}`}
+          }`}
           color={pickedWorld?.color ?? subject.color}
           onPress={() => startUnit(picked)}
         />
@@ -192,7 +190,7 @@ export default function PathScreen() {
           <Text variant="small" style={{ color: colors.danger }}>
             {t('path.unit.locked')}
           </Text>
-          <Button label={`${t('path.unit.skipButton')} · ${t('path.unit.energyCost')}`} tone="secondary" onPress={() => startUnit(picked, true)} />
+          <Button label={t('path.unit.skipButton')} tone="secondary" onPress={() => startUnit(picked, true)} />
           <Text variant="small" secondary>
             {t('path.unit.skipHint')}
           </Text>
@@ -209,21 +207,11 @@ export default function PathScreen() {
       <View style={styles.header}>
         <View style={styles.stats}>
           <Stat icon={flame ? 'flame' : 'flame-outline'} color={flame ? colors.streak : colors.textSecondary} value={displayedStreak(progress.streak, today)} />
-          <EnergyBadge energy={progress.energy} now={now} max={maxEnergyFor(progress.league)} compact />
           <Stat icon="diamond" color={colors.gem} value={progress.gems} />
           <Stat icon="star" color={colors.gold} value={level.level} />
         </View>
-        <View style={[styles.goalRow, { backgroundColor: colors.surface, borderColor: goalMet ? colors.success : colors.border }]}>
-          <Ring ratio={goalRatio} size={56} color={goalMet ? colors.success : subject.color}>
-            {goalMet ? <Icon name="checkmark" size={22} color={colors.success} /> : <Text variant="small">{t('common.percent', { value: Math.round(goalRatio * 100) })}</Text>}
-          </Ring>
-          <View style={styles.goalText}>
-            <Text variant="bodyBold">{goalMet ? t('path.goal.done') : t('path.goal.title')}</Text>
-            <Text variant="small" secondary>
-              {t('path.goal.detail', { xp: Math.min(progress.daily.xp, progress.daily.goal), goal: progress.daily.goal, level: level.level, toNext: level.xpToNextLevel })}
-            </Text>
-          </View>
-        </View>
+        {progress.study.report && <StudyReportCard report={progress.study.report} onClose={() => setProgress(acknowledgeStudyReport(useProgress.getState().progress))} />}
+        <StudyPlanCard study={progress.study} subjects={SUBJECTS} onPick={pickSubject} />
       </View>
 
       {progress.quests.items.length > 0 && <QuestsCard quests={progress.quests.items} />}
@@ -237,13 +225,7 @@ export default function PathScreen() {
               key={s.id}
               accessibilityRole="button"
               accessibilityState={{ selected: active }}
-              onPress={() => {
-                setSubjectId(s.id);
-                // Retenue pour le prochain démarrage.
-                setFavoriteSubject(s.id);
-                setPicked(null);
-                setNoEnergy(false);
-              }}
+              onPress={() => pickSubject(s.id)}
               style={[styles.chip, { backgroundColor: active ? s.color : colors.surface, borderColor: active ? shade(s.color) : colors.border, borderBottomWidth: active ? 4 : 2 }]}>
               <Text variant="small" style={{ color: active ? '#fff' : colors.text }}>
                 {s.emoji} {s.title}
@@ -421,8 +403,6 @@ const styles = StyleSheet.create({
   noPad: { padding: 0, gap: 0 },
   content: { padding: space.lg, gap: space.lg },
   header: { gap: space.md },
-  goalRow: { flexDirection: 'row', alignItems: 'center', gap: space.md, borderWidth: 2, borderRadius: radius.lg, padding: space.sm, paddingRight: space.md },
-  goalText: { flex: 1, gap: 2 },
   stats: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
   chips: { gap: space.sm, paddingVertical: space.xs },
   chip: { borderWidth: 2, borderRadius: radius.pill, paddingVertical: space.sm, paddingHorizontal: space.md, minHeight: 44, justifyContent: 'center' },

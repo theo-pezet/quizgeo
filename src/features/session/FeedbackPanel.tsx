@@ -7,6 +7,7 @@ import type { Exercise } from '@/game';
 import { useT } from '@/i18n';
 import { buildAskPrompt, claudeUrl, deviceLocale } from '@/lib/askClaude';
 import { sandboxSource } from '@/lib/sandbox';
+import { useReports } from '@/store/reports';
 import { Button, FadeUp, Icon, Shake, Text, fonts, radius, space, useColors } from '@/ui';
 
 import type { Feedback } from './useSession';
@@ -152,6 +153,8 @@ function AskRow({ feedback, exercise, unitTitle, tint }: { feedback: Feedback; e
   const t = useT();
   const colors = useColors();
   const [copied, setCopied] = useState(false);
+  const reported = useReports((s) => s.items[exercise.key] !== undefined);
+  const toggleReport = useReports((s) => s.toggle);
   const prompt = () => buildAskPrompt({ exercise, unitTitle, correct: feedback.correct, given: feedback.given, whyWrong: feedback.whyWrong, locale: deviceLocale() });
 
   const openClaude = () => {
@@ -194,6 +197,18 @@ function AskRow({ feedback, exercise, unitTitle, tint }: { feedback: Feedback; e
         <Icon name={copied ? 'checkmark' : 'share-outline'} size={16} color={colors.textSecondary} />
         <Text variant="small" secondary style={{ fontWeight: '700' }}>
           {copied ? t('session.ask.copied') : t('session.ask.share')}
+        </Text>
+      </Pressable>
+      <Pressable
+        onPress={() => toggleReport(exercise.key, unitTitle)}
+        accessibilityRole="button"
+        accessibilityState={{ selected: reported }}
+        accessibilityHint={t('session.report.hint')}
+        hitSlop={8}
+        style={[styles.askBtn, { borderColor: reported ? colors.danger : colors.border }]}>
+        <Icon name={reported ? 'flag' : 'flag-outline'} size={16} color={reported ? colors.danger : colors.textSecondary} />
+        <Text variant="small" style={{ color: reported ? colors.danger : colors.textSecondary, fontWeight: '700' }}>
+          {reported ? t('session.report.done') : t('session.report')}
         </Text>
       </Pressable>
       {sandbox && (

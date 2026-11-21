@@ -1,0 +1,177 @@
+{
+ "unit": {
+  "id": "py-test-1",
+  "subjectId": "python",
+  "topic": "tests",
+  "world": "python-w3",
+  "title": "Testing Python code",
+  "description": "pytest, assert, test functions and files, fixtures, parametrize, testing exceptions, mocks, test-driven development, coverage, virtual environments"
+ },
+ "cards": [
+  {
+   "slug": "unit-vs-integration",
+   "level": "debutant",
+   "term": "Unit and integration tests",
+   "definition": "A unit test checks one function alone, in milliseconds. An integration test checks several parts together (code plus database, or plus a real API): slower, fewer, but closer to reality.",
+   "example": "Unit: add_vat(100) returns 120. Integration: the signup endpoint stores the lead in a test database."
+  },
+  {
+   "slug": "fixture",
+   "level": "debutant",
+   "term": "Fixture",
+   "definition": "A function decorated with @pytest.fixture that prepares data or resources for tests; a test receives it by naming it as a parameter.",
+   "example": "@pytest.fixture def leads(): return [{\"email\": \"a@x.com\"}]"
+  },
+  {
+   "slug": "parametrize",
+   "level": "debutant",
+   "term": "parametrize",
+   "definition": "@pytest.mark.parametrize runs the same test with several inputs and expected outputs, one line per case.",
+   "example": "@pytest.mark.parametrize(\"price, expected\", [(100, 120), (0, 0)])"
+  },
+  {
+   "slug": "pytest-raises",
+   "level": "debutant",
+   "term": "pytest.raises",
+   "definition": "Checks that a piece of code raises the expected exception: with pytest.raises(ValueError): parse_price(\"abc\").",
+   "example": "Testing that an empty email is refused."
+  },
+  {
+   "slug": "mock",
+   "level": "debutant",
+   "term": "Mock",
+   "definition": "A fake object that replaces a slow or external dependency (an API, the clock, an email service) during a test, so tests are fast, free and repeatable.",
+   "example": "Replacing requests.get with a mock that returns a fixed JSON."
+  },
+  {
+   "slug": "tdd",
+   "level": "debutant",
+   "term": "TDD (test-driven development)",
+   "definition": "Writing a failing test first, then the minimal code that makes it pass, then cleaning up: red, green, refactor. Very effective with AI coding agents, which can run the tests themselves.",
+   "example": "Write test_discount_caps_at_50_percent, see it fail, implement, see it pass."
+  },
+  {
+   "slug": "coverage",
+   "level": "debutant",
+   "term": "Test coverage",
+   "definition": "The share of code lines (or branches) executed by the tests, measured with pytest-cov. Useful to find untested areas; a high number does not prove the tests check the right things.",
+   "example": "pytest --cov=app shows that the refund function was never run by any test."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "Which file and function will pytest run automatically?",
+   "choices": [
+    "test_prices.py with def test_vat():",
+    "prices_check.py with def check_vat():",
+    "tests.txt with a line test vat",
+    "main.py with def run_tests():"
+   ],
+   "explain": "pytest collects files named test_*.py (or *_test.py) and functions starting with test_."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "This test fails. What does pytest show?",
+   "choices": [
+    "The assert line with both values: 119.99 == 120",
+    "Only the word FAILED, with no details",
+    "Nothing: failing tests are skipped",
+    "A crash of the Python interpreter"
+   ],
+   "explain": "pytest rewrites asserts to show the compared values, which makes most failures obvious at once.",
+   "code": {
+    "lang": "python",
+    "src": "def add_vat(x):\n    return round(x * 1.2, 2) - 0.01\n\ndef test_vat():\n    assert add_vat(100) == 120"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How does a test receive the data prepared by a fixture named leads?",
+   "choices": [
+    "By having a parameter called leads",
+    "By importing leads from pytest",
+    "By calling fixture(\"leads\") inside it",
+    "By reading a global variable"
+   ],
+   "explain": "pytest injects fixtures by parameter name. Each test gets a fresh copy by default."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How many tests does this produce?",
+   "choices": [
+    "3",
+    "1",
+    "6",
+    "2"
+   ],
+   "explain": "One test per tuple in the list. Each case is reported separately.",
+   "code": {
+    "lang": "python",
+    "src": "@pytest.mark.parametrize(\"price, expected\", [\n    (100, 120),\n    (0, 0),\n    (9.99, 11.99),\n])\ndef test_add_vat(price, expected):\n    assert add_vat(price) == expected"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you check that parse_price(\"abc\") raises a ValueError?",
+   "choices": [
+    "with pytest.raises(ValueError): parse_price(\"abc\")",
+    "assert parse_price(\"abc\") == ValueError",
+    "try parse_price(\"abc\") and print the error",
+    "assert ValueError in parse_price(\"abc\")"
+   ],
+   "explain": "pytest.raises fails the test if no exception, or the wrong one, is raised."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your function calls a paid weather API. How do you test it?",
+   "choices": [
+    "Replace the API call with a mock returning fixed data",
+    "Call the real API in every test run",
+    "Skip testing that function entirely",
+    "Test it only once in production"
+   ],
+   "explain": "Mocks make tests fast, free and repeatable. One separate integration test can still hit the real API now and then."
+  },
+  {
+   "kind": "vf",
+   "prompt": "In TDD, you write the test first, watch it fail, then write the code that makes it pass.",
+   "isTrue": true,
+   "explain": "True. Red, green, refactor. A test that never failed may be testing nothing."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why give each project its own virtual environment?",
+   "choices": [
+    "To isolate package versions between projects",
+    "To make Python run twice as fast",
+    "To hide the code from other users",
+    "Because pytest only runs inside one"
+   ],
+   "explain": "Project A can use pandas 2 while project B still needs pandas 1, without conflicts."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Coverage is 100 percent. What does it prove?",
+   "choices": [
+    "Every line ran, not that the results are right",
+    "The code has no bugs left in it at all",
+    "Every possible input was tested too",
+    "The tests always run in under a second"
+   ],
+   "explain": "Coverage shows what was executed. Assertions on the right behaviour are what catch bugs."
+  },
+  {
+   "kind": "bugline",
+   "prompt": "This test always passes, even when the function is broken. Which line is the problem?",
+   "lang": "python",
+   "lines": [
+    "def test_discount():",
+    "    price = apply_discount(100, 0.2)",
+    "    price == 80"
+   ],
+   "answer": 2,
+   "explain": "A comparison without assert computes True or False and throws it away. Write assert price == 80."
+  }
+ ]
+}

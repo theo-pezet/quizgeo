@@ -1006,8 +1006,8 @@
    "topic": "strategy",
    "level": null,
    "term": "GDPR",
-   "definition": "General Data Protection Regulation: A regulation in EU law on data protection and privacy.",
-   "example": "Asking for explicit consent before tracking a user's behavior on your website.",
+   "definition": "General Data Protection Regulation: the EU law on personal data. Any use of a customer's data needs a legal basis (consent, contract, legitimate interest), a clear purpose and limited retention; fines go up to 4% of global turnover.",
+   "example": "Checking the legal basis before adding buyers to a promotional email list.",
    "tags": [
     "#Strategy"
    ]
@@ -1174,7 +1174,7 @@
    "topic": "strategy",
    "level": null,
    "term": "LTV",
-   "definition": "Lifetime Value: The total revenue a business can expect from a single customer over the whole business relationship. Formula: Average Purchase Value * Purchases per Year * Customer Lifespan in Years.",
+   "definition": "Lifetime Value: the total value a customer brings over the whole relationship. Simple version: average order value x purchases per year x years as a customer; the serious version uses gross margin, not revenue.",
    "example": "A gym member paying $50/month for 3 years has an LTV of $1,800.",
    "tags": [
     "#Strategy_Growth"
@@ -2166,7 +2166,7 @@
    "subject": "marketing",
    "topic": "strategy",
    "level": null,
-   "term": "Guerilla Marketing",
+   "term": "Guerrilla Marketing (low budget)",
    "definition": "An unconventional way of performing promotional activities on a very low budget.",
    "example": "Using street graffiti or flash mobs to create buzz for a new rap album launch.",
    "tags": [
@@ -2553,7 +2553,7 @@
    "topic": "strategy",
    "level": null,
    "term": "BANT",
-   "definition": "A lead qualification framework: Budget, Authority, Need, Timeline.",
+   "definition": "A lead qualification grid that checks four points before sales invests time in a prospect: Budget, Authority, Need and Timeline.",
    "example": "Asking a prospect if they have the budget and the power to sign a contract this quarter.",
    "tags": [
     "#Strategy"
@@ -2869,7 +2869,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Linear Attribution",
-   "definition": "An attribution model that gives equal credit to every touchpoint in the customer journey.",
+   "definition": "An attribution model that gives equal credit to every touchpoint of the journey. GA4 and Google Ads dropped it in 2023 (only data-driven and last click remain), but other tools still use it.",
    "example": "If a user saw 4 ads, each ad gets 25% of the credit for the sale.",
    "tags": [
     "#Analytics"
@@ -2881,7 +2881,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Time Decay Attribution",
-   "definition": "An attribution model that gives more credit to touchpoints that happened closer in time to the conversion.",
+   "definition": "An attribution model that gives more credit to touchpoints closer in time to the conversion. GA4 and Google Ads dropped it in 2023; it lives on in other tools.",
    "example": "The ad seen 1 hour before the purchase gets much more credit than the ad seen 2 weeks ago.",
    "tags": [
     "#Analytics"
@@ -2893,7 +2893,7 @@
    "topic": "analytics",
    "level": null,
    "term": "Data-Driven Attribution (DDA)",
-   "definition": "An attribution model that uses machine learning to evaluate all touchpoints and assign credit based on actual impact.",
+   "definition": "An attribution model that uses machine learning on your own conversion paths to share credit by each touchpoint's estimated contribution. The default in GA4 and Google Ads.",
    "example": "Google’s default model that analyzes thousands of paths to see what truly drives sales.",
    "tags": [
     "#Analytics"
@@ -3087,7 +3087,7 @@
    "level": null,
    "term": "Internal Linking",
    "definition": "Linking from one page of your website to another page on the same website.",
-   "example": "Linking from your \"Contact\" page back to your \"Home\" page.",
+   "example": "Linking from a blog post about running shoes to your running shoes category page.",
    "tags": [
     "#SEO"
    ]
@@ -3134,8 +3134,8 @@
    "topic": "seo",
    "level": null,
    "term": "Domain Rating (DR)",
-   "definition": "A metric from Ahrefs that shows the strength of a website's backlink profile on a scale of 0 to 100.",
-   "example": "A website with a DR of 80 is very difficult to outrank.",
+   "definition": "A metric from Ahrefs scoring the strength of a site's backlink profile from 0 to 100. A comparison tool: Google does not use it.",
+   "example": "A site at DR 80 has a far stronger link profile than one at DR 10, but its pages still have to earn their rankings.",
    "tags": [
     "#SEO"
    ]
@@ -3194,7 +3194,7 @@
    "topic": "seo",
    "level": null,
    "term": "Disavow Tool",
-   "definition": "A Google tool that allows you to tell search engines to ignore certain toxic backlinks.",
+   "definition": "A Google Search Console tool to ask Google to ignore specific backlinks. Google says it is rarely needed: mainly after paid or manipulative links, or a manual action.",
    "example": "Using the disavow tool to clean up a site after a negative SEO attack.",
    "tags": [
     "#SEO"
@@ -4071,7 +4071,7 @@
    "topic": "branding",
    "level": null,
    "term": "Social Identity Theory",
-   "definition": "The portion of an individual's self-concept derived from perceived membership in a relevant social group.",
+   "definition": "Theory from Tajfel and Turner: people define part of who they are through the groups they belong to. A brand that becomes a group marker earns strong loyalty.",
    "example": "Creating a \"Tribe\" of badminton players who all use the same brand.",
    "tags": [
     "#Branding"
@@ -4204,7 +4204,7 @@
    "level": null,
    "term": "Economies of Scale",
    "definition": "The cost advantages that enterprises obtain due to their scale of operation, with cost per unit of output decreasing as scale increases.",
-   "example": "A large company being able to buy ads 50% cheaper than a small startup.",
+   "example": "A big retailer paying less per unit to its suppliers and for shipping than a small shop can.",
    "tags": [
     "#Strategy"
    ]
@@ -4301,7 +4301,7 @@
    "level": null,
    "term": "Unicorn",
    "definition": "A privately held startup company with a current valuation of US$1 billion or more.",
-   "example": "Companies like Uber, Airbnb, or Canva before they went public.",
+   "example": "Airbnb and Uber were unicorns before their stock market listings.",
    "tags": [
     "#Strategy"
    ]
@@ -4965,8 +4965,8 @@
    "topic": "analytics",
    "level": null,
    "term": "Cookieless Tracking",
-   "definition": "Tracking user behavior without the use of cookies, often using server-side data or digital fingerprinting.",
-   "example": "Using a unique ID generated from a user's browser settings to track them.",
+   "definition": "Measuring and targeting without third-party cookies: first-party and server-side data, logged-in users who consented, modeled conversions and contextual signals.",
+   "example": "Using server-side tagging and Consent Mode to keep measuring conversions when visitors refuse cookies.",
    "tags": [
     "#Analytics"
    ]
@@ -4977,8 +4977,8 @@
    "topic": "tech",
    "level": null,
    "term": "Fingerprinting",
-   "definition": "A technique used to identify a user based on unique characteristics of their browser and device (fonts, screen resolution).",
-   "example": "A controversial tracking method that is being blocked by many modern browsers.",
+   "definition": "Identifying a browser from its technical traits (fonts, screen, settings) without any cookie. Safari and Firefox try to limit it, and in Europe it needs consent just like cookies.",
+   "example": "A script combining screen size, fonts and time zone to recognize a visitor who refused cookies: illegal without consent in the EU.",
    "tags": [
     "#Tech"
    ]
@@ -5716,7 +5716,7 @@
    "level": null,
    "term": "Growth Hacking",
    "definition": "A subfield of marketing focused on the rapid growth of a company through low-cost, creative, and data-driven experiments.",
-   "example": "Using a simple \"sent from my iPhone\" signature in an app to spread awareness.",
+   "example": "Hotmail adding \"Get your free email at Hotmail\" to the bottom of every message its users sent.",
    "tags": [
     "#Growth"
    ]
@@ -5776,7 +5776,7 @@
    "level": null,
    "term": "Imposter Syndrome",
    "definition": "A psychological pattern in which an individual doubts their skills, talents, or accomplishments.",
-   "example": "Feeling like you aren't a \"real\" marketer even though you are managing 500 cards in Anki.",
+   "example": "Feeling like a fraud in a marketing job despite years of good results, and fearing to be found out.",
    "tags": [
     "#Psychology"
    ]
@@ -5862,7 +5862,7 @@
    "level": null,
    "term": "S.M.A.R.T. Goals",
    "definition": "Goals that are: Specific, Measurable, Achievable, Relevant, Time-bound.",
-   "example": "\"Increase my Anki retention to 90% by the end of next month\" is a SMART goal.",
+   "example": "\"Raise the newsletter signup rate from 2% to 3% by the end of June\" is a SMART goal; \"get more subscribers\" is not.",
    "tags": [
     "#Strategy"
    ],
@@ -7315,7 +7315,7 @@
    "level": "avance",
    "term": "Encryption",
    "definition": "The process of converting information or data into a code, especially to prevent unauthorized access.",
-   "example": "Your customers' card numbers encrypted in your database: without the key, an attacker who steals the file gets nothing but gibberish.",
+   "example": "An encrypted database backup: a thief who steals the file gets nothing but gibberish without the key.",
    "tags": [
     "#Code_Hard"
    ]
@@ -7458,7 +7458,7 @@
    "level": null,
    "term": "Segmentation",
    "definition": "The process of dividing a broad consumer or business market into sub-groups based on some type of shared characteristics.",
-   "example": "Sending one email offer to female customers and a different one to male customers.",
+   "example": "Sending one offer to first-time buyers and a different one to loyal repeat customers.",
    "tags": []
   },
   {
@@ -8728,7 +8728,7 @@
    "level": null,
    "term": "SSL/TLS Certificate",
    "definition": "A digital certificate that authenticates a website's identity and enables an encrypted connection (HTTPS).",
-   "example": "The \"padlock\" icon in your browser that tells users their credit card info is safe on your e-commerce site.",
+   "example": "The padlock in the address bar: what the visitor types on your checkout page travels encrypted. It does not prove the shop is honest.",
    "tags": []
   },
   {
@@ -8837,8 +8837,8 @@
    "topic": "general",
    "level": null,
    "term": "Device Fingerprinting",
-   "definition": "A way to identify a device based on its unique configuration (browser version, screen size, OS) without using cookies.",
-   "example": "Recognizing a returning visitor even if they have deleted their cookies or are using an ad-blocker.",
+   "definition": "Identifying a device from its configuration (browser version, screen size, OS, fonts) without cookies. In the EU it needs the same consent as cookies.",
+   "example": "Recognizing a returning visitor who deleted their cookies: only legal in Europe if they agreed to tracking.",
    "tags": []
   },
   {
@@ -9327,7 +9327,7 @@
    "topic": "general",
    "level": null,
    "term": "AMP for Email",
-   "definition": "A technology that allows senders to include interactive elements (like carousels or forms) directly inside an email.",
+   "definition": "A technology for interactive elements (carousels, forms) inside an email. Supported mainly by Gmail and Yahoo, it needs a registered sender and is rarely used.",
    "example": "Letting a user choose their racket color and size directly inside the email without visiting the website.",
    "tags": []
   },
@@ -9758,7 +9758,7 @@
    "level": null,
    "term": "Server-Side GTM",
    "definition": "A variant of Google Tag Manager where tags run in a server container you control (on your own subdomain) instead of in the browser: the site sends its events to that server, which forwards them to GA4, Meta and other tools.",
-   "example": "Sending data from your website to your own server first to bypass ad-blockers before sending it to Facebook.",
+   "example": "Your site sends its events to a tagging server on your own subdomain, which forwards only the data visitors consented to, to GA4 and Meta.",
    "tags": []
   },
   {
@@ -10728,7 +10728,7 @@
    "level": null,
    "term": "Random Forest Model",
    "definition": "A machine learning method that uses many \"decision trees\" to provide highly accurate predictions for lead scoring or churn.",
-   "example": "A system that looks at thousands of past paths to predict with 95% accuracy which leads will sign a contract today.",
+   "example": "Scoring every new lead by how likely it is to sign, learned from thousands of past deals, so sales calls the top 10% first.",
    "tags": []
   },
   {
@@ -11378,7 +11378,7 @@
    "level": null,
    "term": "touch",
    "definition": "Creates an empty file if it does not exist yet; if it already exists, it only updates its modification time without touching the content.",
-   "example": "Quickly creating a \"secrets.py\" file to store your LinkedIn API keys.",
+   "example": "touch main.py creates an empty script file, ready to be opened in your editor.",
    "tags": []
   },
   {

@@ -1,0 +1,151 @@
+{
+ "unit": {
+  "id": "mkt-influence-1",
+  "subjectId": "marketing",
+  "topic": "influence",
+  "world": "marketing-w9",
+  "title": "Influence, community and social listening",
+  "description": "Influencer tiers, engagement, briefs and contracts, employee advocacy, community, social listening, brand lift"
+ },
+ "cards": [
+  {
+   "slug": "usage-rights",
+   "level": "debutant",
+   "term": "Content usage rights",
+   "definition": "The clause of an influencer contract that says whether the brand may reuse the content (ads, website, newsletters), for how long and in which countries. Without it, boosting a creator video as an ad can breach their rights.",
+   "example": "Rights to use two Reels in paid social ads in France for 3 months, against an extra fee."
+  },
+  {
+   "slug": "creator-fit",
+   "level": "debutant",
+   "term": "Creator fit",
+   "definition": "Choosing creators on audience match (age, country, interests), engagement quality and values, not on follower count. Fake followers and bought engagement are common; check audience data.",
+   "example": "A 30,000 follower cooking creator with 80 percent French followers beats a 500,000 lifestyle account with 70 percent abroad."
+  },
+  {
+   "slug": "ugc-content",
+   "level": "debutant",
+   "term": "UGC (user-generated content)",
+   "definition": "Content created by customers or paid creators in a customer style: reviews, unboxings, tutorials. It feels authentic and often outperforms polished ads on social platforms.",
+   "example": "A shampoo brand running ads made of short videos filmed by real users in their bathroom."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A creator has 40,000 very engaged followers. In the usual tiers, which category is it?",
+   "choices": [
+    "Micro-influencer",
+    "Mega-influencer",
+    "Macro-influencer",
+    "Celebrity"
+   ],
+   "explain": "Common convention: nano under 10k, micro 10k to 100k, then mid, macro and mega. Thresholds vary by agency."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you choose between two creators for a French cosmetics launch?",
+   "choices": [
+    "Audience in France, engagement quality, brand fit",
+    "Only the total number of followers they have",
+    "The price per post: the cheapest one wins",
+    "Whoever answers the first email the fastest"
+   ],
+   "explain": "Reach is worthless if the audience is abroad or fake. Ask for audience statistics and check comments."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A post is seen by 2,000 people and gets 100 interactions. What is the engagement rate per reach?",
+   "choices": [
+    "5 percent",
+    "2 percent",
+    "20 percent",
+    "50 percent"
+   ],
+   "explain": "100 divided by 2,000. Rate per reach is fairer than per follower, since most followers never see a given post."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What should an influencer brief always include?",
+   "choices": [
+    "Goal, key message, mandatory mentions, deliverables, rights",
+    "The exact script, word for word, to read",
+    "Only the date and the price of the post",
+    "The password of the brand account"
+   ],
+   "explain": "A good brief frames without killing the creator voice. Usage rights avoid disputes when you reuse content in ads."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is social listening?",
+   "choices": [
+    "Monitoring what people say about you and your market online",
+    "Reading only the comments under your own posts",
+    "Buying followers to look more popular",
+    "Listening to podcasts about social media"
+   ],
+   "explain": "Listening covers brand, competitors and topics, even without tags. It feeds product, crisis management and content ideas."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Employees sharing company news on their own LinkedIn often reach more people than the company page.",
+   "isTrue": true,
+   "explain": "True. Personal profiles usually get more reach and trust than brand pages. Advocacy must stay voluntary and authentic."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How can you measure whether a video campaign changed brand perception?",
+   "choices": [
+    "A brand lift study with exposed and control groups",
+    "Counting the likes on the video",
+    "The number of comments in one day",
+    "The cost per thousand impressions"
+   ],
+   "explain": "Brand lift compares awareness or consideration between people who saw the ads and a control group."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A customer complains loudly in the comments. Best first move?",
+   "choices": [
+    "Answer quickly and publicly, then solve it in private",
+    "Delete the comment and block the person",
+    "Ignore it so it is buried by new posts",
+    "Reply with a joke to lighten things up"
+   ],
+   "explain": "Others read your answer. A fast, human, public reply plus a private fix often turns a critic into a fan."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why do UGC-style ads often beat polished studio ads on TikTok?",
+   "choices": [
+    "They look native to the feed and feel authentic",
+    "They are always cheaper to buy as media",
+    "The platform forbids studio videos",
+    "They never need a hook in the first seconds"
+   ],
+   "explain": "Ads that look like the content around them get watched. They still need a strong hook and a clear offer."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put an influencer campaign in order.",
+   "steps": [
+    "Set the goal and the measure of success",
+    "Shortlist creators on audience data and fit",
+    "Send the brief and sign the contract with rights",
+    "Validate content and check the legal mentions",
+    "Publish, track codes and links, and report results"
+   ],
+   "explain": "Goal first, then fit, a clear contract, a compliance check, and measurement with codes or tracked links."
+  }
+ ],
+ "deckCards": [
+  "marketing-influencer-tiers",
+  "marketing-micro-influencer",
+  "marketing-engagement-rate-per-reach",
+  "marketing-social-listening",
+  "marketing-employee-advocacy",
+  "marketing-community-management",
+  "marketing-brand-lift-study",
+  "marketing-sentiment-analysis"
+ ]
+}

@@ -29,3 +29,4 @@ export * from './random';
 export * from './apply';
 export * from './placement';
 export * from './monthly';
+export * from './study';

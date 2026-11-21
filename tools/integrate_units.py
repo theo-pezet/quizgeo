@@ -24,6 +24,7 @@ from pathlib import Path
 
 LANGS = ("en",)
 TARGET = Path("src/data/units.extra.json")
+DECK = Path("src/data/deck.json")
 DASH = re.compile("[—–]")
 
 
@@ -65,7 +66,14 @@ def convert(doc: dict) -> dict:
             "definition": text(c["definition"], f"{slug}.definition"),
             "example": text(c["example"], f"{slug}.example"),
         })
-    if len(cards) < 6:
+    # Cartes déjà présentes dans le deck (src/data/deck.json), réutilisées telles quelles.
+    deck_ids = list(doc.get("deckCards", []))
+    if deck_ids:
+        known = {c["id"] for c in json.load(open(DECK))["cards"]}
+        unknown = [i for i in deck_ids if i not in known]
+        if unknown:
+            raise ValueError(f"{unit_id} : cartes absentes du deck : {unknown}")
+    if len(cards) + len(deck_ids) < 6:
         raise ValueError(f"{unit_id} : au moins 6 cartes")
     exercises = []
     for i, e in enumerate(doc["exercises"], start=1):
@@ -127,7 +135,7 @@ def convert(doc: dict) -> dict:
             "world": u["world"],
             "title": text(u["title"], "unit.title"),
             "description": text(u["description"], "unit.description"),
-            "cardIds": [c["id"] for c in cards],
+            "cardIds": [c["id"] for c in cards] + deck_ids,
         },
         "cards": cards,
         "exercises": exercises,
@@ -146,13 +154,13 @@ def main(paths):
         by_id[unit["unit"]["id"]] = unit
         print(f"{unit['unit']['id']}: {len(unit['cards'])} cartes, {len(unit['exercises'])} exercices")
     units = list(by_id.values())
-    # Unicité globale des cartes.
+    # Unicité globale des cartes (rédigées ou reprises du deck).
     seen = set()
     for u in units:
-        for c in u["cards"]:
-            if c["id"] in seen:
-                raise ValueError(f"carte en double entre unités : {c['id']}")
-            seen.add(c["id"])
+        for cid in u["unit"]["cardIds"]:
+            if cid in seen:
+                raise ValueError(f"carte en double entre unités : {cid}")
+            seen.add(cid)
     TARGET.parent.mkdir(parents=True, exist_ok=True)
     json.dump({"units": units}, open(TARGET, "w"), ensure_ascii=False, separators=(",", ":"))
     print(f"{len(units)} unités dans {TARGET}")

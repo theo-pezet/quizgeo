@@ -1,0 +1,156 @@
+{
+ "unit": {
+  "id": "mkt-dist-1",
+  "subjectId": "marketing",
+  "topic": "fondamentaux",
+  "world": "marketing-w1",
+  "title": "Distribution and the customer journey",
+  "description": "Direct and indirect channels, intensive, selective and exclusive distribution, marketplaces, omnichannel, touchpoints"
+ },
+ "cards": [
+  {
+   "slug": "distribution-channel",
+   "level": "debutant",
+   "term": "Distribution channel",
+   "definition": "The path a product takes to the customer. Direct: the brand sells itself (site, own shops). Indirect: through intermediaries such as wholesalers, retailers or marketplaces, who take a margin in exchange for reach.",
+   "example": "Nespresso sells in its own boutiques and site (direct) and its machines in electronics stores (indirect)."
+  },
+  {
+   "slug": "distribution-intensity",
+   "level": "debutant",
+   "term": "Intensive, selective, exclusive",
+   "definition": "Intensive: everywhere possible (soda, gum). Selective: a chosen network of retailers (good electronics, cosmetics). Exclusive: a few outlets per area, often for luxury or high-service products.",
+   "example": "Coca-Cola is intensive; Apple products in approved resellers are selective; a Ferrari dealer per region is exclusive."
+  },
+  {
+   "slug": "marketplace",
+   "level": "debutant",
+   "term": "Marketplace",
+   "definition": "A platform where third-party sellers sell to buyers in exchange for a commission (Amazon, Cdiscount, Vinted, Back Market). Huge reach, but the platform owns the customer relationship and the data.",
+   "example": "A small brand sells on Amazon for volume and pushes repeat buyers to its own site with a card in the parcel."
+  },
+  {
+   "slug": "channel-conflict",
+   "level": "debutant",
+   "term": "Channel conflict",
+   "definition": "Tension between the channels of a brand, for example when its own website undercuts the retailers who distribute it. It must be managed with prices, exclusive ranges or shared revenue.",
+   "example": "Retailers stop pushing a brand after it sells online 20 percent cheaper than them."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A brand sells only through its own website and shops. What kind of distribution is it?",
+   "choices": [
+    "Direct",
+    "Indirect",
+    "Intensive",
+    "Wholesale"
+   ],
+   "explain": "Direct distribution keeps the margin and the customer data, but the brand must build its own reach."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Chewing gum is sold in supermarkets, kiosks, stations and vending machines. Which distribution intensity?",
+   "choices": [
+    "Intensive",
+    "Selective",
+    "Exclusive",
+    "Direct"
+   ],
+   "explain": "Impulse products need maximum physical availability: intensive distribution."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A luxury watchmaker allows one dealer per big city. Which distribution intensity?",
+   "choices": [
+    "Exclusive",
+    "Intensive",
+    "Selective",
+    "Undifferentiated"
+   ],
+   "explain": "Exclusive distribution protects the image and the service level, at the cost of reach."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the main downside of selling through a marketplace like Amazon?",
+   "choices": [
+    "The platform owns the customer relationship and data",
+    "It is impossible to reach many buyers there",
+    "The platform never takes a commission",
+    "Products cannot be delivered quickly"
+   ],
+   "explain": "Reach is the upside; the cost is a commission and limited access to your own customers. Smart brands use it as an entry door."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Buy online, pick up in store, and return in any shop: which approach is this?",
+   "choices": [
+    "Omnichannel",
+    "Multichannel",
+    "Exclusive distribution",
+    "Direct mail"
+   ],
+   "explain": "Omnichannel links the channels so the customer moves between them seamlessly. Multichannel only runs several channels side by side."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A brand sells on its website 20 percent cheaper than its retailers. What risk does it create?",
+   "choices": [
+    "Channel conflict: retailers stop pushing the brand",
+    "Better relations with all its retail partners",
+    "A rise of its prices in the shops",
+    "No risk: customers never compare prices"
+   ],
+   "explain": "Retailers bring reach; undercutting them pushes them to favour competitors. Brands manage it with price parity or exclusive products."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A touchpoint is any moment where a customer meets the brand: an ad, a review, a delivery, a call to support.",
+   "isTrue": true,
+   "explain": "True. A journey map lists the touchpoints and the emotions at each one, to fix the moments that make people drop out."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A buyer sees an ad, reads reviews, visits the shop, then orders online. Why map this journey?",
+   "choices": [
+    "To find where people drop out and fix those moments",
+    "To credit the whole sale to the last click",
+    "To remove every channel except the shop",
+    "To prove that ads have no effect at all"
+   ],
+   "explain": "Mapping the journey shows friction and missing information. It also reminds you that the last click is rarely the whole story."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does physical availability mean for Byron Sharp?",
+   "choices": [
+    "Being easy to find and buy, everywhere buyers look",
+    "Having a big warehouse full of stock",
+    "Opening a flagship store in Paris",
+    "Always selling at the lowest price"
+   ],
+   "explain": "Physical availability (with mental availability) is one of the two drivers of brand growth: be present wherever and whenever people buy the category."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put in order the classic indirect path of a consumer product.",
+   "steps": [
+    "Manufacturer",
+    "Wholesaler",
+    "Retailer",
+    "Consumer"
+   ],
+   "explain": "Each intermediary takes a margin and adds a service: storage, logistics, display, advice. Direct sales skip some of these steps."
+  }
+ ],
+ "deckCards": [
+  "marketing-d2c",
+  "marketing-omnichannel",
+  "marketing-multichannel",
+  "marketing-customer-journey-mapping",
+  "marketing-touchpoint",
+  "marketing-physical-availability",
+  "marketing-retail-media-network"
+ ]
+}

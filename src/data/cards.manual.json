@@ -1063,7 +1063,7 @@
    "level": "debutant",
    "term": "Variable",
    "definition": "A name that refers to a value in memory. In Python there is no type declaration: “budget = 1200” creates the variable and gives it an integer.",
-   "example": "cpc = 0.45 ; clics = 300 ; depense = cpc * clics",
+   "example": "cpc = 0.45 ; clicks = 300 ; spend = cpc * clicks",
    "tags": [
     "#manual"
    ]
@@ -1075,7 +1075,7 @@
    "level": "intermediaire",
    "term": "Multiple assignment",
    "definition": "Assigning several values at once: “a, b = 1, 2”. Also used to swap two variables without a temporary one: “a, b = b, a”.",
-   "example": "nom, email = ligne.split(\";\")",
+   "example": "name, email = line.split(\";\")",
    "tags": [
     "#manual"
    ]
@@ -1087,7 +1087,7 @@
    "level": "debutant",
    "term": "Boolean",
    "definition": "Type with two values, “True” and “False”. The result of comparisons (“==”, “<”, “in”) and conditions. Careful: “0”, “\"\"”, “[]” and “None” count as False in an “if”.",
-   "example": "if clics > 100: … ; actif = email.endswith(\"@gmail.com\")",
+   "example": "if clicks > 100: ... ; is_gmail = email.endswith(\"@gmail.com\")",
    "tags": [
     "#manual"
    ]
@@ -1099,7 +1099,7 @@
    "level": "debutant",
    "term": "None",
    "definition": "The \"nothing\" value: the absence of a result. A function without “return” returns None. Test for it with “is None”, never with “==”.",
-   "example": "resultat = trouver_client(email) ; if resultat is None: print(\"inconnu\")",
+   "example": "customer = find_customer(email) ; if customer is None: print(\"unknown\")",
    "tags": [
     "#manual"
    ]
@@ -1123,7 +1123,7 @@
    "level": "debutant",
    "term": "Indentation",
    "definition": "In Python, the spaces at the start of a line (4 per level) are what delimit blocks: the body of an “if”, a loop, a function. Wrong indentation is an error.",
-   "example": "if ok:\n    print(\"oui\")  # the 4 spaces are part of the syntax",
+   "example": "if ok:\n    print(\"yes\")  # the 4 spaces are part of the syntax",
    "tags": [
     "#manual"
    ]
@@ -1135,7 +1135,7 @@
    "level": "intermediaire",
    "term": "Mutable / immutable",
    "definition": "A list or a dict is modified in place (mutable); a string, a tuple or a number never changes (immutable): any \"modification\" creates a new value.",
-   "example": "canaux.append(\"geo\") modifies the list; nom.upper() returns a new string, nom stays unchanged.",
+   "example": "channels.append(\"geo\") modifies the list; name.upper() returns a new string, name stays unchanged.",
    "tags": [
     "#manual"
    ]
@@ -1147,7 +1147,7 @@
    "level": "intermediaire",
    "term": "Tuple",
    "definition": "Immutable sequence in parentheses: “(48.85, 2.35)”. For data that belongs together and must not change, or as a dictionary key.",
-   "example": "coordonnees = (48.85, 2.35) ; lat, lon = coordonnees",
+   "example": "coordinates = (48.85, 2.35) ; lat, lon = coordinates",
    "tags": [
     "#manual"
    ]
@@ -1159,7 +1159,7 @@
    "level": "intermediaire",
    "term": "Set",
    "definition": "Collection with no duplicates and no order, in curly braces: “{\"seo\", \"sea\"}”. Ideal for deduplicating and testing membership very fast.",
-   "example": "emails_uniques = set(emails) ; len(emails_uniques)",
+   "example": "unique_emails = set(emails) ; len(unique_emails)",
    "tags": [
     "#manual"
    ]
@@ -1171,7 +1171,7 @@
    "level": "intermediaire",
    "term": "Slicing",
    "definition": "Extract a slice of a sequence with “[start:end]” (end excluded). Negative indices count from the end; “[::2]” skips every other element.",
-   "example": "\"marketing\"[:6] → \"market\" ; liste[-3:] → the last three",
+   "example": "\"marketing\"[:6] gives \"market\" ; items[-3:] gives the last three",
    "tags": [
     "#manual"
    ]
@@ -1183,7 +1183,7 @@
    "level": "intermediaire",
    "term": "List comprehension",
    "definition": "Build a list in one line from another: “[f(x) for x in xs if cond]”. More readable and faster than a loop with append.",
-   "example": "gros_clients = [c for c in clients if c[\"ca\"] > 10000]",
+   "example": "big_customers = [c for c in customers if c[\"revenue\"] > 10000]",
    "tags": [
     "#manual"
    ]
@@ -1206,8 +1206,8 @@
    "topic": "concepts",
    "level": "intermediaire",
    "term": "Default argument",
-   "definition": "Value a parameter takes if the caller doesn't provide one: “def envoyer(msg, urgent=False)”. Trap: never use a list or a dict as a default value.",
-   "example": "def resume(texte, longueur=100): …  →  resume(article) or resume(article, 50)",
+   "definition": "Value a parameter takes if the caller does not provide one: def send(msg, urgent=False). Trap: never use a list or a dict as a default value.",
+   "example": "def summarize(text, length=100): then summarize(article) or summarize(article, 50)",
    "tags": [
     "#manual"
    ]
@@ -1219,7 +1219,7 @@
    "level": "intermediaire",
    "term": "Scope",
    "definition": "A variable created inside a function exists only in that function. Outside code can't see it; the function can see global variables but must not modify them.",
-   "example": "total defined inside calculer() is not accessible after the call: you have to return it.",
+   "example": "total defined inside compute() is not reachable after the call: the function has to return it.",
    "tags": [
     "#manual"
    ]
@@ -1267,7 +1267,7 @@
    "level": "intermediaire",
    "term": "PEP 8",
    "definition": "Python's official style guide: 4 spaces, snake_case for variables and functions, 79-character lines, spaces around operators. Formatters (black, ruff) apply it automatically.",
-   "example": "taux_de_clic rather than TauxDeClic or tauxdeclic",
+   "example": "click_rate rather than ClickRate or clickrate",
    "tags": [
     "#manual"
    ]
@@ -1495,7 +1495,7 @@
    "level": "debutant",
    "term": "DataFrame",
    "definition": "The pandas table: rows and named columns, like a spreadsheet in memory. Almost all data work goes through it.",
-   "example": "df = pd.read_csv(\"campagnes.csv\") ; df.shape → (1200, 8)",
+   "example": "df = pd.read_csv(\"campaigns.csv\") ; df.shape gives (1200, 8)",
    "tags": [
     "#manual"
    ]
@@ -1507,7 +1507,7 @@
    "level": "debutant",
    "term": "Series",
    "definition": "A single column of a DataFrame (or an indexed list). “df[\"clics\"]” is a Series; you apply sum(), mean(), max()… to it.",
-   "example": "df[\"cout\"].sum()",
+   "example": "df[\"cost\"].sum()",
    "tags": [
     "#manual"
    ]
@@ -1519,7 +1519,7 @@
    "level": "intermediaire",
    "term": "dtype",
    "definition": "The type of a column's values: int64, float64, object (text), bool, datetime64. A number read as text can't be summed: check with df.dtypes.",
-   "example": "df[\"cout\"] = df[\"cout\"].astype(float)",
+   "example": "df[\"cost\"] = df[\"cost\"].astype(float)",
    "tags": [
     "#manual"
    ]
@@ -1543,7 +1543,7 @@
    "level": "intermediaire",
    "term": "Index",
    "definition": "The label of each row (0, 1, 2… by default). You can make it a meaningful column (date, id) to select with loc.",
-   "example": "df.set_index(\"id_campagne\").loc[\"C042\"] → the row of campaign C042",
+   "example": "df.set_index(\"campaign_id\").loc[\"C042\"] gives the row of campaign C042",
    "tags": [
     "#manual"
    ]
@@ -1555,7 +1555,7 @@
    "level": "intermediaire",
    "term": "Join (merge)",
    "definition": "Combine two tables on a common column, like a SQL join: inner (shared rows), left (everything from the left), outer (everything).",
-   "example": "pd.merge(campagnes, couts, on=\"id_campagne\", how=\"left\")",
+   "example": "pd.merge(campaigns, costs, on=\"campaign_id\", how=\"left\")",
    "tags": [
     "#manual"
    ]
@@ -1567,7 +1567,7 @@
    "level": "intermediaire",
    "term": "Aggregation",
    "definition": "Summarize groups: groupby() then sum(), mean(), count()… or agg() for several measures at once.",
-   "example": "df.groupby(\"canal\").agg(clics=(\"clics\", \"sum\"), cpa=(\"cpa\", \"mean\"))",
+   "example": "df.groupby(\"channel\").agg(clicks=(\"clicks\", \"sum\"), cpa=(\"cpa\", \"mean\"))",
    "tags": [
     "#manual"
    ]
@@ -1579,7 +1579,7 @@
    "level": "intermediaire",
    "term": "datetime",
    "definition": "Date/time type. pd.to_datetime() converts a text column; you can then extract the month, group by week, filter a period.",
-   "example": "df[\"date\"] = pd.to_datetime(df[\"date\"]) ; df.resample(\"W\", on=\"date\")[\"clics\"].sum()",
+   "example": "df[\"date\"] = pd.to_datetime(df[\"date\"]) ; df.resample(\"W\", on=\"date\")[\"clicks\"].sum()",
    "tags": [
     "#manual"
    ]
@@ -1591,7 +1591,7 @@
    "level": "debutant",
    "term": "matplotlib",
    "definition": "The reference charting library; pandas uses it through df.plot(). Line, bars, histogram in one line.",
-   "example": "df.groupby(\"mois\")[\"clics\"].sum().plot(kind=\"bar\")",
+   "example": "df.groupby(\"month\")[\"clicks\"].sum().plot(kind=\"bar\")",
    "tags": [
     "#manual"
    ]
@@ -1603,7 +1603,7 @@
    "level": "debutant",
    "term": "Export",
    "definition": "Write the result: to_csv(), to_excel(), to_json(). For Excel, openpyxl is required; index=False avoids the stray index column.",
-   "example": "df.to_excel(\"rapport.xlsx\", index=False)",
+   "example": "df.to_excel(\"report.xlsx\", index=False)",
    "tags": [
     "#manual"
    ]
@@ -1626,8 +1626,8 @@
    "topic": "pratiques",
    "level": "intermediaire",
    "term": "assert",
-   "definition": "Check that crashes the program if a condition is false: a safety net for assumptions (\"the CSV really has a cout column\").",
-   "example": "assert \"cout\" in df.columns, \"missing cout column\"",
+   "definition": "Check that crashes the program if a condition is false: a safety net for assumptions (\"the CSV really has a cost column\").",
+   "example": "assert \"cost\" in df.columns, \"missing cost column\"",
    "tags": [
     "#manual"
    ]
@@ -1651,7 +1651,7 @@
    "level": "debutant",
    "term": "Docstring",
    "definition": "Documentation string at the top of a function, between triple quotes: what it does, its parameters, what it returns. Read by help() and by editors.",
-   "example": "def cpa(cout, conversions):\n    \"\"\"Cost per acquisition; returns None if there are no conversions.\"\"\"",
+   "example": "def cpa(cost, conversions):\n    \"\"\"Cost per acquisition; returns None if there are no conversions.\"\"\"",
    "tags": [
     "#manual"
    ]
@@ -1662,8 +1662,8 @@
    "topic": "pratiques",
    "level": "intermediaire",
    "term": "Type hints",
-   "definition": "Type annotations on parameters and the return value (“def cpa(cout: float, conv: int) -> float”). Python doesn't check them, but the editor and tools do, and they document the code.",
-   "example": "def envoyer(destinataires: list[str], objet: str) -> bool:",
+   "definition": "Type annotations on parameters and the return value (def cpa(cost: float, conv: int) -> float). Python does not check them, but the editor and tools do, and they document the code.",
+   "example": "def send(recipients: list[str], subject: str) -> bool:",
    "tags": [
     "#manual"
    ]
@@ -1675,7 +1675,7 @@
    "level": "debutant",
    "term": "DRY",
    "definition": "Don't Repeat Yourself: code copy-pasted three times becomes a function. A fix then happens in a single place.",
-   "example": "Three blocks that compute a CPA → one cpa(cout, conversions) function.",
+   "example": "Three blocks that compute a CPA become one cpa(cost, conversions) function.",
    "tags": [
     "#manual"
    ]
@@ -1698,8 +1698,8 @@
    "topic": "pratiques",
    "level": "debutant",
    "term": "Naming conventions",
-   "definition": "Names that say what the thing is: “cout_par_clic” rather than “x” or “cpc2”. Code is read ten times more often than it is written.",
-   "example": "for campagne in campagnes: rather than for c in cs:",
+   "definition": "Names that say what the thing is: cost_per_click rather than x or cpc2. Code is read ten times more often than it is written.",
+   "example": "for campaign in campaigns: rather than for c in cs:",
    "tags": [
     "#manual"
    ]
@@ -1843,7 +1843,7 @@
    "level": "intermediaire",
    "term": "Specificity",
    "definition": "Rule that settles two conflicting styles: an id beats a class, which beats a tag. On a tie, the last rule wins. !important overrides everything: avoid it.",
-   "example": "#hero p (id) beats .texte (class) even if .texte is written afterwards.",
+   "example": "#hero p (an id) beats .text (a class) even if .text is written afterwards.",
    "tags": [
     "#manual"
    ]
@@ -1891,7 +1891,7 @@
    "level": "debutant",
    "term": "Media query",
    "definition": "Conditional rule based on screen size (or other criteria): @media (max-width: 600px) { … }. The foundation of responsive design with the mobile-first approach.",
-   "example": "@media (min-width: 900px) { .grille { grid-template-columns: 1fr 1fr 1fr; } }",
+   "example": "@media (min-width: 900px) { .grid { grid-template-columns: 1fr 1fr 1fr; } }",
    "tags": [
     "#manual"
    ]
@@ -1914,8 +1914,8 @@
    "topic": "css",
    "level": "intermediaire",
    "term": "CSS variables",
-   "definition": "Custom properties (--couleur-primaire: #5b4bff) declared once, used everywhere with var(). A brand color change = one line.",
-   "example": ":root { --primaire: #ff6b35; } .cta { background: var(--primaire); }",
+   "definition": "Custom properties (--primary-color: #5b4bff) declared once and used everywhere with var(). A brand color change becomes a one-line change.",
+   "example": ":root { --primary: #ff6b35; } .cta { background: var(--primary); }",
    "tags": [
     "#manual"
    ]

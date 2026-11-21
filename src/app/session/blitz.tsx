@@ -64,6 +64,7 @@ export default function BlitzRoute() {
   // Comptes synchrones : une réponse donnée juste avant la fin compte
   // pareil pour le score, le nombre de questions et la série.
   const answeredRef = useRef(0);
+  const lastMark = useRef(Date.now());
   const correctRef = useRef(0);
   const finished = useRef(false);
   const nextTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -151,16 +152,19 @@ export default function BlitzRoute() {
     if (!presented || !running || flash || finished.current) return;
     const ok = i === presented.answer;
     const store = useProgress.getState();
+    const now = new Date();
     const r = applyAnswerAction(store.progress, {
       question: presented.exercise,
       correct: ok,
       mode: 'free',
       chrono: true,
-      now: new Date(),
+      now,
       creditedThisSession: credited.current.has(presented.exercise.key),
+      studySeconds: (now.getTime() - lastMark.current) / 1000,
+      subjectId: subjectId ?? undefined,
     });
+    lastMark.current = now.getTime();
     if (ok) credited.current.add(presented.exercise.key);
-    // Le Blitz coûte 5 ⚡ au lancement, pas une de plus par erreur (chrono : voir applyAnswerAction).
     store.setProgress(r.progress);
     answeredRef.current += 1;
     if (ok) correctRef.current += 1;

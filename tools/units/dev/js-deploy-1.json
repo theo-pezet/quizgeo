@@ -1,0 +1,184 @@
+{
+ "unit": {
+  "id": "js-deploy-1",
+  "subjectId": "js",
+  "topic": "deploiement",
+  "world": "js-w3",
+  "title": "Deploying an app",
+  "description": "Build, environments, environment variables and secrets, CI with GitHub Actions, preview deployments, static, serverless and containers, Docker, domains and HTTPS, logs, rollback"
+ },
+ "cards": [
+  {
+   "slug": "build-step",
+   "level": "debutant",
+   "term": "Build step",
+   "definition": "Turning source code into the files that run in production: compiling TypeScript, bundling and minifying JavaScript, optimizing images. npm run build usually produces a dist or .next folder.",
+   "example": "Vite turns 200 source files into a few minified bundles in dist/."
+  },
+  {
+   "slug": "environments",
+   "level": "debutant",
+   "term": "Environments",
+   "definition": "Separate copies of an app: local (your laptop), preview or staging (to test before release) and production (real users). Each has its own variables, database and keys.",
+   "example": "A pull request gets its own preview URL; main deploys to production."
+  },
+  {
+   "slug": "ci-cd",
+   "level": "debutant",
+   "term": "CI/CD",
+   "definition": "Continuous integration runs tests and checks automatically on every push or pull request; continuous deployment ships to production automatically when checks pass. GitHub Actions describes it in YAML files in .github/workflows.",
+   "example": "On every PR: npm ci, npm test, npm run build. On merge to main: deploy."
+  },
+  {
+   "slug": "hosting-types",
+   "level": "debutant",
+   "term": "Static, serverless, containers",
+   "definition": "Static hosting serves prebuilt files from a CDN (cheap, fast). Serverless functions run code on demand (Vercel, Netlify, Cloudflare Workers). Containers run a full server process (Docker on Fly.io, Railway, Cloud Run).",
+   "example": "A marketing site is static; a contact form uses a serverless function; a real-time app runs in a container."
+  },
+  {
+   "slug": "docker",
+   "level": "debutant",
+   "term": "Docker image and container",
+   "definition": "A Dockerfile describes how to build an image: base system, dependencies, code, start command. A container is a running instance of that image, identical on a laptop and in production.",
+   "example": "FROM node:22-slim, COPY, RUN npm ci, CMD [\"node\", \"server.js\"]"
+  },
+  {
+   "slug": "domain-https",
+   "level": "debutant",
+   "term": "Domain, DNS and HTTPS",
+   "definition": "The domain points to the host through DNS records (A for an IP, CNAME for another name). Modern hosts issue free TLS certificates automatically so the site is served over HTTPS.",
+   "example": "www CNAME to your-app.vercel.app, then the host provisions the certificate."
+  },
+  {
+   "slug": "rollback",
+   "level": "debutant",
+   "term": "Logs, monitoring and rollback",
+   "definition": "In production you watch logs, errors (Sentry) and uptime. When a release breaks something, roll back to the previous version first, then fix calmly.",
+   "example": "Errors jump after a deploy: one click redeploys the previous build."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "What does npm run build usually produce?",
+   "choices": [
+    "Optimized files ready for production in a folder like dist",
+    "A new Git branch called build",
+    "A copy of node_modules for the server",
+    "The test report of the project"
+   ],
+   "explain": "The build compiles, bundles and minifies. The host serves or runs that output."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your Next.js site needs a CMS token on the server. Where does it go?",
+   "choices": [
+    "In the environment variables of the host, server-side only",
+    "In a NEXT_PUBLIC_ variable so pages can read it",
+    "Directly in the source code, in a constant",
+    "In the README, for the next developer"
+   ],
+   "explain": "Public prefixes (NEXT_PUBLIC_, VITE_) end up in the browser bundle. Secrets stay in server variables."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the main benefit of preview deployments on pull requests?",
+   "choices": [
+    "Testing each change on a real URL before it reaches users",
+    "Making the production site load faster",
+    "Avoiding writing any automated test",
+    "Hiding the code from the rest of the team"
+   ],
+   "explain": "Product, marketing and QA can click through the change before merge. Bugs found there cost nothing."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does this GitHub Actions job do on every pull request?",
+   "choices": [
+    "Installs exact dependencies, runs tests, then builds",
+    "Deploys the code to production at once",
+    "Deletes the branch after merging",
+    "Sends the code to npm as a package"
+   ],
+   "explain": "npm ci installs from the lock file, the tests and the build must pass. A red check blocks the merge if main is protected.",
+   "code": {
+    "lang": "yaml",
+    "src": "on: pull_request\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n      - uses: actions/checkout@v4\n      - run: npm ci\n      - run: npm test\n      - run: npm run build"
+   }
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A landing page with no server logic. Which hosting fits best?",
+   "choices": [
+    "Static hosting on a CDN",
+    "A dedicated server rented by the month",
+    "A Kubernetes cluster",
+    "A container with a database"
+   ],
+   "explain": "Static files on a CDN are fast, cheap and nearly impossible to take down."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is the difference between a Docker image and a container?",
+   "choices": [
+    "The image is the recipe built once; a container is a running copy",
+    "They are two names for the very same thing",
+    "The container is built first, then the image",
+    "Images only work on Windows machines"
+   ],
+   "explain": "Same image, same behaviour everywhere: no more it works on my machine."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which DNS record points www.example.com to your-app.netlify.app?",
+   "choices": [
+    "A CNAME record",
+    "An A record",
+    "An MX record",
+    "A TXT record"
+   ],
+   "explain": "A CNAME points a name to another name. An A record points to an IP address; MX handles email."
+  },
+  {
+   "kind": "vf",
+   "prompt": "After a release breaks checkout, the first move is to roll back to the previous version, then investigate.",
+   "isTrue": true,
+   "explain": "True. Restore service first, debug second. Good hosts keep previous builds one click away."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which file should never be committed?",
+   "choices": [
+    ".env with production keys",
+    "package-lock.json",
+    "Dockerfile",
+    ".github/workflows/ci.yml"
+   ],
+   "explain": "The lock file, the Dockerfile and the workflows belong in Git. Secrets do not; list .env in .gitignore."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Why use npm ci instead of npm install in CI?",
+   "choices": [
+    "It installs exactly the versions of the lock file",
+    "It installs newer versions than the lock file",
+    "It skips the installation of dependencies",
+    "It publishes the package to the registry"
+   ],
+   "explain": "npm ci is strict and reproducible: it fails if package.json and the lock file disagree."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put a deployment pipeline in order.",
+   "steps": [
+    "Push a branch and open a pull request",
+    "CI installs, tests and builds the app",
+    "A preview URL is shared and checked",
+    "Merge to main triggers the production deploy",
+    "Watch logs and errors, roll back if needed"
+   ],
+   "explain": "Every step catches problems earlier than the next. Monitoring closes the loop."
+  }
+ ]
+}

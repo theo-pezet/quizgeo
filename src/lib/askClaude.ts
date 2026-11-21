@@ -34,7 +34,7 @@ function clip(text: string, max = MAX_BLOCK): string {
 }
 
 /** L'énoncé et la bonne réponse, selon le type d'exercice. */
-function describe(e: Exercise): { question: string[]; answer: string } {
+export function describe(e: Exercise): { question: string[]; answer: string } {
   switch (e.kind) {
     case 'qcm': {
       const q = [`Question: ${e.prompt}`];

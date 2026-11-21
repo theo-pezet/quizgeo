@@ -400,6 +400,41 @@ export interface Progress {
   blitz: Record<string, number>;
   daily: DailyState;
   monthly: MonthlyState;
+  study: StudyState;
+}
+
+/** Bilan des jours manqués, annoncé une fois à l'ouverture (voir study.ts). */
+export interface StudyReport {
+  missedDays: number;
+  missingMinutes: number;
+  gemsLost: number;
+  /** Dette totale à rattraper aujourd'hui, en minutes. */
+  debtMinutes: number;
+  /** Série « objectif tenu » perdue (0 s'il n'y en avait pas). */
+  streakLost: number;
+}
+
+/** Le temps d'étude du jour et son historique (voir study.ts). */
+export interface StudyState {
+  goalMinutes: number;
+  day: DayKey | null;
+  seconds: number;
+  /** Secondes du jour, par matière. */
+  bySubject: Record<string, number>;
+  debtMinutes: number;
+  /** Secondes par jour passé (35 derniers jours). */
+  history: Record<DayKey, number>;
+  /** Dernier jour dont le bilan a été fait. */
+  settledThrough: DayKey | null;
+  halfOn: DayKey | null;
+  metOn: DayKey | null;
+  goalStreak: number;
+  bestGoalStreak: number;
+  report: StudyReport | null;
+}
+
+export function emptyStudy(): StudyState {
+  return { goalMinutes: 90, day: null, seconds: 0, bySubject: {}, debtMinutes: 0, history: {}, settledThrough: null, halfOn: null, metOn: null, goalStreak: 0, bestGoalStreak: 0, report: null };
 }
 
 /** Le défi du mois (voir monthly.ts). */
@@ -474,5 +509,6 @@ export function emptyProgress(): Progress {
     blitz: {},
     daily: { day: null, xp: 0, goal: DEFAULT_DAILY_GOAL, metOn: null, deckRewardedOn: null },
     monthly: { month: null, lessons: 0, claimed: false, medals: [] },
+    study: emptyStudy(),
   };
 }

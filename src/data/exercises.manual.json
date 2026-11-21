@@ -1485,7 +1485,7 @@
     "An error"
    ],
    "answer": 0,
-   "explain": "An empty list evaluates to False. “not []” is therefore True… but here we print “bool([])”, which is False.",
+   "explain": "An empty list counts as False: bool([]) is False. As soon as it holds one item, even [0], bool() gives True.",
    "code": {
     "lang": "python",
     "src": "clients = []\nprint(bool(clients))"
@@ -1689,13 +1689,13 @@
    "unitId": "py-pratiques-1",
    "prompt": "Which of these names follows PEP 8 for a variable?",
    "choices": [
-    "taux_de_clic",
-    "TauxDeClic",
-    "tauxDeClic",
-    "TAUXDECLIC"
+    "click_rate",
+    "ClickRate",
+    "clickRate",
+    "CLICKRATE"
    ],
    "answer": 0,
-   "explain": "snake_case for variables and functions; CapWords (TauxDeClic) is reserved for classes; UPPERCASE for constants. camelCase (tauxDeClic) is not used in Python."
+   "explain": "snake_case for variables and functions; CapWords (ClickRate) is reserved for classes; UPPERCASE for constants. camelCase (clickRate) is not used in Python."
   },
   {
    "kind": "qcm",
@@ -1827,10 +1827,10 @@
    "unitId": "py-data-1",
    "prompt": "You want total clicks per channel. Which line?",
    "choices": [
-    "df.groupby(\"canal\")[\"clics\"].sum()",
-    "df[\"clics\"].sum(\"canal\")",
-    "df.sum(canal)",
-    "df.groupby(\"clics\")[\"canal\"].sum()"
+    "df.groupby(\"channel\")[\"clicks\"].sum()",
+    "df[\"clicks\"].sum(\"channel\")",
+    "df.sum(channel)",
+    "df.groupby(\"clicks\")[\"channel\"].sum()"
    ],
    "answer": 0,
    "explain": "Group by the dimension (channel), pick the measure (clicks), aggregate (sum)."
@@ -1839,7 +1839,7 @@
    "kind": "qcm",
    "key": "py-data-1:x:105",
    "unitId": "py-data-1",
-   "prompt": "df.to_excel(\"rapport.xlsx\") also writes the index column by default.",
+   "prompt": "df.to_excel(\"report.xlsx\") also writes the index column by default.",
    "choices": [
     "True",
     "False"
@@ -1951,10 +1951,10 @@
     {
      "prompt": "The pivot table, in pandas, is…",
      "choices": [
-      "df.pivot_table(index=\"campagne\", columns=\"semaine\", values=\"cout\", aggfunc=\"sum\")",
-      "df.excel_pivot(rows=\"campagne\", cols=\"semaine\", values=\"cout\", func=\"sum\")",
-      "df.groupby(\"campagne\").pivot(columns=\"semaine\", values=\"cout\", agg=\"sum\")",
-      "df.cross(index=\"campagne\", columns=\"semaine\", values=\"cout\", how=\"sum\")"
+      "df.pivot_table(index=\"campaign\", columns=\"week\", values=\"cost\", aggfunc=\"sum\")",
+      "df.excel_pivot(rows=\"campaign\", cols=\"week\", values=\"cost\", func=\"sum\")",
+      "df.groupby(\"campaign\").pivot(columns=\"week\", values=\"cost\", agg=\"sum\")",
+      "df.cross(index=\"campaign\", columns=\"week\", values=\"cost\", how=\"sum\")"
      ],
      "answer": 0,
      "feedback": "pivot_table = index (rows), columns (columns), values (measure), aggfunc (sum, mean…)."
@@ -1978,26 +1978,26 @@
    "key": "py-case-1:x:2",
    "unitId": "py-case-1",
    "title": "Cleaning a CRM export",
-   "scenario": "A CRM export of 40,000 contacts: uppercase emails with spaces, duplicates, dates stored as text, and a \"ca\" (revenue) column where some amounts are written \"1 200 €\".",
+   "scenario": "A CRM export of 40,000 contacts: uppercase emails with spaces, duplicates, dates stored as text, and a \"revenue\" column where some amounts are written \"1 200 €\".",
    "steps": [
     {
      "prompt": "For the emails, the right chain of operations?",
      "choices": [
       "df[\"email\"].str.strip().str.lower(), then drop_duplicates(subset=\"email\")",
       "df[\"email\"].upper().strip(), then drop_duplicates()",
-      "df[\"email\"].str.strip(), then drop_duplicates(subset=\"nom\")",
+      "df[\"email\"].str.strip(), then drop_duplicates(subset=\"name\")",
       "Fix them by hand in Excel, row by row"
      ],
      "answer": 0,
      "feedback": "strip removes the spaces, lower normalizes the case, drop_duplicates dedupes on the normalized email, in that order."
     },
     {
-     "prompt": "For the \"ca\" column with \"1 200 €\"?",
+     "prompt": "For the \"revenue\" column with \"1 200 €\"?",
      "choices": [
       "Remove the space and € with str.replace, then astype(float)",
       "astype(float) directly: pandas ignores the € symbol",
       "Leave it as text: Excel will convert it on opening",
-      "pd.to_numeric(df[\"ca\"]) with no cleaning first"
+      "pd.to_numeric(df[\"revenue\"]) with no cleaning first"
      ],
      "answer": 0,
      "feedback": "astype(float) on \"1 200 €\" raises an error: you have to clean the text first."
@@ -2506,11 +2506,11 @@
    "kind": "qcm",
    "key": "web-html-2:x:104",
    "unitId": "web-html-2",
-   "prompt": "The catalog has /chaussures, /chaussures?tri=prix and /chaussures?tri=nom with the same content. What do you do?",
+   "prompt": "The catalog has /shoes, /shoes?sort=price and /shoes?sort=name with the same content. What do you do?",
    "choices": [
-    "A <link rel=\"canonical\"> pointing to /chaussures on all three",
+    "A <link rel=\"canonical\"> pointing to /shoes on all three",
     "Keep three separate pages: they bring in more traffic",
-    "Block /chaussures in robots.txt to avoid the duplicate",
+    "Block /shoes in robots.txt to avoid the duplicate",
     "Nothing: Google always picks the right version by itself"
    ],
    "answer": 0,
@@ -2544,7 +2544,7 @@
    "kind": "qcm",
    "key": "web-css-2:x:101",
    "unitId": "web-css-2",
-   "prompt": "The paragraph is <p id=\"intro\" class=\"texte\">. What color is its text?",
+   "prompt": "The paragraph is <p id=\"intro\" class=\"text\">. What color is its text?",
    "choices": [
     "Red: the id beats the class",
     "Blue: the last rule wins",
@@ -2732,8 +2732,8 @@
    "choices": [
     "A \"click\" trigger filtered on the button, linked to the tag",
     "To change the site's code to call GA4 on every click",
-    "A new GTM container dedicated to the \"Essayer\" buttons",
-    "A Meta pixel placed on each of the \"Essayer\" buttons"
+    "A new GTM container dedicated to the \"Try it\" buttons",
+    "A Meta pixel placed on each of the \"Try it\" buttons"
    ],
    "answer": 0,
    "explain": "Tag (what) + trigger (when); a variable can grab the button text to pass it as a parameter."
@@ -2787,7 +2787,7 @@
    "key": "web-case-1:x:1",
    "unitId": "web-case-1",
    "title": "The conversion isn't coming through",
-   "scenario": "Since the site redesign, GA4 no longer records any sign-ups, even though the sign-up emails are arriving fine. The GA4 \"inscription\" tag exists in GTM, fired on \"form submission\".",
+   "scenario": "Since the site redesign, GA4 no longer records any sign-ups, even though the sign-up emails are arriving fine. The GA4 \"sign_up\" tag exists in GTM, fired on \"form submission\".",
    "steps": [
     {
      "prompt": "First reflex?",
@@ -2809,7 +2809,7 @@
       "Turn off the form's JavaScript to go back to plain HTML"
      ],
      "answer": 0,
-     "feedback": "The native \"form submission\" trigger misses JavaScript forms; a dataLayer.push({ event: \"inscription\" }) is reliable."
+     "feedback": "The native \"form submission\" trigger misses JavaScript forms; a dataLayer.push({ event: \"sign_up\" }) is reliable."
     },
     {
      "prompt": "It works in Preview, but still nothing in production. Lead?",
@@ -2872,9 +2872,9 @@
    "kind": "qcm",
    "key": "web-case-1:x:3",
    "unitId": "web-case-1",
-   "prompt": "A campaign link: https://site.fr/offre?utm_source=newsletter&utm_medium=email&utm_campaign=rentree. What does GA4 see?",
+   "prompt": "A campaign link: https://site.fr/offre?utm_source=newsletter&utm_medium=email&utm_campaign=back_to_school. What does GA4 see?",
    "choices": [
-    "Source newsletter, medium email, campaign rentree",
+    "Source newsletter, medium email, campaign back_to_school",
     "Nothing: UTM parameters are only read by Google Ads",
     "A 404 page, because the URL contains parameters",
     "A \"direct\" session, because the link comes from an email"

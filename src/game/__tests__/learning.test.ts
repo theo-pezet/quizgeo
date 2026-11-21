@@ -16,6 +16,8 @@ describe('prétest', () => {
     expect(pickPretest([qcm('u:a'), qcm('u:b'), qcm('u:c'), qcm('u:a')], false).map((e) => e.key)).toEqual(['u:c', 'u:a']);
     expect(PRETEST_SIZE).toBe(2);
     expect(pickPretest(session, false, 3).map((e) => e.key)).toEqual(['u:b', 'u:c', 'u:d']);
+    // Leçon trop courte : on prend ce qu'il y a.
+    expect(pickPretest([order('u:o'), qcm('u:a')], false).map((e) => e.key)).toEqual(['u:a']);
   });
 
   it('ne concerne que les unités jamais commencées', () => {

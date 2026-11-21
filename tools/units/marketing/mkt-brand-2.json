@@ -1,0 +1,152 @@
+{
+ "unit": {
+  "id": "mkt-brand-2",
+  "subjectId": "marketing",
+  "topic": "marque",
+  "world": "marketing-w9",
+  "title": "Brand growth: availability and assets",
+  "description": "Brand equity, awareness, salience, mental and physical availability, distinctive assets, category entry points, brand versus performance"
+ },
+ "cards": [
+  {
+   "slug": "how-brands-grow",
+   "level": "debutant",
+   "term": "How Brands Grow (Byron Sharp)",
+   "definition": "Evidence-based view of growth: brands grow mainly by winning more buyers, most of them light buyers, through mental availability (coming to mind) and physical availability (being easy to buy).",
+   "example": "A soda brand grows by being in more fridges and more minds, not by making its fans drink twice as much."
+  },
+  {
+   "slug": "long-and-short",
+   "level": "debutant",
+   "term": "The long and the short of it",
+   "definition": "Binet and Field analysis of effectiveness cases: brand building drives long-term growth, activation drives short-term sales. A balance close to 60 percent brand and 40 percent activation is often cited as a starting point; it varies by category.",
+   "example": "A B2B brand spending everything on search ads captures demand but stops creating it."
+  },
+  {
+   "slug": "brand-consistency",
+   "level": "debutant",
+   "term": "Consistency",
+   "definition": "Using the same assets, tone and message for years, so memory structures build up. Marketers get bored of their campaigns long before customers notice them.",
+   "example": "A brand changing logo, colours and slogan every year has to start building recognition again each time."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "According to Byron Sharp, how do brands mainly grow?",
+   "choices": [
+    "By winning more buyers, especially light buyers",
+    "By making their loyal fans buy much more often",
+    "By targeting only a tiny niche of heavy users",
+    "By lowering their prices every quarter"
+   ],
+   "explain": "Penetration drives growth: big brands have many more buyers, most of whom buy rarely. Loyalty follows size."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What is mental availability?",
+   "choices": [
+    "The chance your brand comes to mind in a buying situation",
+    "The number of shops that stock your products",
+    "The hours your customer service is open",
+    "The size of your email list"
+   ],
+   "explain": "Mental availability is built by distinctive assets and links to category entry points. Physical availability is the shop side."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What are the purple of Milka, the Intel jingle and the Michelin man?",
+   "choices": [
+    "Distinctive brand assets",
+    "Category entry points",
+    "Brand equity measures",
+    "Price anchors"
+   ],
+   "explain": "Distinctive assets let people recognize the brand without its name. They take years of consistent use to build."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What are situations like I need a quick lunch or a gift for my host?",
+   "choices": [
+    "Category entry points",
+    "Distinctive brand assets",
+    "Lead magnets",
+    "Brand guidelines"
+   ],
+   "explain": "CEPs are the cues that make buyers think of a category. Brands win by being linked to many of them."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Brand awareness and brand salience differ. What does salience add?",
+   "choices": [
+    "Coming to mind at the moment of buying",
+    "Being recognized when the logo is shown",
+    "Having the highest price in the market",
+    "Being liked by people who never buy"
+   ],
+   "explain": "Recognition is awareness; salience is being thought of when it matters. A known brand can still be forgotten at the shelf."
+  },
+  {
+   "kind": "vf",
+   "prompt": "A B2B company that spends all its budget on search ads only captures existing demand; it does not create new demand.",
+   "isTrue": true,
+   "explain": "True. Search captures people already looking. Brand building makes more people look for you later."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Binet and Field suggest which split as a frequent starting point between brand and activation?",
+   "choices": [
+    "About 60 percent brand, 40 percent activation",
+    "About 10 percent brand, 90 percent activation",
+    "Exactly 50 percent brand, 50 percent activation",
+    "All on brand and nothing on activation"
+   ],
+   "explain": "The ratio varies by category and stage (more activation for new e-commerce, more brand for mature categories), but ignoring brand hurts long-term growth."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your team is bored of the campaign after one year. What should you usually do?",
+   "choices": [
+    "Keep the platform: customers have barely noticed it",
+    "Change the logo and the slogan right away",
+    "Stop all brand ads for a while",
+    "Run a totally new concept every month"
+   ],
+   "explain": "Consistency builds memory. Refresh executions, keep the assets and the core idea."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "What does share of search compare?",
+   "choices": [
+    "Your brand searches with the brand searches of your category",
+    "Your ad spend with the ad spend of rivals",
+    "Your SEO traffic with your paid traffic",
+    "Your followers with the followers of rivals"
+   ],
+   "explain": "Share of search is a cheap proxy of mental availability and often leads market share."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which is a sign of strong brand equity?",
+   "choices": [
+    "Customers pay more for your brand than for an equal product",
+    "Your logo was designed by a famous agency",
+    "Your company has existed for 100 years",
+    "You run more ads than all your competitors"
+   ],
+   "explain": "Brand equity is the value the name adds: price premium, preference, loyalty. A generic product with the same features sells for less."
+  }
+ ],
+ "deckCards": [
+  "marketing-brand-equity",
+  "marketing-brand-awareness",
+  "marketing-brand-salience",
+  "marketing-distinctive-brand-assets",
+  "marketing-mental-availability",
+  "marketing-category-entry-points",
+  "marketing-share-of-search",
+  "marketing-branding-vs-direct-response",
+  "marketing-brand-identity",
+  "marketing-brand-voice"
+ ]
+}

@@ -1,0 +1,201 @@
+{
+ "unit": {
+  "id": "mkt-plan-1",
+  "subjectId": "marketing",
+  "topic": "media",
+  "world": "marketing-w11",
+  "title": "Media planning and marketing budget",
+  "description": "Reach, frequency, GRP, effective frequency, media mix, MER, blended CAC, incrementality, marketing mix modeling, zero-base budget"
+ },
+ "cards": [
+  {
+   "slug": "media-plan",
+   "level": "debutant",
+   "term": "Media plan",
+   "definition": "The document that says where, when, how often and with which budget a campaign runs: channels, formats, targeting, flighting (calendar), expected reach and frequency, and how results will be measured.",
+   "example": "Four weeks: YouTube and connected TV for reach, Meta for frequency, search to capture demand, with weekly budgets."
+  },
+  {
+   "slug": "grp",
+   "level": "debutant",
+   "term": "GRP (gross rating points)",
+   "definition": "Reach in percent of the target multiplied by average frequency. 60 percent of the target reached 3 times on average gives 180 GRP. It measures pressure, not quality.",
+   "example": "A TV plan of 300 GRP on women aged 25 to 49."
+  },
+  {
+   "slug": "effective-frequency",
+   "level": "debutant",
+   "term": "Effective frequency",
+   "definition": "The number of exposures needed for a message to be noticed and remembered, often estimated between 3 and 10 depending on creative, category and competition. Beyond a point, extra exposures waste money and annoy.",
+   "example": "Capping display ads at 5 impressions per person per week."
+  },
+  {
+   "slug": "flighting",
+   "level": "debutant",
+   "term": "Flighting and continuity",
+   "definition": "Continuous plans run all year at a steady level; flighting runs bursts with pauses; pulsing keeps a low base with peaks. Choice depends on seasonality and budget.",
+   "example": "A toy brand concentrates spend in November and December, with a light presence the rest of the year."
+  },
+  {
+   "slug": "mmm-modern",
+   "level": "debutant",
+   "term": "Modern marketing mix modeling",
+   "definition": "Statistical models estimating the contribution of each channel to sales from aggregated data (spend, sales, seasonality, price), without cookies. Open-source tools like Meta Robyn and Google Meridian made it accessible; it is best combined with incrementality tests.",
+   "example": "An MMM shows TV adds sales for weeks after airing, which last-click attribution never credited."
+  }
+ ],
+ "exercises": [
+  {
+   "kind": "qcm",
+   "prompt": "A plan reaches 50 percent of the target with an average frequency of 4. How many GRP?",
+   "choices": [
+    "200",
+    "54",
+    "125",
+    "20"
+   ],
+   "explain": "GRP = reach percent x average frequency = 50 x 4. It describes pressure, not whether people remembered the ad."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Which pair of figures should a media plan give?",
+   "choices": [
+    "Reach and frequency on the target",
+    "Followers and likes on the page",
+    "Clicks and bounce rate only",
+    "Number of ads and number of colours"
+   ],
+   "explain": "How many people of the target will see the message, and how many times. Then the measure of results."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Your display ads were shown 25 times per person in a week. What do you do?",
+   "choices": [
+    "Cap frequency and widen the reach",
+    "Raise the bid to show them more",
+    "Change nothing while clicks come in",
+    "Show the ads only to past buyers"
+   ],
+   "explain": "Beyond effective frequency, extra impressions annoy and waste budget. A cap frees money to reach new people."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "A toy brand spends 70 percent of its budget in November and December. Which scheduling is it?",
+   "choices": [
+    "Flighting around the season",
+    "Continuous presence",
+    "Zero-base budgeting",
+    "Dayparting"
+   ],
+   "explain": "Spending follows demand. A light base the rest of the year (pulsing) keeps the brand in mind."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "Total revenue 500,000 euros, total marketing spend 100,000 euros. What is the MER?",
+   "choices": [
+    "5",
+    "0.2",
+    "50",
+    "400"
+   ],
+   "explain": "MER = total revenue divided by total marketing spend. It ignores attribution quarrels between channels."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "200 new customers, 30,000 euros of total acquisition spend across all channels. What is the blended CAC?",
+   "choices": [
+    "150 euros",
+    "200 euros",
+    "30 euros",
+    "6,000 euros"
+   ],
+   "explain": "30,000 divided by 200. Blended CAC includes all channels, paid and organic, which keeps everyone honest."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "How do you prove that retargeting ads cause extra sales?",
+   "choices": [
+    "An incrementality test with a holdout group",
+    "Reading the ROAS in the ad platform",
+    "Counting conversions after a click",
+    "Asking the platform account manager"
+   ],
+   "explain": "Retargeting shows ads to people who often buy anyway. Only a test with a group that sees no ads measures the true lift."
+  },
+  {
+   "kind": "vf",
+   "prompt": "Marketing mix modeling needs individual cookies for each visitor to work.",
+   "isTrue": false,
+   "explain": "False. MMM uses aggregated data over time (spend, sales, seasonality). That is why it came back as cookies declined."
+  },
+  {
+   "kind": "qcm",
+   "prompt": "With zero-base budgeting, how is next year budget built?",
+   "choices": [
+    "Every line restarts at zero and must be justified",
+    "Last year budget plus 5 percent",
+    "Half of what the CEO asks for",
+    "The same amount as the main competitor"
+   ],
+   "explain": "It forces you to question habits. It takes time, so many teams apply it to a few lines each year."
+  },
+  {
+   "kind": "order",
+   "prompt": "Put the steps of a media plan in order.",
+   "steps": [
+    "Set the business goal and the target",
+    "Choose the channels and formats that reach that target",
+    "Set budget, reach, frequency and calendar",
+    "Launch with tracking and test groups",
+    "Read results and rebalance the budget"
+   ],
+   "explain": "Goal and target first, then channels, then the numbers, then measurement. Plans that start from the channel waste money."
+  },
+  {
+   "kind": "case",
+   "title": "The CEO wants to cut brand spend",
+   "scenario": "A meal kit company spends 60 percent on performance ads and 40 percent on YouTube and posters. The CEO sees a ROAS of 6 on search and 0.8 on YouTube and wants to move everything to search.",
+   "steps": [
+    {
+     "prompt": "What is the flaw in comparing these two ROAS?",
+     "choices": [
+      "Search captures demand partly created by the brand ads",
+      "YouTube ROAS is always computed correctly",
+      "Search ads have no effect on sales",
+      "Posters bring the most clicks of all"
+     ],
+     "feedback": "Last-click platforms credit search for people who searched after seeing the brand elsewhere."
+    },
+    {
+     "prompt": "How do you settle the debate with data?",
+     "choices": [
+      "A geo test: pause YouTube in some regions and compare sales",
+      "Ask the YouTube rep for a better report",
+      "Survey 10 employees about the ads",
+      "Look at the likes on the YouTube videos"
+     ],
+     "feedback": "Geo holdout tests measure incrementality across channels, without cookies."
+    },
+    {
+     "prompt": "Sales drop 9 percent in regions without YouTube, and branded search falls too. Decision?",
+     "choices": [
+      "Keep brand spend and optimise it, with MMM to set the mix",
+      "Cut YouTube anyway, the ROAS is too low",
+      "Move all budget to posters",
+      "Stop search ads completely"
+     ],
+     "feedback": "The test shows brand ads feed demand, including search. Use MMM and tests to tune the split instead of guessing."
+    }
+   ],
+   "explain": "Platform ROAS is not incrementality. Test, model, then allocate."
+  }
+ ],
+ "deckCards": [
+  "marketing-reach-frequency",
+  "marketing-marketing-efficiency-ratio",
+  "marketing-blended-cac",
+  "marketing-zero-base-budgeting",
+  "marketing-marketing-mix-modeling-mmm",
+  "marketing-incrementality-testing"
+ ]
+}
