@@ -32,6 +32,7 @@ import {
   composeReviewSession,
   composeUnitSession,
   effectiveStreak,
+  guidedLeft,
   reviewQueue,
   pickPretest,
   shouldPromptExplain,
@@ -122,6 +123,13 @@ export interface SessionState {
 
 const SUBJECT_OF_UNIT: ReadonlyMap<string, string> = new Map(CATALOG.units.map((u) => [u.id, u.subjectId]));
 
+/** La carte prise à tort pour la bonne, sur une question de vocabulaire (voir duels.ts). */
+function confusedWith(exercise: Exercise, correct: boolean, given: string | undefined): string | undefined {
+  if (correct || given === undefined || exercise.kind !== 'qcm' || !exercise.choiceCards) return undefined;
+  const index = exercise.choices.indexOf(given);
+  return index >= 0 && index !== exercise.answer ? exercise.choiceCards[index] : undefined;
+}
+
 function compose(spec: SessionSpec, progress: Progress): Exercise[] {
   const rng = Math.random;
   const { exercisesOfUnit, exercisesOfSubject, EXERCISE_BY_KEY } = content();
@@ -138,9 +146,12 @@ function compose(spec: SessionSpec, progress: Progress): Exercise[] {
       };
       return composeUnitSession(exercisesOfUnit(spec.unitId), rng, undefined, { strength, firstTime: !unitStarted(progress, spec.unitId) });
     }
-    case 'review':
-      // Entrelacées par matière (voir learning.ts).
-      return composeReviewSession(reviewQueue(progress, toDayKey(new Date())), EXERCISE_BY_KEY, undefined, (e) => SUBJECT_OF_UNIT.get(e.unitId) ?? e.unitId);
+    case 'review': {
+      // Plafond quotidien (voir guided.ts), puis entrelacées par matière (voir learning.ts).
+      const today = toDayKey(new Date());
+      const left = guidedLeft(progress, today).review;
+      return composeReviewSession(reviewQueue(progress, today), EXERCISE_BY_KEY, left, (e) => SUBJECT_OF_UNIT.get(e.unitId) ?? e.unitId);
+    }
     case 'free':
       return composeFreeSession(exercisesOfSubject(spec.subjectId), rng);
   }
@@ -260,6 +271,7 @@ export function useSession(spec: SessionSpec) {
         confident: confident && canBeSure,
         studySeconds: (now.getTime() - lastMark.current) / 1000,
         subjectId: SUBJECT_OF_UNIT.get(current.exercise.unitId),
+        confusedWith: confusedWith(current.exercise, correct, given),
       });
       lastMark.current = now.getTime();
       let progress = r.progress;

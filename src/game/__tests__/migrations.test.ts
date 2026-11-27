@@ -165,4 +165,15 @@ describe('v3 : exercices « lis le code » ajoutés en 1.1', () => {
     expect(migratePersistedProgress(raw, 3).questions[added]?.streak).toBe(2);
     expect(migratePersistedProgress(raw, 4).questions[added]).toBeUndefined();
   });
+
+  it('v5 : l’objectif par défaut de 1 h 30 devient 1 h, un autre objectif est gardé, et la séance guidée apparaît', () => {
+    const at = (goalMinutes: number) => ({ ...emptyProgress(), study: { ...emptyProgress().study, goalMinutes } });
+    expect(migratePersistedProgress(at(90), 4).study.goalMinutes).toBe(60);
+    expect(migratePersistedProgress(at(120), 4).study.goalMinutes).toBe(120);
+    expect(migratePersistedProgress(at(90), 5).study.goalMinutes).toBe(90);
+    const { guided: _g, confusions: _c, ...old } = emptyProgress();
+    const migrated = migratePersistedProgress(old, 4);
+    expect(migrated.guided).toEqual(emptyProgress().guided);
+    expect(migrated.confusions).toEqual({});
+  });
 });

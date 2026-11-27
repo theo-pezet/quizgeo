@@ -4,7 +4,7 @@ import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
 
 import { WORLD_BY_UNIT } from '@/content';
 import { useContent } from '@/content/useContent';
-import { boostMinutesLeft } from '@/game';
+import { DAILY_REVIEW_CAP, boostMinutesLeft, guidedLeft, toDayKey } from '@/game';
 import { useT } from '@/i18n';
 import { confirm } from '@/lib/confirm';
 import { haptics } from '@/lib/haptics';
@@ -78,13 +78,19 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
   }
 
   if (state.phase === 'empty' || !current) {
+    const capped = spec.mode === 'review' && guidedLeft(useProgress.getState().progress, toDayKey(new Date())).review === 0;
     return (
       <Screen footer={<Button label={t('common.back')} color={color} onPress={exitSession} />}>
         <View style={styles.empty}>
           <Text style={styles.big}>🌿</Text>
           <Text variant="h2" style={styles.center}>
-            {t('session.nothing')}
+            {t(capped ? 'session.capped' : 'session.nothing')}
           </Text>
+          {capped && (
+            <Text secondary style={styles.center}>
+              {t('session.capped.body', { n: DAILY_REVIEW_CAP })}
+            </Text>
+          )}
         </View>
       </Screen>
     );
@@ -177,7 +183,8 @@ export function SessionScreen({ spec, title }: { spec: SessionSpec; title: strin
           <SessionActionProvider value={actionApi}>
             <ExerciseView
               exercise={current.exercise}
-              hard={hard}
+              hard={hard || current.retry}
+              readDelay
               locked={state.phase === 'feedback'}
               onAnswer={(correct, whyWrong, given) => {
                 void (correct ? haptics.correct() : haptics.wrong());

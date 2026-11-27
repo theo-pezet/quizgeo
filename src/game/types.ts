@@ -130,6 +130,12 @@ export interface QcmExercise extends ExerciseBase {
    * progression — seule la présentation durcit.
    */
   typed?: { answer: string; accept?: string[] };
+  /**
+   * Questions de vocabulaire générées : la carte de chaque choix, alignée sur
+   * `choices`. Une mauvaise réponse dit ainsi quelle notion a été prise pour
+   * laquelle (voir duels.ts).
+   */
+  choiceCards?: string[];
 }
 
 /** Texte à trou : `text` contient un `___` à remplir depuis la banque de mots. */
@@ -401,6 +407,40 @@ export interface Progress {
   daily: DailyState;
   monthly: MonthlyState;
   study: StudyState;
+  /** La séance guidée du jour : blocs faits et rotation des thèmes (voir guided.ts). */
+  guided: GuidedState;
+  /** Paires de notions confondues par l'apprenant (voir duels.ts), par clé de paire. */
+  confusions: Record<string, ConfusionState>;
+}
+
+/** Compteurs de la séance guidée (voir guided.ts). */
+export interface GuidedState {
+  day: DayKey | null;
+  /** Cartes du deck révisées aujourd'hui (plafond quotidien). */
+  deck: number;
+  /** Erreurs revues aujourd'hui (plafond quotidien). */
+  review: number;
+  /** Duels joués aujourd'hui (plafond quotidien). */
+  duels: number;
+  /** Leçons finies aujourd'hui. */
+  lessons: number;
+  /** Leçons finies depuis toujours, par matière : la rotation des thèmes s'en sert. */
+  lessonCounts: Record<string, number>;
+}
+
+export function emptyGuided(): GuidedState {
+  return { day: null, deck: 0, review: 0, duels: 0, lessons: 0, lessonCounts: {} };
+}
+
+/** Une paire de notions confondues (voir duels.ts). `a` < `b`. */
+export interface ConfusionState {
+  a: string;
+  b: string;
+  /** Fois où l'une a été prise pour l'autre (en leçon ou en duel). */
+  misses: number;
+  /** Duels gagnés d'affilée, un au plus par jour. */
+  wins: number;
+  lastWinDay: DayKey | null;
 }
 
 /** Bilan des jours manqués, annoncé une fois à l'ouverture (voir study.ts). */
@@ -434,7 +474,7 @@ export interface StudyState {
 }
 
 export function emptyStudy(): StudyState {
-  return { goalMinutes: 90, day: null, seconds: 0, bySubject: {}, debtMinutes: 0, history: {}, settledThrough: null, halfOn: null, metOn: null, goalStreak: 0, bestGoalStreak: 0, report: null };
+  return { goalMinutes: 60, day: null, seconds: 0, bySubject: {}, debtMinutes: 0, history: {}, settledThrough: null, halfOn: null, metOn: null, goalStreak: 0, bestGoalStreak: 0, report: null };
 }
 
 /** Le défi du mois (voir monthly.ts). */
@@ -510,5 +550,7 @@ export function emptyProgress(): Progress {
     daily: { day: null, xp: 0, goal: DEFAULT_DAILY_GOAL, metOn: null, deckRewardedOn: null },
     monthly: { month: null, lessons: 0, claimed: false, medals: [] },
     study: emptyStudy(),
+    guided: emptyGuided(),
+    confusions: {},
   };
 }

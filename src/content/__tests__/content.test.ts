@@ -67,7 +67,7 @@ describe('le contenu', () => {
     const LANG_LESSONS = new Set(['web-html-2:w:4', 'web-html-4:w:1', 'web-html-4:w:7']);
     const texts: { where: string; text: string }[] = [];
     for (const card of c.CARDS) texts.push({ where: card.id, text: `${card.term} ${card.definition} ${card.example}` });
-    for (const e of c.EXERCISES) if (!LANG_LESSONS.has(e.key)) texts.push({ where: e.key, text: JSON.stringify({ ...e, key: '', unitId: '', cardId: '' }) });
+    for (const e of c.EXERCISES) if (!LANG_LESSONS.has(e.key)) texts.push({ where: e.key, text: JSON.stringify({ ...e, key: '', unitId: '', cardId: '', choiceCards: [] }) });
     for (const u of c.UNITS) texts.push({ where: u.id, text: `${u.title} ${u.description}` });
     const bad = texts.filter((x) => FOREIGN.test(x.text.replace(ALLOWED, '')));
     expect(bad.map((x) => x.where)).toEqual([]);

@@ -20,6 +20,8 @@ import { MONTHLY_REWARD, ensureMonthly, recordMonthlyLesson } from './monthly';
 import { applyAnswer } from './review';
 import { gradeIsCorrect, reviewCard, type Grade } from './srs';
 import { recordActiveDay, sessionCountsForStreak } from './streak';
+import { recordConfusion } from './duels';
+import { countGuided, countLesson } from './guided';
 import { creditStudy, settleStudy } from './study';
 import { MIN_SESSION_LENGTH, XP_CORRECT_REVIEW, addXp, isPerfectSession, levelUp, xpForAnswer, xpForSession } from './xp';
 import {
@@ -117,6 +119,12 @@ export interface AnswerAction {
   /** Temps passé sur cette réponse, en secondes (plafonné par study.ts), et sa matière. */
   studySeconds?: number;
   subjectId?: string;
+  /**
+   * Mauvaise réponse sur une question de vocabulaire : la carte dont
+   * l'apprenant a choisi le terme (ou la définition) à la place de la bonne.
+   * La paire entre dans les duels (voir duels.ts).
+   */
+  confusedWith?: string;
 }
 
 /** Ce que le temps crédité a déclenché (voir study.ts). */
@@ -196,6 +204,13 @@ export function applyAnswerAction(progress: Progress, action: AnswerAction): Ans
     next = r.progress;
     questsCompleted = questsCompleted.concat(r.completed);
   }
+
+  if (!action.correct && action.confusedWith !== undefined && action.question.cardId !== undefined) {
+    next = recordConfusion(next, action.question.cardId, action.confusedWith);
+  }
+  // Plafond quotidien des erreurs à revoir (voir guided.ts) : chaque question
+  // de la file comptée une fois, rattrapages exclus.
+  if (action.mode === 'review' && !action.retry) next = countGuided(next, 'review', 1, toDayKey(action.now));
 
   const studied = credit(next, action.subjectId, action.studySeconds, action.now);
   return {
@@ -405,6 +420,12 @@ export function applySessionEnd(
   next = daily.progress;
   if (daily.goalReached) gemsGained += GEMS.dailyGoal;
 
+  // 4c bis. La séance guidée : une leçon de plus pour la rotation des thèmes.
+  if (action.mode === 'unit' && action.skipTest !== true && counted && action.unitId !== null) {
+    const subjectId = action.catalog.units.find((u) => u.id === action.unitId)?.subjectId;
+    if (subjectId !== undefined) next = countLesson(next, subjectId, today);
+  }
+
   // 4d. Le défi du mois : une leçon complète de plus.
   let monthlyCompleted = false;
   if (lesson && counted) {
@@ -536,6 +557,8 @@ export function applyCardReview(progress: Progress, action: CardReviewAction): C
   };
   let questsCompleted: Quest[] = [];
   if (first) {
+    // Plafond quotidien du deck (voir guided.ts) : une carte comptée une fois par jour.
+    next = countGuided(next, 'deck', 1, today);
     const cards = grantQuests(next, { kind: 'cards', count: 1 });
     next = cards.progress;
     questsCompleted = questsCompleted.concat(cards.completed);

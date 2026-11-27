@@ -105,5 +105,7 @@ export function migratePersistedProgress(raw: unknown, fromVersion: number): Pro
   let progress = migrateProgress(raw);
   if (fromVersion < 3) progress = grandfatherNewExercises(progress, CODE_KEYS_V1_1);
   if (fromVersion < 4) progress = grandfatherNewExercises(progress, ADDED_KEYS_V1_5);
+  // v5 (1.7) : l'objectif par défaut passe de 1 h 30 à 1 h ; un objectif choisi autrement est gardé.
+  if (fromVersion < 5 && progress.study.goalMinutes === 90) progress = { ...progress, study: { ...progress.study, goalMinutes: 60 } };
   return progress;
 }

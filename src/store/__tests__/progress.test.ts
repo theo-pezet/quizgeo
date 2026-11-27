@@ -56,7 +56,7 @@ describe('migration v3 sur le vrai contenu', () => {
     expect(currentUnit('python', traits, CATALOG)).not.toBe('py-1');
     // La version stockée est passée à 4 : la migration ne se rejouera pas.
     const stored = JSON.parse((await AsyncStorage.getItem('progress.v1')) as string);
-    expect(stored.version).toBe(4);
+    expect(stored.version).toBe(5);
   });
 
   it('ne change rien de ce qu’un joueur de la 1.1 a vraiment répondu', async () => {
