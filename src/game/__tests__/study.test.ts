@@ -22,7 +22,8 @@ const D3 = '2026-11-22';
 
 /** Une progression déjà ouverte le jour `day`, avec `gems` gemmes. */
 function opened(day: string, gems = 500): Progress {
-  return settleStudy({ ...emptyProgress(), gems }, day);
+  // Ces tests datent de l'objectif à 1 h 30 : on le fixe pour garder leurs chiffres.
+  return settleStudy({ ...emptyProgress(), gems, study: { ...emptyStudy(), goalMinutes: 90 } }, day);
 }
 
 function study(p: Progress, minutes: number, day: string, subject = 'marketing'): Progress {
@@ -129,7 +130,7 @@ describe('creditStudy', () => {
     expect(again.goalReached || again.halfReached).toBe(false);
     expect(again.progress.study.bySubject.ia).toBe(60 + 120 + 120);
 
-    let q: Progress = { ...opened(D1, 0), study: { ...emptyStudy(), day: D1, settledThrough: '2026-11-19', goalStreak: 6, bestGoalStreak: 6 } };
+    let q: Progress = { ...opened(D1, 0), study: { ...emptyStudy(), goalMinutes: 90, day: D1, settledThrough: '2026-11-19', goalStreak: 6, bestGoalStreak: 6 } };
     q = study(q, 89, D1);
     const seventh = creditStudy(q, 'ia', 60, D1);
     expect(seventh.gems).toBe(STUDY_GEMS.goal + STUDY_GEMS.streakMilestones[7]);
@@ -147,10 +148,11 @@ describe('réglages et plan', () => {
   it('répartit l’objectif selon les poids, matières inconnues comprises', () => {
     const s = { ...emptyStudy(), bySubject: { ia: 25 * 60 } };
     const plan = studyPlan(s, ['python', 'marketing', 'ia']);
-    expect(plan.map((l) => l.subjectId)).toEqual(['marketing', 'ia', 'python']);
-    expect(plan[0].targetMinutes).toBe(39);
-    expect(plan[1].doneMinutes).toBe(25);
-    expect(studyPlan(s, ['zzz'])[0].targetMinutes).toBe(90);
+    // Python et l'IA pèsent autant : l'ordre donné départage.
+    expect(plan.map((l) => l.subjectId)).toEqual(['marketing', 'python', 'ia']);
+    expect(plan[0].targetMinutes).toBe(23);
+    expect(plan[2].doneMinutes).toBe(25);
+    expect(studyPlan(s, ['zzz'])[0].targetMinutes).toBe(60);
     expect(studyPlan(s, [])).toEqual([]);
     expect(nextPlannedSubject(plan)).toBe('marketing');
     expect(nextPlannedSubject([{ subjectId: 'a', targetMinutes: 5, doneMinutes: 5 }])).toBeNull();

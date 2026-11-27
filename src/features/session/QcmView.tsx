@@ -1,7 +1,7 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 
-import { presentQcm, type QcmExercise } from '@/game';
+import { choicesDelayMs, presentQcm, type QcmExercise } from '@/game';
 import { useT } from '@/i18n';
 import { CodeBlock, Text, radius, space, useColors } from '@/ui';
 
@@ -14,9 +14,17 @@ interface Props {
   locked: boolean;
   /** Libellé du bouton (par défaut « Vérifier »). Le test de niveau met « Suivant ». */
   checkLabel?: string;
+  /**
+   * Leçons et révisions : les choix n'apparaissent qu'après le temps de lire
+   * la question (voir choicesDelayMs), pour qu'on ne réponde plus à la forme
+   * de la bonne réponse sans avoir lu.
+   */
+  readDelay?: boolean;
+  /** Unité déjà acquise : un temps de plus pour retrouver la réponse avant de voir les choix. */
+  think?: boolean;
 }
 
-export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
+export function QcmView({ exercise, onAnswer, locked, checkLabel, readDelay = false, think = false }: Props) {
   const colors = useColors();
   const t = useT();
   // Mélangé à chaque affichage, y compris entre deux apparitions.
@@ -25,8 +33,18 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
   const [selected, setSelected] = useState<number | null>(null);
   const isTrueFalse = presented.choices.length === 2;
 
+  const delay = readDelay ? choicesDelayMs(exercise.prompt, exercise.code?.src, think) : 0;
+  const [shown, setShown] = useState(delay === 0);
+  useEffect(() => {
+    if (delay === 0) return undefined;
+    setShown(false);
+    const timer = setTimeout(() => setShown(true), delay);
+    return () => clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [exercise.key, delay]);
+  const visible = shown || locked;
   const inlineAction = useSessionAction(
-    locked
+    locked || !visible
       ? null
       : {
           label: checkLabel ?? t('common.check'),
@@ -44,6 +62,14 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
     <View style={styles.wrap}>
       <Text variant="h2">{exercise.prompt}</Text>
       {exercise.code && <CodeBlock code={exercise.code} output={locked ? exercise.output : undefined} />}
+      {!visible && (
+        <View style={[styles.waiting, { borderColor: colors.border }]}>
+          <Text variant="small" secondary>
+            {t(think ? 'session.read.think' : 'session.read.wait')}
+          </Text>
+        </View>
+      )}
+      {visible && (
       <View style={[styles.choices, isTrueFalse && styles.row]}>
         {presented.choices.map((choice, i) => {
           const isSelected = selected === i;
@@ -75,7 +101,8 @@ export function QcmView({ exercise, onAnswer, locked, checkLabel }: Props) {
           );
         })}
       </View>
-      {inlineAction}
+      )}
+      {visible && inlineAction}
     </View>
   );
 }
@@ -87,4 +114,5 @@ const styles = StyleSheet.create({
   half: { flex: 1, alignItems: 'center' },
   choice: { borderWidth: 2, borderRadius: radius.md, padding: space.md },
   choiceText: { fontSize: 15, lineHeight: 21 },
+  waiting: { borderWidth: 2, borderStyle: 'dashed', borderRadius: radius.md, padding: space.lg, alignItems: 'center' },
 });

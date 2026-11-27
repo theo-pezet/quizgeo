@@ -1,12 +1,12 @@
 import { router, useFocusEffect, useLocalSearchParams } from 'expo-router';
-import { useCallback, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { BackHandler, Pressable, StyleSheet, View } from 'react-native';
 
 import { CATALOG } from '@/content';
 import { faceAvailability, faceMaterial } from '@/content/faces';
 import { useContent } from '@/content/useContent';
 import { useActiveSubjects } from '@/content/useSubjects';
-import { applyCardReview, applySessionEnd, composeDeckSession, interleaveBy, pickCardFace, previewIntervals, shouldRelearn, toDayKey, type CardFace, type Grade } from '@/game';
+import { DAILY_DECK_CAP, DAILY_NEW_CARDS, DECK_THINK_MS, applyCardReview, applySessionEnd, composeDeckSession, guidedLeft, interleaveBy, pickCardFace, previewIntervals, shouldRelearn, toDayKey, type CardFace, type Grade } from '@/game';
 import { useT, type Key, type T } from '@/i18n';
 import { looksLikeCode } from '@/lib/code';
 import { confirm } from '@/lib/confirm';
@@ -34,7 +34,9 @@ export default function DeckReviewRoute() {
   const [queue, setQueue] = useState<string[]>(() => {
     // Toutes matières : celles que l'apprenant a choisies.
     const ids = subjectId ? cardIdsOf(subjectId) : active.flatMap((s) => cardIdsOf(s.id));
-    const picked = composeDeckSession(startProgress.current.cards, ids, today, Math.random);
+    // Plafond quotidien (voir guided.ts) : au-delà de 10 cartes, on révise fatigué et on « passe ».
+    const left = guidedLeft(startProgress.current, today).deck;
+    const picked = composeDeckSession(startProgress.current.cards, ids, today, Math.random, { limit: left, newLimit: Math.min(DAILY_NEW_CARDS, left) });
     return subjectId ? picked : interleaveBy(picked, (id) => CARD_BY_ID.get(id)?.subject ?? '');
   });
   // « Encore » : la carte revient en fin de séance, jusqu'à être retrouvée (au plus RELEARN_MAX fois).
@@ -43,6 +45,13 @@ export default function DeckReviewRoute() {
 
   const [index, setIndex] = useState(0);
   const [flipped, setFlipped] = useState(false);
+  // Le temps de chercher la réponse de tête avant de pouvoir la retourner.
+  const [canFlip, setCanFlip] = useState(false);
+  useEffect(() => {
+    setCanFlip(false);
+    const timer = setTimeout(() => setCanFlip(true), DECK_THINK_MS);
+    return () => clearTimeout(timer);
+  }, [index]);
   const [counts, setCounts] = useState<Record<Grade, number>>({ again: 0, hard: 0, good: 0, easy: 0 });
   const [xp, setXp] = useState(0);
   const [ended, setEnded] = useState<{ bonus: number; streak: number } | null>(null);
@@ -154,11 +163,12 @@ export default function DeckReviewRoute() {
   }
 
   if (!card || !preview) {
+    const capped = guidedLeft(useProgress.getState().progress, today).deck === 0;
     return (
       <Screen footer={<Button label={t('common.back')} onPress={() => router.back()} />}>
-        <Text variant="h2">{t('deck.empty.title')}</Text>
+        <Text variant="h2">{t(capped ? 'deck.capped.title' : 'deck.empty.title')}</Text>
         <Text variant="small" secondary>
-          {t('deck.empty.body')}
+          {capped ? t('deck.capped.body', { n: DAILY_DECK_CAP }) : t('deck.empty.body')}
         </Text>
       </Screen>
     );
@@ -195,7 +205,7 @@ export default function DeckReviewRoute() {
       ))}
     </View>
   ) : (
-    <Button label={t('deck.review.show')} color={accent} onPress={() => setFlipped(true)} />
+    <Button label={canFlip ? t('deck.review.show') : t('deck.review.think')} color={accent} disabled={!canFlip} onPress={() => setFlipped(true)} />
   );
 
   return (
@@ -214,7 +224,7 @@ export default function DeckReviewRoute() {
 
       <Pressable
         onPress={() => setFlipped(true)}
-        disabled={flipped}
+        disabled={flipped || !canFlip}
         style={[styles.flash, { backgroundColor: colors.surface, borderColor: colors.border, borderBottomColor: colors.borderStrong }]}>
         <View style={styles.pills}>
           <View style={[styles.pill, { backgroundColor: tint(accent, 0.88) }]}>

@@ -10,6 +10,8 @@ import {
   PATH_TRAITS,
   allUnitTraits,
   acknowledgeStudyReport,
+  guidedToday,
+  studyTarget,
   applyUnlockAnimationPlayed,
   currentUnit,
   isActiveToday,
@@ -21,7 +23,7 @@ import {
 } from '@/game';
 import { useLang, useT } from '@/i18n';
 import { useProgress, useSettings } from '@/store/progress';
-import { Button, Card, Crowns, Icon, MonthlyCard, NoEnergySheet, Pop, Pulse, QuestsCard, Screen, Stat, StudyPlanCard, StudyReportCard, Text, Tutorial, ink, palette, radius, shade, space, tint, useColors, useIsDark, type IconName } from '@/ui';
+import { Button, Card, Crowns, Icon, MonthlyCard, NoEnergySheet, Pop, Pulse, QuestsCard, Screen, Stat, StudyReportCard, Text, Tutorial, ink, palette, radius, shade, space, tint, useColors, useIsDark, type IconName } from '@/ui';
 
 export default function PathScreen() {
   const colors = useColors();
@@ -211,7 +213,19 @@ export default function PathScreen() {
           <Stat icon="star" color={colors.gold} value={level.level} />
         </View>
         {progress.study.report && <StudyReportCard report={progress.study.report} onClose={() => setProgress(acknowledgeStudyReport(useProgress.getState().progress))} />}
-        <StudyPlanCard study={progress.study} subjects={SUBJECTS} onPick={pickSubject} />
+        <Card>
+          <Text variant="h2">{t('guided.card.title')}</Text>
+          <Text variant="small" secondary>
+            {progress.study.metOn === today ? t('guided.goal.met') : t('guided.goal', { done: progress.study.day === today ? Math.floor(progress.study.seconds / 60) : 0, target: studyTarget(progress.study) })}
+          </Text>
+          <Text variant="small" secondary>
+            {t('guided.card.body')}
+          </Text>
+          <Button
+            label={progress.study.metOn === today ? t('guided.card.done') : guidedToday(progress.guided, today).deck + guidedToday(progress.guided, today).review + guidedToday(progress.guided, today).lessons > 0 ? t('guided.card.resume') : t('guided.card.start')}
+            onPress={() => router.push('/daily')}
+          />
+        </Card>
       </View>
 
       {progress.quests.items.length > 0 && <QuestsCard quests={progress.quests.items} />}

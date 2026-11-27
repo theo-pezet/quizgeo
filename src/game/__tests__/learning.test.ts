@@ -1,5 +1,5 @@
 import { applyAnswerAction } from '../apply';
-import { LEARN_MAX, PRETEST_SIZE, RELEARN_MAX, TYPED_FROM_TRAITS, interleaveBy, pickPretest, shouldPromptExplain, shouldRelearn, sureAllowed, unitStarted, weaveLearn } from '../learning';
+import { LEARN_MAX, PRETEST_SIZE, READ_MAX_MS, READ_MIN_MS, READ_MS_PER_CODE_LINE, READ_MS_PER_WORD, RELEARN_MAX, THINK_EXTRA_MS, TYPED_FROM_TRAITS, choicesDelayMs, interleaveBy, pickPretest, shouldPromptExplain, shouldRelearn, sureAllowed, unitStarted, weaveLearn } from '../learning';
 import { CONFIDENT_STEP, applyAnswer, compareReview, reviewQueue } from '../review';
 import { composeReviewSession } from '../session';
 import { emptyProgress, emptyQuestionProgress, type Exercise, type QuestionProgress } from '../types';
@@ -140,5 +140,18 @@ describe('fiches « New », réponse tapée, auto-explication (1.4)', () => {
     const r = applyAnswerAction(emptyProgress(), { ...base, retry: true });
     expect(r.xpGained).toBe(0);
     expect(r.progress.questions['u:a'].correct).toBe(1);
+  });
+});
+
+describe('choicesDelayMs', () => {
+  it('laisse le temps de lire, dans des bornes', () => {
+    expect(choicesDelayMs('Quick?', undefined, false)).toBe(READ_MIN_MS);
+    expect(choicesDelayMs(Array(20).fill('word').join(' '), undefined, false)).toBe(20 * READ_MS_PER_WORD);
+    expect(choicesDelayMs('Read  this code', 'a = 1\n\nprint(a)', false)).toBe(Math.max(READ_MIN_MS, 3 * READ_MS_PER_WORD + 2 * READ_MS_PER_CODE_LINE));
+    expect(choicesDelayMs(Array(200).fill('word').join(' '), undefined, false)).toBe(READ_MAX_MS);
+  });
+
+  it('ajoute un temps de réflexion sur une unité acquise', () => {
+    expect(choicesDelayMs('Quick?', undefined, true)).toBe(READ_MIN_MS + THINK_EXTRA_MS);
   });
 });

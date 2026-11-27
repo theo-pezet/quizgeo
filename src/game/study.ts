@@ -1,5 +1,5 @@
 /**
- * Le temps d'étude : l'objectif en MINUTES (1 h 30 par défaut), avec ses
+ * Le temps d'étude : l'objectif en MINUTES (1 h par défaut), avec ses
  * récompenses et ses pénalités.
  *
  * - Chaque réponse (leçon, révision, deck, Blitz) crédite le temps écoulé
@@ -20,7 +20,7 @@ import { addGems } from './economy';
 import type { DayKey, Progress, StudyReport, StudyState } from './types';
 
 /** Doit rester égal à la valeur d'emptyStudy (types.ts). */
-export const DEFAULT_STUDY_MINUTES = 90;
+export const DEFAULT_STUDY_MINUTES = 60;
 export const STUDY_GOAL_CHOICES = [30, 45, 60, 90, 120] as const;
 /** Temps crédité au plus par réponse : au-delà, l'apprenant n'était plus là. */
 export const MAX_SECONDS_PER_ANSWER = 180;
@@ -47,11 +47,11 @@ export const STUDY_GEMS = {
 export const STUDY_PLAN_WEIGHTS: Readonly<Record<string, number>> = {
   marketing: 30,
   ia: 25,
-  python: 15,
-  js: 15,
-  html: 5,
-  css: 5,
-  secu: 5,
+  python: 25,
+  js: 8,
+  html: 4,
+  css: 4,
+  secu: 4,
 };
 
 /** Minutes à faire aujourd'hui : l'objectif plus la dette. */

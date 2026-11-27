@@ -145,3 +145,23 @@ export const SELF_EXPLAIN_EVERY = 3;
 export function shouldPromptExplain(nthCorrect: number): boolean {
   return nthCorrect > 0 && nthCorrect % SELF_EXPLAIN_EVERY === 0;
 }
+
+/**
+ * Le délai avant l'apparition des choix d'un QCM, en millisecondes : le
+ * temps de lire la question (environ 300 mots par minute, plus le code), dans
+ * des bornes. Sans lui, on finit par reconnaître la bonne réponse à sa forme
+ * sans lire la question : c'est de la reconnaissance, pas du rappel.
+ * `think` (unité déjà acquise) ajoute un temps pour retrouver la réponse de tête.
+ */
+export const READ_MS_PER_WORD = 200;
+export const READ_MS_PER_CODE_LINE = 400;
+export const READ_MIN_MS = 1500;
+export const READ_MAX_MS = 8000;
+export const THINK_EXTRA_MS = 3000;
+
+export function choicesDelayMs(prompt: string, code: string | undefined, think: boolean): number {
+  const words = prompt.split(/\s+/).filter((w) => w !== '').length;
+  const lines = code ? code.split('\n').filter((l) => l.trim() !== '').length : 0;
+  const read = Math.min(READ_MAX_MS, Math.max(READ_MIN_MS, words * READ_MS_PER_WORD + lines * READ_MS_PER_CODE_LINE));
+  return read + (think ? THINK_EXTRA_MS : 0);
+}

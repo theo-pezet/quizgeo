@@ -436,6 +436,7 @@ export function generateExercises(
         prompt: texts.whatMeans(card.term),
         choices: [mine, ...wrong.map((c) => shownDefinition(c, lang, 'choice').text)],
         answer: 0,
+        choiceCards: [card.id, ...wrong.map((c) => c.id)],
         explain: explainFor(card, texts, lang),
       };
       out.push(qcm);
@@ -466,6 +467,7 @@ export function generateExercises(
         prompt: `${texts.whichTerm}\n\n${shown.text}`,
         choices: [card.term, ...wrong.map((c) => c.term)],
         answer: 0,
+        choiceCards: [card.id, ...wrong.map((c) => c.id)],
         explain: explainFor(card, texts, lang),
         ...(typed ? { typed } : {}),
       };

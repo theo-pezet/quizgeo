@@ -46,7 +46,8 @@ export const useProgress = create<ProgressStore>()(
       // v3 (1.1) : les exercices « lis le code » ajoutés aux unités existantes
       // héritent du niveau de leur unité (voir grandfatherNewExercises).
       // v4 (1.5) : de même pour les exercices ajoutés en 1.4.3 et 1.5.
-      version: 4,
+      // v5 (1.7) : objectif par défaut ramené à 1 h (voir migratePersistedProgress).
+      version: 5,
       storage: createJSONStorage(() => AsyncStorage),
       partialize: (state) => ({ progress: state.progress }),
       // Appelé par zustand seulement quand la version stockée diffère : les
