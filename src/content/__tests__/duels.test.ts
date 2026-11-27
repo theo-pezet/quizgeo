@@ -60,11 +60,11 @@ describe('duels', () => {
 
   it('se rabat sur l’autre notion, puis sur l’exemple, quand un indice ne tient pas', () => {
     const [a, b] = pairs.find(([x, y]) => duelItem(x, y, () => 0.1)) as [Card, Card];
-    const short = { ...a, definition: 'Too short.', example: undefined };
+    const short: Card = { ...a, definition: 'Too short.', example: '' };
     expect(duelItem(short, b, () => 0.1)?.target.id).toBe(b.id);
-    const noDef = { ...b, definition: 'x', example: 'A long enough example sentence that describes the idea in context.' };
+    const noDef: Card = { ...b, definition: 'x', example: 'A long enough example sentence that describes the idea in context.' };
     expect(duelItem(short, noDef, () => 0.1)?.source).toBe('example');
-    expect(duelItem(short, { ...noDef, example: undefined }, () => 0.1)).toBeNull();
+    expect(duelItem(short, { ...noDef, example: '' }, () => 0.1)).toBeNull();
   });
 
   it('propose les paires voisines des notions ratées, les plus oubliées d’abord', () => {
