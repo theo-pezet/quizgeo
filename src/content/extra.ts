@@ -21,11 +21,12 @@ interface ExtraCard {
   term: L;
   definition: L;
   example: L;
+  alts?: L[];
 }
 
 type ExtraExercise =
-  | { key: string; unitId: string; kind: 'qcm'; prompt: L; choices: L[]; answer: number; explain: L; code?: { lang: string; src: string }; whyWrong?: (L | null)[]; output?: string; priority?: boolean }
-  | { key: string; unitId: string; kind: 'vf'; prompt: L; isTrue: boolean; explain: L; priority?: boolean }
+  | { key: string; unitId: string; kind: 'qcm'; prompt: L; choices: L[]; answer: number; explain: L; code?: { lang: string; src: string }; whyWrong?: (L | null)[]; output?: string; priority?: boolean; variants?: { prompt: L; choices: L[]; answer: number; explain?: L }[] }
+  | { key: string; unitId: string; kind: 'vf'; prompt: L; isTrue: boolean; explain: L; priority?: boolean; variants?: { prompt: L; isTrue: boolean; explain?: L }[] }
   | { key: string; unitId: string; kind: 'bugline'; prompt: L; lang: string; lines: string[]; answer: number; explain: L; priority?: boolean }
   | { key: string; unitId: string; kind: 'compose'; prompt: L; lang: string; tokens: string[]; extra: string[]; explain: L; priority?: boolean }
   | { key: string; unitId: string; kind: 'order'; prompt: L; steps: L[]; explain: L; priority?: boolean }
@@ -73,6 +74,7 @@ export function extraCards(): Card[] {
       term: c.term,
       definition: c.definition,
       example: c.example,
+      ...(c.alts && c.alts.length > 0 ? { alts: [...c.alts] } : {}),
       tags: ['#manual'],
     })),
   );
@@ -97,12 +99,25 @@ export function extraExercises(): Exercise[] {
             ...(e.code ? { code: { lang: e.code.lang as CodeBlock['lang'], src: e.code.src } } : {}),
             ...(e.whyWrong ? { whyWrong: e.whyWrong.map((w) => (w ?? null)) } : {}),
             ...(e.output !== undefined ? { output: e.output } : {}),
+            ...(e.variants && e.variants.length > 0 ? { variants: e.variants.map((v) => ({ prompt: v.prompt, choices: [...v.choices], answer: v.answer, ...(v.explain ? { explain: v.explain } : {}) })) } : {}),
             ...priority,
           });
           break;
-        case 'vf':
-          out.push({ kind: 'qcm', key: e.key, unitId: e.unitId, prompt: e.prompt, choices: [translate('en', 'common.true'), translate('en', 'common.false')], answer: e.isTrue ? 0 : 1, explain: e.explain, ...priority });
+        case 'vf': {
+          const tf = [translate('en', 'common.true'), translate('en', 'common.false')];
+          out.push({
+            kind: 'qcm',
+            key: e.key,
+            unitId: e.unitId,
+            prompt: e.prompt,
+            choices: tf,
+            answer: e.isTrue ? 0 : 1,
+            explain: e.explain,
+            ...(e.variants && e.variants.length > 0 ? { variants: e.variants.map((v) => ({ prompt: v.prompt, choices: [...tf], answer: v.isTrue ? 0 : 1, ...(v.explain ? { explain: v.explain } : {}) })) } : {}),
+            ...priority,
+          });
           break;
+        }
         case 'bugline':
           out.push({ kind: 'bugline', key: e.key, unitId: e.unitId, prompt: e.prompt, lang: e.lang as CodeBlock['lang'], lines: [...e.lines], answer: e.answer, explain: e.explain, ...priority });
           break;

@@ -25,7 +25,11 @@ const CODE_DOTS = /\[\.\.\.|\(\.\.\.|\{\s*\.\.\.|\.\.\.[A-Za-z_[{(/]|,\s*\.\.\.|
 
 /** Les questions à choix d'un exercice : le QCM lui-même ou chaque étape du cas. */
 function questions(e: Exercise): { id: string; choices: string[]; answer: number }[] {
-  if (e.kind === 'qcm') return e.choices.length >= 3 ? [{ id: e.key, choices: e.choices, answer: e.answer }] : [];
+  if (e.kind === 'qcm') {
+    // La question et chacune de ses autres formulations (voir variants.ts).
+    const forms = [{ id: e.key, choices: e.choices, answer: e.answer }, ...(e.variants ?? []).map((v, i) => ({ id: `${e.key}~${i + 1}`, choices: v.choices, answer: v.answer }))];
+    return forms.filter((f) => f.choices.length >= 3);
+  }
   if (e.kind === 'case') return e.steps.map((s, i) => ({ id: `${e.key}#${i}`, choices: s.choices, answer: s.answer }));
   return [];
 }
@@ -36,6 +40,7 @@ function displayedTexts(e: Exercise): string[] {
   switch (e.kind) {
     case 'qcm':
       out.push(e.prompt, ...e.choices, ...(e.whyWrong ?? []));
+      for (const v of e.variants ?? []) out.push(v.prompt, v.explain, ...v.choices);
       break;
     case 'case':
       out.push(e.title, e.scenario);

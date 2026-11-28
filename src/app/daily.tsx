@@ -1,6 +1,6 @@
 import { router, useFocusEffect } from 'expo-router';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { AppState, Pressable, StyleSheet, View } from 'react-native';
 
 import { CATALOG } from '@/content';
 import { duelsFor } from '@/content/duels';
@@ -15,9 +15,9 @@ import {
   STUDY_PLAN_WEIGHTS,
   allUnitTraits,
   composeDeckSession,
-  currentUnit,
   guidedLeft,
   guidedToday,
+  guidedUnit,
   nextGuidedBlock,
   pickLessonSubject,
   reviewQueueSize,
@@ -45,23 +45,34 @@ export default function DailyRoute() {
   const now = new Date();
   const today = toDayKey(now);
 
-  // Pause : lancée au retour d'un bloc, jamais à l'ouverture.
+  // Pause : lancée au retour d'un bloc, jamais à l'ouverture. Elle se règle
+  // sur l'heure de fin, pas sur un décompte : téléphone en veille, la minute
+  // continue de s'écouler, et elle est finie au réveil si elle devait l'être.
   const launched = useRef(false);
-  const [breakLeft, setBreakLeft] = useState(0);
+  const [breakEnd, setBreakEnd] = useState<number | null>(null);
+  const [clock, setClock] = useState(Date.now());
   useFocusEffect(
     useCallback(() => {
       tick();
       if (launched.current) {
         launched.current = false;
-        setBreakLeft(BREAK_SECONDS);
+        setBreakEnd(Date.now() + BREAK_SECONDS * 1000);
+        setClock(Date.now());
       }
     }, [tick]),
   );
+  const breakLeft = breakEnd === null ? 0 : Math.max(0, Math.ceil((breakEnd - clock) / 1000));
   useEffect(() => {
     if (breakLeft <= 0) return undefined;
-    const timer = setTimeout(() => setBreakLeft(breakLeft - 1), 1000);
+    const timer = setTimeout(() => setClock(Date.now()), 1000);
     return () => clearTimeout(timer);
-  }, [breakLeft]);
+  }, [breakLeft, clock]);
+  useEffect(() => {
+    const sub = AppState.addEventListener('change', (state) => {
+      if (state === 'active') setClock(Date.now());
+    });
+    return () => sub.remove();
+  }, []);
 
   const g = guidedToday(progress.guided, today);
   const left = guidedLeft(progress, today);
@@ -76,7 +87,7 @@ export default function DailyRoute() {
     const traits = allUnitTraits(progress, EXERCISES, CATALOG, today);
     const unitOf = new Map<string, string>();
     for (const s of subjects) {
-      const unit = currentUnit(s.id, traits, CATALOG);
+      const unit = guidedUnit(s.id, traits, CATALOG, g.units ?? []);
       if (unit && UNIT_BY_ID.has(unit)) unitOf.set(s.id, unit);
     }
     const lessonSubject = pickLessonSubject(g.lessonCounts, [...unitOf.keys()], STUDY_PLAN_WEIGHTS);

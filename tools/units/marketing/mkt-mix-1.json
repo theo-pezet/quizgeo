@@ -13,63 +13,90 @@
    "level": "debutant",
    "term": "Product (the first P)",
    "definition": "Everything the customer actually gets: features, quality, design, range, packaging, brand name, warranty and after-sales service.",
-   "example": "Dacia keeps its cars simple and robust instead of loading them with options: a product choice that serves its low-price promise."
+   "example": "Dacia keeps its cars simple and robust instead of loading them with options: a product choice that serves its low-price promise.",
+   "alts": [
+    "The lever of the mix that covers what the buyer receives: the offer itself, its design, quality, range, packaging and the services around it."
+   ]
   },
   {
    "slug": "price-lever",
    "level": "debutant",
    "term": "Price (the second P)",
    "definition": "What the customer pays and how: list price, discounts, payment terms, subscription or one-off. It is the only P that brings money in; the three others cost money.",
-   "example": "A gym charging 39 euros a month without commitment, or 29 euros a month on a one-year plan."
+   "example": "A gym charging 39 euros a month without commitment, or 29 euros a month on a one-year plan.",
+   "alts": [
+    "The lever that sets how much the customer pays and on which terms: amount, discounts, subscription or one-off payment. The only lever that brings revenue in."
+   ]
   },
   {
    "slug": "place-lever",
    "level": "debutant",
    "term": "Place (the third P)",
    "definition": "Distribution: where and how the offer reaches the customer (own website, shops, marketplaces, resellers), with stock, delivery and opening hours.",
-   "example": "A cosmetics brand selling on its own site, in Sephora stores and on Amazon."
+   "example": "A cosmetics brand selling on its own site, in Sephora stores and on Amazon.",
+   "alts": [
+    "The lever of the mix that decides where and how customers can buy: own site, shops, marketplaces, resellers, delivery and opening hours."
+   ]
   },
   {
    "slug": "promotion-lever",
    "level": "debutant",
    "term": "Promotion (the fourth P)",
    "definition": "Communication: everything that makes the offer known and wanted, such as ads, SEO, social media, PR, sales teams and price promotions. Most of digital marketing lives here.",
-   "example": "A Google Ads campaign, a newsletter and an Instagram partnership all belong to Promotion."
+   "example": "A Google Ads campaign, a newsletter and an Instagram partnership all belong to Promotion.",
+   "alts": [
+    "The lever of the mix that makes the offer known and wanted: advertising, SEO, social media, press relations, sales teams and temporary deals."
+   ]
   },
   {
    "slug": "seven-ps",
    "level": "debutant",
    "term": "The 7Ps (services mix)",
    "definition": "For services, three Ps are added to the four: People (the staff who deliver the service), Process (how the service runs, step by step) and Physical evidence (tangible proof such as premises, website, reviews, invoices).",
-   "example": "A hotel works on staff training (People), check-in speed (Process) and clean rooms plus good reviews (Physical evidence)."
+   "example": "A hotel works on staff training (People), check-in speed (Process) and clean rooms plus good reviews (Physical evidence).",
+   "alts": [
+    "The services version of the mix: the four classic levers plus the staff, the way the service runs, and the tangible clues customers use to judge it."
+   ]
   },
   {
    "slug": "four-cs",
    "level": "debutant",
    "term": "The 4Cs (customer view)",
-   "definition": "Lauterborn rewrote the 4Ps from the buyer side in 1990: Customer needs instead of Product, Cost instead of Price, Convenience instead of Place, Communication instead of Promotion.",
-   "example": "The real cost of an online order includes delivery fees, waiting time and the hassle of a return, not just the price tag."
+   "definition": "Lauterborn rewrote the 4Ps from the buyer side in 1990: customer needs instead of Product, cost to the customer (often written customer cost) instead of Price, convenience instead of Place, communication instead of Promotion.",
+   "example": "The real cost of an online order includes delivery fees, waiting time and the hassle of a return, not just the price tag.",
+   "alts": [
+    "A rewrite of the classic mix from the buyer side: customer needs (or customer value), cost to the customer, convenience and communication."
+   ]
   },
   {
    "slug": "product-levels",
    "level": "debutant",
    "term": "Product levels (Kotler)",
    "definition": "A product has layers: the core benefit (what the buyer really wants), the actual product (features, design, brand, packaging) and the augmented product (delivery, warranty, support, community). Competition often plays out on the augmented layer.",
-   "example": "Core: listening to music anywhere. Actual: the headphones. Augmented: two-year warranty, app, free returns."
+   "example": "Core: listening to music anywhere. Actual: the headphones. Augmented: two-year warranty, app, free returns.",
+   "alts": [
+    "The idea that an offer has layers: the core benefit, the actual item with its features and design, and the extras around it such as delivery, warranty and support."
+   ]
   },
   {
    "slug": "needs-wants-demand",
    "level": "debutant",
    "term": "Needs, wants and demand",
    "definition": "A need is a basic lack (eat, move, belong). A want is the specific form culture gives it (a burger, an SUV). Demand is a want backed by the ability and the willingness to pay.",
-   "example": "Need: getting around. Want: an electric car. Demand: a buyer who can and will pay 30,000 euros for one."
+   "example": "Need: getting around. Want: an electric car. Demand: a buyer who can and will pay 30,000 euros for one.",
+   "alts": [
+    "The chain from a basic lack, to the specific form culture gives it, to the moment a buyer is able and willing to pay for it."
+   ]
   },
   {
    "slug": "mix-coherence",
    "level": "debutant",
    "term": "Coherence of the mix",
    "definition": "The four levers must tell the same story. A premium price, a bargain distribution channel and discount ads send contradictory signals and destroy the positioning.",
-   "example": "A luxury watch dumped on a flash-sale site at minus 70 percent hurts the brand far more than it helps sales."
+   "example": "A luxury watch dumped on a flash-sale site at minus 70 percent hurts the brand far more than it helps sales.",
+   "alts": [
+    "The rule that every lever must send the same signal: a premium price sold through bargain channels confuses buyers and damages the brand."
+   ]
   }
  ],
  "exercises": [
@@ -82,7 +109,27 @@
     "Plan, Price, Place, Publicity",
     "Product, Process, Partners, Press"
    ],
-   "explain": "Jerome McCarthy, 1960. Place means distribution and Promotion means communication: the two words most often misunderstood."
+   "explain": "Jerome McCarthy, 1960. Place means distribution and Promotion means communication: the two words most often misunderstood.",
+   "variants": [
+    {
+     "prompt": "A colleague lists the marketing mix. Which list is the classic one?",
+     "choices": [
+      "Product, Price, Place, Promotion",
+      "Product, Price, Packaging, Publicity",
+      "Profit, Price, Place, People",
+      "Product, Positioning, Press, Promotion"
+     ]
+    },
+    {
+     "prompt": "Place and Promotion are two of the 4Ps. Which pair completes the list?",
+     "choices": [
+      "Product and Price",
+      "People and Process",
+      "Profit and Partners",
+      "Packaging and Press"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -93,7 +140,27 @@
     "Product",
     "Price"
    ],
-   "explain": "Promotion covers all communication. A big share of digital marketing is one P out of four: a great marketer works on the other three too."
+   "explain": "Promotion covers all communication. A big share of digital marketing is one P out of four: a great marketer works on the other three too.",
+   "variants": [
+    {
+     "prompt": "A brand hires a press agency and runs a TikTok campaign. Which P is it working on?",
+     "choices": [
+      "Promotion",
+      "Place",
+      "Product",
+      "Price"
+     ]
+    },
+    {
+     "prompt": "Which of these actions belongs to Promotion?",
+     "choices": [
+      "Sending a newsletter about a new range",
+      "Opening a second warehouse in Lyon",
+      "Adding a larger size to the range",
+      "Moving from 49 to 45 euros a month"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -104,7 +171,27 @@
     "Product",
     "Price"
    ],
-   "explain": "Place is where and how the customer can buy. Going direct to consumer (D2C) is a distribution decision."
+   "explain": "Place is where and how the customer can buy. Going direct to consumer (D2C) is a distribution decision.",
+   "variants": [
+    {
+     "prompt": "A cosmetics brand starts selling on Amazon in addition to its shops. Which P changes?",
+     "choices": [
+      "Place",
+      "Promotion",
+      "Product",
+      "Price"
+     ]
+    },
+    {
+     "prompt": "Which decision is a Place decision?",
+     "choices": [
+      "Opening a pick-up point in train stations",
+      "Lowering the price of the starter pack",
+      "Adding a vegan version of the recipe",
+      "Hiring an influencer for the launch"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -115,7 +202,27 @@
     "Place",
     "Product"
    ],
-   "explain": "Product, Place and Promotion cost money. Price captures the value you create, which is why a small price change often moves profit more than a big ad budget."
+   "explain": "Product, Place and Promotion cost money. Price captures the value you create, which is why a small price change often moves profit more than a big ad budget.",
+   "variants": [
+    {
+     "prompt": "Product, Place and Promotion cost money. Which P captures the value created?",
+     "choices": [
+      "Price",
+      "Promotion",
+      "Place",
+      "Product"
+     ]
+    },
+    {
+     "prompt": "Why can a small price increase move profit more than a big ad campaign?",
+     "choices": [
+      "Price is the lever that brings money in directly",
+      "Ads are forbidden for most products",
+      "Price does not influence what customers buy",
+      "Ads always cost more than they bring"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -126,7 +233,27 @@
     "Packaging, Planning, Press",
     "Pricing, Placement, Publicity"
    ],
-   "explain": "A service is produced while it is consumed: the staff, the way it runs and the tangible clues around it shape what the customer buys."
+   "explain": "A service is produced while it is consumed: the staff, the way it runs and the tangible clues around it shape what the customer buys.",
+   "variants": [
+    {
+     "prompt": "A hotel works on its staff, its check-in flow and its rooms. Which extra Ps of the services mix are these?",
+     "choices": [
+      "People, Process, Physical evidence",
+      "Profit, Partners, Positioning",
+      "Packaging, Planning, Press",
+      "Pricing, Placement, Publicity"
+     ]
+    },
+    {
+     "prompt": "How many Ps does the services mix have?",
+     "choices": [
+      "Seven",
+      "Four",
+      "Five",
+      "Ten"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -137,13 +264,45 @@
     "People (the staff)",
     "Place (distribution)"
    ],
-   "explain": "A service cannot be touched before purchase, so customers judge it from tangible clues. Reviews are physical evidence in the digital age."
+   "explain": "A service cannot be touched before purchase, so customers judge it from tangible clues. Reviews are physical evidence in the digital age.",
+   "variants": [
+    {
+     "prompt": "Which of the 7Ps covers the training and attitude of the staff in a bank branch?",
+     "choices": [
+      "People (the staff)",
+      "Process (the service flow)",
+      "Physical evidence",
+      "Place (distribution)"
+     ]
+    },
+    {
+     "prompt": "The steps a customer goes through to open a bank account online belong to which of the 7Ps?",
+     "choices": [
+      "Process (the service flow)",
+      "People (the staff)",
+      "Physical evidence",
+      "Promotion (communication)"
+     ]
+    }
+   ]
   },
   {
    "kind": "vf",
-   "prompt": "The 4Cs rewrite the 4Ps from the customer side: needs, cost, convenience and communication.",
+   "prompt": "The 4Cs rewrite the 4Ps from the customer side: customer needs, cost to the customer, convenience and communication.",
    "isTrue": true,
-   "explain": "True. Lauterborn (1990) wanted marketers to start from the buyer: what they need, what it really costs them, how easy it is to get, and a two-way conversation."
+   "explain": "True. Lauterborn (1990) wanted marketers to start from the buyer: what they need, what it really costs them, how easy it is to get, and a two-way conversation.",
+   "variants": [
+    {
+     "prompt": "In the 4Cs, Convenience replaces Place: how easy it is for the customer to buy.",
+     "isTrue": true,
+     "explain": "True. Convenience is the customer view of distribution: opening hours, delivery, how few steps it takes."
+    },
+    {
+     "prompt": "In the 4Cs, Communication replaces Product.",
+     "isTrue": false,
+     "explain": "False. Communication replaces Promotion: a two-way conversation instead of one-way ads. Customer needs (also called customer value or customer solution) replaces Product."
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -154,7 +313,27 @@
     "It is simply the price before VAT is added",
     "It means the advertising cost per customer"
    ],
-   "explain": "The buyer compares total effort: a cheaper product with a 10-day delivery and a painful return can cost more than a dearer one."
+   "explain": "The buyer compares total effort: a cheaper product with a 10-day delivery and a painful return can cost more than a dearer one.",
+   "variants": [
+    {
+     "prompt": "For the customer, what does the Cost of the 4Cs include besides the price?",
+     "choices": [
+      "Delivery fees, time, effort and the risk of a bad choice",
+      "Only the margin the seller keeps on each sale",
+      "The VAT rate that applies to the product",
+      "The budget the brand spends on its ads"
+     ]
+    },
+    {
+     "prompt": "Two online shops sell the same jacket at the same price. Why can one cost the customer more?",
+     "choices": [
+      "Slower delivery and paid returns add time and money",
+      "The law fixes a higher price for some shops",
+      "Customers never compare delivery conditions",
+      "The jacket has a different VAT rate there"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -165,7 +344,27 @@
     "Adding a free sample to every online order",
     "Training beauty advisors on its ingredients"
    ],
-   "explain": "The price says premium; a discount channel and endless promotions say cheap. Customers believe the cheapest signal."
+   "explain": "The price says premium; a discount channel and endless promotions say cheap. Customers believe the cheapest signal.",
+   "variants": [
+    {
+     "prompt": "A luxury hotel wants more bookings. Which move clashes with its positioning?",
+     "choices": [
+      "Listing its rooms at minus 60 percent all year on a flash-sale site",
+      "Training its staff to welcome guests by name",
+      "Adding a spa reserved for its guests",
+      "Partnering with a premium travel agency"
+     ]
+    },
+    {
+     "prompt": "A discount supermarket chain keeps prices very low. Which move fits its mix?",
+     "choices": [
+      "Simple shops, a short range and own brands",
+      "Marble floors and valet parking at each shop",
+      "Private concerts for loyalty members",
+      "Luxury packaging designed by an artist"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -176,7 +375,27 @@
     "A cloud platform with 99.9 percent uptime and APIs",
     "The number one choice of French patients"
    ],
-   "explain": "A value proposition names a target, a concrete benefit and an edge over the alternative (calling the practice). The others are a slogan, a feature list and an unproven claim."
+   "explain": "A value proposition names a target, a concrete benefit and an edge over the alternative (calling the practice). The others are a slogan, a feature list and an unproven claim.",
+   "variants": [
+    {
+     "prompt": "Which sentence states a value proposition rather than a slogan?",
+     "choices": [
+      "Learn Spanish 10 minutes a day on your phone, with a native coach",
+      "The passion for languages, every day since 1990",
+      "Number one in language learning, all over Europe",
+      "Innovation and quality for each and every learner"
+     ]
+    },
+    {
+     "prompt": "A value proposition must say three things. Which ones?",
+     "choices": [
+      "Who it is for, the benefit, and why you over alternatives",
+      "The founding date, the logo and the slogan",
+      "The price, the VAT and the delivery delay",
+      "The list of all features and the team names"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -187,7 +406,27 @@
     "The want",
     "Brand awareness"
    ],
-   "explain": "Demand is a want backed by purchasing power. Marketers either target people who can pay, or change the offer (cheaper model, payment in instalments)."
+   "explain": "Demand is a want backed by purchasing power. Marketers either target people who can pay, or change the offer (cheaper model, payment in instalments).",
+   "variants": [
+    {
+     "prompt": "A family needs a car, wants an SUV and can pay for one. What does this describe?",
+     "choices": [
+      "Demand: a want backed by the ability to pay",
+      "A need only, with no want yet",
+      "A want only, with no means to pay",
+      "Brand awareness, not demand"
+     ]
+    },
+    {
+     "prompt": "Thirst is a basic lack; a craving for a cold soda is the form culture gives it. Which words fit, in order?",
+     "choices": [
+      "Need, then want",
+      "Want, then demand",
+      "Demand, then need",
+      "Need, then demand"
+     ]
+    }
+   ]
   },
   {
    "kind": "case",

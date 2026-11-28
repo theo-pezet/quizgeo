@@ -13,28 +13,40 @@
    "level": "debutant",
    "term": "Distribution channel",
    "definition": "The path a product takes to the customer. Direct: the brand sells itself (site, own shops). Indirect: through intermediaries such as wholesalers, retailers or marketplaces, who take a margin in exchange for reach.",
-   "example": "Nespresso sells in its own boutiques and site (direct) and its machines in electronics stores (indirect)."
+   "example": "Nespresso sells in its own boutiques and site (direct) and its machines in electronics stores (indirect).",
+   "alts": [
+    "The route an offer takes to reach buyers: sold by the brand itself, or through intermediaries such as wholesalers, retailers and platforms."
+   ]
   },
   {
    "slug": "distribution-intensity",
    "level": "debutant",
    "term": "Intensive, selective, exclusive",
    "definition": "Intensive: everywhere possible (soda, gum). Selective: a chosen network of retailers (good electronics, cosmetics). Exclusive: a few outlets per area, often for luxury or high-service products.",
-   "example": "Coca-Cola is intensive; Apple products in approved resellers are selective; a Ferrari dealer per region is exclusive."
+   "example": "Coca-Cola is intensive; Apple products in approved resellers are selective; a Ferrari dealer per region is exclusive.",
+   "alts": [
+    "How widely a product is made available: everywhere possible, through a chosen network, or through very few outlets per area."
+   ]
   },
   {
    "slug": "marketplace",
    "level": "debutant",
    "term": "Marketplace",
    "definition": "A platform where third-party sellers sell to buyers in exchange for a commission (Amazon, Cdiscount, Vinted, Back Market). Huge reach, but the platform owns the customer relationship and the data.",
-   "example": "A small brand sells on Amazon for volume and pushes repeat buyers to its own site with a card in the parcel."
+   "example": "A small brand sells on Amazon for volume and pushes repeat buyers to its own site with a card in the parcel.",
+   "alts": [
+    "A platform where many independent sellers reach buyers in exchange for a commission, while the platform keeps the customer relationship."
+   ]
   },
   {
    "slug": "channel-conflict",
    "level": "debutant",
    "term": "Channel conflict",
    "definition": "Tension between the channels of a brand, for example when its own website undercuts the retailers who distribute it. It must be managed with prices, exclusive ranges or shared revenue.",
-   "example": "Retailers stop pushing a brand after it sells online 20 percent cheaper than them."
+   "example": "Retailers stop pushing a brand after it sells online 20 percent cheaper than them.",
+   "alts": [
+    "Tension when one sales route of a brand hurts another, for example its own site undercutting the shops that sell it."
+   ]
   }
  ],
  "exercises": [
@@ -47,7 +59,27 @@
     "Intensive",
     "Wholesale"
    ],
-   "explain": "Direct distribution keeps the margin and the customer data, but the brand must build its own reach."
+   "explain": "Direct distribution keeps the margin and the customer data, but the brand must build its own reach.",
+   "variants": [
+    {
+     "prompt": "A brand sells only through supermarkets and online marketplaces. What kind of distribution is it?",
+     "choices": [
+      "Indirect",
+      "Direct",
+      "Exclusive",
+      "D2C"
+     ]
+    },
+    {
+     "prompt": "What does a brand gain by selling direct?",
+     "choices": [
+      "Its full margin and the data of its customers",
+      "A huge reach with no effort at all",
+      "Free delivery paid by retailers",
+      "Shelf space in every supermarket"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -58,7 +90,27 @@
     "Exclusive",
     "Direct"
    ],
-   "explain": "Impulse products need maximum physical availability: intensive distribution."
+   "explain": "Impulse products need maximum physical availability: intensive distribution.",
+   "variants": [
+    {
+     "prompt": "Bottled water is sold almost everywhere. Which distribution intensity?",
+     "choices": [
+      "Intensive",
+      "Selective",
+      "Exclusive",
+      "Direct"
+     ]
+    },
+    {
+     "prompt": "Which product suits intensive distribution best?",
+     "choices": [
+      "Chocolate bars",
+      "Luxury watches",
+      "Private jets",
+      "Made-to-measure suits"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -69,7 +121,27 @@
     "Selective",
     "Undifferentiated"
    ],
-   "explain": "Exclusive distribution protects the image and the service level, at the cost of reach."
+   "explain": "Exclusive distribution protects the image and the service level, at the cost of reach.",
+   "variants": [
+    {
+     "prompt": "A premium hi-fi brand sells through a network of approved specialist shops, several per city. Which intensity?",
+     "choices": [
+      "Selective",
+      "Intensive",
+      "Exclusive",
+      "Direct"
+     ]
+    },
+    {
+     "prompt": "Why choose exclusive distribution?",
+     "choices": [
+      "To protect the image and the level of service",
+      "To reach the largest number of buyers",
+      "To lower the price paid by customers",
+      "To avoid paying any retailer margin"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -80,7 +152,27 @@
     "The platform never takes a commission",
     "Products cannot be delivered quickly"
    ],
-   "explain": "Reach is the upside; the cost is a commission and limited access to your own customers. Smart brands use it as an entry door."
+   "explain": "Reach is the upside; the cost is a commission and limited access to your own customers. Smart brands use it as an entry door.",
+   "variants": [
+    {
+     "prompt": "Why do brands often push marketplace buyers toward their own site?",
+     "choices": [
+      "To own the customer relationship and data",
+      "To pay a higher commission to the platform",
+      "Because marketplaces forbid repeat buyers",
+      "To make delivery slower and cheaper"
+     ]
+    },
+    {
+     "prompt": "What does a marketplace offer a new brand?",
+     "choices": [
+      "Fast access to many buyers, against a commission",
+      "Full control of its customer data",
+      "Free advertising with no commission",
+      "A physical shop in every city"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -91,7 +183,27 @@
     "Exclusive distribution",
     "Direct mail"
    ],
-   "explain": "Omnichannel links the channels so the customer moves between them seamlessly. Multichannel only runs several channels side by side."
+   "explain": "Omnichannel links the channels so the customer moves between them seamlessly. Multichannel only runs several channels side by side.",
+   "variants": [
+    {
+     "prompt": "A brand runs a website, shops and an app that share neither stock nor customer history. What is it?",
+     "choices": [
+      "Multichannel, not omnichannel",
+      "Omnichannel",
+      "Exclusive distribution",
+      "Direct mail"
+     ]
+    },
+    {
+     "prompt": "Which feature is typical of omnichannel?",
+     "choices": [
+      "Returning an online order in any shop",
+      "Two websites with different prices",
+      "A shop that ignores online orders",
+      "A catalogue sent once a year"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -102,13 +214,45 @@
     "A rise of its prices in the shops",
     "No risk: customers never compare prices"
    ],
-   "explain": "Retailers bring reach; undercutting them pushes them to favour competitors. Brands manage it with price parity or exclusive products."
+   "explain": "Retailers bring reach; undercutting them pushes them to favour competitors. Brands manage it with price parity or exclusive products.",
+   "variants": [
+    {
+     "prompt": "How can a brand sell online without upsetting its retailers?",
+     "choices": [
+      "Keep price parity or offer exclusive products online",
+      "Sell everything online 30 percent cheaper",
+      "Stop delivering its retailers",
+      "Hide its website from search engines"
+     ]
+    },
+    {
+     "prompt": "A brand gives its retailers a share of the online sales in their area. What is it trying to avoid?",
+     "choices": [
+      "Channel conflict",
+      "Price elasticity",
+      "Brand salience",
+      "Choice overload"
+     ]
+    }
+   ]
   },
   {
    "kind": "vf",
    "prompt": "A touchpoint is any moment where a customer meets the brand: an ad, a review, a delivery, a call to support.",
    "isTrue": true,
-   "explain": "True. A journey map lists the touchpoints and the emotions at each one, to fix the moments that make people drop out."
+   "explain": "True. A journey map lists the touchpoints and the emotions at each one, to fix the moments that make people drop out.",
+   "variants": [
+    {
+     "prompt": "A delivery that arrives late is a touchpoint of the customer journey.",
+     "isTrue": true,
+     "explain": "True. Every contact shapes the experience, including logistics and support, not only ads."
+    },
+    {
+     "prompt": "Only ads and the website count as touchpoints.",
+     "isTrue": false,
+     "explain": "False. Reviews, packaging, delivery, invoices and support are touchpoints too, and they often decide loyalty."
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -119,7 +263,27 @@
     "To remove every channel except the shop",
     "To prove that ads have no effect at all"
    ],
-   "explain": "Mapping the journey shows friction and missing information. It also reminds you that the last click is rarely the whole story."
+   "explain": "Mapping the journey shows friction and missing information. It also reminds you that the last click is rarely the whole story.",
+   "variants": [
+    {
+     "prompt": "The journey map shows many buyers quit when delivery fees appear. What do you do?",
+     "choices": [
+      "Show fees earlier or set a free shipping threshold",
+      "Buy more ads to bring more visitors",
+      "Remove all the product photos",
+      "Add two more steps to the checkout"
+     ]
+    },
+    {
+     "prompt": "What does a customer journey map list?",
+     "choices": [
+      "The steps, touchpoints and feelings of the customer",
+      "Only the ad budget spent per channel",
+      "The salaries of the whole sales team",
+      "The legal terms and conditions of the site"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -130,7 +294,27 @@
     "Opening a flagship store in Paris",
     "Always selling at the lowest price"
    ],
-   "explain": "Physical availability (with mental availability) is one of the two drivers of brand growth: be present wherever and whenever people buy the category."
+   "explain": "Physical availability (with mental availability) is one of the two drivers of brand growth: be present wherever and whenever people buy the category.",
+   "variants": [
+    {
+     "prompt": "A brand sells only in its 3 Paris shops. In Byron Sharp terms, what limits its growth first?",
+     "choices": [
+      "Physical availability: it is hard to buy",
+      "The price elasticity of its products",
+      "The tone of voice of its posts",
+      "The colours used in its logo"
+     ]
+    },
+    {
+     "prompt": "Byron Sharp names two drivers of brand growth. Which ones?",
+     "choices": [
+      "Mental and physical availability",
+      "Loyalty and discounts",
+      "Price and packaging",
+      "Followers and likes"
+     ]
+    }
+   ]
   },
   {
    "kind": "order",

@@ -94,6 +94,10 @@ export const en = {
   'duels.done.body': 'Pairs come back on other days until you win them three times in a row.',
   'duels.none': 'No duel for now',
   'duels.none.body': 'Duels appear when you mix up two notions in a lesson or the deck.',
+  'variant.right': 'Right answer',
+  'variant.wrong': 'Wrong answer',
+  'variant.proposed': '{prompt}\n\nProposed answer: {answer}\n\nIs this the right answer?',
+  'variant.correctIs': 'The right answer is: {answer}.',
   'study.short': '{done} min',
   'session.report': 'Report an error',
   'session.report.done': 'Reported',
@@ -501,6 +505,7 @@ export const en = {
 
   'gen.whatMeans': 'What does “{term}” mean?',
   'gen.whichTerm': 'Which term matches this definition?',
+  'gen.whichExample': 'Which term fills the blank in this example?',
   'gen.match': 'Match each term with its definition',
   'gen.example': 'Example: {text}',
 

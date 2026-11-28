@@ -65,6 +65,7 @@ def convert(doc: dict) -> dict:
             "term": text(c["term"], f"{slug}.term"),
             "definition": text(c["definition"], f"{slug}.definition"),
             "example": text(c["example"], f"{slug}.example"),
+            **({"alts": texts(c["alts"], f"{slug}.alts")} if c.get("alts") else {}),
         })
     # Cartes déjà présentes dans le deck (src/data/deck.json), réutilisées telles quelles.
     deck_ids = list(doc.get("deckCards", []))
@@ -95,8 +96,13 @@ def convert(doc: dict) -> dict:
                 if not isinstance(why, list) or len(why) != len(choices) - 1:
                     raise ValueError(f"{key} : whyWrong attend une entrée par mauvais choix")
                 out["whyWrong"] = [None] + texts(why, f"{key}.whyWrong")
+            # Autres formulations (bonne réponse en premier, comme la question).
+            if e.get("variants"):
+                out["variants"] = [{"prompt": text(v["prompt"], f"{key}.variant"), "choices": texts(v["choices"], f"{key}.variant.choices"), "answer": 0, **({"explain": text(v["explain"], f"{key}.variant.explain")} if v.get("explain") else {})} for v in e["variants"]]
         elif kind == "vf":
             out = {**base, "kind": "vf", "prompt": text(e["prompt"], key), "isTrue": bool(e["isTrue"]), "explain": text(e["explain"], key)}
+            if e.get("variants"):
+                out["variants"] = [{"prompt": text(v["prompt"], f"{key}.variant"), "isTrue": bool(v["isTrue"]), **({"explain": text(v["explain"], f"{key}.variant.explain")} if v.get("explain") else {})} for v in e["variants"]]
         elif kind == "order":
             steps = texts(e["steps"], f"{key}.steps")
             if not 3 <= len(steps) <= 6:

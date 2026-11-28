@@ -7,6 +7,7 @@ import {
   countLesson,
   guidedLeft,
   guidedToday,
+  guidedUnit,
   nextGuidedBlock,
   pickLessonSubject,
   type GuidedInput,
@@ -22,10 +23,14 @@ const q: Exercise = { kind: 'qcm', key: 'u1:x:1', unitId: 'u1', prompt: 'p', cho
 describe('compteurs du jour', () => {
   it('repart à zéro un nouveau jour mais garde la rotation', () => {
     let p = countGuided(emptyProgress(), 'deck', 3, D1);
-    p = countLesson(p, 'marketing', D1);
-    expect(p.guided).toEqual({ day: D1, deck: 3, review: 0, duels: 0, lessons: 1, lessonCounts: { marketing: 1 } });
+    p = countLesson(p, 'marketing', 'm1', D1);
+    p = countLesson(p, 'marketing', 'm1', D1);
+    expect(p.guided).toEqual({ day: D1, deck: 3, review: 0, duels: 0, lessons: 2, units: ['m1'], lessonCounts: { marketing: 2 } });
+    // État d'avant la 1.7.1, sans la liste des unités du jour.
+    const old = { ...p, guided: { ...p.guided, units: undefined as unknown as string[] } };
+    expect(countLesson(old, 'ia', 'i1', D1).guided.units).toEqual(['i1']);
     const next = guidedToday(p.guided, D2);
-    expect(next).toEqual({ ...emptyGuided(), day: D2, lessonCounts: { marketing: 1 } });
+    expect(next).toEqual({ ...emptyGuided(), day: D2, lessonCounts: { marketing: 2 } });
     expect(guidedToday(p.guided, D1)).toBe(p.guided);
     expect(guidedToday(undefined, D1).day).toBe(D1);
   });
@@ -81,6 +86,29 @@ describe('rotation des thèmes', () => {
   });
 });
 
+describe('unité proposée', () => {
+  const catalog = catalogFrom([
+    { id: 'p1', subjectId: 'python' },
+    { id: 'p2', subjectId: 'python' },
+    { id: 'p3', subjectId: 'python' },
+  ]);
+
+  it('prend l’unité du chemin si elle n’a pas été faite aujourd’hui', () => {
+    expect(guidedUnit('python', {}, catalog, [])).toBe('p1');
+  });
+
+  it('passe à l’unité ouverte suivante quand celle du chemin a été faite aujourd’hui', () => {
+    expect(guidedUnit('python', { p1: 1 }, catalog, ['p1'])).toBe('p2');
+  });
+
+  it('attend demain quand la suivante est fermée ou que tout est fait', () => {
+    expect(guidedUnit('python', {}, catalog, ['p1'])).toBeNull();
+    expect(guidedUnit('python', { p1: 3, p2: 1 }, catalog, ['p2'])).toBe('p3');
+    expect(guidedUnit('python', { p1: 3, p2: 3, p3: 3 }, catalog, ['p3'])).toBeNull();
+    expect(guidedUnit('vide', {}, catalog, [])).toBeNull();
+  });
+});
+
 describe('prochain bloc', () => {
   const base: GuidedInput = {
     left: { deck: 10, review: 10, duels: 5 },
@@ -127,6 +155,7 @@ describe('branchements dans apply', () => {
     const end = (skipTest: boolean, unitId: string | null, questionCount = 10) =>
       applySessionEnd(emptyProgress(), { mode: 'unit', unitId, questionCount, correctCount: 8, chrono: false, now, questions: [q], catalog, skipTest, progressAtSessionStart: emptyProgress() }).progress.guided;
     expect(end(false, 'u1').lessonCounts).toEqual({ python: 1 });
+    expect(end(false, 'u1').units).toEqual(['u1']);
     expect(end(true, 'u1').lessonCounts).toEqual({});
     expect(end(false, null).lessonCounts).toEqual({});
     expect(end(false, 'inconnue').lessonCounts).toEqual({});
