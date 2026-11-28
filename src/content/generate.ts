@@ -17,7 +17,7 @@
 
 import confusablesJson from '@/data/confusables.json';
 import vetoesJson from '@/data/gen-vetoes.json';
-import type { Exercise, MatchExercise, QcmExercise } from '@/game';
+import type { Exercise, MatchExercise, QcmExercise, QcmVariant } from '@/game';
 import { hashString, mulberry32 } from '@/lib/random';
 
 import {
@@ -28,10 +28,13 @@ import {
   foldKey,
   isAcronym,
   isCompoundTerm,
+  maskTerm,
+  mentionsTerm,
   termBase,
   termParens,
   termVariants,
   truncate,
+  usefulLength,
   wholeTermOnly,
   type CardLang,
   type DisplayedDefinition,
@@ -46,6 +49,8 @@ export interface GenTexts {
   whichTerm: string;
   match: string;
   example: (text: string) => string;
+  /** Énoncé de la variante « quel terme complète cet exemple ? » ; anglais par défaut. */
+  whichExample?: string;
   /** Langue du contenu : typographie de « Terme : définition », variantes acceptées en mode tapé. Anglais par défaut. */
   lang?: CardLang;
 }
@@ -55,8 +60,41 @@ export const GEN_TEXTS_EN: GenTexts = {
   whichTerm: 'Which term matches this definition?',
   match: 'Match each term with its definition',
   example: (text) => `Example: ${text}`,
+  whichExample: 'Which term fills the blank in this example?',
   lang: 'en',
 };
+
+/** Un exemple qui ressemble à du code : masquer le terme dedans le rendrait illisible. */
+const CODE_LIKE = /[{}<>;=]/;
+/** Longueur minimale (hors trous) d'un exemple posé en variante. */
+const MIN_EXAMPLE_PROMPT = 30;
+
+/**
+ * Les variantes d'une question « quel terme ? » : chaque autre définition,
+ * puis l'exemple, terme masqué, quand il ne le trahit pas.
+ */
+function termVariantsFor(card: Card, lang: CardLang, texts: GenTexts, choices: string[], choiceCards: string[]): QcmVariant[] {
+  const out: QcmVariant[] = [];
+  for (const alt of card.alts ?? []) {
+    const shown = shownDefinition({ ...card, definition: alt }, lang);
+    if (usefulLength(shown.text) >= MIN_TERM_PROMPT / 2 && !mentionsTerm(shown.text, variantsOf(card, lang))) {
+      out.push({ prompt: `${texts.whichTerm}\n\n${shown.text}`, choices, answer: 0, choiceCards });
+    }
+  }
+  const example = card.example?.trim();
+  if (example && !CODE_LIKE.test(example)) {
+    const v = variantsOf(card, lang);
+    const masked = maskTerm(example, v).replace(/\s+/g, ' ').trim();
+    const term = foldKey(card.term);
+    // Seulement quand l'exemple contient le terme : le trou n'admet alors que
+    // lui. Un exemple sans le terme peut illustrer aussi un des pièges, et la
+    // question deviendrait ambiguë.
+    if (masked.includes(MASK) && usefulLength(masked) >= MIN_EXAMPLE_PROMPT && !mentionsTerm(masked, v) && (term.length < 3 || !foldKey(masked).includes(term))) {
+      out.push({ prompt: `${texts.whichExample ?? GEN_TEXTS_EN.whichExample}\n\n${masked}`, choices, answer: 0, choiceCards });
+    }
+  }
+  return out;
+}
 const CLOZE = /\{\{c\d+::(.*?)(?:::.*?)?\}\}/g;
 const FIRST_CLOZE = /\{\{c\d+::(.*?)(?:::.*?)?\}\}/;
 
@@ -439,6 +477,15 @@ export function generateExercises(
         choiceCards: [card.id, ...wrong.map((c) => c.id)],
         explain: explainFor(card, texts, lang),
       };
+      // Les autres définitions de la carte prennent tour à tour la place de la bonne réponse.
+      const others = wrong.map((c) => shownDefinition(c, lang, 'choice').text);
+      const variants: QcmVariant[] = (card.alts ?? []).map((alt) => ({
+        prompt: qcm.prompt,
+        choices: [shownDefinition({ ...card, definition: alt }, lang, 'choice').text, ...others],
+        answer: 0,
+        choiceCards: qcm.choiceCards,
+      }));
+      if (variants.length > 0) qcm.variants = variants;
       out.push(qcm);
     } else if (planned('term', card, subjectCards, lang)) {
       const defStems = stemsOf(shown.text);
@@ -471,6 +518,8 @@ export function generateExercises(
         explain: explainFor(card, texts, lang),
         ...(typed ? { typed } : {}),
       };
+      const variants = termVariantsFor(card, lang, texts, qcm.choices, qcm.choiceCards as string[]);
+      if (variants.length > 0) qcm.variants = variants;
       out.push(qcm);
     }
 

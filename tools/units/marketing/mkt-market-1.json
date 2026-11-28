@@ -13,35 +13,50 @@
    "level": "debutant",
    "term": "Porter five forces",
    "definition": "A model to judge how attractive an industry is: rivalry between competitors, threat of new entrants, threat of substitutes, bargaining power of buyers and bargaining power of suppliers.",
-   "example": "Food delivery apps face strong rivalry, restaurants with growing power and customers who switch for 2 euros: low profits."
+   "example": "Food delivery apps face strong rivalry, restaurants with growing power and customers who switch for 2 euros: low profits.",
+   "alts": [
+    "A model judging how profitable an industry can be: rivalry, new entrants, substitutes, and the bargaining power of buyers and of suppliers."
+   ]
   },
   {
    "slug": "bcg-matrix",
    "level": "debutant",
    "term": "BCG matrix",
    "definition": "A portfolio grid crossing market growth and relative market share: Stars (high, high), Cash cows (low growth, high share), Question marks (high growth, low share) and Dogs (low, low).",
-   "example": "A cash cow product funds the marketing of a question mark that might become a star."
+   "example": "A cash cow product funds the marketing of a question mark that might become a star.",
+   "alts": [
+    "A grid crossing market growth with relative market share to sort products into stars, cash cows, question marks and dogs."
+   ]
   },
   {
    "slug": "ansoff-matrix",
    "level": "debutant",
    "term": "Ansoff matrix",
    "definition": "Four growth paths: market penetration (existing product, existing market), product development (new product, existing market), market development (existing product, new market) and diversification (new product, new market, the riskiest).",
-   "example": "A French meal kit brand launching in Belgium is market development."
+   "example": "A French meal kit brand launching in Belgium is market development.",
+   "alts": [
+    "A growth grid crossing existing or new products with existing or new markets: penetration, product development, market development, diversification."
+   ]
   },
   {
    "slug": "product-life-cycle",
    "level": "debutant",
    "term": "Product life cycle",
    "definition": "The stages a product category goes through: introduction, growth, maturity and decline. Marketing priorities change at each stage, from education to differentiation to cost control.",
-   "example": "Streaming video is mature in France: growth slows and services fight on price and exclusive content."
+   "example": "Streaming video is mature in France: growth slows and services fight on price and exclusive content.",
+   "alts": [
+    "The stages a category goes through, from introduction to growth, maturity and decline, each with its own marketing priorities."
+   ]
   },
   {
    "slug": "swot-to-action",
    "level": "debutant",
    "term": "From SWOT to action",
    "definition": "A SWOT is only useful when crossed: use strengths to seize opportunities, fix weaknesses that threats would exploit. A list of 40 bullets nobody acts on is not analysis.",
-   "example": "Strength: a loyal community. Opportunity: a rising trend for repair. Action: launch a repair service promoted by the community."
+   "example": "Strength: a loyal community. Opportunity: a rising trend for repair. Action: launch a repair service promoted by the community.",
+   "alts": [
+    "Turning the four boxes into decisions by crossing them: use strengths on opportunities, and fix the weaknesses that threats would exploit."
+   ]
   }
  ],
  "exercises": [
@@ -54,7 +69,27 @@
     "Strengths and opportunities",
     "Weaknesses and threats"
    ],
-   "explain": "Strengths and weaknesses are inside (team, product, budget). Opportunities and threats come from the outside (market, law, competitors)."
+   "explain": "Strengths and weaknesses are inside (team, product, budget). Opportunities and threats come from the outside (market, law, competitors).",
+   "variants": [
+    {
+     "prompt": "In a SWOT, where do a new regulation and a new competitor go?",
+     "choices": [
+      "Opportunities or threats (external)",
+      "Strengths or weaknesses (internal)",
+      "Only in the strengths box",
+      "Nowhere: a SWOT ignores them"
+     ]
+    },
+    {
+     "prompt": "Where do a loyal community and a strong patent go in a SWOT?",
+     "choices": [
+      "Strengths",
+      "Opportunities",
+      "Threats",
+      "Weaknesses"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -65,7 +100,27 @@
     "Economic",
     "Technological"
    ],
-   "explain": "PESTEL: Political, Economic, Social, Technological, Environmental, Legal. A new regulation is Legal; a government policy change would be Political."
+   "explain": "PESTEL: Political, Economic, Social, Technological, Environmental, Legal. A new regulation is Legal; a government policy change would be Political.",
+   "variants": [
+    {
+     "prompt": "Rising inflation lowers the budget of households. In a PESTEL, where does it go?",
+     "choices": [
+      "Economic",
+      "Social",
+      "Legal",
+      "Political"
+     ]
+    },
+    {
+     "prompt": "Consumers adopt AI assistants very fast. In which PESTEL box does it go first?",
+     "choices": [
+      "Technological",
+      "Environmental",
+      "Legal",
+      "Economic"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -76,7 +131,27 @@
     "The bargaining power of buyers",
     "The threat of new entrants"
    ],
-   "explain": "The five forces describe the industry, not your own resources: rivalry, entrants, substitutes, buyers and suppliers."
+   "explain": "The five forces describe the industry, not your own resources: rivalry, entrants, substitutes, buyers and suppliers.",
+   "variants": [
+    {
+     "prompt": "Which of these IS one of Porter five forces?",
+     "choices": [
+      "The bargaining power of suppliers",
+      "The quality of your logo",
+      "The number of your employees",
+      "The age of your CEO"
+     ]
+    },
+    {
+     "prompt": "What do Porter five forces describe?",
+     "choices": [
+      "How attractive and profitable an industry is",
+      "The internal culture of one company",
+      "The steps of a sales funnel",
+      "The seven Ps of the services mix"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -87,7 +162,27 @@
     "Rivalry between competitors",
     "Bargaining power of suppliers"
    ],
-   "explain": "A substitute meets the same need in a different way. Another cinema would be a rival; streaming is a substitute."
+   "explain": "A substitute meets the same need in a different way. Another cinema would be a rival; streaming is a substitute.",
+   "variants": [
+    {
+     "prompt": "For a train company on Paris to Lyon, low-cost flights and car-sharing are which force?",
+     "choices": [
+      "Threat of substitutes",
+      "Bargaining power of suppliers",
+      "Threat of new entrants",
+      "Bargaining power of buyers"
+     ]
+    },
+    {
+     "prompt": "Video calls reduce business travel. For airlines, what are they?",
+     "choices": [
+      "A substitute",
+      "A new entrant",
+      "A supplier",
+      "A buyer"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -98,7 +193,27 @@
     "Question mark",
     "Dog"
    ],
-   "explain": "Cash cows dominate a mature market: they need little investment and generate cash that funds stars and question marks."
+   "explain": "Cash cows dominate a mature market: they need little investment and generate cash that funds stars and question marks.",
+   "variants": [
+    {
+     "prompt": "What is a product with high market growth and a low relative share in the BCG matrix?",
+     "choices": [
+      "Question mark",
+      "Cash cow",
+      "Star",
+      "Dog (low, low)"
+     ]
+    },
+    {
+     "prompt": "In the BCG matrix, which product usually funds the others?",
+     "choices": [
+      "The cash cow",
+      "The question mark",
+      "The star",
+      "The dog"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -109,7 +224,27 @@
     "Product development",
     "Diversification"
    ],
-   "explain": "Existing product, new market: market development. Diversification would be a new product in a new market, the riskiest move."
+   "explain": "Existing product, new market: market development. Diversification would be a new product in a new market, the riskiest move.",
+   "variants": [
+    {
+     "prompt": "A French yoghurt brand starts selling the same yoghurts in Germany. Which Ansoff quadrant?",
+     "choices": [
+      "Market development",
+      "Market penetration",
+      "Product development",
+      "Diversification"
+     ]
+    },
+    {
+     "prompt": "A coffee chain launches sandwiches for its existing customers. Which Ansoff quadrant?",
+     "choices": [
+      "Product development",
+      "Market development",
+      "Market penetration",
+      "Diversification"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -120,7 +255,27 @@
     "Product development",
     "Market penetration"
    ],
-   "explain": "New product and new market at once: diversification. It can work, but it uses few of the existing strengths."
+   "explain": "New product and new market at once: diversification. It can work, but it uses few of the existing strengths.",
+   "variants": [
+    {
+     "prompt": "Which Ansoff move is usually the riskiest?",
+     "choices": [
+      "Diversification",
+      "Market penetration",
+      "Product development",
+      "Market development"
+     ]
+    },
+    {
+     "prompt": "A brand runs more promotions to sell more of the same product to the same buyers. Which quadrant?",
+     "choices": [
+      "Market penetration",
+      "Market development",
+      "Product development",
+      "Diversification"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -131,13 +286,45 @@
     "Opening many distributors as fast as possible",
     "Stopping all communication to save money"
    ],
-   "explain": "In maturity growth comes from stealing share or keeping customers. Education was the priority at introduction."
+   "explain": "In maturity growth comes from stealing share or keeping customers. Education was the priority at introduction.",
+   "variants": [
+    {
+     "prompt": "A category is at the introduction stage: few people know the product. What is the usual priority?",
+     "choices": [
+      "Explaining what it does and building awareness",
+      "Cutting costs to fight on price",
+      "Stopping all marketing investment",
+      "Defending share against many rivals"
+     ]
+    },
+    {
+     "prompt": "At which stage of the life cycle do sales grow fast and many competitors arrive?",
+     "choices": [
+      "Growth",
+      "Introduction",
+      "Maturity",
+      "Decline"
+     ]
+    }
+   ]
   },
   {
    "kind": "vf",
    "prompt": "A long SWOT with 40 bullets is a better analysis than a short one with 8.",
    "isTrue": false,
-   "explain": "False. The value is in crossing the four boxes and deciding. A short SWOT that leads to three clear actions beats an exhaustive list."
+   "explain": "False. The value is in crossing the four boxes and deciding. A short SWOT that leads to three clear actions beats an exhaustive list.",
+   "variants": [
+    {
+     "prompt": "A useful SWOT crosses its boxes, for example using a strength to seize an opportunity.",
+     "isTrue": true,
+     "explain": "True. The analysis is in the links and the actions they lead to, not in the length of the lists."
+    },
+    {
+     "prompt": "A SWOT is finished once each of the four boxes has a list of bullets.",
+     "isTrue": false,
+     "explain": "False. The lists are raw material. The value comes from crossing them and deciding a few actions."
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -148,7 +335,27 @@
     "10 percent",
     "50 percent"
    ],
-   "explain": "2 divided by 10. Market share can be measured in value (euros) or in volume (units); always say which one."
+   "explain": "2 divided by 10. Market share can be measured in value (euros) or in volume (units); always say which one.",
+   "variants": [
+    {
+     "prompt": "A market is worth 50 million euros and your sales are 5 million euros. What is your value share?",
+     "choices": [
+      "10 percent",
+      "5 percent",
+      "50 percent",
+      "45 percent"
+     ]
+    },
+    {
+     "prompt": "You sold 300,000 units in a market of 1.2 million units. What is your volume share?",
+     "choices": [
+      "25 percent",
+      "30 percent",
+      "12 percent",
+      "4 percent"
+     ]
+    }
+   ]
   },
   {
    "kind": "case",

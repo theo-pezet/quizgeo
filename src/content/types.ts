@@ -22,6 +22,11 @@ export interface Card {
   tags: string[];
   /** Définition avec ses trous {{c1::…}} intacts, quand il y en a. */
   cloze?: string;
+  /**
+   * Autres définitions de la même notion, dites autrement ou par un autre
+   * angle : les questions générées les posent tour à tour (voir variants.ts).
+   */
+  alts?: string[];
 }
 
 /** Tranche [from, to) des cartes d'un sous-thème, dans l'ordre du deck. */

@@ -13,35 +13,50 @@
    "level": "debutant",
    "term": "Sample and representativeness",
    "definition": "Surveying a subset of the population instead of everyone. To generalize, the sample must look like the population (quota or random sampling) and be big enough; 1,000 well chosen people can describe a country.",
-   "example": "A poll of 1,000 French adults built on quotas of age, sex, region and job."
+   "example": "A poll of 1,000 French adults built on quotas of age, sex, region and job.",
+   "alts": [
+    "A subset of a population chosen so that its structure mirrors the whole, which lets a survey of a few people describe many."
+   ]
   },
   {
    "slug": "survey-bias",
    "level": "debutant",
    "term": "Survey bias",
    "definition": "Ways a survey misleads: leading questions, people saying what is socially expected, only motivated people answering, or asking about future behaviour, which people predict badly.",
-   "example": "Would you buy an eco-friendly product? gets 80 percent yes; actual sales are far lower."
+   "example": "Would you buy an eco-friendly product? gets 80 percent yes; actual sales are far lower.",
+   "alts": [
+    "Ways a questionnaire distorts reality: leading wording, socially expected answers, self-selected respondents and questions about future behaviour."
+   ]
   },
   {
    "slug": "focus-group",
    "level": "debutant",
    "term": "Focus group",
    "definition": "A moderated discussion with 6 to 10 people to explore perceptions and words. Rich for ideas, but small and influenced by the loudest participants: never use it to measure.",
-   "example": "Testing three packaging concepts with young parents before a quantitative test."
+   "example": "Testing three packaging concepts with young parents before a quantitative test.",
+   "alts": [
+    "A moderated discussion with a handful of people to explore perceptions and vocabulary: good for ideas, never for measuring."
+   ]
   },
   {
    "slug": "customer-interview",
    "level": "debutant",
    "term": "Customer interview",
    "definition": "A one to one conversation about real past behaviour (the last time you bought, what you tried before) rather than opinions about the future. Five to ten good interviews reveal most of the recurring problems.",
-   "example": "Tell me about the last time you looked for a plumber: where did you search first?"
+   "example": "Tell me about the last time you looked for a plumber: where did you search first?",
+   "alts": [
+    "A one to one talk about what a buyer actually did in the past, rather than what they think they might do."
+   ]
   },
   {
    "slug": "nps",
    "level": "debutant",
    "term": "NPS (Net Promoter Score)",
    "definition": "How likely are you to recommend us, from 0 to 10? Promoters answer 9 or 10, passives 7 or 8, detractors 0 to 6. NPS = percentage of promoters minus percentage of detractors, from minus 100 to plus 100.",
-   "example": "50 percent promoters, 30 percent passives and 20 percent detractors give an NPS of 30."
+   "example": "50 percent promoters, 30 percent passives and 20 percent detractors give an NPS of 30.",
+   "alts": [
+    "Share of customers scoring 9 or 10 minus share scoring 0 to 6 on how likely they are to recommend, from minus 100 to plus 100."
+   ]
   }
  ],
  "exercises": [
@@ -54,7 +69,27 @@
     "Counting cancellations per month in a chart",
     "Reading the annual report of a competitor"
    ],
-   "explain": "Why questions need qualitative research. Once you know the reasons, a quantitative survey can measure how common each one is."
+   "explain": "Why questions need qualitative research. Once you know the reasons, a quantitative survey can measure how common each one is.",
+   "variants": [
+    {
+     "prompt": "You want to know what share of customers cancel because of price. Which method?",
+     "choices": [
+      "A quantitative survey of a large sample",
+      "Three interviews with friends",
+      "A single focus group of 8 people",
+      "Reading one online review"
+     ]
+    },
+    {
+     "prompt": "Which research best explores the words customers use about a problem?",
+     "choices": [
+      "Qualitative interviews",
+      "A large quantitative survey",
+      "Counting website visits",
+      "Analysing the ad budget"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -65,7 +100,27 @@
     "First-party data",
     "Qualitative data"
    ],
-   "explain": "Secondary data was collected by someone else for another purpose. It is cheap and fast; check its date and method."
+   "explain": "Secondary data was collected by someone else for another purpose. It is cheap and fast; check its date and method.",
+   "variants": [
+    {
+     "prompt": "A survey you design and run on your own customers produces which kind of data?",
+     "choices": [
+      "Primary data",
+      "Secondary data",
+      "Third-party data",
+      "Public data"
+     ]
+    },
+    {
+     "prompt": "Which of these is secondary data?",
+     "choices": [
+      "Official statistics from INSEE",
+      "Interviews you run with clients",
+      "A survey you sent last week",
+      "A test you ran on your site"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -76,13 +131,45 @@
     "Which feature did you use most recently?",
     "What did you do before using the app?"
    ],
-   "explain": "A leading question suggests the answer. Neutral questions about facts and past behaviour give more reliable data."
+   "explain": "A leading question suggests the answer. Neutral questions about facts and past behaviour give more reliable data.",
+   "variants": [
+    {
+     "prompt": "Which question is neutral?",
+     "choices": [
+      "How often did you use the app last week?",
+      "Do you agree our app is the best one?",
+      "How much do you love our new design?",
+      "Would you not prefer our cheaper plan?"
+     ]
+    },
+    {
+     "prompt": "Why is Do you agree that our great new app is easier a bad survey question?",
+     "choices": [
+      "It suggests the answer it wants",
+      "It is too short to understand",
+      "It asks about the past",
+      "It uses a rating scale"
+     ]
+    }
+   ]
   },
   {
    "kind": "vf",
    "prompt": "When people say they would buy a product, sales will match their answers closely.",
    "isTrue": false,
-   "explain": "False. Stated intentions overestimate real behaviour, especially for virtuous products. Prefer observed behaviour: pre-orders, tests, real sales."
+   "explain": "False. Stated intentions overestimate real behaviour, especially for virtuous products. Prefer observed behaviour: pre-orders, tests, real sales.",
+   "variants": [
+    {
+     "prompt": "Pre-orders are a more reliable signal of demand than survey answers about buying intentions.",
+     "isTrue": true,
+     "explain": "True. Paying, even a deposit, is behaviour. Saying yes in a survey costs nothing."
+    },
+    {
+     "prompt": "People predict their own future purchases accurately in surveys.",
+     "isTrue": false,
+     "explain": "False. Stated intentions overestimate real behaviour, especially for virtuous or new products."
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -93,7 +180,27 @@
     "The launch is certain to be a success",
     "There is no need for further research"
    ],
-   "explain": "A focus group explores; it does not measure. Eight people cannot represent a market."
+   "explain": "A focus group explores; it does not measure. Eight people cannot represent a market.",
+   "variants": [
+    {
+     "prompt": "What is a focus group good for?",
+     "choices": [
+      "Exploring perceptions and the words people use",
+      "Measuring the market share of a brand",
+      "Predicting the exact sales of a launch",
+      "Replacing all other research"
+     ]
+    },
+    {
+     "prompt": "Why should a focus group never be used to measure?",
+     "choices": [
+      "Too few people, swayed by the loudest ones",
+      "It is illegal to count the answers",
+      "People are paid to lie in them",
+      "It only works in B2B markets"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -104,7 +211,27 @@
     "85",
     "75"
    ],
-   "explain": "NPS = promoters minus detractors = 60 minus 15 = 45. Passives count in the total but not in the subtraction."
+   "explain": "NPS = promoters minus detractors = 60 minus 15 = 45. Passives count in the total but not in the subtraction.",
+   "variants": [
+    {
+     "prompt": "50 percent promoters, 20 percent passives, 30 percent detractors. What is the NPS?",
+     "choices": [
+      "20",
+      "50",
+      "80",
+      "30"
+     ]
+    },
+    {
+     "prompt": "40 percent promoters, 40 percent passives and 20 percent detractors. What is the NPS?",
+     "choices": [
+      "20",
+      "40",
+      "60",
+      "80"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -115,7 +242,27 @@
     "Detractor",
     "Neutral promoter"
    ],
-   "explain": "Only 9 and 10 are promoters, 0 to 6 are detractors, 7 and 8 are passives."
+   "explain": "Only 9 and 10 are promoters, 0 to 6 are detractors, 7 and 8 are passives.",
+   "variants": [
+    {
+     "prompt": "A customer answers 6 to the recommendation question. Which group is it in?",
+     "choices": [
+      "Detractor",
+      "Passive",
+      "Promoter",
+      "Neutral"
+     ]
+    },
+    {
+     "prompt": "Which scores make a promoter?",
+     "choices": [
+      "9 and 10",
+      "7 and 8",
+      "8 to 10",
+      "6 to 10"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -126,7 +273,27 @@
     "CSAT",
     "ROAS"
    ],
-   "explain": "Customer Effort Score measures effort. Low effort predicts loyalty well after service interactions."
+   "explain": "Customer Effort Score measures effort. Low effort predicts loyalty well after service interactions.",
+   "variants": [
+    {
+     "prompt": "After a purchase you ask: how satisfied are you with your order? Which metric?",
+     "choices": [
+      "CSAT",
+      "CES",
+      "NPS",
+      "CAC"
+     ]
+    },
+    {
+     "prompt": "Which question measures NPS?",
+     "choices": [
+      "How likely are you to recommend us?",
+      "How easy was it to solve your issue?",
+      "How satisfied are you with this order?",
+      "How much did you spend this year?"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -137,7 +304,27 @@
     "Do you like our new shoe design?",
     "What features should the perfect shoe have?"
    ],
-   "explain": "Past behaviour is fact; predictions and opinions are guesses. The Mom Test principle: ask about their life, not your idea."
+   "explain": "Past behaviour is fact; predictions and opinions are guesses. The Mom Test principle: ask about their life, not your idea.",
+   "variants": [
+    {
+     "prompt": "Which interview question follows the Mom Test?",
+     "choices": [
+      "What did you do the last time this happened?",
+      "Would you use an app that solves this?",
+      "Do you think our idea is good?",
+      "How much would you pay for it?"
+     ]
+    },
+    {
+     "prompt": "Why ask about past behaviour rather than future intentions?",
+     "choices": [
+      "Past behaviour is fact; predictions are guesses",
+      "People remember the future better",
+      "The law forbids questions about the future",
+      "Past questions are quicker to ask"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -148,7 +335,27 @@
     "The law requires polls to be accurate",
     "People in big cities speak for the rest"
    ],
-   "explain": "Representativeness matters more than size. A biased sample of 100,000 can be wrong where 1,000 quota-based answers are right."
+   "explain": "Representativeness matters more than size. A biased sample of 100,000 can be wrong where 1,000 quota-based answers are right.",
+   "variants": [
+    {
+     "prompt": "A survey of 100,000 readers of one magazine predicts an election badly. Why?",
+     "choices": [
+      "The sample is big but not representative",
+      "100,000 answers is far too few",
+      "The answers were never counted",
+      "Elections cannot be studied at all"
+     ]
+    },
+    {
+     "prompt": "What matters more than sample size for a reliable poll?",
+     "choices": [
+      "Representativeness of the sample",
+      "The length of the questionnaire",
+      "The colour of the survey form",
+      "The day of the week it is sent"
+     ]
+    }
+   ]
   },
   {
    "kind": "order",

@@ -13,8 +13,9 @@
  * court décale les thèmes au lendemain, rien ne se perd.
  */
 
-import type { DayKey, GuidedState, Progress } from './types';
-import { emptyGuided } from './types';
+import { PATH_TRAITS, currentUnit, isUnitUnlocked } from './mastery';
+import type { Catalog, DayKey, GuidedState, Progress, Traits, UnitId } from './types';
+import { emptyGuided, subjectUnits } from './types';
 
 export const DAILY_DECK_CAP = 10;
 /** Cartes nouvelles au plus parmi les cartes du deck du jour. */
@@ -41,13 +42,35 @@ export function countGuided(progress: Progress, counter: GuidedCounter, n: numbe
   return { ...progress, guided: { ...s, [counter]: s[counter] + Math.max(0, n) } };
 }
 
-/** Une leçon finie : compte pour le jour et pour la rotation de sa matière. */
-export function countLesson(progress: Progress, subjectId: string, today: DayKey): Progress {
+/** Une leçon finie : compte pour le jour, pour la rotation de sa matière, et l'unité est marquée faite aujourd'hui. */
+export function countLesson(progress: Progress, subjectId: string, unitId: UnitId, today: DayKey): Progress {
   const s = guidedToday(progress.guided, today);
+  const units = s.units ?? [];
   return {
     ...progress,
-    guided: { ...s, lessons: s.lessons + 1, lessonCounts: { ...s.lessonCounts, [subjectId]: (s.lessonCounts[subjectId] ?? 0) + 1 } },
+    guided: {
+      ...s,
+      lessons: s.lessons + 1,
+      units: units.includes(unitId) ? units : [...units, unitId],
+      lessonCounts: { ...s.lessonCounts, [subjectId]: (s.lessonCounts[subjectId] ?? 0) + 1 },
+    },
   };
+}
+
+/**
+ * L'unité à proposer dans une matière : celle du chemin (currentUnit), sauf
+ * si elle a déjà été faite aujourd'hui. Refaire la même leçon le même jour,
+ * c'est répondre de mémoire immédiate : on prend alors l'unité ouverte
+ * suivante pas encore acquise, ou rien (la matière attend demain).
+ */
+export function guidedUnit(subjectId: string, traits: Record<string, Traits>, catalog: Catalog, doneToday: readonly string[]): UnitId | null {
+  const current = currentUnit(subjectId, traits, catalog);
+  if (current !== null && !doneToday.includes(current)) return current;
+  for (const unit of subjectUnits(catalog, subjectId)) {
+    if (doneToday.includes(unit.id)) continue;
+    if ((traits[unit.id] ?? 0) < PATH_TRAITS && isUnitUnlocked(unit.id, traits, catalog)) return unit.id;
+  }
+  return null;
 }
 
 export interface GuidedLeft {

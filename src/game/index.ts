@@ -32,3 +32,4 @@ export * from './monthly';
 export * from './study';
 export * from './guided';
 export * from './duels';
+export * from './variants';

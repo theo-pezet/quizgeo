@@ -423,7 +423,7 @@ export function applySessionEnd(
   // 4c bis. La séance guidée : une leçon de plus pour la rotation des thèmes.
   if (action.mode === 'unit' && action.skipTest !== true && counted && action.unitId !== null) {
     const subjectId = action.catalog.units.find((u) => u.id === action.unitId)?.subjectId;
-    if (subjectId !== undefined) next = countLesson(next, subjectId, today);
+    if (subjectId !== undefined) next = countLesson(next, subjectId, action.unitId, today);
   }
 
   // 4d. Le défi du mois : une leçon complète de plus.

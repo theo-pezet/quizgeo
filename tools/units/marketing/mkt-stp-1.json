@@ -13,49 +13,70 @@
    "level": "debutant",
    "term": "STP (segment, target, position)",
    "definition": "The core method of strategic marketing: split the market into groups with similar needs (Segmentation), choose the groups you will serve (Targeting), then decide the place you want in their mind (Positioning).",
-   "example": "A running brand splits runners into beginners, marathoners and trail runners, targets trail runners, and positions itself as the grip specialist."
+   "example": "A running brand splits runners into beginners, marathoners and trail runners, targets trail runners, and positions itself as the grip specialist.",
+   "alts": [
+    "The three-step core of strategic marketing: split the market into groups, choose the groups to serve, then decide the place to win in their minds."
+   ]
   },
   {
    "slug": "segmentation-criteria",
    "level": "debutant",
    "term": "Segmentation criteria",
    "definition": "The four families: geographic (country, city, climate), demographic (age, income, job, company size in B2B), psychographic (values, lifestyle) and behavioural (usage, loyalty, benefit sought, purchase moment).",
-   "example": "Behavioural: heavy users who order every week versus occasional buyers who order twice a year."
+   "example": "Behavioural: heavy users who order every week versus occasional buyers who order twice a year.",
+   "alts": [
+    "The four families used to split a market: where people live, who they are, what they value, and how they buy and use the product."
+   ]
   },
   {
    "slug": "good-segment",
    "level": "debutant",
    "term": "What makes a good segment",
    "definition": "A useful segment is measurable, large enough to be profitable, reachable through your channels, and it reacts differently from other segments to your offer.",
-   "example": "Left-handed golfers are measurable, reachable through clubs and forums, and need different equipment: a good segment."
+   "example": "Left-handed golfers are measurable, reachable through clubs and forums, and need different equipment: a good segment.",
+   "alts": [
+    "A group of buyers that can be measured, is big enough to pay off, can be reached through your channels and responds to the offer in its own way."
+   ]
   },
   {
    "slug": "targeting-strategies",
    "level": "debutant",
    "term": "Targeting strategies",
    "definition": "Undifferentiated (one offer for everyone), differentiated (a specific offer per segment), concentrated (one niche, served very well) and micro-marketing (offers tailored to small groups or individuals).",
-   "example": "A small brand of gluten-free pasta chooses a concentrated strategy instead of fighting Barilla on every shelf."
+   "example": "A small brand of gluten-free pasta chooses a concentrated strategy instead of fighting Barilla on every shelf.",
+   "alts": [
+    "The choice between one offer for everyone, an offer per group, a single niche served very well, or offers tailored to very small groups."
+   ]
   },
   {
    "slug": "positioning-statement",
    "level": "debutant",
    "term": "Positioning statement",
    "definition": "An internal sentence that fixes the strategy: For (target) who (need), our (brand) is the (category) that (main benefit), unlike (alternative), because (proof).",
-   "example": "For busy parents who hate meal planning, Quitoque is the meal kit that removes the daily what do we eat question, unlike supermarkets, because recipes and exact quantities arrive at your door."
+   "example": "For busy parents who hate meal planning, Quitoque is the meal kit that removes the daily what do we eat question, unlike supermarkets, because recipes and exact quantities arrive at your door.",
+   "alts": [
+    "An internal sentence naming the target, its need, the category, the main benefit, the alternative and the proof that makes the claim believable."
+   ]
   },
   {
    "slug": "perceptual-map",
    "level": "debutant",
    "term": "Perceptual map",
    "definition": "A chart placing brands on two axes that matter to buyers (for example price and modernity) as customers perceive them. Empty zones can reveal an opportunity, or a place nobody wants.",
-   "example": "Placing car brands on cheap to premium and practical to sporty, to see where a new model could stand out."
+   "example": "Placing car brands on cheap to premium and practical to sporty, to see where a new model could stand out.",
+   "alts": [
+    "A two-axis chart showing where buyers place competing brands on criteria that matter to them, such as price and modernity."
+   ]
   },
   {
    "slug": "jobs-to-be-done",
    "level": "debutant",
    "term": "Jobs to be done",
    "definition": "Clayton Christensen idea: customers hire a product to get a job done in a given situation. Understanding the job explains choices better than demographics do.",
-   "example": "People buy a morning milkshake to make a boring commute more bearable and to stay full until lunch: its real competitors are bananas and bagels."
+   "example": "People buy a morning milkshake to make a boring commute more bearable and to stay full until lunch: its real competitors are bananas and bagels.",
+   "alts": [
+    "The idea that customers hire an offer to make progress in a given situation, which reveals competitors that look nothing like you."
+   ]
   }
  ],
  "exercises": [
@@ -68,7 +89,27 @@
     "Target, then position, then segment",
     "Segment, then position, then target"
    ],
-   "explain": "You cannot choose a target before splitting the market, and you cannot position yourself without knowing whose mind you want to win."
+   "explain": "You cannot choose a target before splitting the market, and you cannot position yourself without knowing whose mind you want to win.",
+   "variants": [
+    {
+     "prompt": "Before choosing its targets and its positioning, what must a brand do?",
+     "choices": [
+      "Segment the market into groups",
+      "Write the positioning statement",
+      "Choose the advertising agency",
+      "Set the final retail price"
+     ]
+    },
+    {
+     "prompt": "Which step of STP answers: which customer groups do we choose to serve?",
+     "choices": [
+      "Targeting",
+      "Segmentation",
+      "Positioning",
+      "Pricing"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -79,7 +120,27 @@
     "Geographic",
     "Psychographic"
    ],
-   "explain": "Behavioural criteria describe what people do with the product: usage rate, loyalty, benefit sought, moment of purchase. They often predict buying better than age."
+   "explain": "Behavioural criteria describe what people do with the product: usage rate, loyalty, benefit sought, moment of purchase. They often predict buying better than age.",
+   "variants": [
+    {
+     "prompt": "Grouping customers by how often they order uses which type of criterion?",
+     "choices": [
+      "Behavioural",
+      "Demographic",
+      "Geographic",
+      "Psychographic"
+     ]
+    },
+    {
+     "prompt": "Which of these is a behavioural criterion?",
+     "choices": [
+      "Loyalty to a brand",
+      "Age group",
+      "Region of residence",
+      "Values and lifestyle"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -90,7 +151,27 @@
     "Demographic",
     "Geographic"
    ],
-   "explain": "Values, attitudes and lifestyles are psychographic. Two 35-year-old Parisians with the same income can be very different on these."
+   "explain": "Values, attitudes and lifestyles are psychographic. Two 35-year-old Parisians with the same income can be very different on these.",
+   "variants": [
+    {
+     "prompt": "Targeting people who see themselves as adventurers and love risk uses which criterion?",
+     "choices": [
+      "Psychographic",
+      "Behavioural",
+      "Demographic",
+      "Geographic"
+     ]
+    },
+    {
+     "prompt": "Which of these is a psychographic criterion?",
+     "choices": [
+      "Values and lifestyle",
+      "Monthly income",
+      "Purchase frequency",
+      "Size of the city"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -101,7 +182,27 @@
     "It is large enough to be profitable",
     "You can reach it with your channels"
    ],
-   "explain": "A segment groups people who react the same way to the offer. They do not need identical demographics."
+   "explain": "A segment groups people who react the same way to the offer. They do not need identical demographics.",
+   "variants": [
+    {
+     "prompt": "A segment must be measurable, large enough and reachable. What else?",
+     "choices": [
+      "React differently from other segments to your offer",
+      "Have members who all live in the same city",
+      "Include only people over 30",
+      "Be chosen by the competitors first"
+     ]
+    },
+    {
+     "prompt": "Left-handed golfers form a good segment. Why?",
+     "choices": [
+      "They are measurable, reachable and need different gear",
+      "They all have the same age and income",
+      "They are the biggest group of golfers",
+      "They never compare prices before buying"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -112,7 +213,27 @@
     "Differentiated",
     "Mass marketing"
    ],
-   "explain": "Concentrated marketing (niche) lets a small player be the best for one group instead of average for everyone. The risk: depending on a single segment."
+   "explain": "Concentrated marketing (niche) lets a small player be the best for one group instead of average for everyone. The risk: depending on a single segment.",
+   "variants": [
+    {
+     "prompt": "A start-up makes software only for dental clinics. Which targeting strategy?",
+     "choices": [
+      "Concentrated",
+      "Undifferentiated",
+      "Differentiated",
+      "Mass marketing"
+     ]
+    },
+    {
+     "prompt": "What is the main risk of a concentrated strategy?",
+     "choices": [
+      "Depending on a single segment",
+      "Spending too much on many segments",
+      "Having no clear positioning at all",
+      "Being too big for its niche"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -123,13 +244,45 @@
     "Undifferentiated",
     "Micro-marketing"
    ],
-   "explain": "Several segments, a specific offer and message for each: differentiated targeting. It reaches more people but costs more."
+   "explain": "Several segments, a specific offer and message for each: differentiated targeting. It reaches more people but costs more.",
+   "variants": [
+    {
+     "prompt": "A hotel group runs budget, mid-range and luxury brands, each with its own offer. Which strategy?",
+     "choices": [
+      "Differentiated",
+      "Concentrated",
+      "Undifferentiated",
+      "Micro-marketing"
+     ]
+    },
+    {
+     "prompt": "One product and one message for the whole market: which strategy?",
+     "choices": [
+      "Undifferentiated",
+      "Differentiated",
+      "Concentrated",
+      "Micro-marketing"
+     ]
+    }
+   ]
   },
   {
    "kind": "vf",
    "prompt": "Positioning is what you put in your ads; it exists as soon as the brand says it.",
    "isTrue": false,
-   "explain": "False. Positioning is the place the brand occupies in the mind of the target. You can aim for it, but customers decide whether you got it."
+   "explain": "False. Positioning is the place the brand occupies in the mind of the target. You can aim for it, but customers decide whether you got it.",
+   "variants": [
+    {
+     "prompt": "Positioning is the place a brand holds in the mind of its target, compared with its competitors.",
+     "isTrue": true,
+     "explain": "True. You aim for it with the whole mix, but customers decide whether you got it."
+    },
+    {
+     "prompt": "A new slogan is enough to change the positioning of a brand overnight.",
+     "isTrue": false,
+     "explain": "False. Positioning lives in the minds of buyers and moves slowly, through product, price, distribution and years of consistent communication."
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -140,7 +293,27 @@
     "The list of all the recipes on offer",
     "The colours of the brand logo"
    ],
-   "explain": "A full positioning statement says unlike what, and why we can be believed. Without them, any competitor could write the same sentence."
+   "explain": "A full positioning statement says unlike what, and why we can be believed. Without them, any competitor could write the same sentence.",
+   "variants": [
+    {
+     "prompt": "A statement reads: For runners, our shoe is the lightest. What does it lack?",
+     "choices": [
+      "The alternative and the proof that make it credible",
+      "The founding date of the company",
+      "The list of all the shoe sizes",
+      "The colours of the brand logo"
+     ]
+    },
+    {
+     "prompt": "Which part of a positioning statement answers: why should they believe it?",
+     "choices": [
+      "The proof (the reason to believe)",
+      "The target (who it is for)",
+      "The category (what it is)",
+      "The price (what it costs)"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -151,7 +324,27 @@
     "The map was drawn the wrong way round",
     "Competitors are hiding products in that zone"
    ],
-   "explain": "A gap is a question, not an answer. Check that buyers actually want that combination before launching into it."
+   "explain": "A gap is a question, not an answer. Check that buyers actually want that combination before launching into it.",
+   "variants": [
+    {
+     "prompt": "A perceptual map shows no brand in the zone very cheap and very eco-friendly. What do you do first?",
+     "choices": [
+      "Check that buyers want it and that it can pay off",
+      "Launch a product there at once",
+      "Redraw the map until the gap disappears",
+      "Copy the leader of the closest zone"
+     ]
+    },
+    {
+     "prompt": "What does a perceptual map show?",
+     "choices": [
+      "How buyers see brands on two axes that matter to them",
+      "The sales of each brand by region",
+      "The prices brands paid for their ads",
+      "The legal status of each competitor"
+     ]
+    }
+   ]
   },
   {
    "kind": "qcm",
@@ -162,7 +355,27 @@
     "The price must be cut to match other drinks",
     "Nothing: it only applies to software products"
    ],
-   "explain": "The job reveals the real competition and the real benefits to improve: thicker, longer to drink, easy with one hand."
+   "explain": "The job reveals the real competition and the real benefits to improve: thicker, longer to drink, easy with one hand.",
+   "variants": [
+    {
+     "prompt": "People hire a power drill to get a hole in the wall. What does jobs to be done suggest?",
+     "choices": [
+      "Compete on the result people want, not only on drills",
+      "Lower the price of the drill below all rivals",
+      "Target only professional builders",
+      "Add more features to the drill"
+     ]
+    },
+    {
+     "prompt": "What does jobs to be done mainly look at to explain choices?",
+     "choices": [
+      "The job the customer wants done in a situation",
+      "The age and income of the customer",
+      "The colour preferences of the customer",
+      "The advertising budget of the brand"
+     ]
+    }
+   ]
   },
   {
    "kind": "order",

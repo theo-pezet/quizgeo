@@ -131,6 +131,12 @@ export interface QcmExercise extends ExerciseBase {
    */
   typed?: { answer: string; accept?: string[] };
   /**
+   * Autres formulations de la même question (énoncé, choix, bonne réponse
+   * reformulés, autre exemple). Posées tour à tour aux passages suivants
+   * (voir variants.ts), pour qu'on ne réponde plus par cœur.
+   */
+  variants?: QcmVariant[];
+  /**
    * Questions de vocabulaire générées : la carte de chaque choix, alignée sur
    * `choices`. Une mauvaise réponse dit ainsi quelle notion a été prise pour
    * laquelle (voir duels.ts).
@@ -217,6 +223,15 @@ export type ExerciseKind = Exercise['kind'];
  * la maîtrise, optionnelle, qui se fissure si on ne revient pas.
  */
 export type Traits = 0 | 1 | 2 | 3 | 4 | 5;
+
+/** Une autre formulation d'un QCM (voir variants.ts). */
+export interface QcmVariant {
+  prompt: string;
+  choices: string[];
+  answer: number;
+  explain?: string;
+  choiceCards?: string[];
+}
 
 export interface QuestionProgress {
   key: string;
@@ -424,12 +439,14 @@ export interface GuidedState {
   duels: number;
   /** Leçons finies aujourd'hui. */
   lessons: number;
+  /** Unités travaillées aujourd'hui : la séance guidée n'en repropose pas une le même jour. */
+  units: string[];
   /** Leçons finies depuis toujours, par matière : la rotation des thèmes s'en sert. */
   lessonCounts: Record<string, number>;
 }
 
 export function emptyGuided(): GuidedState {
-  return { day: null, deck: 0, review: 0, duels: 0, lessons: 0, lessonCounts: {} };
+  return { day: null, deck: 0, review: 0, duels: 0, lessons: 0, units: [], lessonCounts: {} };
 }
 
 /** Une paire de notions confondues (voir duels.ts). `a` < `b`. */

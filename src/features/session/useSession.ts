@@ -33,6 +33,8 @@ import {
   composeUnitSession,
   effectiveStreak,
   guidedLeft,
+  presentVariant,
+  type VariantTexts,
   reviewQueue,
   pickPretest,
   shouldPromptExplain,
@@ -47,6 +49,7 @@ import {
   type SessionEndResult,
   type SessionMode,
 } from '@/game';
+import { translate } from '@/i18n/translate';
 import { ads } from '@/lib/ads';
 import { useProgress } from '@/store/progress';
 
@@ -122,6 +125,13 @@ export interface SessionState {
 }
 
 const SUBJECT_OF_UNIT: ReadonlyMap<string, string> = new Map(CATALOG.units.map((u) => [u.id, u.subjectId]));
+
+const VARIANT_TEXTS: VariantTexts = {
+  right: translate('en', 'variant.right'),
+  wrong: translate('en', 'variant.wrong'),
+  proposed: (prompt, answer) => translate('en', 'variant.proposed', { prompt, answer }),
+  correctIs: (answer) => translate('en', 'variant.correctIs', { answer }),
+};
 
 /** La carte prise à tort pour la bonne, sur une question de vocabulaire (voir duels.ts). */
 function confusedWith(exercise: Exercise, correct: boolean, given: string | undefined): string | undefined {
@@ -231,7 +241,19 @@ export function useSession(spec: SessionSpec) {
     xpAtStart: init.startProgress.xp,
   });
 
-  const current: Step | undefined = state.steps[state.index];
+  // La question change de forme aux passages suivants (voir variants.ts) ;
+  // la forme est tirée une fois par étape, au moment où elle s'affiche.
+  const forms = useRef(new Map<number, Exercise>());
+  const raw: Step | undefined = state.steps[state.index];
+  let current: Step | undefined = raw;
+  if (raw && raw.learn === undefined && !raw.pretest) {
+    let shown = forms.current.get(state.index);
+    if (!shown) {
+      shown = presentVariant(raw.exercise, useProgress.getState().progress.questions[raw.exercise.key], Math.random, VARIANT_TEXTS);
+      forms.current.set(state.index, shown);
+    }
+    current = { ...raw, exercise: shown };
+  }
   const mode: SessionMode = spec.mode;
   const unitId = spec.mode === 'unit' ? spec.unitId : null;
 
@@ -295,7 +317,7 @@ export function useSession(spec: SessionSpec) {
         revealed.current.add(key);
         const n = (fails.current.get(key) ?? 0) + 1;
         fails.current.set(key, n);
-        if (shouldRelearn(n) && !retryQueue.current.some((e) => e.key === key)) retryQueue.current.push(current.exercise);
+        if (shouldRelearn(n) && !retryQueue.current.some((e) => e.key === key)) retryQueue.current.push(raw?.exercise ?? current.exercise);
       } else if (!current.retry) {
         retryQueue.current = retryQueue.current.filter((e) => e.key !== key);
       }

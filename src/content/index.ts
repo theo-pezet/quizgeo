@@ -68,6 +68,7 @@ function build(lang: Lang): Content {
     whichTerm: translate(lang, 'gen.whichTerm'),
     match: translate(lang, 'gen.match'),
     example: (text) => translate(lang, 'gen.example', { text }),
+    whichExample: translate(lang, 'gen.whichExample'),
     lang,
   };
   const cardsOf = (subject: string, topic?: string) => CARDS.filter((c) => c.subject === subject && (topic === undefined || c.topic === topic));
